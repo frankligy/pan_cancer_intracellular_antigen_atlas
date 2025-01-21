@@ -123,6 +123,52 @@ def get_enst2gs():
     return dic1
 
 
+# nuorf peptide assemble
+mapping = {
+    'BRCA':'breast cancer',
+    'KIRC':'clear cell renal cell carcinoma',
+    'COAD':'colon cancer',
+    'STAD':'gastric cancer',
+    'MESO':'mesothelioma',
+    'LIHC':'liver cancer',
+    'ESCA':'esophageal cancer',
+    'CESC':'cervical cancer',
+    'BLCA':'bladder cancer',	
+    'RT':'rhabdoid tumor',
+    'AML':'acute myeloid leukemia',
+    'DLBC':'diffuse large B cell lymphoma',	
+    'GBM':'glioblastoma',	
+    'NBL':'neuroblastoma',
+    'PAAD':'pancreatic cancer',
+    'HNSC':'head and neck cancer',
+    'OV':'ovarian cancer',
+    'LUSC':'lung squamous cell carcinoma',
+    'LUAD':'lung adenocarcinoma',
+    'CHOL':'bile duct cancer',	
+    'SKCM':'melanoma'
+}
+
+pd.Series(mapping,name='full_name').to_csv('abbreviation.txt',sep='\t');sys.exit('stop')
+
+df = pd.read_csv('peptide_view_nuorf.txt',sep='\t',header=None).iloc[2:,:24]
+col = []
+for item1,item2 in zip(df[2],df[1]):
+    col.append(','.join([item1,item2.replace(' ','_')]))
+df['uid'] = col
+col = []
+for i in np.arange(df.shape[0]):
+    s = df.iloc[i]
+    s = s.iloc[3:-1]
+    s = s.astype(float)
+    s = s.where(s>0)
+    s = s.loc[s.notna()]
+    need = ','.join([mapping[cancers[item-3]] for item in s.index])
+    col.append(need)
+df['need'] = col
+df.to_csv('mannual_input_nuorf_in_patent.txt',sep='\t')
+sys.exit('stop')
+
+
 # figure out nbl and ribo
 # final = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/NBL/antigen/fdr/final_enhanced.txt',sep='\t')
 # cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]

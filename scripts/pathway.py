@@ -92,22 +92,58 @@ def process_tumor_gene():
         dic[c] = c_dic
     return dic
 
+# looking at RT and DLBC peptide
+final = pd.read_csv(os.path.join(root_atlas_dir,'DLBC','antigen','fdr','final_enhanced.txt'),sep='\t')
+cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+df1 = final.loc[cond,:]
+final = pd.read_csv(os.path.join(root_atlas_dir,'RT','antigen','fdr','final_enhanced.txt'),sep='\t')
+cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+df2 = final.loc[cond,:]
+
+from scipy.stats import chi2_contingency
+mat = []
+for df in [df1,df2]:
+    cond = [True if pep.endswith('D') or pep.endswith('R') else False for pep in df['pep']]
+    n = sum(cond)
+    t = df.shape[0]
+    mat.append((n,t-n))
+    p = n / t
+    print(p)
+
+mat = np.array(mat)
+res = chi2_contingency(mat)
+print(res)
+sys.exit('stop')
+
 genes = [
     'PSMB8',
     'PSMB9',
     'PSMB10',
     'TAP1',
     'TAP2',
-    'TAPBP',
     'ERAP1',
     'ERAP2',
+    'TAPBP',
+    'TAPBPL',
     'CALR',
     'CANX',
     'PDIA3',
     'B2M',
     'HLA-A',
     'HLA-B',
-    'HLA-C'
+    'HLA-C',
+    'CXCL8',
+    'CXCL9',
+    'CXCL10',
+    'NFKB1',
+    'IFNGR1',
+    'IFNGR2',
+    'JAK1',
+    'JAK2',
+    'TYK2',
+    'STAT1',
+    'STAT2',
+    'STAT3'
 ]
 
 

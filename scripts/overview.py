@@ -237,17 +237,19 @@ def get_ts_gene(atlas_dir):
     ensg2symbol = gene_lfc['gene_symbol'].to_dict()
     symbol2ensg = {v:k for k,v in ensg2symbol.items()}
     gene_lfc = gene_lfc.loc[(gene_lfc['median_tumor']>20) & (gene_lfc['median_tumor'] > gene_lfc['max_median_gtex']),:]
-    gene2membrane = gene_lfc['is_membrane'].to_dict()
     real_common = list(set(gene_lfc.index).intersection(set(common)))
 
     # remove the manual bl
     manual_bl_ensg = [symbol2ensg[item] for item in manual_bl]
     real_common = list(set(real_common).difference(set(manual_bl_ensg)))
 
-
+    # membrane
+    mem = pd.read_csv('human_membrane_protein_postdoc_final_no_edit.txt',sep='\t')
+    mem = mem.loc[mem['ensg'].notna(),:]
+    membrane_ensg = mem['ensg'].values.tolist()
     real_common_membrane = []
     for item in real_common:
-        if gene2membrane[item]:
+        if item in membrane_ensg:
             real_common_membrane.append(item)
 
     return real_common,real_common_membrane
@@ -341,6 +343,15 @@ def get_ts_fusion(atlas_dir):
     return df
 
 
+# help with membrane protein filter
+# df_list = []
+# for c,s in zip(cancers,n_samples):
+#     atlas_dir = os.path.join(root_atlas_dir,c)
+#     real_common, real_common_membrane = get_ts_gene(atlas_dir)
+#     s = pd.Series(real_common_membrane)
+#     df_list.append(s)
+# df = pd.concat(df_list,axis=0,keys=cancers)
+# df.to_csv('my_filter_membrane.txt',sep='\t')
 
 
 # collage the meta and get number
@@ -377,7 +388,21 @@ pathogen_df = pathogen_df.loc[pathogen_df['highest_abundance'].notna(),:]
 pathogen_df = pathogen_df.loc[pathogen_df['unique'],:]
 pathogen_df = pathogen_df.loc[pathogen_df['highest_score']>40,:]
 total_antigen += pathogen_df.shape[0]
-print(total_antigen)
+
+patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
+data = []
+for pep,patent_sub_df in patent_df.groupby(by='pep'):
+
+    patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
+    all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
+    tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+    tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+    tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
+    all_hla = ','.join([item[0] for item in tmp])
+    data.append((pep,all_c,all_hla))
+patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
+patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
+sys.exit('stop')  
 
 
 # plot peptide overview, order will be gene, splicing, self_TE, chimera_TE, IR, pathogen, fusion, variant, lncRNA, pseudogene, cryptic ORF
