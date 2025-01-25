@@ -75,7 +75,7 @@ data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
-    cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
     final = final.loc[cond,:]
     final = final.loc[final['typ']=='variant',:]
     final = final.loc[final['unique'],:]
@@ -84,7 +84,7 @@ final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns
 final['gene'] = [item.split('|')[0] for item in final['source']]
 final['is_driver'] = final['gene'].isin(driver).values
 final['mutation'] = ['|'.join([item.split('|')[0],item.split('|')[1]]) for item in final['source']]
-# final.to_csv('all_variants.txt',sep='\t',index=None)
+final.to_csv('all_variants.txt',sep='\t',index=None);sys.exit('stop')
 # final['pep'].value_counts().to_csv('all_variant_peptide.txt',sep='\t')
 # final['gene'].value_counts().to_csv('all_variant_gene.txt',sep='\t')
 # final['mutation'].value_counts().to_csv('all_variant_mutation.txt',sep='\t')

@@ -68,7 +68,7 @@ data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
-    cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
     final = final.loc[cond,:]
     final = final.loc[final['typ']=='pathogen',:]
     data.append(final)
@@ -100,44 +100,45 @@ final['strain'] = col
 final = final.loc[final['strain']!='unknown',:]
 final.to_csv('all_pathogen.txt',sep='\t',index=None)
 
-# look for N circulans gene in ov
-final_n = final.loc[(final['strain']=='N.Circulans') & (final['cancer']=='OV'),:]
-genes = list(set([item.split('|')[1] for item in final_n['source']]))
-print(len(genes))
-sys.exit('stop')
+
+# # look for N circulans gene in ov
+# final_n = final.loc[(final['strain']=='N.Circulans') & (final['cancer']=='OV'),:]
+# genes = list(set([item.split('|')[1] for item in final_n['source']]))
+# print(len(genes))
+# sys.exit('stop')
 
 
-# look for cmv
-common_cmv = ['DLLSALQQL',
-              'TLLVYLFSL',
-              'VLEETSVML',
-              'IARLAKIPL',
-              'LLDGVTVSL',
-              'LPVESLPLL',
-              'YTSRGALYLY']
-final_cmv = final.loc[(final['strain']=='CMV') & (final['pep'].isin(common_cmv)),:]
-final_cmv.to_csv('final_cmv.txt',sep='\t')
-cmv_cancers = ['OV','BRCA','LIHC','NBL','GBM','CESC','COAD']
+# # look for cmv
+# common_cmv = ['DLLSALQQL',
+#               'TLLVYLFSL',
+#               'VLEETSVML',
+#               'IARLAKIPL',
+#               'LLDGVTVSL',
+#               'LPVESLPLL',
+#               'YTSRGALYLY']
+# final_cmv = final.loc[(final['strain']=='CMV') & (final['pep'].isin(common_cmv)),:]
+# final_cmv.to_csv('final_cmv.txt',sep='\t')
+# cmv_cancers = ['OV','BRCA','LIHC','NBL','GBM','CESC','COAD']
 
-store_data = []
-for pep in common_cmv:
-    final_p = final_cmv.loc[final_cmv['pep']==pep,:]
-    all_occur = final_p['cancer'].values.tolist()
-    tmp = []
-    for c in cmv_cancers:
-        if c in all_occur:
-            sub = final_p.loc[final_p['cancer']==c,:]
-            all_intensity = []
-            for item in sub['detailed_intensity']:
-                all_intensity.extend(literal_eval(item))
-            med_intensity = np.median(all_intensity)
-            tmp.append(med_intensity)
-        else:
-            tmp.append(0)
-    store_data.append(tmp)
+# store_data = []
+# for pep in common_cmv:
+#     final_p = final_cmv.loc[final_cmv['pep']==pep,:]
+#     all_occur = final_p['cancer'].values.tolist()
+#     tmp = []
+#     for c in cmv_cancers:
+#         if c in all_occur:
+#             sub = final_p.loc[final_p['cancer']==c,:]
+#             all_intensity = []
+#             for item in sub['detailed_intensity']:
+#                 all_intensity.extend(literal_eval(item))
+#             med_intensity = np.median(all_intensity)
+#             tmp.append(med_intensity)
+#         else:
+#             tmp.append(0)
+#     store_data.append(tmp)
 
-cmv_df = pd.DataFrame(data=store_data,index=common_cmv,columns=cmv_cancers)
-cmv_df.to_csv('cmv_df.txt',sep='\t')
+# cmv_df = pd.DataFrame(data=store_data,index=common_cmv,columns=cmv_cancers)
+# cmv_df.to_csv('cmv_df.txt',sep='\t')
 
 
 

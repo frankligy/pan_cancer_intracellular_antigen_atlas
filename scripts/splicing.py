@@ -135,13 +135,14 @@ data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
-    cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
     final = final.loc[cond,:]
     final = final.loc[final['typ']=='splicing',:]
     data.append(final)
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
-# final.to_csv('all_splicing.txt',sep='\t',index=None)
-# final['pep'].value_counts().to_csv('all_splicing_peptide.txt',sep='\t')
+final.to_csv('all_splicing.txt',sep='\t',index=None)
+final['pep'].value_counts().to_csv('all_splicing_peptide.txt',sep='\t')
+sys.exit('stop')
 
 # peptide view
 # peptide = pd.read_csv('splicing_peptides.txt',sep='\t',index_col=0)

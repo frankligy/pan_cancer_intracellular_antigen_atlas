@@ -123,50 +123,50 @@ def get_enst2gs():
     return dic1
 
 
-# nuorf peptide assemble
-mapping = {
-    'BRCA':'breast cancer',
-    'KIRC':'clear cell renal cell carcinoma',
-    'COAD':'colon cancer',
-    'STAD':'gastric cancer',
-    'MESO':'mesothelioma',
-    'LIHC':'liver cancer',
-    'ESCA':'esophageal cancer',
-    'CESC':'cervical cancer',
-    'BLCA':'bladder cancer',	
-    'RT':'rhabdoid tumor',
-    'AML':'acute myeloid leukemia',
-    'DLBC':'diffuse large B cell lymphoma',	
-    'GBM':'glioblastoma',	
-    'NBL':'neuroblastoma',
-    'PAAD':'pancreatic cancer',
-    'HNSC':'head and neck cancer',
-    'OV':'ovarian cancer',
-    'LUSC':'lung squamous cell carcinoma',
-    'LUAD':'lung adenocarcinoma',
-    'CHOL':'bile duct cancer',	
-    'SKCM':'melanoma'
-}
+# # nuorf peptide assemble
+# mapping = {
+#     'BRCA':'breast cancer',
+#     'KIRC':'clear cell renal cell carcinoma',
+#     'COAD':'colon cancer',
+#     'STAD':'gastric cancer',
+#     'MESO':'mesothelioma',
+#     'LIHC':'liver cancer',
+#     'ESCA':'esophageal cancer',
+#     'CESC':'cervical cancer',
+#     'BLCA':'bladder cancer',	
+#     'RT':'rhabdoid tumor',
+#     'AML':'acute myeloid leukemia',
+#     'DLBC':'diffuse large B cell lymphoma',	
+#     'GBM':'glioblastoma',	
+#     'NBL':'neuroblastoma',
+#     'PAAD':'pancreatic cancer',
+#     'HNSC':'head and neck cancer',
+#     'OV':'ovarian cancer',
+#     'LUSC':'lung squamous cell carcinoma',
+#     'LUAD':'lung adenocarcinoma',
+#     'CHOL':'bile duct cancer',	
+#     'SKCM':'melanoma'
+# }
 
-pd.Series(mapping,name='full_name').to_csv('abbreviation.txt',sep='\t');sys.exit('stop')
+# pd.Series(mapping,name='full_name').to_csv('abbreviation.txt',sep='\t');sys.exit('stop')
 
-df = pd.read_csv('peptide_view_nuorf.txt',sep='\t',header=None).iloc[2:,:24]
-col = []
-for item1,item2 in zip(df[2],df[1]):
-    col.append(','.join([item1,item2.replace(' ','_')]))
-df['uid'] = col
-col = []
-for i in np.arange(df.shape[0]):
-    s = df.iloc[i]
-    s = s.iloc[3:-1]
-    s = s.astype(float)
-    s = s.where(s>0)
-    s = s.loc[s.notna()]
-    need = ','.join([mapping[cancers[item-3]] for item in s.index])
-    col.append(need)
-df['need'] = col
-df.to_csv('mannual_input_nuorf_in_patent.txt',sep='\t')
-sys.exit('stop')
+# df = pd.read_csv('peptide_view_nuorf.txt',sep='\t',header=None).iloc[2:,:24]
+# col = []
+# for item1,item2 in zip(df[2],df[1]):
+#     col.append(','.join([item1,item2.replace(' ','_')]))
+# df['uid'] = col
+# col = []
+# for i in np.arange(df.shape[0]):
+#     s = df.iloc[i]
+#     s = s.iloc[3:-1]
+#     s = s.astype(float)
+#     s = s.where(s>0)
+#     s = s.loc[s.notna()]
+#     need = ','.join([mapping[cancers[item-3]] for item in s.index])
+#     col.append(need)
+# df['need'] = col
+# df.to_csv('mannual_input_nuorf_in_patent.txt',sep='\t')
+
 
 
 # figure out nbl and ribo
@@ -192,13 +192,15 @@ data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
-    cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
     final = final.loc[cond,:]
     final = final.loc[final['typ']=='nuORF',:]
     data.append(final)
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
-# final.to_csv('all_nuorf.txt',sep='\t',index=None)
-# final['pep'].value_counts().to_csv('all_nuorf_peptide.txt',sep='\t')
+final.to_csv('all_nuorf.txt',sep='\t',index=None)
+final['pep'].value_counts().to_csv('all_nuorf_peptide.txt',sep='\t')
+
+
 
 
 vc = final['pep'].value_counts()

@@ -119,38 +119,39 @@ data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
-    cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
     final = final.loc[cond,:]
     final = final.loc[final['typ'].isin(['TE_chimeric_transcript','ERV']),:]
     data.append(final)
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
+final.to_csv('te_all_antigens.txt',sep='\t',index=None)
+sys.exit('stop')
 
 
 # overreprensentaion in aml
-lis = []
-with open('all_annotations.txt','r') as f:
-    for line in f:
-        lis.append(line.rstrip('\n').split('_')[0])
-        print(line.rstrip('\n').split('_')[0])
-vc = pd.Series(lis).value_counts()
-vc.to_csv('aml_te_or.txt',sep='\t')
-sys.exit('stop')
+# lis = []
+# with open('all_annotations.txt','r') as f:
+#     for line in f:
+#         lis.append(line.rstrip('\n').split('_')[0])
+#         print(line.rstrip('\n').split('_')[0])
+# vc = pd.Series(lis).value_counts()
+# vc.to_csv('aml_te_or.txt',sep='\t')
+
 
 # ORF2
-orf2 = 'MTGSNSHITILTLNVNGLNSPIKRHRLASWIKSQDPSVCCIQETHLTCRDTHRLKIKGWRKIYQANGKQKKAGVAILVSDKTDFKPTKIKRDKEGHYIMVKGSIQQEELTILNIYAPNTGAPRFIKQVLSDLQRDLDSHTLIMGDFNTPLSILDRSTRQKVNKDTQELNSALHQTDLIDIYRTLHPKSTEYTFFSAPHHTYSKIDHIVGSKALLSKCKRTEIITNYLSDHSAIKLELRIKNLTQSRSTTWKLNNLLLNDYWVHNEMKAEIKMFFETNENKDTTYQNLWDAFKAVCRGKFIALNAYKRKQERSKIDTLTSQLKELEKQEQTHSKASRRQEITKIRAELKEIETQKTLQKINESRSWFFERINKIDRPLARLIKKKREKNQIDTIKNDKGDITTDPTEIQTTIREYYKHLYANKLENLEEMDTFLDTYTLPRLNQEEVESLNRPITGSEIVAIINSLPTKKSPGPDGFTAEFYQRYKEELVPFLLKLFQSIEKEGILPNSFYEASIILIPKPGRDTTKKENFRPISLMNIDAKILNKILANRIQQHIKKLIHHDQVGFIPGMQGWFNIRKSINVIQHINRAKDKNHVIISIDAEKAFDKIQQPFMLKTLNKLGIDGMYLKIIRAIYDKPTANIILNGQKLEAFPLKTGTRQGCPLSPLLFNIVLEVLARAIRQEKEIKGIQLGKEEVKLSLFADDMIVYLENPIVSAQNLLKLISNFSKVSGYKINVQKSQAFLYNNNRQTESQIMGELPFTIASKRIKYLGIQLTRDVKDLFKENYKPLLKEIKEDTNKWKNIPCSWVGRINIVKMAILPKVIYRFNAIPIKLPMTFFTELEKTTLKFIWNQKRARIAKSILSQKNKAGGITLPDFKLYYKATVTKTAWYWYQNRDIDQWNRTEPSEIMPHIYNYLIFDKPEKNKQWGKDSLLNKWCWENWLAICRKLKLDPFLTPYTKINSRWIKDLNVKPKTIKTLEENLGITIQDIGVGKDFMSKTPKAMATKDKIDKWDLIKLKSFCTAKETTIRVNRQPTTWEKIFATYSSDKGLISRIYNELKQIYKKKTNNPIKKWAKDMNRHFSKEDIYAAKKHMKKCSSSLAIREMQIKTTMRYHLTPVRMAIIKKSGNNRCWRGCGEIGTLVHCWWDCKLVQPLWKSVWRFLRDLELEIPFDPAIPLLGIYPKDYKSCCYKDTCTRMFIAALFTIAKTWNQPNCPTMIDWIKKMWHIYTMEYYAAIKNDEFISFVGTWMKLETIILSKLSQEQKTKHRIFSLIGGN'
-cond = []
-for item in final['source']:
-    if 'L1_ORF2' in item:
-        cond.append(True)
-    else:
-        cond.append(False)
-final_orf2 = final.loc[cond,:]
-final_orf2.to_csv('final_orf2.txt',sep='\t',index=None)
-sys.exit('stop')
+# orf2 = 'MTGSNSHITILTLNVNGLNSPIKRHRLASWIKSQDPSVCCIQETHLTCRDTHRLKIKGWRKIYQANGKQKKAGVAILVSDKTDFKPTKIKRDKEGHYIMVKGSIQQEELTILNIYAPNTGAPRFIKQVLSDLQRDLDSHTLIMGDFNTPLSILDRSTRQKVNKDTQELNSALHQTDLIDIYRTLHPKSTEYTFFSAPHHTYSKIDHIVGSKALLSKCKRTEIITNYLSDHSAIKLELRIKNLTQSRSTTWKLNNLLLNDYWVHNEMKAEIKMFFETNENKDTTYQNLWDAFKAVCRGKFIALNAYKRKQERSKIDTLTSQLKELEKQEQTHSKASRRQEITKIRAELKEIETQKTLQKINESRSWFFERINKIDRPLARLIKKKREKNQIDTIKNDKGDITTDPTEIQTTIREYYKHLYANKLENLEEMDTFLDTYTLPRLNQEEVESLNRPITGSEIVAIINSLPTKKSPGPDGFTAEFYQRYKEELVPFLLKLFQSIEKEGILPNSFYEASIILIPKPGRDTTKKENFRPISLMNIDAKILNKILANRIQQHIKKLIHHDQVGFIPGMQGWFNIRKSINVIQHINRAKDKNHVIISIDAEKAFDKIQQPFMLKTLNKLGIDGMYLKIIRAIYDKPTANIILNGQKLEAFPLKTGTRQGCPLSPLLFNIVLEVLARAIRQEKEIKGIQLGKEEVKLSLFADDMIVYLENPIVSAQNLLKLISNFSKVSGYKINVQKSQAFLYNNNRQTESQIMGELPFTIASKRIKYLGIQLTRDVKDLFKENYKPLLKEIKEDTNKWKNIPCSWVGRINIVKMAILPKVIYRFNAIPIKLPMTFFTELEKTTLKFIWNQKRARIAKSILSQKNKAGGITLPDFKLYYKATVTKTAWYWYQNRDIDQWNRTEPSEIMPHIYNYLIFDKPEKNKQWGKDSLLNKWCWENWLAICRKLKLDPFLTPYTKINSRWIKDLNVKPKTIKTLEENLGITIQDIGVGKDFMSKTPKAMATKDKIDKWDLIKLKSFCTAKETTIRVNRQPTTWEKIFATYSSDKGLISRIYNELKQIYKKKTNNPIKKWAKDMNRHFSKEDIYAAKKHMKKCSSSLAIREMQIKTTMRYHLTPVRMAIIKKSGNNRCWRGCGEIGTLVHCWWDCKLVQPLWKSVWRFLRDLELEIPFDPAIPLLGIYPKDYKSCCYKDTCTRMFIAALFTIAKTWNQPNCPTMIDWIKKMWHIYTMEYYAAIKNDEFISFVGTWMKLETIILSKLSQEQKTKHRIFSLIGGN'
+# cond = []
+# for item in final['source']:
+#     if 'L1_ORF2' in item:
+#         cond.append(True)
+#     else:
+#         cond.append(False)
+# final_orf2 = final.loc[cond,:]
+# final_orf2.to_csv('final_orf2.txt',sep='\t',index=None)
+
 
 
 tid2cid = process_te_gtf()
-
 
 # find tumor specific one
 # tid2medians,all_tissues = process_te_gtex()
@@ -211,6 +212,11 @@ ori_array = [tuple(['cancer']*21+['normal']*31),tuple(df.columns.tolist())]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.columns = mi
 
+tmp1 = tuple(df.index.tolist()) # for later
+tmp2 = tuple([tid2full[item].split('|')[4] for item in df.index]) # for later, because multiindex will mess up things
+tmp3 = tuple([tid2cid[item] for item in df.index])
+tmp4 = tuple([tid2full[item].split('|')[-1] for item in df.index])
+
 ori_array = [tuple(df.index.tolist()),
              tuple([tid2full[item].split('|')[4] for item in df.index]),
              tuple([tid2cid[item] for item in df.index]),
@@ -219,16 +225,20 @@ mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
 df.to_csv('te_holy.txt',sep='\t')
 
-tmp1 = df.index.levels[1]
-tmp2 = df.index.levels[0]
-ts_te = []
-for item1,item2 in zip(tmp1,tmp2):
-    if float(item1) > 5:
-        ts_te.append(item2)
-final_ts = final_ts.loc[[True if item.split('|')[0] in ts_te else False for item in final_ts['source']],:]
-final_ts.to_csv('ts_te_antigen.txt',sep='\t',index=None)
-sys.exit('stop')
 
+
+ts_te = []
+ts_tid2cid = {}
+ts_tid2lfc = {}
+for item1,item2,item3,item4 in zip(tmp1,tmp2,tmp3,tmp4):
+    if float(item2) > 5:
+        ts_te.append(item1)
+        ts_tid2cid[item1] = item3
+        ts_tid2lfc[item1] = item2
+final_ts = final_ts.loc[[True if item.split('|')[0] in ts_te else False for item in final_ts['source']],:]
+final_ts['cid'] = [ts_tid2cid[item.split('|')[0]] for item in final_ts['source']]
+final_ts['lfc'] = [ts_tid2lfc[item.split('|')[0]] for item in final_ts['source']]
+final_ts.to_csv('ts_te_antigen.txt',sep='\t',index=None)
 
 # category
 col = []
@@ -282,7 +292,6 @@ for item1,item2 in zip(final['typ'],final['source']):
                     col.append('both_unknown')
 final['class'] = col
 final = final.loc[final['class']!='both_unknown',:]
-# final.to_csv('te_all_antigens.txt',sep='\t',index=None)
 
 data = []
 all_types = []

@@ -390,6 +390,7 @@ pathogen_df = pathogen_df.loc[pathogen_df['highest_score']>40,:]
 total_antigen += pathogen_df.shape[0]
 
 patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
+patent_df.to_csv('for_safety_screen.txt',sep='\t',index=None);sys.exit('stop')
 data = []
 for pep,patent_sub_df in patent_df.groupby(by='pep'):
 

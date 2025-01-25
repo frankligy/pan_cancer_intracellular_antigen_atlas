@@ -370,54 +370,54 @@ pan_cancer_ensgs = [
 
 
 
-ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
-symbol2ensg = {v:k for k,v in ensg2symbol.items()}
-df = pd.read_csv('uniprotkb_proteome_UP000005640_AND_revi_2024_12_26.tsv',sep='\t')
-col = []
-for i1,i2 in zip(df['Entry Name'],df['Gene Names']):
-    gs_lis = []
-    gs_lis.append(i1.split('_')[0])
-    if isinstance(i2,str):
-        for item in i2.split(' '):
-            gs_lis.append(item)
-    gs_lis = list(set(gs_lis))
-    for gs in gs_lis:
-        ensg = symbol2ensg.get(gs,None)
-        if not ensg is None:
-            break
-    col.append(ensg)
-df['ensg'] = col
+# ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
+# symbol2ensg = {v:k for k,v in ensg2symbol.items()}
+# df = pd.read_csv('uniprotkb_proteome_UP000005640_AND_revi_2024_12_26.tsv',sep='\t')
+# col = []
+# for i1,i2 in zip(df['Entry Name'],df['Gene Names']):
+#     gs_lis = []
+#     gs_lis.append(i1.split('_')[0])
+#     if isinstance(i2,str):
+#         for item in i2.split(' '):
+#             gs_lis.append(item)
+#     gs_lis = list(set(gs_lis))
+#     for gs in gs_lis:
+#         ensg = symbol2ensg.get(gs,None)
+#         if not ensg is None:
+#             break
+#     col.append(ensg)
+# df['ensg'] = col
 
-keyword_map = {
-    'Cell membrane':'cell_membrane',
-    'Secreted':'secreted',
-    'Lysosome':'lysosome',
-    'Endosome':'endosome',
-    'Golgi apparatus': 'golgi',
-    'Endoplasmic reticulum':'er',
-    'Nucleus':'nucleus',
-    'Cytoplasm':'cytoplasma',
-    'Mitochondrion': 'mitochondria',
-    'Peroxisome':'peroxisome' 
-}
+# keyword_map = {
+#     'Cell membrane':'cell_membrane',
+#     'Secreted':'secreted',
+#     'Lysosome':'lysosome',
+#     'Endosome':'endosome',
+#     'Golgi apparatus': 'golgi',
+#     'Endoplasmic reticulum':'er',
+#     'Nucleus':'nucleus',
+#     'Cytoplasm':'cytoplasma',
+#     'Mitochondrion': 'mitochondria',
+#     'Peroxisome':'peroxisome' 
+# }
 
 
 
-for k,v in keyword_map.items():
-    col = []
-    for item in df['Subcellular location [CC]']:
-        if isinstance(item,str) and k in item:  
-            col.append(True)
-        else:
-            col.append(False)
-    now_df = df.copy()
-    now_df['is_cell_membrane'] = col
-    now_df = now_df.loc[:,['ensg','Entry Name','Entry','is_cell_membrane','Subcellular location [CC]']]
+# for k,v in keyword_map.items():
+#     col = []
+#     for item in df['Subcellular location [CC]']:
+#         if isinstance(item,str) and k in item:  
+#             col.append(True)
+#         else:
+#             col.append(False)
+#     now_df = df.copy()
+#     now_df['is_cell_membrane'] = col
+#     now_df = now_df.loc[:,['ensg','Entry Name','Entry','is_cell_membrane','Subcellular location [CC]']]
 
-    now_df = now_df.loc[now_df['is_cell_membrane']]
-    now_df['gs'] = [item.split('_')[0] for item in now_df['Entry Name']]
-    now_df.to_csv('./compartment/human_{}_protein_postdoc_final.txt'.format(v),sep='\t',index=None)
-sys.exit('stop')
+#     now_df = now_df.loc[now_df['is_cell_membrane']]
+#     now_df['gs'] = [item.split('_')[0] for item in now_df['Entry Name']]
+#     now_df.to_csv('./compartment/human_{}_protein_postdoc_final.txt'.format(v),sep='\t',index=None)
+
 
 # sc_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_sc'
 # lis = [
@@ -453,174 +453,171 @@ sys.exit('stop')
 # d.index = col
 # d.to_csv('zach_single_cell_data_ensg.txt',sep='\t')
 
-# membrane protein coverage
-mem = pd.read_csv('my_filter_membrane.txt',sep='\t')
-membrane_ensg = list(set(mem['0'].values.tolist()))
+# # membrane protein coverage
+# mem = pd.read_csv('my_filter_membrane.txt',sep='\t')
+# membrane_ensg = list(set(mem['0'].values.tolist()))
 
-mem_bl_ensg = [
-    'ENSG00000144681',
-    'ENSG00000050438',
-    'ENSG00000179639',
-    'ENSG00000187867',
-    'ENSG00000146013',
-    'ENSG00000160856',
-    'ENSG00000143297',
-    'ENSG00000169258',
-    'ENSG00000182866',
-    'ENSG00000158315',
-    'ENSG00000139193',
-    'ENSG00000188389',
-    'ENSG00000134061',
-    'ENSG00000101082',
-    'ENSG00000196358',
-    'ENSG00000126353',
-    'ENSG00000094755',
-    'ENSG00000227191',
-    'ENSG00000152939',
-    'ENSG00000156738',
-    'ENSG00000116824',
-    'ENSG00000167083',
-    'ENSG00000253313'
-]
+# mem_bl_ensg = [
+#     'ENSG00000144681',
+#     'ENSG00000050438',
+#     'ENSG00000179639',
+#     'ENSG00000187867',
+#     'ENSG00000146013',
+#     'ENSG00000160856',
+#     'ENSG00000143297',
+#     'ENSG00000169258',
+#     'ENSG00000182866',
+#     'ENSG00000158315',
+#     'ENSG00000139193',
+#     'ENSG00000188389',
+#     'ENSG00000134061',
+#     'ENSG00000101082',
+#     'ENSG00000196358',
+#     'ENSG00000126353',
+#     'ENSG00000094755',
+#     'ENSG00000227191',
+#     'ENSG00000152939',
+#     'ENSG00000156738',
+#     'ENSG00000116824',
+#     'ENSG00000167083',
+#     'ENSG00000253313'
+# ]
 
-mem_bl_no_extra_ensg = [
-    'ENSG00000255587',
-    'ENSG00000104537',
-    'ENSG00000135605',
-    'ENSG00000168421',
-    'ENSG00000276231',
-    'ENSG00000248905',
-    'ENSG00000165304',
-    'ENSG00000141293',
-    'ENSG00000185686'
-]
+# mem_bl_no_extra_ensg = [
+#     'ENSG00000255587',
+#     'ENSG00000104537',
+#     'ENSG00000135605',
+#     'ENSG00000168421',
+#     'ENSG00000276231',
+#     'ENSG00000248905',
+#     'ENSG00000165304',
+#     'ENSG00000141293',
+#     'ENSG00000185686'
+# ]
 
-# seems that I missed CLDN6, GPC2 and CDH17 from the 71 list, based on clinicaltrials.gov rescue
-other_car = {
-    'ENSG00000007038',
-    'ENSG00000243566',
-    'ENSG00000186818',
-    'ENSG00000062038',
-    'ENSG00000079112',
-    'ENSG00000113361',
-    'ENSG00000172061',
-    'ENSG00000198400',
-    'ENSG00000154269',
-    'ENSG00000189143',
-    'ENSG00000134258',
-    'ENSG00000086548',
-    'ENSG00000184697',
-    'ENSG00000102524',
-    'ENSG00000213420',
-    'ENSG00000066294',
-    'ENSG00000117091',
-    'ENSG00000091831',
-    'ENSG00000148848',
-    'ENSG00000165215',
-    'ENSG00000105369',
-    'ENSG00000142583',
-    'ENSG00000142319'
-}
+# # seems that I missed CLDN6, GPC2 and CDH17 from the 71 list, based on clinicaltrials.gov rescue
+# other_car = {
+#     'ENSG00000007038',
+#     'ENSG00000243566',
+#     'ENSG00000186818',
+#     'ENSG00000062038',
+#     'ENSG00000079112',
+#     'ENSG00000113361',
+#     'ENSG00000172061',
+#     'ENSG00000198400',
+#     'ENSG00000154269',
+#     'ENSG00000189143',
+#     'ENSG00000134258',
+#     'ENSG00000086548',
+#     'ENSG00000184697',
+#     'ENSG00000102524',
+#     'ENSG00000213420',
+#     'ENSG00000066294',
+#     'ENSG00000117091',
+#     'ENSG00000091831',
+#     'ENSG00000148848',
+#     'ENSG00000165215',
+#     'ENSG00000105369',
+#     'ENSG00000142583',
+#     'ENSG00000142319'
+# }
 
-artifact_car = [
-    'ENSG00000167286',
-    'ENSG00000211753',
-    'ENSG00000089692',
-    'ENSG00000211697',
-    'ENSG00000181847',
-    'ENSG00000137078',
-    'ENSG00000211689',
-    'ENSG00000142484'
-]
+# artifact_car = [
+#     'ENSG00000167286',
+#     'ENSG00000211753',
+#     'ENSG00000089692',
+#     'ENSG00000211697',
+#     'ENSG00000181847',
+#     'ENSG00000137078',
+#     'ENSG00000211689',
+#     'ENSG00000142484'
+# ]
 
-known_car = pd.read_csv('cart_targets.txt',sep='\t')
-known_car = known_car.loc[known_car['Category'] == 'in clinical trials',:]
-known_car_ensg = known_car['Ensembl ID'].values.tolist()
+# known_car = pd.read_csv('cart_targets.txt',sep='\t')
+# known_car = known_car.loc[known_car['Category'] == 'in clinical trials',:]
+# known_car_ensg = known_car['Ensembl ID'].values.tolist()
 
-membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_ensg)))
-membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_no_extra_ensg)))
+# membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_ensg)))
+# membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_no_extra_ensg)))
 
-ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
-symbol2ensg = {v:k for k,v in ensg2symbol.items()}
-all_genes = list(set(membrane_ensg).intersection(set(ensg2medians.keys())))
-dic = process_tumor_gene()
-ensg2tumors = {}
-for gene in all_genes:
-    data = []
-    for k,v in dic.items():
-        data.append(v.get(gene,[0]*21))
-    ensg2tumors[gene] = data
+# ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
+# symbol2ensg = {v:k for k,v in ensg2symbol.items()}
+# all_genes = list(set(membrane_ensg).intersection(set(ensg2medians.keys())))
+# dic = process_tumor_gene()
+# ensg2tumors = {}
+# for gene in all_genes:
+#     data = []
+#     for k,v in dic.items():
+#         data.append(v.get(gene,[0]*21))
+#     ensg2tumors[gene] = data
 
-all_data = []
-for gene in all_genes:
-    data = []
-    data.extend(ensg2tumors[gene])
-    data.extend(ensg2medians[gene])
-    all_data.append(data)
-df = pd.DataFrame.from_records(all_data,columns=cancers+all_tissues,index=all_genes)
+# all_data = []
+# for gene in all_genes:
+#     data = []
+#     data.extend(ensg2tumors[gene])
+#     data.extend(ensg2medians[gene])
+#     all_data.append(data)
+# df = pd.DataFrame.from_records(all_data,columns=cancers+all_tissues,index=all_genes)
 
 
-ori_array = [tuple(['cancer']*21+['normal']*43),tuple(df.columns.tolist())]
-mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-df.columns = mi
+# ori_array = [tuple(['cancer']*21+['normal']*43),tuple(df.columns.tolist())]
+# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+# df.columns = mi
 
-cond_col = []
-for item in df.index:
-    if item in ['ENSG00000048462','ENSG00000177455']:
-        cond_col.append('1_FDR_approved')
-    elif item in known_car_ensg:
-        cond_col.append('2_clinical_trial')
-    elif item in other_car:
-        cond_col.append('3_preclinical_test')
-    elif item in artifact_car:
-        cond_col.append('5_bystander_tcell')
-    else:
-        cond_col.append('4_other_viable')
+# cond_col = []
+# for item in df.index:
+#     if item in ['ENSG00000048462','ENSG00000177455']:
+#         cond_col.append('1_FDR_approved')
+#     elif item in known_car_ensg:
+#         cond_col.append('2_clinical_trial')
+#     elif item in other_car:
+#         cond_col.append('3_preclinical_test')
+#     elif item in artifact_car:
+#         cond_col.append('5_bystander_tcell')
+#     else:
+#         cond_col.append('4_other_viable')
 
-ori_array = [tuple(df.index.tolist()),
-             tuple([ensg2symbol[item] for item in df.index]),
-             tuple(cond_col)]
-mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-df.index = mi
-df.to_csv('gene_morpheus_mem.txt',sep='\t')
-sys.exit('stop')
+# ori_array = [tuple(df.index.tolist()),
+#              tuple([ensg2symbol[item] for item in df.index]),
+#              tuple(cond_col)]
+# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+# df.index = mi
+# df.to_csv('gene_morpheus_mem.txt',sep='\t')
 
-total_p = 0
-for c in cancers:
-    print(c)
-    path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
-    exp = pd.read_csv(path,sep='\t',index_col=0)
-    exp = exp.loc[membrane_ensg,:]
-    exp = exp.values
-    exp = (exp > 20).astype(int)
-    n = np.any(exp,axis=0).sum()
-    total_p += n
-p = total_p / sum(n_samples)
-print(p)
+
+# total_p = 0
+# for c in cancers:
+#     print(c)
+#     path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
+#     exp = pd.read_csv(path,sep='\t',index_col=0)
+#     exp = exp.loc[membrane_ensg,:]
+#     exp = exp.values
+#     exp = (exp > 20).astype(int)
+#     n = np.any(exp,axis=0).sum()
+#     total_p += n
+# p = total_p / sum(n_samples)
+# print(p)
     
 
     
-sys.exit('stop')
 
-
-
-# previous main
-data = []
-for c in cancers:
-    print(c)
-    path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
-    exp = pd.read_csv(path,sep='\t',index_col=0)
-    exp = exp.loc[ts_ensg,:]
-    exp = exp.values
-    exp = (exp > 20).astype(int)
-    props = np.sum(exp,axis=1) / exp.shape[1]
+# # previous main
+# data = []
+# for c in cancers:
+#     print(c)
+#     path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
+#     exp = pd.read_csv(path,sep='\t',index_col=0)
+#     exp = exp.loc[ts_ensg,:]
+#     exp = exp.values
+#     exp = (exp > 20).astype(int)
+#     props = np.sum(exp,axis=1) / exp.shape[1]
 
 
 data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
-    cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
     final = final.loc[cond,:]
     final = final.loc[final['typ']=='self_gene',:]
     final = final.loc[final['unique']!=False,:]
