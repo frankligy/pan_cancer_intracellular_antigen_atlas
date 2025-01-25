@@ -14,6 +14,10 @@ Accompanying codes for pan cancer atlas of intracellular tumor antigens
 
 * Other scripts can be requested by emailing us.
 
+# Citation
+
+Guangyuan Li* , Omar Uriel Guzman-Bringas, Aman Sharma, Zachary Harpaz, Ethan Tardio, Aswin Natarajan, Xinya Liu, Darren Taylor, Rachel Yamin, Maxence Dellacherie, Michelle Krogsgaard, Conrad Russell Cruz, Mark Yarmarkovich, 2025 “A pan-cancer atlas of T cell targets”, BioRxiv, https://www.biorxiv.org/content/10.1101/2025.01.22.634237v1
+
 
 # Contact
 
