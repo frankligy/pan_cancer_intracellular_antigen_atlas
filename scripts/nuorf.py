@@ -70,39 +70,9 @@ n_samples = [
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 VARIANT_ENSEMBL_GTF = '/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/Homo_sapiens.GRCh38.110.gtf'
 
-n_dic = {
-    "Primary fibroblast cells":0,
-    "Breast":0,
-    "Spleen":0,
-    "Skin":0,
-    "Aorta":0,
-    "Liver":0,
-    "Adrenal Gland":0,
-    "Tongue":0,
-    "Heart":0,
-    "Nerve":0,
-    "Trachea":0,
-    "Brain":0,
-    "Stomach":0,
-    "Thyroid":0,
-    "Lung":0,
-    "Esophagus":0,
-    "Bladder":0,
-    "Colon":0,
-    "Kidney":0,
-    "Pancreas":0,
-    "Lymph Node":0,
-    "Cerebellum":0,
-    "Gallbladder":0,
-    "Bone Marrow":0,
-    "Prostate":0,
-    "Testis":0,
-    "Thymus":0,
-    "Muscle":0,
-    "Small Intestine":0,
-    "Ovary":0,
-    "Uterus":0
-}
+all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
+                'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
+                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
 
 def get_enst2gs():
     gtf = pd.read_csv(VARIANT_ENSEMBL_GTF,sep='\t',skiprows=5,header=None)
@@ -200,9 +170,6 @@ final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns
 final.to_csv('all_nuorf.txt',sep='\t',index=None)
 final['pep'].value_counts().to_csv('all_nuorf_peptide.txt',sep='\t')
 
-
-
-
 vc = final['pep'].value_counts()
 candidates = vc.loc[vc>8].index.tolist()
 added = ['STIRVLSGY','RYLPSSVFL','LYLETRSEF','VLMEVTLEGK','AYPASLQTL','KSLAAELLVLK']
@@ -220,8 +187,8 @@ candidates = candidates + added
 freq_nuorf_pep2anno = pd.read_csv('freq_nuorf_pep2anno.txt',sep='\t',index_col=0)['annotation'].to_dict()
 candidates = list(freq_nuorf_pep2anno.keys())
 
-
 pep2type = {p:sub_df['nuorf_type'].iloc[0] for p,sub_df in final.groupby(by='pep')}
+safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.01.txt',sep='\t')
 
 store_data = []
 store_type = []
@@ -239,15 +206,21 @@ for pep in candidates:
             tmp.append(med_intensity)
         else:
             tmp.append(0)
-    tmp = tmp + [0] * len(n_dic)
+    all_tissues = np.array(all_tissues)
+    tmp_normal = np.full(shape=len(all_tissues),fill_value=0.0)
+    tmp_normal_df = safety_screen_df.loc[safety_screen_df['peptide']==pep,:]
+    for t,sub_df in tmp_normal_df.groupby(by='tissue'):
+        med_intensity = np.median(sub_df['percentile'].values)
+        indices = np.where(all_tissues == t)[0]
+        tmp_normal[indices[0]] = med_intensity
+    tmp = tmp + tmp_normal.tolist()
     store_data.append(tmp)
     store_type.append(pep2type[pep])
 
 
+df = pd.DataFrame(data=store_data,index=candidates,columns=cancers+list(all_tissues))
 
-df = pd.DataFrame(data=store_data,index=candidates,columns=cancers+list(n_dic.keys()))
-
-ori_array = [tuple(['cancer']*21+['normal']*31),tuple(df.columns.tolist())]
+ori_array = [tuple(['cancer']*21+['normal']*30),tuple(df.columns.tolist())]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.columns = mi
 

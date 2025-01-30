@@ -353,57 +353,77 @@ def get_ts_fusion(atlas_dir):
 # df = pd.concat(df_list,axis=0,keys=cancers)
 # df.to_csv('my_filter_membrane.txt',sep='\t')
 
+safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
+safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond'],:]
+safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
 
 # collage the meta and get number
-total_antigen = 0  # 15079
+total_antigen = 0  # 16077
 self_df = pd.read_csv('ts_final.txt',sep='\t')
 self_df = self_df.loc[self_df['highest_abundance'].notna(),:]
-total_antigen += self_df.shape[0]
+self_df = self_df.loc[~self_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(self_df['pep'].values.tolist()))
+
 self_translate_te_df = pd.read_csv('ts_te_antigen.txt',sep='\t')
 self_translate_te_df = self_translate_te_df.loc[self_translate_te_df['highest_abundance'].notna(),:]
-total_antigen += self_translate_te_df.shape[0]
+self_translate_te_df = self_translate_te_df.loc[~self_translate_te_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(self_translate_te_df['pep'].values.tolist()))
+
 te_chimeric_df = pd.read_csv('te_all_antigens.txt',sep='\t')
 te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['typ']=='TE_chimeric_transcript',:]
 te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['highest_abundance'].notna(),:]
-total_antigen += te_chimeric_df.shape[0]
+te_chimeric_df = te_chimeric_df.loc[~te_chimeric_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(te_chimeric_df['pep'].values.tolist()))
+
 splicing_df = pd.read_csv('all_splicing.txt',sep='\t')
 splicing_df = splicing_df.loc[splicing_df['highest_abundance'].notna(),:]
-total_antigen += splicing_df.shape[0]
+splicing_df = splicing_df.loc[~splicing_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(splicing_df['pep'].values.tolist()))
+
 nuorf_df = pd.read_csv('all_nuorf.txt',sep='\t')
 nuorf_df = nuorf_df.loc[nuorf_df['highest_abundance'].notna(),:]
 nuorf_df = nuorf_df.loc[nuorf_df['highest_score']>40,:]
-total_antigen += nuorf_df.shape[0] * 0.37
+nuorf_df = nuorf_df.loc[~nuorf_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(nuorf_df['pep'].values.tolist()))
+
 variant_df = pd.read_csv('all_variants.txt',sep='\t')
 variant_df = variant_df.loc[variant_df['highest_abundance'].notna(),:]
-total_antigen += variant_df.shape[0]
+variant_df = variant_df.loc[~variant_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(variant_df['pep'].values.tolist()))
+
 fusion_df = pd.read_csv('all_fusion.txt',sep='\t')
 fusion_df = fusion_df.loc[fusion_df['highest_abundance'].notna(),:]
 fusion_df = fusion_df.loc[~fusion_df['source'].str.contains('nc'),:]
-total_antigen += fusion_df.shape[0]
+fusion_df = fusion_df.loc[~fusion_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(fusion_df['pep'].values.tolist()))
+
 ir_df = pd.read_csv('all_ir.txt',sep='\t')
 ir_df = ir_df.loc[ir_df['highest_abundance'].notna(),:]
-total_antigen += ir_df.shape[0]
+ir_df = ir_df.loc[~ir_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(ir_df['pep'].values.tolist()))
+
 pathogen_df = pd.read_csv('all_pathogen.txt',sep='\t')
 pathogen_df = pathogen_df.loc[pathogen_df['highest_abundance'].notna(),:]
 pathogen_df = pathogen_df.loc[pathogen_df['unique'],:]
 pathogen_df = pathogen_df.loc[pathogen_df['highest_score']>40,:]
-total_antigen += pathogen_df.shape[0]
+pathogen_df = pathogen_df.loc[~pathogen_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(pathogen_df['pep'].values.tolist()))
 
 patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
-patent_df.to_csv('for_safety_screen.txt',sep='\t',index=None);sys.exit('stop')
-data = []
-for pep,patent_sub_df in patent_df.groupby(by='pep'):
+patent_df.to_csv('submission_all_antigens.txt',sep='\t',index=None)   # you can generate for safety screen as well
+# data = []
+# for pep,patent_sub_df in patent_df.groupby(by='pep'):
+#     patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
+#     all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
+#     tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+#     tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+#     tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
+#     all_hla = ','.join([item[0] for item in tmp])
+#     data.append((pep,all_c,all_hla))
+# patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
+# patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
 
-    patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
-    all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
-    tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-    tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-    tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
-    all_hla = ','.join([item[0] for item in tmp])
-    data.append((pep,all_c,all_hla))
-patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
-patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
-sys.exit('stop')  
+print(total_antigen)
 
 
 # plot peptide overview, order will be gene, splicing, self_TE, chimera_TE, IR, pathogen, fusion, variant, lncRNA, pseudogene, cryptic ORF
@@ -508,7 +528,7 @@ data.append(tmp_data)
 lncRNA_df = nuorf_df.loc[nuorf_df['nuorf_type']=='lncRNA',:]
 pseudo_df =  nuorf_df.loc[nuorf_df['nuorf_type']=='Pseudogene',:]
 cryptic_df = nuorf_df.loc[(nuorf_df['nuorf_type']!='Pseudogene') & (nuorf_df['nuorf_type']!='lncRNA'),:]
-prop = 0.37
+prop = 1
 # lncRNA
 tmp_dic = {}
 for c_,sub_df in lncRNA_df.groupby(by='cancer'):
@@ -614,9 +634,6 @@ ori_array = [tuple([freq_dic.get('HLA-' + item.replace(':','').replace('*',''),0
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 hla_df.columns = mi
 hla_df.to_csv('hla_df.txt',sep='\t')
-
-
-
 
 
 
