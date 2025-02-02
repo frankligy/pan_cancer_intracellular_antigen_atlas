@@ -8,9 +8,11 @@ Accompanying codes for pan cancer atlas of intracellular tumor antigens
 
 * Codes for generating the figures in the manuscript can be found [scripts](./scripts).
 
-* Pipeline for generating sample-specific search space are deployed to [Cancer Genome Cloud (CGC)](https://cgc.sbgenomics.com/home).
+* Pipeline for generating sample-specific search space are deployed to [Cancer Genome Cloud (CGC)](https://cgc.sbgenomics.com/home). Tutorials will be released soon
 
-* Web portal will be hosted on NYULH server.
+* [Whole molecular catalogus](./notes/molecular_catalogue.md) and [search space](./notes/search_space.md) for each cancer are released.
+
+* Web portal will be hosted on NYULH server, will be available soon
 
 * Other scripts can be requested by emailing us.
 
