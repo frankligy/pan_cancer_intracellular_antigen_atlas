@@ -15,7 +15,7 @@ We released the whole molecular catalogues for 21 cancers [here](https://genome.
 ## Intron Retention
 
 1. `intron_all.txt`: record intron expression (Stringtie reported exons coverage that read through an intron) in each tumor sample.
-2. `intron_rec.txt`: cohort level and to what extent they are present in normal tissue.
+2. `intron_rec.txt`: cohort level and to what extent they are present in normal tissue. `cond` stands for condition, True means it is tumor-specific and vice versus.
 3. `intron_peptide_all.txt`: all the read-through transcripts, their cds and peptide sequence.
 
 ## Mutation
