@@ -15,8 +15,11 @@ We released the whole molecular catalogues for 21 cancers [here](https://genome.
 ## Intron Retention
 
 1. `intron_all.txt`: record intron expression (Stringtie reported exons coverage that read through an intron) in each tumor sample.
-2. `intron_rec.txt`: cohort level and to what extent they are present in normal tissue. `cond` stands for condition, True means it is tumor-specific and vice versus.
+2. `intron_rec.txt`: cohort level and to what extent they are present in normal tissue. 
 3. `intron_peptide_all.txt`: all the read-through transcripts, their cds and peptide sequence.
+
+**Note**: We used two normal controls for intron retention, first relies on previously reported [SNAF normal database](https://github.com/frankligy/SNAF). But since in this work, we used a slightly different strategy to call out intron retention (stringtie assembly), I also apply the new strategy to 155 normal samples spanning all histologies to make sure each intron retention is not detected as well. The SNAF filters were annotated by `cond` column, True is not detected, and the `normal` column is when applying the new strategy to normal samples.
+
 
 ## Mutation
 
