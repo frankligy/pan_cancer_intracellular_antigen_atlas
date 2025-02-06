@@ -8,7 +8,8 @@ Accompanying codes for pan cancer atlas of intracellular tumor antigens
 
 * Codes for generating the figures in the manuscript can be found [scripts](./scripts).
 
-* Pipeline for generating sample-specific search space are deployed to [Cancer Genome Cloud (CGC)](https://cgc.sbgenomics.com/home). Tutorials will be released soon
+* The whole pipelines have been deployed to [Cancer Genome Cloud (CGC)](https://cgc.sbgenomics.com/home). Please refer to [this
+tutorial](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?usp=sharing).
 
 * [Whole molecular catalogus](./notes/molecular_catalogue.md) and [search space](./notes/search_space.md) for each cancer, along with [normal controls](./notes/normal.md) are released.
 
