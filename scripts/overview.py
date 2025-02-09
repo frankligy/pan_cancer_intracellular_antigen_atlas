@@ -45,7 +45,7 @@ n_samples = [
     412,
     87,
     374,
-    412,
+    185,
     306,
     412,
     63,
@@ -56,8 +56,8 @@ n_samples = [
     179,
     522,
     429,
-    541,
     502,
+    541,
     35,
     472
 ]
@@ -353,326 +353,326 @@ def get_ts_fusion(atlas_dir):
 # df = pd.concat(df_list,axis=0,keys=cancers)
 # df.to_csv('my_filter_membrane.txt',sep='\t')
 
-safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond'],:]
-safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
+# safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
+# safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond'],:]
+# safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
 
-# collage the meta and get number
-total_antigen = 0  # 16077
-self_df = pd.read_csv('ts_final.txt',sep='\t')
-self_df = self_df.loc[self_df['highest_abundance'].notna(),:]
-self_df = self_df.loc[~self_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(self_df['pep'].values.tolist()))
+# # collage the meta and get number
+# total_antigen = 0  # 16077
+# self_df = pd.read_csv('ts_final.txt',sep='\t')
+# self_df = self_df.loc[self_df['highest_abundance'].notna(),:]
+# # self_df = self_df.loc[~self_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(self_df['pep'].values.tolist()))
 
-self_translate_te_df = pd.read_csv('ts_te_antigen.txt',sep='\t')
-self_translate_te_df = self_translate_te_df.loc[self_translate_te_df['highest_abundance'].notna(),:]
-self_translate_te_df = self_translate_te_df.loc[~self_translate_te_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(self_translate_te_df['pep'].values.tolist()))
+# self_translate_te_df = pd.read_csv('ts_te_antigen.txt',sep='\t')
+# self_translate_te_df = self_translate_te_df.loc[self_translate_te_df['highest_abundance'].notna(),:]
+# # self_translate_te_df = self_translate_te_df.loc[~self_translate_te_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(self_translate_te_df['pep'].values.tolist()))
 
-te_chimeric_df = pd.read_csv('te_all_antigens.txt',sep='\t')
-te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['typ']=='TE_chimeric_transcript',:]
-te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['highest_abundance'].notna(),:]
-te_chimeric_df = te_chimeric_df.loc[~te_chimeric_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(te_chimeric_df['pep'].values.tolist()))
+# te_chimeric_df = pd.read_csv('te_all_antigens.txt',sep='\t')
+# te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['typ']=='TE_chimeric_transcript',:]
+# te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['highest_abundance'].notna(),:]
+# # te_chimeric_df = te_chimeric_df.loc[~te_chimeric_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(te_chimeric_df['pep'].values.tolist()))
 
-splicing_df = pd.read_csv('all_splicing.txt',sep='\t')
-splicing_df = splicing_df.loc[splicing_df['highest_abundance'].notna(),:]
-splicing_df = splicing_df.loc[~splicing_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(splicing_df['pep'].values.tolist()))
+# splicing_df = pd.read_csv('all_splicing.txt',sep='\t')
+# splicing_df = splicing_df.loc[splicing_df['highest_abundance'].notna(),:]
+# # splicing_df = splicing_df.loc[~splicing_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(splicing_df['pep'].values.tolist()))
 
-nuorf_df = pd.read_csv('all_nuorf.txt',sep='\t')
-nuorf_df = nuorf_df.loc[nuorf_df['highest_abundance'].notna(),:]
-nuorf_df = nuorf_df.loc[nuorf_df['highest_score']>40,:]
-nuorf_df = nuorf_df.loc[~nuorf_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(nuorf_df['pep'].values.tolist()))
+# nuorf_df = pd.read_csv('all_nuorf.txt',sep='\t')
+# nuorf_df = nuorf_df.loc[nuorf_df['highest_abundance'].notna(),:]
+# nuorf_df = nuorf_df.loc[nuorf_df['highest_score']>40,:]
+# # nuorf_df = nuorf_df.loc[~nuorf_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(nuorf_df['pep'].values.tolist()))
 
-variant_df = pd.read_csv('all_variants.txt',sep='\t')
-variant_df = variant_df.loc[variant_df['highest_abundance'].notna(),:]
-variant_df = variant_df.loc[~variant_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(variant_df['pep'].values.tolist()))
+# variant_df = pd.read_csv('all_variants.txt',sep='\t')
+# variant_df = variant_df.loc[variant_df['highest_abundance'].notna(),:]
+# # variant_df = variant_df.loc[~variant_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(variant_df['pep'].values.tolist()))
 
-fusion_df = pd.read_csv('all_fusion.txt',sep='\t')
-fusion_df = fusion_df.loc[fusion_df['highest_abundance'].notna(),:]
-fusion_df = fusion_df.loc[~fusion_df['source'].str.contains('nc'),:]
-fusion_df = fusion_df.loc[~fusion_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(fusion_df['pep'].values.tolist()))
+# fusion_df = pd.read_csv('all_fusion.txt',sep='\t')
+# fusion_df = fusion_df.loc[fusion_df['highest_abundance'].notna(),:]
+# fusion_df = fusion_df.loc[~fusion_df['source'].str.contains('nc'),:]
+# # fusion_df = fusion_df.loc[~fusion_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(fusion_df['pep'].values.tolist()))
 
-ir_df = pd.read_csv('all_ir.txt',sep='\t')
-ir_df = ir_df.loc[ir_df['highest_abundance'].notna(),:]
-ir_df = ir_df.loc[~ir_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(ir_df['pep'].values.tolist()))
+# ir_df = pd.read_csv('all_ir.txt',sep='\t')
+# ir_df = ir_df.loc[ir_df['highest_abundance'].notna(),:]
+# # ir_df = ir_df.loc[~ir_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(ir_df['pep'].values.tolist()))
 
-pathogen_df = pd.read_csv('all_pathogen.txt',sep='\t')
-pathogen_df = pathogen_df.loc[pathogen_df['highest_abundance'].notna(),:]
-pathogen_df = pathogen_df.loc[pathogen_df['unique'],:]
-pathogen_df = pathogen_df.loc[pathogen_df['highest_score']>40,:]
-pathogen_df = pathogen_df.loc[~pathogen_df['pep'].isin(safety_screen_bl),:]
-total_antigen += len(set(pathogen_df['pep'].values.tolist()))
+# pathogen_df = pd.read_csv('all_pathogen.txt',sep='\t')
+# # pathogen_df = pathogen_df.loc[pathogen_df['highest_abundance'].notna(),:]   # normally I will turn it on, but HBV suggest it might be true, but let's enforce that later
+# # pathogen_df = pathogen_df.loc[pathogen_df['highest_score']>40,:]  # normally I will turn it on, but HBV suggest it might be true, but let's enforce that later
+# # pathogen_df = pathogen_df.loc[~pathogen_df['pep'].isin(safety_screen_bl),:]
+# total_antigen += len(set(pathogen_df['pep'].values.tolist()))
 
-patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
-patent_df.to_csv('submission_all_antigens.txt',sep='\t',index=None)   # you can generate for safety screen as well
+# patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
+# patent_df.to_csv('for_safety_screen.txt',sep='\t',index=None)   # you can generate for safety screen as well
+# # data = []
+# # for pep,patent_sub_df in patent_df.groupby(by='pep'):
+# #     patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
+# #     all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
+# #     tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+# #     tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+# #     tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
+# #     all_hla = ','.join([item[0] for item in tmp])
+# #     data.append((pep,all_c,all_hla))
+# # patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
+# # patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
+
+# print(total_antigen)
+
+
+
+# # plot peptide overview, order will be gene, splicing, self_TE, chimera_TE, IR, pathogen, fusion, variant, lncRNA, pseudogene, cryptic ORF
 # data = []
-# for pep,patent_sub_df in patent_df.groupby(by='pep'):
-#     patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
-#     all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
-#     tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-#     tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-#     tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
-#     all_hla = ','.join([item[0] for item in tmp])
-#     data.append((pep,all_c,all_hla))
-# patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
-# patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
+# # self_gene
+# tmp_dic = {}
+# for c_,sub_df in self_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # splicing
+# tmp_dic = {}
+# for c_,sub_df in splicing_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # self_TE
+# tmp_dic = {}
+# for c_,sub_df in self_translate_te_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # chimera_TE
+# tmp_dic = {}
+# for c_,sub_df in te_chimeric_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # IR
+# tmp_dic = {}
+# for c_,sub_df in ir_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # pathogen
+# tmp_dic = {}
+# for c_,sub_df in pathogen_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # fusion
+# tmp_dic = {}
+# for c_,sub_df in fusion_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # variant
+# tmp_dic = {}
+# for c_,sub_df in variant_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(v)
+# data.append(tmp_data)
+# # lncRNA, pseudogene, cryptic ORF
+# lncRNA_df = nuorf_df.loc[nuorf_df['nuorf_type']=='lncRNA',:]
+# pseudo_df =  nuorf_df.loc[nuorf_df['nuorf_type']=='Pseudogene',:]
+# cryptic_df = nuorf_df.loc[(nuorf_df['nuorf_type']!='Pseudogene') & (nuorf_df['nuorf_type']!='lncRNA'),:]
+# prop = 1
+# # lncRNA
+# tmp_dic = {}
+# for c_,sub_df in lncRNA_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(round(v*prop))
+# data.append(tmp_data)
+# # pseudogene
+# tmp_dic = {}
+# for c_,sub_df in pseudo_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(round(v*prop))
+# data.append(tmp_data)
+# # cryptic ORF
+# tmp_dic = {}
+# for c_,sub_df in cryptic_df.groupby(by='cancer'):
+#     tmp_dic[c_] = sub_df.shape[0]
+# tmp_data = []
+# for c in cancers:
+#     v = tmp_dic.get(c,None)
+#     if v is None:
+#         tmp_data.append(0)
+#     else:
+#         tmp_data.append(round(v*prop))
+# data.append(tmp_data)
 
-print(total_antigen)
+# plot_df = pd.DataFrame(index=['gene','splicing','self_translate_TE','chimera_TE','intron_retention','pathogen','fusion','variant','lncRNA','pseudogene','cryptic ORF'],
+#                        columns=cancers,data=np.array(data))
+
+# fig,ax = plt.subplots(figsize=(15,15))
+# sns.heatmap(plot_df,annot=True,linewidth=0.5,fmt='g',annot_kws={"fontsize": 8},cmap='Blues',square=True)
+# plt.savefig('ts_antigen_overview.pdf',bbox_inches='tight')
+# plt.close()
 
 
-# plot peptide overview, order will be gene, splicing, self_TE, chimera_TE, IR, pathogen, fusion, variant, lncRNA, pseudogene, cryptic ORF
-data = []
-# self_gene
-tmp_dic = {}
-for c_,sub_df in self_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# splicing
-tmp_dic = {}
-for c_,sub_df in splicing_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# self_TE
-tmp_dic = {}
-for c_,sub_df in self_translate_te_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# chimera_TE
-tmp_dic = {}
-for c_,sub_df in te_chimeric_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# IR
-tmp_dic = {}
-for c_,sub_df in ir_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# pathogen
-tmp_dic = {}
-for c_,sub_df in pathogen_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# fusion
-tmp_dic = {}
-for c_,sub_df in fusion_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# variant
-tmp_dic = {}
-for c_,sub_df in variant_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(v)
-data.append(tmp_data)
-# lncRNA, pseudogene, cryptic ORF
-lncRNA_df = nuorf_df.loc[nuorf_df['nuorf_type']=='lncRNA',:]
-pseudo_df =  nuorf_df.loc[nuorf_df['nuorf_type']=='Pseudogene',:]
-cryptic_df = nuorf_df.loc[(nuorf_df['nuorf_type']!='Pseudogene') & (nuorf_df['nuorf_type']!='lncRNA'),:]
-prop = 1
-# lncRNA
-tmp_dic = {}
-for c_,sub_df in lncRNA_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(round(v*prop))
-data.append(tmp_data)
-# pseudogene
-tmp_dic = {}
-for c_,sub_df in pseudo_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(round(v*prop))
-data.append(tmp_data)
-# cryptic ORF
-tmp_dic = {}
-for c_,sub_df in cryptic_df.groupby(by='cancer'):
-    tmp_dic[c_] = sub_df.shape[0]
-tmp_data = []
-for c in cancers:
-    v = tmp_dic.get(c,None)
-    if v is None:
-        tmp_data.append(0)
-    else:
-        tmp_data.append(round(v*prop))
-data.append(tmp_data)
 
-plot_df = pd.DataFrame(index=['gene','splicing','self_translate_TE','chimera_TE','intron_retention','pathogen','fusion','variant','lncRNA','pseudogene','cryptic ORF'],
-                       columns=cancers,data=np.array(data))
+# hla_dic = {}
+# dic = {}
+# total_immuno = 0  # 1564
+# root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
+# with pd.ExcelWriter('all_immuno_meta.xlsx') as writer:
+#     for c in cancers:
+#         f = os.path.join(root_immuno_dir,cancers2immuno[c],'metadata.txt')
+#         df = pd.read_csv(f,sep='\t',index_col=0)
+#         total_immuno += df.shape[0]
+#         dic[c] = df.shape[0]
+#         df.to_excel(writer,sheet_name=c)
+#         hlas = []
+#         for item in df['HLA']:
+#             if isinstance(item,str):
+#                 hlas.extend(list(set(item.split(','))))
+#         values,counts = np.unique(hlas,return_counts=True)
+#         hla_dic[c] = {v:c_ for v,c_ in zip(values,counts)}
 
-fig,ax = plt.subplots(figsize=(15,15))
-sns.heatmap(plot_df,annot=True,linewidth=0.5,fmt='g',annot_kws={"fontsize": 8},cmap='Blues',square=True)
-plt.savefig('ts_antigen_overview.pdf',bbox_inches='tight')
-plt.close()
+# hla_data = []
+# all_hla = []
+# for k,v in hla_dic.items():
+#     all_hla.extend(list(v.keys()))
+# all_hla = list(set(all_hla))
+# for c in cancers:
+#     tmp = []
+#     for hla in all_hla:
+#         tmp.append(hla_dic[c].get(hla,0))
+#     hla_data.append(tmp)
 
-sys.exit('stop')
+# hla_df = pd.DataFrame(index=cancers,columns=all_hla,data=hla_data)
+# freq_dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
 
-hla_dic = {}
-dic = {}
-total_immuno = 0  # 1564
-root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
-with pd.ExcelWriter('all_immuno_meta.xlsx') as writer:
-    for c in cancers:
-        f = os.path.join(root_immuno_dir,cancers2immuno[c],'metadata.txt')
-        df = pd.read_csv(f,sep='\t',index_col=0)
-        total_immuno += df.shape[0]
-        dic[c] = df.shape[0]
-        df.to_excel(writer,sheet_name=c)
-        hlas = []
-        for item in df['HLA']:
-            if isinstance(item,str):
-                hlas.extend(list(set(item.split(','))))
-        values,counts = np.unique(hlas,return_counts=True)
-        hla_dic[c] = {v:c_ for v,c_ in zip(values,counts)}
+# reformatted_hla = ['HLA-' + item.replace(':','').replace('*','') for item in hla_df.columns]
+# freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)
+# # HLA-A
+# freq_a = freq_df.loc[[True if item.startswith('HLA-A') else False for item in freq_df.index],:]
+# freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
+# have_a = [item for item in reformatted_hla if item.startswith('HLA-A')]
+# prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
+# print(prop)
+# # HLA-B
+# freq_a = freq_df.loc[[True if item.startswith('HLA-B') else False for item in freq_df.index],:]
+# freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
+# have_a = [item for item in reformatted_hla if item.startswith('HLA-B')]
+# prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
+# print(prop)
+# # HLA-C
+# freq_a = freq_df.loc[[True if item.startswith('HLA-C') else False for item in freq_df.index],:]
+# freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
+# have_a = [item for item in reformatted_hla if item.startswith('HLA-C')]
+# prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
+# print(prop)
 
-hla_data = []
-all_hla = []
-for k,v in hla_dic.items():
-    all_hla.extend(list(v.keys()))
-all_hla = list(set(all_hla))
-for c in cancers:
-    tmp = []
-    for hla in all_hla:
-        tmp.append(hla_dic[c].get(hla,0))
-    hla_data.append(tmp)
 
-hla_df = pd.DataFrame(index=cancers,columns=all_hla,data=hla_data)
-freq_dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
-
-reformatted_hla = ['HLA-' + item.replace(':','').replace('*','') for item in hla_df.columns]
-freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)
-# HLA-A
-freq_a = freq_df.loc[[True if item.startswith('HLA-A') else False for item in freq_df.index],:]
-freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
-have_a = [item for item in reformatted_hla if item.startswith('HLA-A')]
-prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
-print(prop)
-# HLA-B
-freq_a = freq_df.loc[[True if item.startswith('HLA-B') else False for item in freq_df.index],:]
-freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
-have_a = [item for item in reformatted_hla if item.startswith('HLA-B')]
-prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
-print(prop)
-# HLA-C
-freq_a = freq_df.loc[[True if item.startswith('HLA-C') else False for item in freq_df.index],:]
-freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
-have_a = [item for item in reformatted_hla if item.startswith('HLA-C')]
-prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
-print(prop)
-sys.exit('stop')
-
-ori_array = [tuple([freq_dic.get('HLA-' + item.replace(':','').replace('*',''),0) for item in hla_df.columns]),tuple(hla_df.columns.tolist())]
-mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-hla_df.columns = mi
-hla_df.to_csv('hla_df.txt',sep='\t')
+# ori_array = [tuple([freq_dic.get('HLA-' + item.replace(':','').replace('*',''),0) for item in hla_df.columns]),tuple(hla_df.columns.tolist())]
+# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+# hla_df.columns = mi
+# hla_df.to_csv('hla_df.txt',sep='\t')
 
 
 
 
-fig,ax = plt.subplots()
-bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
-for bar in bars:
-    yval = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
-ax.set_xticks(np.arange(len(dic)))
-ax.set_xticklabels(list(dic.keys()),rotation=60)
-ax.set_ylabel('Number of sample')
-plt.savefig('figs1_stat_immuno.pdf',bbox_inches='tight')
-plt.close()
+# fig,ax = plt.subplots()
+# bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
+# for bar in bars:
+#     yval = bar.get_height()
+#     ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
+# ax.set_xticks(np.arange(len(dic)))
+# ax.set_xticklabels(list(dic.keys()),rotation=60)
+# ax.set_ylabel('Number of sample')
+# plt.savefig('figs1_stat_immuno.pdf',bbox_inches='tight')
+# plt.close()
     
 
-dic = {}
-total_rna = 0  # 7473
-with pd.ExcelWriter('all_rna_manifest.xlsx') as writer:
-    for c in cancers:
-        cmd = 'find {} -type f -name "manifest_*_*.tsv"'.format(os.path.join(root_atlas_dir,c))
-        possible_f = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1][0]
-        df = pd.read_csv(possible_f,sep='\t',index_col=0)
-        total_rna += df.shape[0]
-        dic[c] = df.shape[0]
-        df.to_excel(writer,sheet_name=c)
+# dic = {}
+# total_rna = 0  # 7473
+# with pd.ExcelWriter('all_rna_manifest.xlsx') as writer:
+#     for c in cancers:
+#         cmd = 'find {} -type f -name "manifest_*_*.tsv"'.format(os.path.join(root_atlas_dir,c))
+#         possible_f = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1][0]
+#         df = pd.read_csv(possible_f,sep='\t',index_col=0)
+#         total_rna += df.shape[0]
+#         dic[c] = df.shape[0]
+#         df.to_excel(writer,sheet_name=c)
 
-fig,ax = plt.subplots()
-bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
-for bar in bars:
-    yval = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
-ax.set_xticks(np.arange(len(dic)))
-ax.set_xticklabels(list(dic.keys()),rotation=60)
-ax.set_ylabel('Number of sample')
-plt.savefig('figs1_stat_rna.pdf',bbox_inches='tight')
-plt.close()
+# fig,ax = plt.subplots()
+# bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
+# for bar in bars:
+#     yval = bar.get_height()
+#     ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
+# ax.set_xticks(np.arange(len(dic)))
+# ax.set_xticklabels(list(dic.keys()),rotation=60)
+# ax.set_ylabel('Number of sample')
+# plt.savefig('figs1_stat_rna.pdf',bbox_inches='tight')
+# plt.close()
 
-sys.exit('stop')
+
 
 # tumor specific event 
 data = []
