@@ -9,18 +9,19 @@ Accompanying codes for pan cancer atlas of intracellular tumor antigens
 * Codes for generating the figures in the manuscript can be found [scripts](./scripts).
 
 * The whole [ImmunoVerse pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?usp=sharing) have been 
-deployed to Cancer Genome Cloud (CGC).
-
+deployed to Cancer Genome Cloud (CGC), no coding required, please read out and we will grant you access.
 
 * [Whole molecular catalogues](./notes/molecular_catalogue.md) and [search space](./notes/search_space.md) for each cancer, along with [normal controls](./notes/normal.md) are released.
 
-* Web portal will be hosted on NYULH server, will be available soon
+* web portal is live but in experimental version [immunoverse-web](https://immunoverse-web-5ef5cdbdcedf.herokuapp.com/). You can type in PHOX2B peptide `QYNPIRTTF` in the box and click the table to test.
 
 * Other scripts can be requested by emailing us.
 
 # Citation
 
 Guangyuan Li* , Omar Uriel Guzman-Bringas, Aman Sharma, Zachary Harpaz, Ethan Tardio, Aswin Natarajan, Xinya Liu, Darren Taylor, Rachel Yamin, Maxence Dellacherie, Michelle Krogsgaard, Conrad Russell Cruz, Mark Yarmarkovich, 2025 “A pan-cancer atlas of T cell targets”, BioRxiv, https://www.biorxiv.org/content/10.1101/2025.01.22.634237v1
+
+Manuscript in submission
 
 
 # Contact
