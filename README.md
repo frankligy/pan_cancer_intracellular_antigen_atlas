@@ -9,7 +9,8 @@ Accompanying codes for pan cancer atlas of intracellular tumor antigens
 * Codes for generating the figures in the manuscript can be found [scripts](./scripts).
 
 * The whole [ImmunoVerse pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?usp=sharing) have been 
-deployed to Cancer Genome Cloud (CGC), no coding required, please read out and we will grant you access.
+deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single line of code required. Please email us for access, we also provide standone CLI versions
+available upon request.
 
 * [Whole molecular catalogues](./notes/molecular_catalogue.md) and [search space](./notes/search_space.md) for each cancer, along with [normal controls](./notes/normal.md) are released.
 
