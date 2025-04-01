@@ -9,14 +9,18 @@ Accompanying codes for pan cancer atlas of intracellular tumor antigens
 * Codes for generating the figures in the manuscript can be found [scripts](./scripts).
 
 * The whole [ImmunoVerse pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?usp=sharing) have been 
-deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single line of code required. Please email us for access, we also provide standone CLI versions
-available upon request.
+deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single line of code required.
 
 * [Whole molecular catalogues](./notes/molecular_catalogue.md) and [search space](./notes/search_space.md) for each cancer, along with [normal controls](./notes/normal.md) are released.
 
-* web portal is live but in experimental version [immunoverse-web](https://immunoverse-web-5ef5cdbdcedf.herokuapp.com/). You can type in PHOX2B peptide `QYNPIRTTF` in the box and click the table to test.
+* Web portal (alpha version) are live:
 
-* Other scripts can be requested by emailing us.
+    * [Immunoverse Heroku App](https://immunoverse-web-5ef5cdbdcedf.herokuapp.com/). You can type in 
+      PHOX2B peptide `QYNPIRTTF` in the box and click the table to test (limited
+      functionalities for now).
+    * [Immunoverse CGC App](https://cgc.sbgenomics.com/webapps). Start ImmunoVerse with
+      full functionalities, 2-3 minutes for launching.
+
 
 # Citation
 
