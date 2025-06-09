@@ -86,133 +86,8 @@ cancers2immuno = {
     'SKCM':'melanoma'
 }
 
-manual_bl = [
-    'FCGR1A',
-    'TDGF1',
-    'EPS8L3',
-    'PCSK9',
-    'HOXA9',
-    'MUC13',
-    'CTSW',
-    'ADGRE2',
-    'IRF4',
-    'PRR15L',
-    'MYEOV',
-    'LYPD6B',
-    'ATP6V1B1',
-    'LGALS4',
-    'GPA33',
-    'DUOXA2',
-    'FOXA3',
-    'FOXA2',
-    'SLC44A4',
-    'SLAMF7',
-    'ECEL1',
-    'DPEP2',
-    'UGT2A3',
-    'PPP1R14D',
-    'ATP2C2',
-    'CBLC',
-    'RASEF',
-    'REG4',
-    'OLIG2',
-    'OVOL2',
-    'B3GNT3',
-    'TENM2',
-    'CCNF',
-    'PLEK2',
-    'LIX1',
-    'ESRP1',
-    'ETV7',
-    'CA14',
-    'ITGB6',
-    'NTS',
-    'PRR15',
-    'IGSF9',
-    'MAP3K7CL',
-    'LRRTM1',
-    'TJP3',
-    'LIPH',
-    'HKDC1',
-    'SCN9A',
-    'GUCY2C',
-    'TP63',
-    'CXCL17',
-    'CDX2',
-    'LGR5',
-    'CNTNAP2',
-    'PLS3',
-    'GPR87',
-    'LARGE2',
-    'ELF3',
-    'KLHL14',
-    'HLA-DQB2',
-    'SLC28A1',
-    'TRAF3IP3',
-    'SLC17A4',
-    'AP1M2',
-    'KCTD14',
-    'HLA-G',
-    'GCNT1',
-    'KLK8',
-    'SLC6A15',
-    'CXCL8',
-    'IHH',
-    'RNF175',
-    'MCTP2',
-    'CELF5',
-    'INHBA',
-    'TMPRSS4',
-    'NLRP3',
-    'GFRA2',
-    'MAB21L1',
-    'CEMIP',
-    'RNASE2',
-    'SNX20',
-    'NKAIN4',
-    'ARHGAP36',
-    'ESPN',
-    'ATP10B',
-    'RNASE7',
-    'GCSAM',
-    'POU3F2',
-    'CTSE',
-    'SEZ6L',
-    'IDO1',
-    'CELSR1',
-    'WNT5A',
-    'ANKS4B',
-    'SCN3A',
-    'TMEM200A',
-    'TMEM45B',
-    'SUCNR1',
-    'MISP',
-    'TMEM150B',
-    'HGF',
-    'SATB2',
-    'SLC5A10',
-    'MIA',
-    'CDX1',
-    'BLK',
-    'MSR1',
-    'ELAVL2',
-    'FAM129C',
-    'TMEM139',
-    'CLRN3',
-    'KCNG1',
-    'PMAIP1',
-    'TMEM178B',
-    'BIRC7',
-    'KCNK15',
-    'FBLL1',
-    'C15orf48',
-    'C9orf152',
-    'C16orf54',
-    'CSF2RA',
-    'PLEKHG6'
-]
-
-
+with open('manual_bl.txt','r') as f:
+    manual_bl = [gene.rstrip('\n') for gene in f.readlines()]
 
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 bayests_xy_path = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt'
@@ -233,24 +108,35 @@ def get_ts_gene(atlas_dir):
         deg = deg.loc[(deg['adjp']<0.05) & (deg['Log2(Fold Change)']>0.58),:].index.tolist()
         common = list(set(ts_gene).intersection(set(deg)))
 
+
     gene_lfc = pd.read_csv(os.path.join(atlas_dir,'gene_lfc.txt'),sep='\t',index_col=0)
     ensg2symbol = gene_lfc['gene_symbol'].to_dict()
     symbol2ensg = {v:k for k,v in ensg2symbol.items()}
     gene_lfc = gene_lfc.loc[(gene_lfc['median_tumor']>20) & (gene_lfc['median_tumor'] > gene_lfc['max_median_gtex']),:]
     real_common = list(set(gene_lfc.index).intersection(set(common)))
 
+
     # remove the manual bl
     manual_bl_ensg = [symbol2ensg[item] for item in manual_bl]
     real_common = list(set(real_common).difference(set(manual_bl_ensg)))
 
     # membrane
-    mem = pd.read_csv('human_membrane_protein_postdoc_final_no_edit.txt',sep='\t')
+    mem = pd.read_csv('human_membrane_proteins_acc2ens.txt',sep='\t')
+    mem = mem.loc[mem['Ens'].notna(),:]
+    membrane_ensg = mem['Ens'].values.tolist()
+
+    mem = pd.read_csv('./compartment/human_cell_membrane_protein_postdoc_final.txt',sep='\t')
+    mem = mem.loc[mem['Subcellular location [CC]'].str.contains('anchor'),:]
     mem = mem.loc[mem['ensg'].notna(),:]
-    membrane_ensg = mem['ensg'].values.tolist()
+    membrane_ensg_add = mem['ensg'].values.tolist()
+
+    membrane_ensg = set(membrane_ensg + membrane_ensg_add)
+
     real_common_membrane = []
     for item in real_common:
         if item in membrane_ensg:
             real_common_membrane.append(item)
+
 
     return real_common,real_common_membrane
 
@@ -293,20 +179,9 @@ def get_ts_variant(atlas_dir,c):
 
         mutation_rec_path = os.path.join(atlas_dir,'mutation_rec.txt')
         variants = pd.read_csv(mutation_rec_path,sep='\t')
-        variants = variants.loc[(variants['ensg'].str.contains(r'^ENSG')) &                  
-                                (~variants['mutation'].str.contains(r'^HLA')) &
-                                (~variants['mutation'].str.contains(r'^IG')) &
-                                (~variants['mutation'].str.contains(r'^TRAV')) & 
-                                (~variants['mutation'].str.contains(r'^TRAJ')) &
-                                (~variants['mutation'].str.contains(r'^TRBV')) & 
-                                (~variants['mutation'].str.contains(r'^TRBD')) & 
-                                (~variants['mutation'].str.contains(r'^TRBJ')) &
-                                ((variants['n_samples']>1) | (variants['is_driver'])), :]   
-
+        variants = variants.loc[(variants['ensg'].notna()) & (variants['ensg'].str.contains(r'^ENSG')), :]   
         n_variant = variants.shape[0]
 
-        
-        
     return n_variant
 
 def get_ts_pathogen(c):
@@ -314,10 +189,10 @@ def get_ts_pathogen(c):
         'BRCA':1,
         'KIRC':0,
         'COAD':2,
-        'STAD':4,
+        'STAD':5,
         'MESO':0,
         'LIHC':2,
-        'ESCA':3,
+        'ESCA':5,
         'CESC':2,
         'BLCA':0,
         'RT':0,
@@ -326,7 +201,7 @@ def get_ts_pathogen(c):
         'GBM':1,
         'NBL':1,
         'PAAD':0,
-        'HNSC':1,
+        'HNSC':3,
         'OV':3,
         'LUSC':0,
         'LUAD':0,
@@ -353,74 +228,78 @@ def get_ts_fusion(atlas_dir):
 # df = pd.concat(df_list,axis=0,keys=cancers)
 # df.to_csv('my_filter_membrane.txt',sep='\t')
 
+
 # safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-# safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond'],:]
+# safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
 # safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
 
-# # collage the meta and get number
-# total_antigen = 0  # 16077
-# self_df = pd.read_csv('ts_final.txt',sep='\t')
-# self_df = self_df.loc[self_df['highest_abundance'].notna(),:]
-# # self_df = self_df.loc[~self_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(self_df['pep'].values.tolist()))
+# collage the meta and get number
+total_antigen = 0  # 27451
+self_df = pd.read_csv('ts_final.txt',sep='\t')
+# self_df = self_df.loc[~self_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(self_df['pep'].values.tolist()))
 
-# self_translate_te_df = pd.read_csv('ts_te_antigen.txt',sep='\t')
-# self_translate_te_df = self_translate_te_df.loc[self_translate_te_df['highest_abundance'].notna(),:]
-# # self_translate_te_df = self_translate_te_df.loc[~self_translate_te_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(self_translate_te_df['pep'].values.tolist()))
+self_translate_te_df = pd.read_csv('ts_te_antigen.txt',sep='\t')  # remember, after safety screen, do autonomy check and update 
+# real_autonomy_check = pd.read_csv('splicing_ir_dic/final.txt',sep='\t')
+# real_autonomy = set(real_autonomy_check.loc[real_autonomy_check['not_has_ss'] & real_autonomy_check['not_in_ir'],:]['pep'].values)
+# self_translate_te_df = self_translate_te_df.loc[self_translate_te_df['pep'].isin(real_autonomy),:]
+# te_all_df = pd.read_csv('te_all_antigens.txt',sep='\t')
+# orf2_taa = te_all_df.loc[te_all_df['source'].str.contains('L1_ORF2'),:]
+# self_translate_te_df = pd.concat([self_translate_te_df,orf2_taa],axis=0)
+# self_translate_te_df['typ'] = np.full(shape=self_translate_te_df.shape[0],fill_value='self_translate_te')
+# self_translate_te_df = self_translate_te_df.loc[~self_translate_te_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(self_translate_te_df['pep'].values.tolist()))
 
-# te_chimeric_df = pd.read_csv('te_all_antigens.txt',sep='\t')
-# te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['typ']=='TE_chimeric_transcript',:]
-# te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['highest_abundance'].notna(),:]
-# # te_chimeric_df = te_chimeric_df.loc[~te_chimeric_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(te_chimeric_df['pep'].values.tolist()))
+te_chimeric_df = pd.read_csv('te_all_antigens.txt',sep='\t')
+te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['typ']=='TE_chimeric_transcript',:]
+# original_all_self_translate =  pd.read_csv('ts_te_antigen.txt',sep='\t')
+# reclassified_te_chimeric = original_all_self_translate.loc[~original_all_self_translate['pep'].isin(real_autonomy),:]
+# te_chimeric_df = pd.concat([te_chimeric_df,reclassified_te_chimeric],axis=0)
+# te_chimeric_df['typ'] = np.full(shape=te_chimeric_df.shape[0],fill_value='TE_chimeric_transcript')
+# te_chimeric_df = te_chimeric_df.loc[~te_chimeric_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(te_chimeric_df['pep'].values.tolist()))
 
-# splicing_df = pd.read_csv('all_splicing.txt',sep='\t')
-# splicing_df = splicing_df.loc[splicing_df['highest_abundance'].notna(),:]
-# # splicing_df = splicing_df.loc[~splicing_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(splicing_df['pep'].values.tolist()))
+splicing_df = pd.read_csv('all_splicing.txt',sep='\t')
+# splicing_df = splicing_df.loc[~splicing_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(splicing_df['pep'].values.tolist()))
 
-# nuorf_df = pd.read_csv('all_nuorf.txt',sep='\t')
-# nuorf_df = nuorf_df.loc[nuorf_df['highest_abundance'].notna(),:]
-# nuorf_df = nuorf_df.loc[nuorf_df['highest_score']>40,:]
-# # nuorf_df = nuorf_df.loc[~nuorf_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(nuorf_df['pep'].values.tolist()))
+nuorf_df = pd.read_csv('all_nuorf.txt',sep='\t')
+# nuorf_df = nuorf_df.loc[~nuorf_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(nuorf_df['pep'].values.tolist()))
 
-# variant_df = pd.read_csv('all_variants.txt',sep='\t')
-# variant_df = variant_df.loc[variant_df['highest_abundance'].notna(),:]
-# # variant_df = variant_df.loc[~variant_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(variant_df['pep'].values.tolist()))
+variant_df = pd.read_csv('all_variants.txt',sep='\t')
+# variant_df = variant_df.loc[~variant_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(variant_df['pep'].values.tolist()))
 
-# fusion_df = pd.read_csv('all_fusion.txt',sep='\t')
-# fusion_df = fusion_df.loc[fusion_df['highest_abundance'].notna(),:]
-# fusion_df = fusion_df.loc[~fusion_df['source'].str.contains('nc'),:]
-# # fusion_df = fusion_df.loc[~fusion_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(fusion_df['pep'].values.tolist()))
+fusion_df = pd.read_csv('all_fusion.txt',sep='\t')
+fusion_df = fusion_df.loc[~fusion_df['source'].str.contains('nc'),:]
+# fusion_df = fusion_df.loc[~fusion_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(fusion_df['pep'].values.tolist()))
 
-# ir_df = pd.read_csv('all_ir.txt',sep='\t')
-# ir_df = ir_df.loc[ir_df['highest_abundance'].notna(),:]
-# # ir_df = ir_df.loc[~ir_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(ir_df['pep'].values.tolist()))
+ir_df = pd.read_csv('all_ir.txt',sep='\t')
+# ir_df = ir_df.loc[~ir_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(ir_df['pep'].values.tolist()))
 
-# pathogen_df = pd.read_csv('all_pathogen.txt',sep='\t')
-# # pathogen_df = pathogen_df.loc[pathogen_df['highest_abundance'].notna(),:]   # normally I will turn it on, but HBV suggest it might be true, but let's enforce that later
-# # pathogen_df = pathogen_df.loc[pathogen_df['highest_score']>40,:]  # normally I will turn it on, but HBV suggest it might be true, but let's enforce that later
-# # pathogen_df = pathogen_df.loc[~pathogen_df['pep'].isin(safety_screen_bl),:]
-# total_antigen += len(set(pathogen_df['pep'].values.tolist()))
+pathogen_df = pd.read_csv('all_pathogen.txt',sep='\t')
+# pathogen_df = pathogen_df.loc[~pathogen_df['pep'].isin(safety_screen_bl),:]
+total_antigen += len(set(pathogen_df['pep'].values.tolist()))
 
-# patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
-# patent_df.to_csv('for_safety_screen.txt',sep='\t',index=None)   # you can generate for safety screen as well
-# # data = []
-# # for pep,patent_sub_df in patent_df.groupby(by='pep'):
-# #     patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
-# #     all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
-# #     tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-# #     tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-# #     tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
-# #     all_hla = ','.join([item[0] for item in tmp])
-# #     data.append((pep,all_c,all_hla))
-# # patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
-# # patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
+patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
+patent_df.to_csv('for_safety_screen.txt',sep='\t',index=None)   # you can generate for safety screen as well
+sys.exit('stop')
+# patent_df.to_csv('final_all_ts_antigens.txt',sep='\t',index=None)
+
+# data = []
+# for pep,patent_sub_df in patent_df.groupby(by='pep'):
+#     patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
+#     all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
+#     tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+#     tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+#     tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
+#     all_hla = ','.join([item[0] for item in tmp])
+#     data.append((pep,all_c,all_hla))
+# patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
+# patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
 
 # print(total_antigen)
 
@@ -464,7 +343,7 @@ def get_ts_fusion(atlas_dir):
 #     else:
 #         tmp_data.append(v)
 # data.append(tmp_data)
-# # chimera_TE
+# # chimera_TE, need to change
 # tmp_dic = {}
 # for c_,sub_df in te_chimeric_df.groupby(by='cancer'):
 #     tmp_dic[c_] = sub_df.shape[0]
@@ -576,78 +455,94 @@ def get_ts_fusion(atlas_dir):
 
 
 
-# hla_dic = {}
-# dic = {}
-# total_immuno = 0  # 1564
-# root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
-# with pd.ExcelWriter('all_immuno_meta.xlsx') as writer:
-#     for c in cancers:
-#         f = os.path.join(root_immuno_dir,cancers2immuno[c],'metadata.txt')
-#         df = pd.read_csv(f,sep='\t',index_col=0)
-#         total_immuno += df.shape[0]
-#         dic[c] = df.shape[0]
-#         df.to_excel(writer,sheet_name=c)
-#         hlas = []
-#         for item in df['HLA']:
-#             if isinstance(item,str):
-#                 hlas.extend(list(set(item.split(','))))
-#         values,counts = np.unique(hlas,return_counts=True)
-#         hla_dic[c] = {v:c_ for v,c_ in zip(values,counts)}
+hla_dic = {}
+dic = {}
+total_immuno = 0  # 1771
+total_immuno_bio = 0
+root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
+with pd.ExcelWriter('all_immuno_meta.xlsx') as writer:
+    for c in cancers:
+        f = os.path.join(root_immuno_dir,cancers2immuno[c],'metadata.txt')
+        df = pd.read_csv(f,sep='\t',index_col=0)
+        total_immuno += df.shape[0]
+        total_immuno_bio += len(df['biology'].unique())
+        dic[c] = df.shape[0]
+        df.to_excel(writer,sheet_name=c)
+        hlas = []
+        for item in df['HLA']:
+            if isinstance(item,str):
+                hlas.extend(list(set(item.split(','))))
+        values,counts = np.unique(hlas,return_counts=True)
+        hla_dic[c] = {v:c_ for v,c_ in zip(values,counts)}
+print(total_immuno)
+print(total_immuno_bio)
+sys.exit('stop')
 
-# hla_data = []
-# all_hla = []
-# for k,v in hla_dic.items():
-#     all_hla.extend(list(v.keys()))
-# all_hla = list(set(all_hla))
-# for c in cancers:
-#     tmp = []
-#     for hla in all_hla:
-#         tmp.append(hla_dic[c].get(hla,0))
-#     hla_data.append(tmp)
+hla_data = []
+all_hla = []
+for k,v in hla_dic.items():
+    all_hla.extend(list(v.keys()))
+all_hla = list(set(all_hla))
+all_hla = sorted(all_hla)
+for c in cancers:
+    tmp = []
+    for hla in all_hla:
+        tmp.append(hla_dic[c].get(hla,0))
+    hla_data.append(tmp)
 
-# hla_df = pd.DataFrame(index=cancers,columns=all_hla,data=hla_data)
-# freq_dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
+hla_df = pd.DataFrame(index=cancers,columns=all_hla,data=hla_data)
+reformatted_hla = ['HLA-' + item.replace(':','').replace('*','') for item in hla_df.columns]
+hla_df.columns = reformatted_hla
+freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)
+freq_dic = freq_df['Percent US population'].to_dict()
+ori_array = [tuple([item[4:] for item in hla_df.columns.tolist()]),
+             tuple([freq_dic.get(item,0) for item in hla_df.columns]),
+             tuple([item[4] for item in hla_df.columns])]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+hla_df.columns = mi
 
-# reformatted_hla = ['HLA-' + item.replace(':','').replace('*','') for item in hla_df.columns]
-# freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)
-# # HLA-A
-# freq_a = freq_df.loc[[True if item.startswith('HLA-A') else False for item in freq_df.index],:]
-# freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
-# have_a = [item for item in reformatted_hla if item.startswith('HLA-A')]
-# prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
-# print(prop)
-# # HLA-B
-# freq_a = freq_df.loc[[True if item.startswith('HLA-B') else False for item in freq_df.index],:]
-# freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
-# have_a = [item for item in reformatted_hla if item.startswith('HLA-B')]
-# prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
-# print(prop)
-# # HLA-C
-# freq_a = freq_df.loc[[True if item.startswith('HLA-C') else False for item in freq_df.index],:]
-# freq_a = freq_a.loc[freq_a['Percent US population']>0.01,:]
-# have_a = [item for item in reformatted_hla if item.startswith('HLA-C')]
-# prop = len(set(freq_a.index).intersection(set(have_a))) / len(freq_a)
-# print(prop)
+cancer2coverage = {}
+for c in cancers:
+    s = hla_df.loc[c]
+    s = s.loc[s>0]
+    freqs = s.index.to_frame(index=False)[1].values.tolist()
+    neg = 1
+    for f in freqs:
+        neg *= (1-f)
+    coverage = 1-neg
+    cancer2coverage[c] = coverage
+ori_array = [tuple(hla_df.index.tolist()),
+             tuple([cancer2coverage[item] for item in hla_df.index])]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+hla_df.index = mi
+hla_df.to_csv('hla_df.txt',sep='\t')
 
+selected_col = [col for col in hla_df.columns if col[1] > 0.01]
+hla_df_freq = hla_df.loc[:,selected_col]
+hla_df_freq.to_csv('hla_df_freq.txt',sep='\t')
 
-# ori_array = [tuple([freq_dic.get('HLA-' + item.replace(':','').replace('*',''),0) for item in hla_df.columns]),tuple(hla_df.columns.tolist())]
-# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-# hla_df.columns = mi
-# hla_df.to_csv('hla_df.txt',sep='\t')
+hla_df_freq = hla_df_freq.mask(hla_df_freq>0,1)
+hla_df_freq.to_csv('hla_df_freq_binary.txt',sep='\t')
+sys.exit('stop')
 
 
 
 
-# fig,ax = plt.subplots()
-# bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
-# for bar in bars:
-#     yval = bar.get_height()
-#     ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
-# ax.set_xticks(np.arange(len(dic)))
-# ax.set_xticklabels(list(dic.keys()),rotation=60)
-# ax.set_ylabel('Number of sample')
-# plt.savefig('figs1_stat_immuno.pdf',bbox_inches='tight')
-# plt.close()
+
+
+
+
+
+fig,ax = plt.subplots()
+bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
+for bar in bars:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
+ax.set_xticks(np.arange(len(dic)))
+ax.set_xticklabels(list(dic.keys()),rotation=60)
+ax.set_ylabel('Number of sample')
+plt.savefig('figs1_stat_immuno.pdf',bbox_inches='tight')
+plt.close()
     
 
 # dic = {}
@@ -671,7 +566,6 @@ def get_ts_fusion(atlas_dir):
 # ax.set_ylabel('Number of sample')
 # plt.savefig('figs1_stat_rna.pdf',bbox_inches='tight')
 # plt.close()
-
 
 
 # tumor specific event 
@@ -711,10 +605,8 @@ for c,s in zip(cancers,n_samples):
 
 plot_df = pd.DataFrame(index=['gene','splicing','intron','TE','variant','pathogen','fusion'],columns=cancers,data=np.transpose(np.array(data)))
 
-print(n_ts_total,n_ts_membrane)
-
 fig,ax = plt.subplots(figsize=(15,10))
-sns.heatmap(plot_df,annot=True,linewidth=0.5,fmt='g',annot_kws={"fontsize": 5},cmap='Blues',square=True)
+sns.heatmap(plot_df,annot=True,linewidth=0.5,fmt='g',vmax=15000,annot_kws={"fontsize": 5},cmap='Blues',square=True)
 plt.savefig('ts_event_overview.pdf',bbox_inches='tight')
 plt.close()
 

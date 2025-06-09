@@ -49,7 +49,7 @@ n_samples = [
     412,
     87,
     374,
-    412,
+    185,
     306,
     412,
     63,
@@ -60,8 +60,8 @@ n_samples = [
     179,
     522,
     429,
-    541,
     502,
+    541,
     35,
     472
 ]
@@ -94,10 +94,10 @@ def process_tumor_gene():
 
 # looking at RT and DLBC peptide
 final = pd.read_csv(os.path.join(root_atlas_dir,'DLBC','antigen','fdr','final_enhanced.txt'),sep='\t')
-cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
 df1 = final.loc[cond,:]
 final = pd.read_csv(os.path.join(root_atlas_dir,'RT','antigen','fdr','final_enhanced.txt'),sep='\t')
-cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
+cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
 df2 = final.loc[cond,:]
 
 from scipy.stats import chi2_contingency
@@ -113,6 +113,7 @@ for df in [df1,df2]:
 mat = np.array(mat)
 res = chi2_contingency(mat)
 print(res)
+
 sys.exit('stop')
 
 genes = [
@@ -128,10 +129,20 @@ genes = [
     'CALR',
     'CANX',
     'PDIA3',
+    # 'NLRC5',
     'B2M',
     'HLA-A',
     'HLA-B',
     'HLA-C',
+    # 'HLA-E',
+    # 'HLA-G',
+    # 'CIITA',
+    # 'HLA-DPA1',
+    # 'HLA-DPB1',
+    # 'HLA-DQA1',
+    # 'HLA-DQB1',
+    # 'HLA-DRA',
+    # 'HLA-DRB1',
     'CXCL8',
     'CXCL9',
     'CXCL10',
