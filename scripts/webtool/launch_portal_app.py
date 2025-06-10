@@ -459,8 +459,8 @@ if __name__ == '__main__':
             # display row
             html.Div([
                 html.Div(html.H5('Please leave Peptide, Gene/Source, HLA blank if not specific (not case-sensitive), then click submit button'),style={'text-align':'left','color':'#4f6d7a'}),
-
                 html.H5("Please click any row/cell in the table below to expand visuals for each antigen",style={'text-align': 'left','color':'#4f6d7a'}),
+                html.H5(['Have a question or Experience intermittent rendering issue? ',html.A('Contact us',href='mailto:guangyuan.li@nyulangone.org',title='Click to send an email')],style={'text-align': 'left','color':'#4f6d7a'}),
 
                 html.Div(dash_table.DataTable(id='candidate',
                                               page_size=10, page_current=0, page_action='native',hidden_columns=['presented_by_each_sample_hla','additional_query','Source'],
@@ -476,7 +476,7 @@ if __name__ == '__main__':
                                               },
                                               style_table={'overflowX': 'auto'},
                                               style_cell={
-                                                'minWidth': '180px', 'width': '180px', 'maxWidth': '180px',
+                                                'minWidth': '165px', 'width': '165px', 'maxWidth': '165px',
                                                 'textAlign': 'left',
                                                 'textOverflow': 'ellipsis',
                                                 'fontFamily': 'Inter, sans-serif',
@@ -528,7 +528,7 @@ if __name__ == '__main__':
                                               },
                                               style_table={'overflowX': 'auto'},
                                               style_cell={
-                                                'minWidth': '180px', 'width': '180px', 'maxWidth': '180px',
+                                                'minWidth': '165px', 'width': '165px', 'maxWidth': '165px',
                                                 'textAlign': 'left',
                                                 'textOverflow': 'ellipsis',
                                                 'fontFamily': 'Inter, sans-serif',
