@@ -115,7 +115,6 @@ def process_tumor_te():
 
 
 
-
 # # later, build the ORF2 peptide plot
 # df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
 # df_orf2 = df.loc[(df['typ']=='self_translate_te') & (df['source'].str.contains('L1_ORF2')),:]
@@ -279,71 +278,6 @@ final_ts.to_csv('ts_te_antigen.txt',sep='\t',index=None)
 
 sys.exit('stop')
 
-
-# # category
-# col = []
-# for item1,item2 in zip(final['typ'],final['source']):
-
-#     if 'L1_ORF1' in item2:
-#         col.append('canonical_ORF1')
-#     elif 'L1_ORF2' in item2:
-#         col.append('canonical_ORF2')
-#     elif 'ENSG' in item2 and 'ERVK' in item2:
-#         col.append('canonical_ERVK')
-#     else:
-
-#         if item1 == 'TE_chimeric_transcript':
-#             if 'LINE' in item2:
-#                 col.append('chimera_LINE')
-#             elif 'LTR' in item2:
-#                 col.append('chimera_LTR')
-#             elif 'SINE' in item2:
-#                 col.append('chimera_SINE')
-#             elif 'SVA' in item2:
-#                 col.append('chimera_Retroposon_SVA')
-#             elif 'DNA' in item2:
-#                 col.append('chimera_DNA_transposon')
-#             elif 'Satellite' in item2:
-#                 col.append('chimera_Satellite')
-#             else:
-#                 col.append('chimera_unknown')
-#         elif item1 == 'ERV':
-#             uid = item2.split('|')[0]
-#             cid = tid2cid.get(uid,'unknown')
-
-#             if cid != 'unknown':
-#                 if cid == 'Retroposon':
-#                     cid = 'Retroposon_SVA'
-#                 col.append('self_translate_{}'.format(cid))
-#             else:
-#                 if 'LINE' in item2:
-#                     col.append('both_LINE')
-#                 elif 'LTR' in item2:
-#                     col.append('both_LTR')
-#                 elif 'SINE' in item2:
-#                     col.append('both_SINE')
-#                 elif 'SVA' in item2:
-#                     col.append('both_Retroposon_SVA')
-#                 elif 'DNA' in item2:
-#                     col.append('both_DNA_transposon')
-#                 elif 'Satellite' in item2:
-#                     col.append('both_Satellite')
-#                 else:
-#                     col.append('both_unknown')
-# final['class'] = col
-# final = final.loc[final['class']!='both_unknown',:]
-
-# data = []
-# all_types = []
-# for s,sub_df in final.groupby(by='class'):
-#     all_types.append(s)
-#     vc = sub_df['cancer'].value_counts().to_dict()
-#     row = []
-#     for c in cancers:
-#         row.append(vc.get(c,0))
-#     data.append(row)
-# df = pd.DataFrame.from_records(data=data,index=all_types,columns=cancers)
-# df.to_csv('te_class_df.txt',sep='\t')
 
 
 

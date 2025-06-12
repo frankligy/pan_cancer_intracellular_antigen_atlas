@@ -70,16 +70,45 @@ n_samples = [
 
 # use peptide abudance to cluster immunopeptidome samples
 rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+c_df_list = []
 for c in cancers:
-    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','fdr','final_enhanced_full.txt'),sep='\t')
+    print(c)
+    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','fdr','final_enhanced_all.txt'),sep='\t')
     cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_all['presented_by_each_sample_hla']]
     final_all = final_all.loc[cond,:]
     final_all = final_all.loc[final_all['typ']=='self_gene',:]
     final_all = final_all.loc[final_all['unique'],:]
-    all_peptides = set(final_all['pep'].values)
-    msms = pd.read_csv(os.path.join(rootdir,c,'antigen','fdr','msmsScans_all_add_tesorai.txt'),sep='\t')
-    msms = msms.loc[(msms['Identified']=='+') & (msms['Sequence'].isin(all_peptides)),:]
-    msms['uid'] = [i1 + ';' + i2 for i1,i2 in zip(msms['level_0'],msms['Raw file'])]
+    gene2data = {}
+    for ensg,sub_df in tqdm(final_all.groupby(by='ensgs')):
+        sample2data = {}
+        for item in sub_df['detailed_intensity']:
+            item = literal_eval(item)
+            for tup in item:
+                sample2data.setdefault(tup[0],[]).append(tup[1])
+        sample2value = {k:np.sum(v) for k,v in sample2data.items()}   # sample1:0.56
+        gene2data[ensg] = sample2value
+    c_df = pd.DataFrame.from_dict(gene2data,orient='columns')
+    c_df_list.append(c_df)
+df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers).fillna(value=0).T
+
+mi = df.columns
+mi_df = mi.to_frame(index=False)
+df.columns = mi_df[1].values
+
+
+df = df.T
+adata = ad.AnnData(X=df.values,obs=pd.DataFrame(index=df.index,data={'cancer':mi_df[0].values}),var=pd.DataFrame(index=df.columns))  
+sc.pp.highly_variable_genes(adata,flavor='seurat',n_top_genes=5000)
+adata.raw = adata
+adata = adata[:,adata.var['highly_variable']]
+sc.pp.scale(adata,max_value=10)
+sc.tl.pca(adata,n_comps=50)
+sc.pp.neighbors(adata)
+sc.tl.umap(adata)
+umap_dual_view_save(adata,cols=['cancer'])
+
+sys.exit('stop')
+        
 
 
 

@@ -68,38 +68,15 @@ bayests_xy_path = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results
 gtex_median_path = '/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/bulk-gex_v8_rna-seq_GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct'
 membrane_path = '/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/human_membrane_proteins_acc2ens.txt'
 
-safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
-safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
 
-splicing_df = pd.read_csv('all_splicing.txt',sep='\t')
-splicing_df = splicing_df.loc[~splicing_df['pep'].isin(safety_screen_bl),:]
-nuorf_df = pd.read_csv('all_nuorf.txt',sep='\t')
-nuorf_df = nuorf_df.loc[~nuorf_df['pep'].isin(safety_screen_bl),:]
-variant_df = pd.read_csv('all_variants_ts.txt',sep='\t')
-fusion_df = pd.read_csv('all_fusion.txt',sep='\t')
-fusion_df = fusion_df.loc[~fusion_df['pep'].isin(safety_screen_bl),:]
-fusion_df = fusion_df.loc[~fusion_df['source'].str.contains('nc'),:]
-ir_df = pd.read_csv('all_ir.txt',sep='\t')
-ir_df = ir_df.loc[~ir_df['pep'].isin(safety_screen_bl),:]
-
-self_translate_te_df = pd.read_csv('ts_te_antigen.txt',sep='\t')  # remember, after safety screen, do autonomy check and update 
-real_autonomy_check = pd.read_csv('splicing_ir_dic/final.txt',sep='\t')
-real_autonomy = set(real_autonomy_check.loc[real_autonomy_check['not_has_ss'] & real_autonomy_check['not_in_ir'],:]['pep'].values)
-self_translate_te_df = self_translate_te_df.loc[self_translate_te_df['pep'].isin(real_autonomy),:]
-te_all_df = pd.read_csv('te_all_antigens.txt',sep='\t')
-orf2_taa = te_all_df.loc[te_all_df['source'].str.contains('L1_ORF2'),:]
-self_translate_te_df = pd.concat([self_translate_te_df,orf2_taa],axis=0)
-self_translate_te_df['typ'] = np.full(shape=self_translate_te_df.shape[0],fill_value='self_translate_te')
-self_translate_te_df = self_translate_te_df.loc[~self_translate_te_df['pep'].isin(safety_screen_bl),:]
-
-te_chimeric_df = pd.read_csv('te_all_antigens.txt',sep='\t')
-te_chimeric_df = te_chimeric_df.loc[te_chimeric_df['typ']=='TE_chimeric_transcript',:]
-original_all_self_translate =  pd.read_csv('ts_te_antigen.txt',sep='\t')
-reclassified_te_chimeric = original_all_self_translate.loc[~original_all_self_translate['pep'].isin(real_autonomy),:]
-te_chimeric_df = pd.concat([te_chimeric_df,reclassified_te_chimeric],axis=0)
-te_chimeric_df['typ'] = np.full(shape=te_chimeric_df.shape[0],fill_value='TE_chimeric_transcript')
-te_chimeric_df = te_chimeric_df.loc[~te_chimeric_df['pep'].isin(safety_screen_bl),:]
+df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+splicing_df = df.loc[df['typ']=='splicing',:]
+nuorf_df = df.loc[df['typ']=='nuORF',:]
+variant_df = df.loc[df['typ']=='variant',:]
+fusion_df = df.loc[df['typ']=='fusion',:]
+ir_df = df.loc[df['typ']=='intron_retention',:]
+self_translate_te_df = df.loc[df['typ']=='self_translate_te',:]
+te_chimeric_df = df.loc[df['typ']=='TE_chimeric_transcript']
 
 
 data = np.empty((21,7),dtype=np.float64)

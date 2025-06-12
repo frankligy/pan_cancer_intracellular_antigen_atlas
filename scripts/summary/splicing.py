@@ -129,9 +129,6 @@ def process_tumor_splicing():
         dic[c] = splicing['ave_count_tumor'].to_dict()
     return dic
 
-# safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-# safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
-# safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
 
 
 data = []
@@ -161,18 +158,18 @@ for item in final['source']:
         col2.append(anno)
 final['coord'] = col1
 final['anno'] = col2
-final.to_csv('all_splicing.txt',sep='\t',index=None);sys.exit('stop')
-final['pep'].value_counts().to_csv('all_splicing_peptide.txt',sep='\t')
-final = final.loc[~final['pep'].isin(safety_screen_bl),:]
+final.to_csv('all_splicing.txt',sep='\t',index=None)
+
+df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+final = df.loc[df['typ']=='splicing',:]
 cond = [False if 'nc|ENSG00000100146|P56693|SOX10' in item else True for item in final['source']]
 final = final.loc[cond,:]
-final.to_csv('all_splicing_ts.txt',sep='\t',index=None)
 
 
 # peptide view
 prioritized_peps = final.sort_values(by='n_psm',ascending=False).iloc[:40]['pep'].values.tolist()
 peptide = pd.read_csv('splicing_peptides.txt',sep='\t',index_col=0)
-peptide = peptide.loc[~peptide.index.isin(safety_screen_bl),:]
+peptide = peptide.loc[peptide.index.isin(final['pep']),:]
 prioritized_peps.extend(peptide.index.tolist())
 prioritized_peps = list(set(prioritized_peps))
 
@@ -226,66 +223,6 @@ mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
 df.to_csv('peptide_view_splicing.txt',sep='\t')
 
-sys.exit('stop')
-
-
-# # find tumor specific one
-# all_uids = []
-# uid2full = {}
-# for item in final['source']:
-#     tmp_list = item.split(';')
-#     for i in tmp_list:
-#         if i.startswith('chr'):
-#             uid = i.split('|')[0]
-#             all_uids.append(uid)
-#             uid2full.setdefault(uid,[]).append(i)
-#             break
-# all_uids = list(set(all_uids))
-# tmp = {}
-# for k,v in uid2full.items():
-#     if len(v) == 1:
-#         tmp[k] = v[0]
-#     else:
-#         lfcs = []
-#         for item in v:
-#             lfcs.append(float(item.split('|')[4]))
-#         tmp[k] = v[np.argmax(lfcs)]
-# uid2full = tmp
-
-
-# uid2medians,all_tissues = process_splicing_gtex(all_uids)
-# dic = process_tumor_splicing()
-
-
-# uid2tumors = {}
-# for uid in all_uids:
-#     data = []
-#     for k,v in dic.items():
-#         data.append(v.get(uid,0))
-#     uid2tumors[uid] = data
-
-# all_data = []
-# for uid in all_uids:
-#     data = []
-#     data.extend(uid2tumors[uid])
-#     data.extend(uid2medians[uid])
-#     all_data.append(data)
-
-# df = pd.DataFrame.from_records(all_data,columns=cancers+all_tissues,index=all_uids)
-
-# ori_array = [tuple(['cancer']*21+['normal']*51+['paratumor']*21),tuple(df.columns.tolist())]
-# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-# df.columns = mi
-
-# ori_array = [tuple(df.index.tolist()),
-#              tuple([uid2full[item].split('|')[4] for item in df.index]),
-#              tuple([uid2full[item].split('|')[-2] for item in df.index])]
-# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-# df.index = mi
-
-# df = df.loc[:,(['cancer','normal'],slice(None))]
-
-# df.to_csv('splicing_holy.txt',sep='\t')
 
 
 

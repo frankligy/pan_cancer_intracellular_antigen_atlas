@@ -107,63 +107,59 @@ final['mutation_type'] = [item.split('|')[-1] for item in final['real_source']]
 final['recurrency'] = [item.split('|')[2] for item in final['real_source']]
 final.to_csv('all_variants.txt',sep='\t',index=None)
 
-sys.exit('stop')
 
-final = pd.read_csv('all_variants.txt',sep='\t')
-safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
-safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
-final = final.loc[~final['pep'].isin(safety_screen_bl),:]
+df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+final = df.loc[df['typ']=='variant',:]
 
 
-# # plot cancer
-# col1 = []
-# col2 = []
-# for c,sub_df in final.groupby(by='cancer'):
-#     col1.append(c)
-#     col2.append(sub_df.shape[0])
-# other_c = list(set(cancers).difference(set(col1)))
-# for c in other_c:
-#     col1.append(c)
-#     col2.append(0)
-# df = pd.DataFrame(data={'cancer':col1,'value':col2}).sort_values(by='value',ascending=True)
-# df.plot.barh(x='cancer', y='value', rot=0)
-# plt.savefig('variant_by_cancer.pdf',bbox_inches='tight')
-# plt.close()
+# plot cancer
+col1 = []
+col2 = []
+for c,sub_df in final.groupby(by='cancer'):
+    col1.append(c)
+    col2.append(sub_df.shape[0])
+other_c = list(set(cancers).difference(set(col1)))
+for c in other_c:
+    col1.append(c)
+    col2.append(0)
+df = pd.DataFrame(data={'cancer':col1,'value':col2}).sort_values(by='value',ascending=True)
+df.plot.barh(x='cancer', y='value', rot=0)
+plt.savefig('variant_by_cancer.pdf',bbox_inches='tight')
+plt.close()
 
-# # plot gene
-# col1 = []
-# col2 = []
-# for g,sub_df in final.groupby(by='gene'):
-#     col1.append(g)
-#     col2.append(sub_df.shape[0])
-# df = pd.DataFrame(data={'gene':col1,'value':col2}).sort_values(by='value',ascending=True)
-# df.plot.barh(x='gene', y='value', rot=0,fontsize=1)
-# plt.savefig('variant_by_gene.pdf',bbox_inches='tight')
-# plt.close()
+# plot gene
+col1 = []
+col2 = []
+for g,sub_df in final.groupby(by='gene'):
+    col1.append(g)
+    col2.append(sub_df.shape[0])
+df = pd.DataFrame(data={'gene':col1,'value':col2}).sort_values(by='value',ascending=True)
+df.plot.barh(x='gene', y='value', rot=0,fontsize=1)
+plt.savefig('variant_by_gene.pdf',bbox_inches='tight')
+plt.close()
 
-# # plot gene driver
-# col1 = []
-# col2 = []
-# final_sub = final.loc[final['is_driver'],:]
-# for g,sub_df in final_sub.groupby(by='gene'):
-#     col1.append(g)
-#     col2.append(sub_df.shape[0])
-# df = pd.DataFrame(data={'gene':col1,'value':col2}).sort_values(by='value',ascending=True)
-# df.plot.barh(x='gene', y='value', rot=0,fontsize=5)
-# plt.savefig('variant_by_gene_driver.pdf',bbox_inches='tight')
-# plt.close()
+# plot gene driver
+col1 = []
+col2 = []
+final_sub = final.loc[final['is_driver'],:]
+for g,sub_df in final_sub.groupby(by='gene'):
+    col1.append(g)
+    col2.append(sub_df.shape[0])
+df = pd.DataFrame(data={'gene':col1,'value':col2}).sort_values(by='value',ascending=True)
+df.plot.barh(x='gene', y='value', rot=0,fontsize=5)
+plt.savefig('variant_by_gene_driver.pdf',bbox_inches='tight')
+plt.close()
 
-# # plot mutation type
-# col1 = []
-# col2 = []
-# for mt,sub_df in final.groupby(by='mutation_type'):
-#     col1.append(mt)
-#     col2.append(sub_df.shape[0])
-# df = pd.DataFrame(data={'mutation_type':col1,'value':col2}).sort_values(by='value',ascending=True)
-# df.plot.barh(x='mutation_type',y='value',rot=0,fontsize=5)
-# plt.savefig('variant_by_mutation_type.pdf',bbox_inches='tight')
-# plt.close()
+# plot mutation type
+col1 = []
+col2 = []
+for mt,sub_df in final.groupby(by='mutation_type'):
+    col1.append(mt)
+    col2.append(sub_df.shape[0])
+df = pd.DataFrame(data={'mutation_type':col1,'value':col2}).sort_values(by='value',ascending=True)
+df.plot.barh(x='mutation_type',y='value',rot=0,fontsize=5)
+plt.savefig('variant_by_mutation_type.pdf',bbox_inches='tight')
+plt.close()
 
 
 # compare with common database
@@ -193,7 +189,7 @@ for c,p in zip(final['cancer'],final['pep']):
     else:
         cond.append(False)
 final['in_tesorai'] = cond
-final.to_csv('all_variants_ts.txt',sep='\t',index=None)
+final.to_csv('annotated_variant_antigen.txt',sep='\t',index=None)
 
 item3 = categorize_sets(set(pep_tsnadb),set(final['pep'].values))
 length3 = [len(item) for item in item3]

@@ -221,14 +221,9 @@ final['strain'] = col
 final = final.loc[final['strain']!='unknown',:]
 final.to_csv('all_pathogen.txt',sep='\t',index=None)
 
-sys.exit('stop')
 
-safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
-safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
-
-final = final.loc[~final['pep'].isin(safety_screen_bl),:]
-final.to_csv('all_pathogen_ts.txt',sep='\t',index=None)
+df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+final = df.loc[df['typ']=='pathogen',:]
 
 
 # select representative
@@ -299,7 +294,6 @@ hpv_peptides = ['LESRITVFE']
 
 
 
-
 raw_total = list(common_cmv.keys()) + list(common_hbv.keys()) + list(common_hpv.keys()) + synthesized_bac + fuso + circ + intes + ureo + pylori + ebv_peptides + hpv_peptides 
 raw_total = list(set(raw_total))
 
@@ -357,46 +351,9 @@ df.index = mi
 
 df.to_csv('peptide_view_pathogen.txt',sep='\t')
 
-sys.exit('stop')
-
-# # look for N circulans gene in ov
-# final_n = final.loc[(final['strain']=='N.Circulans') & (final['cancer']=='OV'),:]
-# genes = list(set([item.split('|')[1] for item in final_n['source']]))
-# print(len(genes))
-# sys.exit('stop')
 
 
-# # look for cmv
-# common_cmv = ['DLLSALQQL',
-#               'TLLVYLFSL',
-#               'VLEETSVML',
-#               'IARLAKIPL',
-#               'LLDGVTVSL',
-#               'LPVESLPLL',
-#               'YTSRGALYLY']
-# final_cmv = final.loc[(final['strain']=='CMV') & (final['pep'].isin(common_cmv)),:]
-# final_cmv.to_csv('final_cmv.txt',sep='\t')
-# cmv_cancers = ['OV','BRCA','LIHC','NBL','GBM','CESC','COAD']
 
-# store_data = []
-# for pep in common_cmv:
-#     final_p = final_cmv.loc[final_cmv['pep']==pep,:]
-#     all_occur = final_p['cancer'].values.tolist()
-#     tmp = []
-#     for c in cmv_cancers:
-#         if c in all_occur:
-#             sub = final_p.loc[final_p['cancer']==c,:]
-#             all_intensity = []
-#             for item in sub['detailed_intensity']:
-#                 all_intensity.extend(literal_eval(item))
-#             med_intensity = np.median(all_intensity)
-#             tmp.append(med_intensity)
-#         else:
-#             tmp.append(0)
-#     store_data.append(tmp)
-
-# cmv_df = pd.DataFrame(data=store_data,index=common_cmv,columns=cmv_cancers)
-# cmv_df.to_csv('cmv_df.txt',sep='\t')
 
 
 

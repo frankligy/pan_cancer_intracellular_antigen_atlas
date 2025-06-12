@@ -203,13 +203,15 @@ df = df.loc[~df['pep'].isin(safety_screen_bl),:]
 #     df_now.to_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(cancer),sep='\t')
 
 
-# # assemble
+# assemble
 # df_list = []
 # for c in cancers:
 #     df = pd.read_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(c),sep='\t')
 #     df_list.append(df)
 # final = pd.concat(df_list,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'}).drop(columns='Unnamed: 0')
 # final.to_csv('splicing_ir_dic/final.txt',sep='\t',index=None)
+
+
 
 # draw
 final = pd.read_csv('splicing_ir_dic/final.txt',sep='\t')

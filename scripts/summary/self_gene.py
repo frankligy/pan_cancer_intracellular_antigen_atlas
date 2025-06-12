@@ -202,18 +202,21 @@ pan_cancer_ensgs = [
 # plt.close()
 
 
-# safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-# safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
-# safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
-
-# # for ts gene, coverage for patients
-# df = pd.read_csv('ts_final.txt',sep='\t')
-# df = df.loc[~df['pep'].isin(safety_screen_bl),:]
-# ts_ensg = df['ensgs'].unique().tolist()
-# ts_ensg = list(set(ts_ensg).difference(set(pan_cancer_ensgs)))
-# data = []
+# # for ts gene, coverage for patients, also consider all antigens
+# df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+# # remove pan-cancer gene, because they are not ideal as single target
+# cond = []
+# for item1,item2 in zip(df['typ'],df['ensgs']):
+#     if item1 == 'self_gene' and item2 in pan_cancer_ensgs:
+#         cond.append(False)
+#     else:
+#         cond.append(True)
+# df = df.loc[cond,:]
+# # add g_prop column
+# ts_ensg = df.loc[df['typ']=='self_gene',:]['ensgs'].values
+# self_gene_dic = {}
+# self_gene_dic_overall = {}
 # for c in cancers:
-#     print(c)
 #     path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
 #     exp = pd.read_csv(path,sep='\t',index_col=0)
 #     exp = exp.loc[ts_ensg,:]
@@ -223,7 +226,52 @@ pan_cancer_ensgs = [
 #     mapping = {} # gene specific prop
 #     for i1,i2 in zip(ts_ensg,props):
 #         mapping[i1] = i2
+#     self_gene_dic[c] = mapping
 #     prop = np.count_nonzero(np.any(exp,axis=0)) / exp.shape[1]
+#     self_gene_dic_overall[c] = prop
+
+# col = []
+# for row in df.itertuples():
+#     if row.typ == 'self_gene':
+#         col.append(self_gene_dic[row.cancer][row.ensgs])
+#     elif (row.typ == 'splicing' or row.typ == 'TE_chimeric_transcript') and row.unique:
+#         try:
+#             n = float(row.source.split('|')[1]) 
+#             p = n / n_samples[cancers.index(row.cancer)]
+#         except:
+#             p = 0
+#         col.append(p)
+#     elif row.typ == 'self_translate_te' and row.unique:
+#         try:
+#             n = float(row.source.split('|')[5])
+#             p = n / n_samples[cancers.index(row.cancer)]
+#         except:
+#             p = 0
+#         col.append(p)
+#     elif row.typ == 'variant' and row.unique:
+#         try:
+#             n = float(row.source.split('|')[2])
+#             p = n / n_samples[cancers.index(row.cancer)]
+#         except:
+#             p = 0
+#         col.append(p)
+#     elif row.typ == 'intron_retention' and row.unique:
+#         try:
+#             n = float(row.source.split('|')[1])
+#             p = n / n_samples[cancers.index(row.cancer)]
+#         except:
+#             p = 0
+#         col.append(p)
+#     else:
+#         col.append(0)
+
+# df['g_prop'] = col
+
+# df = df.loc[df['typ']=='self_gene',:]
+
+# data = []
+# for c in cancers:
+#     print(c)
 #     # now consider hla
 #     if c in ['RT','NBL']:
 #         dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
@@ -248,11 +296,11 @@ pan_cancer_ensgs = [
 #             if v.startswith('C'):
 #                 dic[v] = c_/len(tmp)
 #     # start to look for antigen 
-#     df_sub = df.loc[(df['cancer']==c) & (df['ensgs'].isin(ts_ensg)),:]
+#     df_sub = df.loc[(df['cancer']==c) & (df['g_prop']!=0),:]
 #     mapping_norm_sb = {}
 #     mapping_norm_wb = {}
-#     for ensg,sub_df in tqdm(df_sub.groupby(by='ensgs')):
-#         g_prop = mapping[ensg]
+#     for source,sub_df in tqdm(df_sub.groupby(by='source')):
+#         g_prop = sub_df['g_prop'].iloc[0]
 #         all_query = []
 #         sb_hla = []
 #         wb_hla = []
@@ -271,14 +319,14 @@ pan_cancer_ensgs = [
 #         for item in tmp:
 #             h_prop *= (1-item)
 #         norm_prop = g_prop * (1-h_prop)
-#         mapping_norm_sb[ensg] = norm_prop
+#         mapping_norm_sb[source] = norm_prop
 
 #         tmp = [dic.get(h.replace('HLA-','').replace('*','').replace(':',''),0) for h in wb_hla]
 #         h_prop = 1
 #         for item in tmp:
 #             h_prop *= (1-item)
 #         norm_prop = g_prop * (1-h_prop)
-#         mapping_norm_wb[ensg] = norm_prop
+#         mapping_norm_wb[source] = norm_prop
 
 #     final_prop = 1
 #     for k,v in mapping_norm_sb.items():
@@ -290,7 +338,7 @@ pan_cancer_ensgs = [
 #         final_prop *= (1-v)
 #     final_wb_prop = 1-final_prop
 
-#     data.append((prop,'gene_prop',c))
+#     data.append((self_gene_dic_overall[c],'gene_prop',c))
 #     data.append((final_wb_prop,'wb_prop',c))
 #     data.append((final_sb_prop,'sb_prop',c))
 
@@ -304,6 +352,7 @@ pan_cancer_ensgs = [
 #     coverage += round(i1*i2)
 # print(coverage/sum(n_samples))  # sb 78% and wb 87%
 
+
 # custom_order = []
 # for i in plot_df_now['cancer']:
 #     if i not in custom_order:
@@ -316,6 +365,7 @@ pan_cancer_ensgs = [
 # ax.set_xticklabels(ax.get_xticklabels(), rotation=60)
 # plt.savefig('self_gene_coverage.pdf',bbox_inches='tight')
 # plt.close()
+
 
 # ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
 # symbol2ensg = {v:k for k,v in ensg2symbol.items()}
@@ -528,32 +578,8 @@ pan_cancer_ensgs = [
 # df.to_csv('gene_morpheus_mem.txt',sep='\t')
 
 
-# total_p = 0
-# for c in cancers:
-#     print(c)
-#     path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
-#     exp = pd.read_csv(path,sep='\t',index_col=0)
-#     exp = exp.loc[membrane_ensg,:]
-#     exp = exp.values
-#     exp = (exp > 20).astype(int)
-#     n = np.any(exp,axis=0).sum()
-#     total_p += n
-# p = total_p / sum(n_samples)
-# print(p)
-    
 
-# # previous main
-# data = []
-# for c in cancers:
-#     print(c)
-#     path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
-#     exp = pd.read_csv(path,sep='\t',index_col=0)
-#     exp = exp.loc[ts_ensg,:]
-#     exp = exp.values
-#     exp = (exp > 20).astype(int)
-#     props = np.sum(exp,axis=1) / exp.shape[1]
-
-
+# previous main to generate ts_final
 data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
@@ -564,7 +590,6 @@ for c in cancers:
     final = final.loc[final['unique']!=False,:]
     data.append(final)
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
-final.to_csv('all_unique_self_gene.txt',sep='\t',index=None)
 
 
 ensg2dep = {}
@@ -579,12 +604,12 @@ symbol2ensg = {v:k for k,v in ensg2symbol.items()}
 manual_bl_ensg = [symbol2ensg[item] for item in manual_bl]
 
 ts_final = final.loc[~final['ensgs'].isin(manual_bl_ensg),:]
-# ts_final = ts_final.loc[~ts_final['pep'].isin(safety_screen_bl),:]
-cc = pd.read_csv('cell_cycle.txt',sep='\t',index_col=0)
-cc_list = cc.at['Cell Cycle & Mitotic Control (spindle, centrosome, mitosis)','Genes'].split(',') + cc.at['DNA Synthesis and Repair','Genes'].split(',')
-cc_list = [item.strip(' ') for item in cc_list]
-ts_final.to_csv('ts_final.txt',sep='\t',index=None);sys.exit('stop')
-ts_final.loc[~ts_final['gene_symbol'].isin(cc_list),:].to_csv('ts_final_not_cc.txt',sep='\t',index=None);sys.exit('stop')
+ts_final.to_csv('ts_final.txt',sep='\t',index=None) # stop here for safety screen
+
+
+
+ts_final = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+ts_final = ts_final.loc[ts_final['typ'] == 'self_gene',:]
 all_genes = list(set(ts_final['ensgs'].values))
 
 mem = pd.read_csv('human_membrane_protein_postdoc_final_no_edit.txt',sep='\t')
