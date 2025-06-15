@@ -1,0 +1,526 @@
+{
+
+    "preprocess":{
+
+        "tunable_parameters":{
+            "mode":"disambiguate",
+            "PDX_DIR":"na",
+            "TMP_DIR":"na",
+            "sample_file":"na",
+            "cores":2,
+            "strand_sample_include_dir":"na"
+        },
+
+        "fixed_parameters":{
+            "DATABASE":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database",
+            "DISAMBIGUATE_ENV":"/gpfs/data/yarmarkovichlab/neuroblastoma/pdx_test/disambiguate_py_env",
+            "DISAMBIGUATE_PY_SCRIPT":"/gpfs/data/yarmarkovichlab/neuroblastoma/pdx_test/disambiguate.py",
+            "STRANDEDNESS_ENV":"/gpfs/scratch/lig08/strandedness_env"
+
+        }
+    },
+
+    "shell_script":{
+
+        "tunable_parameters":{
+            "intdir":"/gpfs/home/requed01/data/HMF/transcriptomics/fastq/CPCT02030461T",
+            "rootdir":"/gpfs/data/yarmarkovichlab/HMF_vaccine",
+            "sample":"CPCT02030461T_HC3NNBGX9_S7",
+            "strand":"no",
+            "mode":"normal_run",
+            "modality":"rna"
+        },
+
+        "fixed_parameters":{
+            "DATABASE":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database",
+            "neoverse_py_env":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/snv_env",        
+            "star_fusion_image":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/fcs/star-fusion.v1.12.0.simg",
+            "opossum_py_env":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/opossum_env",
+            "opossum_py_code":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/Opossum",
+            "platypus_py_env":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/platypus_env",
+            "platypus_py_code":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/Platypus",
+            "htslib_code":"/gpfs/share/apps/htslib/1.3",
+            "optitype_image":"/gpfs/data/yarmarkovichlab/neuroblastoma/optitype.sif",
+            "circexplorer2_env":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/circRNA/circexplorer2_env",
+            "te_local_env":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/TE_ERV/telocal_env"
+        }
+    },
+
+    "python_script":{
+
+        "tunable_parameters":{
+            "min_pep_len":8,
+            "max_pep_len":15,
+            "outdir":"/gpfs/data/yarmarkovichlab/HMF_vaccine/immunoverse_result",
+            "rootdir":"/gpfs/data/yarmarkovichlab/HMF_vaccine",
+            "sample_file":"/gpfs/data/yarmarkovichlab/HMF_vaccine/samples.txt",
+            "library":"no",
+            "home_dir":"/gpfs/home/lig08",
+            "db_fasta_dir":"db_fasta",
+            "image_format":"pdf",
+            
+            "kallisto_rootdir":"na",
+            "kallisto_sample":"na"
+
+        },
+
+        "fixed_parameters":{
+            "DATABASE":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database",
+            "vep_image":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/vep.sif"
+
+        }
+
+    },
+
+    "maxquant":{
+
+        "tunable_parameters":{
+            "outdir":"/gpfs/data/yarmarkovichlab/HMF_vaccine/immunoverse_result",
+            "db_fasta":"db_fasta",
+            "immunopeptidome_dir":"/gpfs/data/yarmarkovichlab/HMF_vaccine/immuno",
+            "technology":{
+                "CPCT02030461T_HC3NNBGX9_S7":"orbitrap"
+            },
+            "rna2immuno":{
+                "CPCT02030461T_HC3NNBGX9_S7":"pan_cancer"
+            },
+            "peptide_fdr":1,
+            "hla_class":1,
+            "dia_dir":null,
+
+            "current_maxquant_run_mqpar":"na",
+
+
+            "rederive_mzml_dir":"na",
+            "rederive_vanilla_fdr":0.05,
+            "rederive_mode":"rewrite",
+            "rederive_train_cutoff":0.1,
+            "rederive_rescore_fdr":0.05,
+            "rederive_samples":["sample1","sample13"],
+
+            "mode":"other_alg",
+            "hla_mapping":null,
+            "overwrite_hla_dic":{
+                "pan_cancer@A375_OE3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@A375_OE2":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@A375_OE1":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@A375_EV3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@A375_EV2":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@A375_EV1":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@12T_OE3":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_OE2":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_OE1":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_NT3":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_NT2":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_NT1":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_IFN3":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_IFN2":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_IFN1":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_EV3":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_EV2":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@12T_EV1":["A*02:01","A*03:01","B*08:01","B*51:01","C*01:02","C*07:02"],
+                "pan_cancer@108T_OE3":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_OE2":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_OE1":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_NT3":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_NT2":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_NT1":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_IFN3":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_IFN2":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_IFN1":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_EV3":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_EV2":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@108T_EV1":["A*01:01","A*11:01","B*08:01","B*55:01","C*03:03","C*07:01"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_1_R1":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_1_R2":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_2_R1":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_2_R2":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_3_R1":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_3_R2":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_4_R1":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170901_QEh1_LC1_ChC_SA_HLAIp_ONVC_ctrl_4_R2":["A*03:01","A*26:01","B*38:01","B*40:01","C*03:04","C*12:03"],
+                "pan_cancer@20170903_QEh1_LC1_ChC_SA_HLAIp_OMM475_ctrl_1_R1":["A*01:01","A*30:02","B*08:01","B*18:01","C*05:01","C*07:01"],
+                "pan_cancer@20170903_QEh1_LC1_ChC_SA_HLAIp_OMM475_ctrl_2_R1":["A*01:01","A*30:02","B*08:01","B*18:01","C*05:01","C*07:01"],
+                "pan_cancer@20170903_QEh1_LC1_ChC_SA_HLAIp_OMM475_ctrl_3_R1":["A*01:01","A*30:02","B*08:01","B*18:01","C*05:01","C*07:01"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_1_R1":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_1_R2":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_2_R1":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_2_R2":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_3_R1":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_3_R2":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_4_R1":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20170913_QEh1_LC1_CHC_SA_HLAIp_OD5P_ctrl_4_R2":["A*01:01","A*23:01","B*07:02","B*15:01","C*12:03","C*14:02"],
+                "pan_cancer@20180222_QE_HFX_LC2_HLAIp_JMI_SA_Me275_R1":["A*02:01","A*23:01","B*07:02","B*07:02","C*07:02","C*07:02"],
+                "pan_cancer@20180222_QE_HFX_LC2_HLAIp_JMI_SA_Me275_R2":["A*02:01","A*23:01","B*07:02","B*07:02","C*07:02","C*07:02"],
+                "pan_cancer@20180222_QE_HFX_LC2_HLAIp_JMI_SA_Me290_R1":["A*01:01","A*02:01","B*07:02","B*08:01","B*07:01","B*07:02"],
+                "pan_cancer@20180222_QE_HFX_LC2_HLAIp_JMI_SA_Me290_R2":["A*01:01","A*02:01","B*07:02","B*08:01","B*07:01","B*07:02"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1015A_1_R01":["A*02:09","A*32:01","B*35:03","B*49:01","C*04:01","C*07:01"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1015A_1_R02":["A*02:09","A*32:01","B*35:03","B*49:01","C*04:01","C*07:01"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1015A_2_R01":["A*02:09","A*32:01","B*35:03","B*49:01","C*04:01","C*07:01"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1015A_2_R02":["A*02:09","A*32:01","B*35:03","B*49:01","C*04:01","C*07:01"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1185B_C1_R01":["A*02:01","A*68:01","B*13:02","B*40:01","C*03:04","C*06:02"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1185B_C1_R02":["A*02:01","A*68:01","B*13:02","B*40:01","C*03:04","C*06:02"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1185B_C2_R01":["A*02:01","A*68:01","B*13:02","B*40:01","C*03:04","C*06:02"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1185B_C3_R01":["A*02:01","A*68:01","B*13:02","B*40:01","C*03:04","C*06:02"],
+                "pan_cancer@20180721_QEh1_LC1_SA_JMI_HLAIp_T1185B_C3_R02":["A*02:01","A*68:01","B*13:02","B*40:01","C*03:04","C*06:02"],
+                "pan_cancer@A375_MHC_IP_R2":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@A375_MHC_IP_R1":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@Seq57558_QE3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@Seq57556_QE3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@Seq57560_QE3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@Seq57559_QE3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@Seq57557_QE3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@Seq57555_QE3":["A*01:01","A*02:01","B*44:03","B*57:01","C*06:02","C*16:02"],
+                "pan_cancer@20140304_EXQ6_MiBa_SA_MM12-HLAp-1":["A*01:01","A*01:01","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@20140304_EXQ6_MiBa_SA_MM12-HLAp-2":["A*01:01","A*01:01","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@20140304_EXQ6_MiBa_SA_MM3-HLAp-1":[],
+                "pan_cancer@20140304_EXQ6_MiBa_SA_MM3-HLAp-2":[],
+                "pan_cancer@20140304_EXQ6_MiBa_SA_MM4-HLAp-1":[],
+                "pan_cancer@20140304_EXQ6_MiBa_SA_MM4-HLAp-2":[],
+                "pan_cancer@20140305_EXQ6_MiBa_SA_MM5-HLAp-1":["A*01:01","A*25:01","B*08:01","B*18:01"],
+                "pan_cancer@20140305_EXQ6_MiBa_SA_MM5-HLAp-2":["A*01:01","A*25:01","B*08:01","B*18:01"],
+                "pan_cancer@20140305_EXQ6_MiBa_SA_MM8-HLAp-1":["A*01:01","A*03:01","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20140305_EXQ6_MiBa_SA_MM8-HLAp-2":["A*01:01","A*03:01","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM12-HLAp-1":["A*01:01","A*01:01","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM12-HLAp-2":["A*01:01","A*01:01","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM3-HLAp-1":[],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM3-HLAp-2":[],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM4-HLAp-1":[],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM4-HLAp-2":[],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM5-HLAp-1":["A*01:01","A*25:01","B*08:01","B*18:01"],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM5-HLAp-2":["A*01:01","A*25:01","B*08:01","B*18:01"],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM8-HLAp-1":["A*01:01","A*03:01","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20140306_EXQ6_MiBa_SA_MM8-HLAp-2":["A*01:01","A*03:01","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_1_A":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_1_B":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_2_A":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_2_B":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_3_A":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_3_B":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_4_A":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141208_QEp7_MiBa_SA_HLA-I-p_MM15_4_B":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_1_A_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_1_B_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_2_A_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_2_B_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_3_A_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_3_B_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_4_A_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141210_QEp7_MiBa_SA_HLA-I-p_MM15_4_B_1":["A*03:01","A*68:01","B*27:05","B*35:03","C*02:02","C*04:01"],
+                "pan_cancer@20141212_QEp7_MiBa_SA_HLA-I-p_MM16_1_A":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141212_QEp7_MiBa_SA_HLA-I-p_MM16_1_B":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141212_QEp7_MiBa_SA_HLA-I-p_MM16_2_A":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141212_QEp7_MiBa_SA_HLA-I-p_MM16_2_B":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141212_QEp7_MiBa_SA_HLA-I-p_MM16_3_A":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141212_QEp7_MiBa_SA_HLA-I-p_MM16_3_B":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141213_QEp7_MiBa_SA_HLA-I-p_MM16_1_A_1":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141213_QEp7_MiBa_SA_HLA-I-p_MM16_2_A_1":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141213_QEp7_MiBa_SA_HLA-I-p_MM16_2_B_1":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141213_QEp7_MiBa_SA_HLA-I-p_MM16_3_A_1":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141213_QEp7_MiBa_SA_HLA-I-p_MM16_3_B_1":["A*01:01","A*24:02","B*07:02","B*08:01","C*07:01","C*07:02"],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MM21_1":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MM21_2":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MM21_3":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_18_1":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_18_2":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_18_3":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_4_1":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_4_2":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_4_3":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_5_1":[],
+                "pan_cancer@20141214_QEp7_MiBa_SA_HLA-I-p_MMf_5-2":[],
+                "pan_cancer@20141215_QEp7_MiBa_SA_HLA-I-p_MMf_1_1":[],
+                "pan_cancer@20141215_QEp7_MiBa_SA_HLA-I-p_MMf_1_2":[],
+                "pan_cancer@20141215_QEp7_MiBa_SA_HLA-I-p_MMf_15_1":[],
+                "pan_cancer@20141215_QEp7_MiBa_SA_HLA-I-p_MMf_16_1":[],
+                "pan_cancer@20141215_QEp7_MiBa_SA_HLA-I-p_MMf_16_2":[],
+                "pan_cancer@20141215_QEp7_MiBa_SA_HLA-I-p_MMf_7_1":[],
+                "pan_cancer@20141215_QEp7_MiBa_SA_HLA-I-p_MMf_7-2":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_10_1":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_10_2":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_2_1":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_2_2":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_3_1":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_3_2":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_6_1":[],
+                "pan_cancer@20141216_QEp7_MiBa_SA_HLA-I-p_MMf_6_2":[],
+                "pan_cancer@20141217_QEp7_MiBa_SA_HLA-I-p_MMf_13_1":[],
+                "pan_cancer@20141217_QEp7_MiBa_SA_HLA-I-p_MMf_13_2":[],
+                "pan_cancer@20141217_QEp7_MiBa_SA_HLA-I-p_MMf_17_1":[],
+                "pan_cancer@20141217_QEp7_MiBa_SA_HLA-I-p_MMf_17_2":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MM_12_1":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MM_12_2":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MM_20_1":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MM_20_2":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MMf_11_1":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MMf_11_2":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MMf_12_1":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MMf_12_2":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MMf_19_1":[],
+                "pan_cancer@20141218_QEp7_MiBa_SA_HLA-I-p_MMf_19_2":[],
+                "pan_cancer@QEP2_10348_YSA_MD55A3-IFN-1-500-HLA-I_1_311019":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_10348_YSA_MD55A3-IFN-2-500-HLA-I_1_311019":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_10348_YSA_MD55A3-NT1-HLA-I_1_311019":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_10348_YSA_MD55A3-NT2-HLA-I_1_311019":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_10348_YSA_MD55A3-W-1-HLA-I_1_311019":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_10348_YSA_MD55A3-W-2-HLA-I_1_311019":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_11290_YSA_412_1_060520":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_11290_YSA_413_1_060520":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_11290_YSA_414_1_060520":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_11290_YSA_415_1_060520":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_11290_YSA_416_1_060520":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_11290_YSA_417_1_060520":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@Seq47091_QE3":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@Seq48568_QE3":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@Seq48570_QE3":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@Seq48572_QE3":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@YE_20180622_SK_HLA_Melanoma_P006_2IPsx0p15g_wIFNy_01":["A*02:01","A*03:01","B*27:05","B*47:01","C*01:02","C*06:02"],
+                "pan_cancer@YE_20180622_SK_HLA_Melanoma_P006_2IPsx0p15g_wIFNy_02":["A*02:01","A*03:01","B*27:05","B*47:01","C*01:02","C*06:02"],
+                "pan_cancer@YE_20180622_SK_HLA_Melanoma_P006_2IPsx0p15g_01":["A*02:01","A*03:01","B*27:05","B*47:01","C*01:02","C*06:02"],
+                "pan_cancer@YE_20180622_SK_HLA_Melanoma_P006_2IPsx0p15g_02":["A*02:01","A*03:01","B*27:05","B*47:01","C*01:02","C*06:02"],
+                "pan_cancer@YY_20180828_SK_HLA_Pat5_Mel_withIFNy_3x7Mio_R1_01":["A*01:01","A*01:01","B*38:01","B*56:01","C*01:02","C*06:02"],
+                "pan_cancer@YY_20180828_SK_HLA_Pat5_Mel_withIFNy_3x7Mio_R1_02":["A*01:01","A*01:01","B*38:01","B*56:01","C*01:02","C*06:02"],
+                "pan_cancer@YY_20180828_SK_HLA_Pat5_Mel_3x5Mio_R1_01":["A*01:01","A*01:01","B*38:01","B*56:01","C*01:02","C*06:02"],
+                "pan_cancer@YY_20180828_SK_HLA_Pat5_Mel_3x5Mio_R1_02":["A*01:01","A*01:01","B*38:01","B*56:01","C*01:02","C*06:02"],
+                "pan_cancer@YG20190108_AA_MEL_sel_Pat2_IFNy_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YG20190108_AA_MEL_sel_Pat2_IFNy_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YG20190108_AA_MEL_sel_Pat2_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YG20190108_AA_MEL_sel_Pat2_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YJ20180306_SK_HLA_Melanoma_Pat2_2IPs_R1_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YJ20180306_SK_HLA_Melanoma_Pat2_2IPs_R1_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YJ20180306_SK_HLA_Melanoma_Pat2_2IPs_R2_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YJ20180306_SK_HLA_Melanoma_Pat2_2IPs_R2_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YY20190418_SK_HLA_Mel_Pat002_10x0p17g_pooled_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YE_20180726_SK_HLA_Mel_Pat15_6Mio_IFNy_01":["A*02:01","A*02:02","B*13:02","B*40:02","C*02:02","C*06:02"],
+                "pan_cancer@YE_20180726_SK_HLA_Mel_Pat15_6Mio_IFNy_02":["A*02:01","A*02:02","B*13:02","B*40:02","C*02:02","C*06:02"],
+                "pan_cancer@GG20160930_CRH_HLA_Patient15_250mlnCells_01":["A*02:01","A*02:02","B*13:02","B*40:02","C*02:02","C*06:02"],
+                "pan_cancer@GG20160930_CRH_HLA_Patient15_250mlnCells_02":["A*02:01","A*02:02","B*13:02","B*40:02","C*02:02","C*06:02"],
+                "pan_cancer@YE_20180726_SK_HLA_Mel_Pat15_6Mio_01":["A*02:01","A*02:02","B*13:02","B*40:02","C*02:02","C*06:02"],
+                "pan_cancer@YE_20180726_SK_HLA_Mel_Pat15_6Mio_02":["A*02:01","A*02:02","B*13:02","B*40:02","C*02:02","C*06:02"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_withIFNy_3IPs_R1_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_withIFNy_3IPs_R1_02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_withIFNy_3IPs_R2_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_withIFNy_3IPs_R2_02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@GG20160819_CRH_HLA_Patient11_08092016_discoveryTest":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@GG20160819_CRH_HLA_Patient11_08182016_discoveryTest":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@GG20160819_CRH_HLA_Patient11_olderSample_discoveryTest":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_3IPs_R1_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_3IPs_R1_02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_3IPs_R2_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YJ20180308_SK_HLA_Melanoma_Pat11_3IPs_R2_02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CTRLsiRNA_W_Adjusted_20_Rep3_msms3":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CD74siRNA_W_Adjusted_20_Rep2_msms6":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CD74siRNA_W_Adjusted_20_Rep3_msms7":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CTRLsiRNA_W_Adjusted_20_Rep5_msms5":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CTRLsiRNA_W_Adjusted_20_Rep4_msms4":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CTRLsiRNA_W_Adjusted_20_Rep1_msms1":[],
+                "pan_cancer@160121_DK_CoOp-PH_H1_CD74siRNA_W_20_DoseFinding_msms2":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CD74siRNA_W_Adjusted_20_Rep4_msms8":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CD74siRNA_W_Adjusted_20_Rep5_msms9":[],
+                "pan_cancer@160122_DK_CoOp-PH_H1_CTRLsiRNA_W_Adjusted_20_Rep2_msms2":[],
+                "pan_cancer@AG20210513_SR_FAIMS_HLA_2IPs_MEL_13240_011_NAIVE_02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YN20190329_AA_PT2_1p5sec_2CV_10secDE_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YY20190515_HLA_Mel_pt11_2IPs_fxn1_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@AG20210513_SR_FAIMS_HLA_2IPs_MEL_13240_011_NAIVE_Fxn01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@AG20210513_SR_FAIMS_HLA_2IPs_MEL_13240_011_NAIVE_Fxn03":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@AG20210513_SR_FAIMS_HLA_2IPs_MEL_13240_011_NAIVE_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190422_AA_Pat2_SDB_fxn2_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@AG20210513_SR_FAIMS_HLA_2IPs_MEL_13240_011_NAIVE_Fxn02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190516_FAIMS_HLA_Mel_pt11_2IPs_fxn3_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@AG20210511_SR_HLA_2IPs_MEL_13240_011_NAIVE_02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@AG20210511_SR_HLA_2IPs_MEL_13240_011_NAIVE_Fxn03":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190422_AA_Pat2_SDB_fxn1_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YY20190422_AA_Pat2_SDB_fxn2_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@AG20210511_SR_HLA_2IPs_MEL_13240_011_NAIVE_Fxn02":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190422_AA_Pat2_SDB_fxn3_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@AG20210511_SR_HLA_2IPs_MEL_13240_011_NAIVE_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190515_HLA_Mel_pt11_2IPs_fxn2_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190516_FAIMS_HLA_Mel_pt11_2IPs_fxn1_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190422_AA_Pat2_SDB_fxn1_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@AG20210511_SR_HLA_2IPs_MEL_13240_011_NAIVE_Fxn01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190515_HLA_Mel_pt11_2IPs_fxn3_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YY20190422_AA_Pat2_SDB_fxn3_01":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@YY20190516_FAIMS_HLA_Mel_pt11_2IPs_fxn2_01":["A*66:01","A*01:03","B*08:01","B*08:01","C*07:01","C*07:01"],
+                "pan_cancer@YN20190329_AA_PT2_1p5sec_3CV_10secDE_02":["A*02:01","A*24:02","B*15:01","B*44:02","C*05:01","C*07:02"],
+                "pan_cancer@QEP2_9649_YSA_62_1_280519":["A*02:01","A*30:02","B*18:01","C*05:01","C*07:01"],
+                "pan_cancer@Seq48586_QE3":["A*02:01","A*03:01","B*07:02","B*40:01","C*07:02","C*03:04"],
+                "pan_cancer@Seq48584_QE3":["A*02:01","A*03:01","B*07:02","B*40:01","C*07:02","C*03:04"],
+                "pan_cancer@Seq48578_QE3":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@Seq48576_QE3":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@QEP2_9649_YSA_56_1_280519":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@QEP2_9649_YSA_60_1_280519":["A*02:05","A*03:01","B*07:02","B*40:32","C*06:02","C*07:02"],
+                "pan_cancer@QEP2_9649_YSA_35_1_280519":["A*03:01","A*68:01","B*15:01","B*27:05","C*02:02","C*03:04"],
+                "pan_cancer@QEP2_9649_YSA_39_1_280519":["A*24:02","A*30:01","B*13:02","B*15:01","C*03:03","C*06:02"],
+                "pan_cancer@Seq47093_QE3":["A*24:02","A*30:01","B*13:02","B*15:01","C*03:03","C*06:02"],
+                "pan_cancer@Seq48582_QE3":["A*02:01","A*11:01","B*44:02","B*55:01","C*03:03","C*05:01"],
+                "pan_cancer@QEP2_9649_YSA_58_1_280519":["A*31:01","A*32:01","B*40:01","B*40:02","C*02:02","C*03:04"],
+                "pan_cancer@QEP2_9649_YSA_45_1_280519":["A*03:01","B*08:01","B*35:01","C*04:01","C*07:01"],
+                "pan_cancer@QEP2_10980_YSA_325_1_160220":["A*01:01","A*29:02","B*44:03","B*51:01","C*16:01","C*15:13"],
+                "pan_cancer@QEP2_10980_YSA_326_1_160220":["A*01:01","A*29:02","B*44:03","B*51:01","C*16:01","C*15:13"],
+                "pan_cancer@QEP2_11483_YSA_449_2_220620":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@QEP2_11483_YSA_450_2_220620":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@QEP2_11483_YSA_451_2_220620":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@QEP2_12247_YSA_526_2_090920":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@QEP2_11483_YSA_526_1_220620":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"],
+                "pan_cancer@QEP2_11483_YSA_527_1_220620":["A*01:01","A*02:01","B*14:02","B*15:01","C*08:02","C*03:04"]
+            },
+            "overwrite_hla_nested":true,
+            "overwrite_additional_hla":false,
+            "additional_hla":[],
+            "cores":20,
+            "inquiry_mode":"i",
+            "added_genes":["ENSG00000221867","ENSG00000147381","ENSG00000184033","ENSG00000185686","ENSG00000046774"],
+            "use_genes_lfc":true,
+            "other_alg_mapping":{
+                "filename":"Raw file",
+                "clean_sequence":"Sequence",
+                "scan_id":"Scan number",
+                "possible_protein_ids":"Proteins",
+                "intensity":"Precursor intensity",
+                "score":"Score",
+                "qval":"PEP",
+                "charge":"Charge",
+                "precursor_mz":"m/z",
+                "retention_time":"Retention time"
+            },
+            "other_alg_impute":{
+                "plot_logic":"mzml",
+                "Mass analyzer":"ITMS"
+            },
+            "protein_delimiter":";;"
+
+        },
+
+        "fixed_parameters":{
+            "DATABASE":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database",
+            "default_var_mods": [
+                "Oxidation (M)", 
+                "Acetyl (Protein N-term)"
+            ],
+            "added_var_mods":null,
+            "fix_mods":null,
+            "maxNmods":1,
+            "n_threads":20,
+            "maxquant_program":"dotnet",
+            "maxquant_exe":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/MaxQuant_v_2.4.9.0/bin/MaxQuantCmd.exe",
+            "antigen_dir":"antigen",
+            "inquiry_categories":[
+                "self_gene",
+                "rna_edit",
+                "circRNA",
+                "TE_chimeric_transcript",
+                "splicing",
+                "ERV",
+                "intron_retention",
+                "pathogen",
+                "variant",
+                "fusion",
+                "nuORF"
+                ],
+    
+            "netMHCpan_path":"/gpfs/data/yarmarkovichlab/Frank/SNAF_ecosystem/netMHCpan-4.1/netMHCpan",
+            "netMHCIIpan_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/netMHCIIpan-4.3/netMHCIIpan"   
+        }
+
+
+
+    },
+
+    "antigen_portal":{
+        "tunable_parameters":{
+            "raw_dir":"/gpfs/data/yarmarkovichlab/JH_AML/immuno",
+            "mzml_dir":"/gpfs/data/yarmarkovichlab/JH_AML/immuno/mzml_dir",
+            "technology_setup":"na",
+            "cores":20,
+
+            "cancer":"JH_AML",
+            "antigen_dir":"/gpfs/data/yarmarkovichlab/JH_AML/antigen/fdr",
+            "assets_dir":"/gpfs/data/yarmarkovichlab/JH_AML/assets",
+
+            "template_json":"/gpfs/data/yarmarkovichlab/JH_AML/codes/template.json",
+            "draw_diff":false,
+            "draw_psm":true
+        },
+
+        "fixed_parameters":{
+            "DATABASE":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database",
+            "SANDBOX_PATH":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/pwiz",
+            "tmp_dir":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse/scratch",
+            "bruker_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse/process_bruker.py",
+            "neoverse_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse/NeoVerse.py"       
+        }
+
+    },
+
+
+    "python_interact":{
+
+
+        "image_format":"pdf",
+
+        "gene":{
+            "markers":{
+                "LRRC15":"ENSG00000172061"
+            },
+
+            "cat_dic":null,
+
+            "cat_dic_tmp":{
+                "10792":[
+                    "SF10792-PDX-20038XR-17Q2-05_clean",
+                    "SF10792-PDX-20038XR-17Q5-33_clean",
+                    "SF10792-PDX-20038XR-17Q5-34_clean",
+                    "SF10792-PDX-20038XR-17Q5-35_clean"
+                ],
+                "8894":[
+                    "SF8894-PDX-20038XR-17Q5-36_clean",
+                    "SF8894-PDX-20038XR-17Q5-37_clean",
+                    "SF8894-PDX-20038XR-17Q5-38_clean",
+                    "SF8894-PDX-20038XR-17Q5-39_clean"
+                ]
+            }
+        },
+
+        "splicing":{
+            "events":[
+                "chr16:11818424-11827321"
+            ]
+        },
+
+        "erv":{
+            "markers":[
+                "L2a_dup17921"
+            ]
+        },
+
+        "pathogen":{
+            "included_strains":[],
+            "plot_strains":["Cutibacterium acnes","Malassezia restricta"]
+        },
+
+
+        "intron_retention":{
+            "introns":[
+                "CHM13_G0000301,AL357140.1,chr1,+,I1.1,9391378,9392279"
+            ]
+        },
+
+
+        "nuorf":{
+            "obj":"SLFEGIYTI",
+
+            "immuno_dir":"/gpfs/data/yarmarkovichlab/JH_AML/immuno",
+            "col":"percentile",
+
+            "raw2bio":{
+                "4-9-2025_20250409_TT_Evo_RA_AML_PBMC_Sample_1_Rep1_5081":"sample1",
+                "4-9-2025_20250409_TT_Evo_RA_AML_PBMC_Sample_1_Rep2_5084":"sample1",
+                "4-9-2025_20250409_TT_Evo_RA_AML_PBMC_Sample_13_Rep1_5087":"sample13",
+                "4-10-2025_20250409_TT_Evo_RA_AML_PBMC_Sample_13_Rep2_5090":"sample13"
+            },
+
+            "final_path":"/gpfs/data/yarmarkovichlab/JH_AML/antigen/other_alg/final_enhanced.txt"
+
+        }
+    }
+}
