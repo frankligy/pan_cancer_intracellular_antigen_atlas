@@ -219,14 +219,14 @@ def get_ts_fusion(atlas_dir):
 
 
 # help with membrane protein filter
-# df_list = []
-# for c,s in zip(cancers,n_samples):
-#     atlas_dir = os.path.join(root_atlas_dir,c)
-#     real_common, real_common_membrane = get_ts_gene(atlas_dir)
-#     s = pd.Series(real_common_membrane)
-#     df_list.append(s)
-# df = pd.concat(df_list,axis=0,keys=cancers)
-# df.to_csv('my_filter_membrane.txt',sep='\t')
+df_list = []
+for c,s in zip(cancers,n_samples):
+    atlas_dir = os.path.join(root_atlas_dir,c)
+    real_common, real_common_membrane = get_ts_gene(atlas_dir)
+    s = pd.Series(real_common_membrane)
+    df_list.append(s)
+df = pd.concat(df_list,axis=0,keys=cancers)
+df.to_csv('my_filter_membrane.txt',sep='\t')
 
 
 safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
@@ -281,19 +281,22 @@ pathogen_df = pathogen_df.loc[~pathogen_df['pep'].isin(safety_screen_bl),:]
 patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
 # patent_df.to_csv('for_safety_screen.txt',sep='\t',index=None)   # you can generate for safety screen as well
 patent_df.to_csv('final_all_ts_antigens.txt',sep='\t',index=None)
+print(len(patent_df['pep'].unique()))
 
 
-# data = []
-# for pep,patent_sub_df in patent_df.groupby(by='pep'):
-#     patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
-#     all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
-#     tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-#     tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
-#     tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
-#     all_hla = ','.join([item[0] for item in tmp])
-#     data.append((pep,all_c,all_hla))
-# patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
-# patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
+
+
+data = []
+for pep,patent_sub_df in patent_df.groupby(by='pep'):
+    patent_sub_df.sort_values(by='highest_score',inplace=True,ascending=False)
+    all_c = ','.join(patent_sub_df['cancer'].values.tolist()[:3])
+    tmp1 = [item[0].replace('HLA-','').replace('*','').replace(':','') for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+    tmp2 = [item[2] for item in literal_eval(patent_sub_df['additional_query'].iloc[0])]
+    tmp = sorted(zip(tmp1,tmp2),key=lambda x:x[1])[:3]
+    all_hla = ','.join([item[0] for item in tmp])
+    data.append((pep,all_c,all_hla))
+patent_df_final = pd.DataFrame.from_records(data=data,columns=['peptide','indication','HLA'])
+patent_df_final.to_csv('patent_df_final.txt',sep='\t',index=None)
 
 
 
@@ -446,110 +449,116 @@ plt.savefig('ts_antigen_overview.pdf',bbox_inches='tight')
 plt.close()
 
 
-# hla_dic = {}
-# dic = {}
-# total_immuno = 0  # 1771
-# total_immuno_bio = 0
-# root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
-# with pd.ExcelWriter('all_immuno_meta.xlsx') as writer:
-#     for c in cancers:
-#         f = os.path.join(root_immuno_dir,cancers2immuno[c],'metadata.txt')
-#         df = pd.read_csv(f,sep='\t',index_col=0)
-#         total_immuno += df.shape[0]
-#         total_immuno_bio += len(df['biology'].unique())
-#         dic[c] = df.shape[0]
-#         df.to_excel(writer,sheet_name=c)
-#         hlas = []
-#         for item in df['HLA']:
-#             if isinstance(item,str):
-#                 hlas.extend(list(set(item.split(','))))
-#         values,counts = np.unique(hlas,return_counts=True)
-#         hla_dic[c] = {v:c_ for v,c_ in zip(values,counts)}
-# print(total_immuno)
-# print(total_immuno_bio)
+hla_dic = {}
+dic1 = {}
+dic2 = {}
+total_immuno = 0  # 1771
+total_immuno_bio = 0
+root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
+with pd.ExcelWriter('all_immuno_meta.xlsx') as writer:
+    for c in cancers:
+        f = os.path.join(root_immuno_dir,cancers2immuno[c],'metadata.txt')
+        df = pd.read_csv(f,sep='\t',index_col=0)
+        total_immuno += df.shape[0]
+        total_immuno_bio += len(df['biology'].unique())
+        dic1[c] = df.shape[0]
+        dic2[c] = len(df['biology'].unique())
+        df.to_excel(writer,sheet_name=c)
+        hlas = []
+        for item in df['HLA']:
+            if isinstance(item,str):
+                hlas.extend(list(set(item.split(','))))
+        values,counts = np.unique(hlas,return_counts=True)
+        hla_dic[c] = {v:c_ for v,c_ in zip(values,counts)}
+print(total_immuno)
+print(total_immuno_bio)
 
 
-# hla_data = []
-# all_hla = []
-# for k,v in hla_dic.items():
-#     all_hla.extend(list(v.keys()))
-# all_hla = list(set(all_hla))
-# all_hla = sorted(all_hla)
-# for c in cancers:
-#     tmp = []
-#     for hla in all_hla:
-#         tmp.append(hla_dic[c].get(hla,0))
-#     hla_data.append(tmp)
+hla_data = []
+all_hla = []
+for k,v in hla_dic.items():
+    all_hla.extend(list(v.keys()))
+all_hla = list(set(all_hla))
+all_hla = sorted(all_hla)
+for c in cancers:
+    tmp = []
+    for hla in all_hla:
+        tmp.append(hla_dic[c].get(hla,0))
+    hla_data.append(tmp)
 
-# hla_df = pd.DataFrame(index=cancers,columns=all_hla,data=hla_data)
-# reformatted_hla = ['HLA-' + item.replace(':','').replace('*','') for item in hla_df.columns]
-# hla_df.columns = reformatted_hla
-# freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)
-# freq_dic = freq_df['Percent US population'].to_dict()
-# ori_array = [tuple([item[4:] for item in hla_df.columns.tolist()]),
-#              tuple([freq_dic.get(item,0) for item in hla_df.columns]),
-#              tuple([item[4] for item in hla_df.columns])]
-# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-# hla_df.columns = mi
+hla_df = pd.DataFrame(index=cancers,columns=all_hla,data=hla_data)
+reformatted_hla = ['HLA-' + item.replace(':','').replace('*','') for item in hla_df.columns]
+hla_df.columns = reformatted_hla
+freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)
+freq_dic = freq_df['Percent US population'].to_dict()
+ori_array = [tuple([item[4:] for item in hla_df.columns.tolist()]),
+             tuple([freq_dic.get(item,0) for item in hla_df.columns]),
+             tuple([item[4] for item in hla_df.columns])]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+hla_df.columns = mi
 
-# cancer2coverage = {}
-# for c in cancers:
-#     s = hla_df.loc[c]
-#     s = s.loc[s>0]
-#     freqs = s.index.to_frame(index=False)[1].values.tolist()
-#     neg = 1
-#     for f in freqs:
-#         neg *= (1-f)
-#     coverage = 1-neg
-#     cancer2coverage[c] = coverage
-# ori_array = [tuple(hla_df.index.tolist()),
-#              tuple([cancer2coverage[item] for item in hla_df.index])]
-# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-# hla_df.index = mi
-# hla_df.to_csv('hla_df.txt',sep='\t')
+cancer2coverage = {}
+for c in cancers:
+    s = hla_df.loc[c]
+    s = s.loc[s>0]
+    freqs = s.index.to_frame(index=False)[1].values.tolist()
+    neg = 1
+    for f in freqs:
+        neg *= (1-f)
+    coverage = 1-neg
+    cancer2coverage[c] = coverage
+ori_array = [tuple(hla_df.index.tolist()),
+             tuple([cancer2coverage[item] for item in hla_df.index])]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+hla_df.index = mi
+hla_df.to_csv('hla_df.txt',sep='\t')
 
-# selected_col = [col for col in hla_df.columns if col[1] > 0.01]
-# hla_df_freq = hla_df.loc[:,selected_col]
-# hla_df_freq.to_csv('hla_df_freq.txt',sep='\t')
+selected_col = [col for col in hla_df.columns if col[1] > 0.01]
+hla_df_freq = hla_df.loc[:,selected_col]
+hla_df_freq.to_csv('hla_df_freq.txt',sep='\t')
 
-# hla_df_freq = hla_df_freq.mask(hla_df_freq>0,1)
-# hla_df_freq.to_csv('hla_df_freq_binary.txt',sep='\t')
+hla_df_freq = hla_df_freq.mask(hla_df_freq>0,1)
+hla_df_freq.to_csv('hla_df_freq_binary.txt',sep='\t')
 
 
 
-# fig,ax = plt.subplots()
-# bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
-# for bar in bars:
-#     yval = bar.get_height()
-#     ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
-# ax.set_xticks(np.arange(len(dic)))
-# ax.set_xticklabels(list(dic.keys()),rotation=60)
-# ax.set_ylabel('Number of sample')
-# plt.savefig('figs1_stat_immuno.pdf',bbox_inches='tight')
-# plt.close()
-    
+fig,ax = plt.subplots()
+bars = ax.bar(x=[i*3 for i in range(len(dic1))],height=list(dic1.values()),width=1)
+for bar in bars:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
+bars = ax.bar(x=[i*3+1 for i in range(len(dic2))],height=list(dic2.values()),width=1)
+for bar in bars:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
+ax.set_xticks([i*3+0.5 for i in range(len(dic2))])
+ax.set_xticklabels(list(dic1.keys()),rotation=60)
+ax.set_ylabel('Number of sample')
+plt.savefig('figs1_stat_immuno.pdf',bbox_inches='tight')
+plt.close()
 
-# dic = {}
-# total_rna = 0  # 7473
-# with pd.ExcelWriter('all_rna_manifest.xlsx') as writer:
-#     for c in cancers:
-#         cmd = 'find {} -type f -name "manifest_*_*.tsv"'.format(os.path.join(root_atlas_dir,c))
-#         possible_f = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1][0]
-#         df = pd.read_csv(possible_f,sep='\t',index_col=0)
-#         total_rna += df.shape[0]
-#         dic[c] = df.shape[0]
-#         df.to_excel(writer,sheet_name=c)
 
-# fig,ax = plt.subplots()
-# bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
-# for bar in bars:
-#     yval = bar.get_height()
-#     ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
-# ax.set_xticks(np.arange(len(dic)))
-# ax.set_xticklabels(list(dic.keys()),rotation=60)
-# ax.set_ylabel('Number of sample')
-# plt.savefig('figs1_stat_rna.pdf',bbox_inches='tight')
-# plt.close()
+dic = {}
+total_rna = 0  
+with pd.ExcelWriter('all_rna_manifest.xlsx') as writer:
+    for c in cancers:
+        cmd = 'find {} -type f -name "manifest_*_*.tsv"'.format(os.path.join(root_atlas_dir,c))
+        possible_f = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1][0]
+        df = pd.read_csv(possible_f,sep='\t',index_col=0)
+        total_rna += df.shape[0]
+        dic[c] = df.shape[0]
+        df.to_excel(writer,sheet_name=c)
+
+fig,ax = plt.subplots()
+bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))
+for bar in bars:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, yval, ha='center', va='bottom')
+ax.set_xticks(np.arange(len(dic)))
+ax.set_xticklabels(list(dic.keys()),rotation=60)
+ax.set_ylabel('Number of sample')
+plt.savefig('figs1_stat_rna.pdf',bbox_inches='tight')
+plt.close()
 
 
 # tumor specific event 

@@ -95,80 +95,7 @@ def process_tumor_gene():
         
 
 # so it really does not change that much, this list versus the 66 that I used for enrichment
-pan_cancer_ensgs = [
-    'ENSG00000100162',
-    'ENSG00000101057',
-    'ENSG00000161888',
-    'ENSG00000089685',
-    'ENSG00000167513',
-    'ENSG00000093009',
-    'ENSG00000091651',
-    'ENSG00000080986',
-    'ENSG00000142945',
-    'ENSG00000131153',
-    'ENSG00000146670',
-    'ENSG00000237649',
-    'ENSG00000175643',
-    'ENSG00000131351',
-    'ENSG00000127564',
-    'ENSG00000162062',
-    'ENSG00000137807',
-    'ENSG00000131747',
-    'ENSG00000117724',
-    'ENSG00000112984',
-    'ENSG00000138160',
-    'ENSG00000126787',
-    'ENSG00000072571',
-    'ENSG00000071539',
-    'ENSG00000101003',
-    'ENSG00000171848',
-    'ENSG00000094804',
-    'ENSG00000090889',
-    'ENSG00000138180',
-    'ENSG00000112742',
-    'ENSG00000088325',
-    'ENSG00000165304',
-    'ENSG00000170312',
-    'ENSG00000117650',
-    'ENSG00000087586',
-    'ENSG00000175063',
-    'ENSG00000117399',
-    'ENSG00000134690',
-    'ENSG00000115163',
-    'ENSG00000157456',
-    'ENSG00000100526',
-    'ENSG00000164087',
-    'ENSG00000105011',
-    'ENSG00000169679',
-    'ENSG00000148773',
-    'ENSG00000143228',
-    'ENSG00000186185',
-    'ENSG00000135451',
-    'ENSG00000111206',
-    'ENSG00000151725',
-    'ENSG00000143476',
-    'ENSG00000156970',
-    'ENSG00000111247',
-    'ENSG00000183856',
-    'ENSG00000179750',
-    'ENSG00000189057',
-    'ENSG00000123219',
-    'ENSG00000276043',
-    'ENSG00000119969',
-    'ENSG00000166803',
-    'ENSG00000169245',
-    'ENSG00000155893',
-    'ENSG00000129195',
-    'ENSG00000168078',
-    'ENSG00000121211',
-    'ENSG00000144354',
-    'ENSG00000162390',
-    'ENSG00000196083',
-    'ENSG00000160886',
-    'ENSG00000130487',
-    'ENSG00000117407',
-    'ENSG00000176597',
-]
+pan_cancer_ensgs = pd.read_csv('pan_cancer_cluster.txt',sep='\t',header=None)[0].values.tolist()
 
 # peptide versus rna
 # df = pd.read_csv('ts_final.txt',sep='\t')
@@ -201,170 +128,170 @@ pan_cancer_ensgs = [
 # plt.savefig('pan_cancer_cell_cycle_enrichr.pdf',bbox_inches='tight')
 # plt.close()
 
+# for ts gene, coverage for patients, also consider all antigens
+df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+# remove pan-cancer gene, because they are not ideal as single target
+cond = []
+for item1,item2 in zip(df['typ'],df['ensgs']):
+    if item1 == 'self_gene' and item2 in pan_cancer_ensgs:
+        cond.append(False)
+    else:
+        cond.append(True)
+df = df.loc[cond,:]
+# add g_prop column
+ts_ensg = df.loc[df['typ']=='self_gene',:]['ensgs'].values
+self_gene_dic = {}
+self_gene_dic_overall = {}
+for c in cancers:
+    path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
+    exp = pd.read_csv(path,sep='\t',index_col=0)
+    exp = exp.loc[ts_ensg,:]
+    exp = exp.values
+    exp = (exp > 20).astype(int)
+    props = np.sum(exp,axis=1) / exp.shape[1]
+    mapping = {} # gene specific prop
+    for i1,i2 in zip(ts_ensg,props):
+        mapping[i1] = i2
+    self_gene_dic[c] = mapping
+    prop = np.count_nonzero(np.any(exp,axis=0)) / exp.shape[1]
+    self_gene_dic_overall[c] = prop
 
-# # for ts gene, coverage for patients, also consider all antigens
-# df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
-# # remove pan-cancer gene, because they are not ideal as single target
-# cond = []
-# for item1,item2 in zip(df['typ'],df['ensgs']):
-#     if item1 == 'self_gene' and item2 in pan_cancer_ensgs:
-#         cond.append(False)
-#     else:
-#         cond.append(True)
-# df = df.loc[cond,:]
-# # add g_prop column
-# ts_ensg = df.loc[df['typ']=='self_gene',:]['ensgs'].values
-# self_gene_dic = {}
-# self_gene_dic_overall = {}
-# for c in cancers:
-#     path = os.path.join(root_atlas_dir,c,'gene_tpm.txt')
-#     exp = pd.read_csv(path,sep='\t',index_col=0)
-#     exp = exp.loc[ts_ensg,:]
-#     exp = exp.values
-#     exp = (exp > 20).astype(int)
-#     props = np.sum(exp,axis=1) / exp.shape[1]
-#     mapping = {} # gene specific prop
-#     for i1,i2 in zip(ts_ensg,props):
-#         mapping[i1] = i2
-#     self_gene_dic[c] = mapping
-#     prop = np.count_nonzero(np.any(exp,axis=0)) / exp.shape[1]
-#     self_gene_dic_overall[c] = prop
+col = []
+for row in df.itertuples():
+    if row.typ == 'self_gene':
+        col.append(self_gene_dic[row.cancer][row.ensgs])
+    elif (row.typ == 'splicing' or row.typ == 'TE_chimeric_transcript') and row.unique:
+        try:
+            n = float(row.source.split('|')[1]) 
+            p = n / n_samples[cancers.index(row.cancer)]
+        except:
+            p = 0
+        col.append(p)
+    elif row.typ == 'self_translate_te' and row.unique:
+        try:
+            n = float(row.source.split('|')[5])
+            p = n / n_samples[cancers.index(row.cancer)]
+        except:
+            p = 0
+        col.append(p)
+    elif row.typ == 'variant' and row.unique:
+        try:
+            n = float(row.source.split('|')[2])
+            p = n / n_samples[cancers.index(row.cancer)]
+        except:
+            p = 0
+        col.append(p)
+    elif row.typ == 'intron_retention' and row.unique:
+        try:
+            n = float(row.source.split('|')[1])
+            p = n / n_samples[cancers.index(row.cancer)]
+        except:
+            p = 0
+        col.append(p)
+    else:
+        col.append(0)
 
-# col = []
-# for row in df.itertuples():
-#     if row.typ == 'self_gene':
-#         col.append(self_gene_dic[row.cancer][row.ensgs])
-#     elif (row.typ == 'splicing' or row.typ == 'TE_chimeric_transcript') and row.unique:
-#         try:
-#             n = float(row.source.split('|')[1]) 
-#             p = n / n_samples[cancers.index(row.cancer)]
-#         except:
-#             p = 0
-#         col.append(p)
-#     elif row.typ == 'self_translate_te' and row.unique:
-#         try:
-#             n = float(row.source.split('|')[5])
-#             p = n / n_samples[cancers.index(row.cancer)]
-#         except:
-#             p = 0
-#         col.append(p)
-#     elif row.typ == 'variant' and row.unique:
-#         try:
-#             n = float(row.source.split('|')[2])
-#             p = n / n_samples[cancers.index(row.cancer)]
-#         except:
-#             p = 0
-#         col.append(p)
-#     elif row.typ == 'intron_retention' and row.unique:
-#         try:
-#             n = float(row.source.split('|')[1])
-#             p = n / n_samples[cancers.index(row.cancer)]
-#         except:
-#             p = 0
-#         col.append(p)
-#     else:
-#         col.append(0)
+df['g_prop'] = col
 
-# df['g_prop'] = col
+df = df.loc[df['typ']=='self_gene',:]
 
-# df = df.loc[df['typ']=='self_gene',:]
+data = []
+for c in cancers:
+    print(c)
+    # now consider hla
+    if c in ['RT','NBL']:
+        dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
+        dic = {k.replace('HLA-',''):v for k,v in dic.items()}
+    else:
+        dic = {}
+        hla_path = os.path.join(root_atlas_dir,c,'hla_types.txt')
+        hla = pd.read_csv(hla_path,sep='\t',index_col=0)
+        tmp = hla.loc[:,['HLAA1','HLAA2']].values.flatten().tolist()
+        values,counts = np.unique(tmp,return_counts=True)
+        for v,c_ in zip(values,counts):
+            if v.startswith('A'):
+                dic[v] = c_/len(tmp)
+        tmp = hla.loc[:,['HLAB1','HLAB2']].values.flatten().tolist()
+        values,counts = np.unique(tmp,return_counts=True)
+        for v,c_ in zip(values,counts):
+            if v.startswith('B'):
+                dic[v] = c_/len(tmp)
+        tmp = hla.loc[:,['HLAC1','HLAC2']].values.flatten().tolist()
+        values,counts = np.unique(tmp,return_counts=True)
+        for v,c_ in zip(values,counts):
+            if v.startswith('C'):
+                dic[v] = c_/len(tmp)
+    # start to look for antigen 
+    df_sub = df.loc[(df['cancer']==c) & (df['g_prop']!=0),:]
+    mapping_norm_sb = {}
+    mapping_norm_wb = {}
+    for source,sub_df in tqdm(df_sub.groupby(by='source')):
+        g_prop = sub_df['g_prop'].iloc[0]
+        all_query = []
+        sb_hla = []
+        wb_hla = []
+        for item in sub_df['additional_query']:
+            item = literal_eval(item)
+            all_query.extend(item)
+        for item in all_query:
+            wb_hla.append(item[0])
+            if item[3] == 'SB':
+                sb_hla.append(item[0])
+        sb_hla = list(set(sb_hla))
+        wb_hla = list(set(wb_hla))
 
-# data = []
-# for c in cancers:
-#     print(c)
-#     # now consider hla
-#     if c in ['RT','NBL']:
-#         dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
-#         dic = {k.replace('HLA-',''):v for k,v in dic.items()}
-#     else:
-#         dic = {}
-#         hla_path = os.path.join(root_atlas_dir,c,'hla_types.txt')
-#         hla = pd.read_csv(hla_path,sep='\t',index_col=0)
-#         tmp = hla.loc[:,['HLAA1','HLAA2']].values.flatten().tolist()
-#         values,counts = np.unique(tmp,return_counts=True)
-#         for v,c_ in zip(values,counts):
-#             if v.startswith('A'):
-#                 dic[v] = c_/len(tmp)
-#         tmp = hla.loc[:,['HLAB1','HLAB2']].values.flatten().tolist()
-#         values,counts = np.unique(tmp,return_counts=True)
-#         for v,c_ in zip(values,counts):
-#             if v.startswith('B'):
-#                 dic[v] = c_/len(tmp)
-#         tmp = hla.loc[:,['HLAC1','HLAC2']].values.flatten().tolist()
-#         values,counts = np.unique(tmp,return_counts=True)
-#         for v,c_ in zip(values,counts):
-#             if v.startswith('C'):
-#                 dic[v] = c_/len(tmp)
-#     # start to look for antigen 
-#     df_sub = df.loc[(df['cancer']==c) & (df['g_prop']!=0),:]
-#     mapping_norm_sb = {}
-#     mapping_norm_wb = {}
-#     for source,sub_df in tqdm(df_sub.groupby(by='source')):
-#         g_prop = sub_df['g_prop'].iloc[0]
-#         all_query = []
-#         sb_hla = []
-#         wb_hla = []
-#         for item in sub_df['additional_query']:
-#             item = literal_eval(item)
-#             all_query.extend(item)
-#         for item in all_query:
-#             wb_hla.append(item[0])
-#             if item[3] == 'SB':
-#                 sb_hla.append(item[0])
-#         sb_hla = list(set(sb_hla))
-#         wb_hla = list(set(wb_hla))
+        tmp = [dic.get(h.replace('HLA-','').replace('*','').replace(':',''),0) for h in sb_hla]
+        h_prop = 1
+        for item in tmp:
+            h_prop *= (1-item)
+        norm_prop = g_prop * (1-h_prop)
+        mapping_norm_sb[source] = norm_prop
 
-#         tmp = [dic.get(h.replace('HLA-','').replace('*','').replace(':',''),0) for h in sb_hla]
-#         h_prop = 1
-#         for item in tmp:
-#             h_prop *= (1-item)
-#         norm_prop = g_prop * (1-h_prop)
-#         mapping_norm_sb[source] = norm_prop
+        tmp = [dic.get(h.replace('HLA-','').replace('*','').replace(':',''),0) for h in wb_hla]
+        h_prop = 1
+        for item in tmp:
+            h_prop *= (1-item)
+        norm_prop = g_prop * (1-h_prop)
+        mapping_norm_wb[source] = norm_prop
 
-#         tmp = [dic.get(h.replace('HLA-','').replace('*','').replace(':',''),0) for h in wb_hla]
-#         h_prop = 1
-#         for item in tmp:
-#             h_prop *= (1-item)
-#         norm_prop = g_prop * (1-h_prop)
-#         mapping_norm_wb[source] = norm_prop
+    final_prop = 1
+    for k,v in mapping_norm_sb.items():
+        final_prop *= (1-v)
+    final_sb_prop = 1-final_prop
 
-#     final_prop = 1
-#     for k,v in mapping_norm_sb.items():
-#         final_prop *= (1-v)
-#     final_sb_prop = 1-final_prop
+    final_prop = 1
+    for k,v in mapping_norm_wb.items():
+        final_prop *= (1-v)
+    final_wb_prop = 1-final_prop
 
-#     final_prop = 1
-#     for k,v in mapping_norm_wb.items():
-#         final_prop *= (1-v)
-#     final_wb_prop = 1-final_prop
+    data.append((self_gene_dic_overall[c],'gene_prop',c))
+    data.append((final_wb_prop,'wb_prop',c))
+    data.append((final_sb_prop,'sb_prop',c))
 
-#     data.append((self_gene_dic_overall[c],'gene_prop',c))
-#     data.append((final_wb_prop,'wb_prop',c))
-#     data.append((final_sb_prop,'sb_prop',c))
+plot_df = pd.DataFrame.from_records(data,columns=['value','category','cancer'])
 
-# plot_df = pd.DataFrame.from_records(data,columns=['value','category','cancer'])
+plot_df_now = plot_df.loc[plot_df['category']=='wb_prop',:].sort_values(by='value',ascending=False)
+cancer2n_sample = pd.Series(index=cancers,data=n_samples).to_dict()
+plot_df_now['n_sample'] = plot_df_now['cancer'].map(cancer2n_sample).values
+coverage = 0
+for i1,i2 in zip(plot_df_now['n_sample'],plot_df_now['value']):
+    coverage += round(i1*i2)
+print(coverage/sum(n_samples))  # sb 78% and wb 87%
 
-# plot_df_now = plot_df.loc[plot_df['category']=='wb_prop',:].sort_values(by='value',ascending=False)
-# cancer2n_sample = pd.Series(index=cancers,data=n_samples).to_dict()
-# plot_df_now['n_sample'] = plot_df_now['cancer'].map(cancer2n_sample).values
-# coverage = 0
-# for i1,i2 in zip(plot_df_now['n_sample'],plot_df_now['value']):
-#     coverage += round(i1*i2)
-# print(coverage/sum(n_samples))  # sb 78% and wb 87%
-
-
-# custom_order = []
-# for i in plot_df_now['cancer']:
-#     if i not in custom_order:
-#         custom_order.append(i)
-# plot_df['cancer'] = pd.Categorical(plot_df['cancer'], categories=custom_order, ordered=True)
-# plot_df.sort_values(by=['cancer','category'],inplace=True)
-# plot_df.to_csv('self_gene_coverage.txt',sep='\t')
-# fig,ax = plt.subplots()
-# sns.barplot(plot_df,x='cancer',y='value',hue='category',ax=ax)
-# ax.set_xticklabels(ax.get_xticklabels(), rotation=60)
-# plt.savefig('self_gene_coverage.pdf',bbox_inches='tight')
-# plt.close()
+c2c = plot_df_now.set_index(keys='cancer')['value'].to_dict()
+c2c = {k:round(v,2) for k,v in c2c.items()}
+custom_order = []
+for i in plot_df_now['cancer']:
+    if i not in custom_order:
+        custom_order.append(i)
+plot_df['cancer'] = pd.Categorical(plot_df['cancer'], categories=custom_order, ordered=True)
+plot_df.sort_values(by=['cancer','category'],inplace=True)
+plot_df.to_csv('self_gene_coverage.txt',sep='\t')
+fig,ax = plt.subplots()
+sns.barplot(plot_df,x='cancer',y='value',hue='category',ax=ax)
+ax.set_xticklabels(['{}({})'.format(item.get_text(),str(c2c[item.get_text()])) for item in ax.get_xticklabels()], rotation=60)
+plt.savefig('self_gene_coverage.pdf',bbox_inches='tight')
+plt.close()
 
 
 # ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
@@ -450,133 +377,133 @@ pan_cancer_ensgs = [
 # d.to_csv('zach_single_cell_data_ensg.txt',sep='\t')
 
 # membrane protein coverage
-# mem = pd.read_csv('my_filter_membrane.txt',sep='\t')
-# membrane_ensg = list(set(mem['0'].values.tolist()))
+mem = pd.read_csv('my_filter_membrane.txt',sep='\t')
+membrane_ensg = list(set(mem['0'].values.tolist()))
 
-# mem_bl_ensg = [
-#     'ENSG00000144681',
-#     'ENSG00000050438',
-#     'ENSG00000179639',
-#     'ENSG00000187867',
-#     'ENSG00000146013',
-#     'ENSG00000160856',
-#     'ENSG00000143297',
-#     'ENSG00000169258',
-#     'ENSG00000182866',
-#     'ENSG00000158315',
-#     'ENSG00000139193',
-#     'ENSG00000188389',
-#     'ENSG00000134061',
-#     'ENSG00000101082',
-#     'ENSG00000196358',
-#     'ENSG00000126353',
-#     'ENSG00000094755',
-#     'ENSG00000227191',
-#     'ENSG00000152939',
-#     'ENSG00000156738',
-#     'ENSG00000116824',
-#     'ENSG00000167083',
-#     'ENSG00000253313',
-#     'ENSG00000196209',
-#     'ENSG00000161682',
-#     'ENSG00000164175'
-# ]
+mem_bl_ensg = [
+    'ENSG00000144681',
+    'ENSG00000050438',
+    'ENSG00000179639',
+    'ENSG00000187867',
+    'ENSG00000146013',
+    'ENSG00000160856',
+    'ENSG00000143297',
+    'ENSG00000169258',
+    'ENSG00000182866',
+    'ENSG00000158315',
+    'ENSG00000139193',
+    'ENSG00000188389',
+    'ENSG00000134061',
+    'ENSG00000101082',
+    'ENSG00000196358',
+    'ENSG00000126353',
+    'ENSG00000094755',
+    'ENSG00000227191',
+    'ENSG00000152939',
+    'ENSG00000156738',
+    'ENSG00000116824',
+    'ENSG00000167083',
+    'ENSG00000253313',
+    'ENSG00000196209',
+    'ENSG00000161682',
+    'ENSG00000164175'
+]
 
-# mem_bl_no_extra_ensg = [
-#     'ENSG00000255587',
-#     'ENSG00000104537',
-#     'ENSG00000135605',
-#     'ENSG00000168421',
-#     'ENSG00000276231',
-#     'ENSG00000248905',
-#     'ENSG00000165304',
-#     'ENSG00000141293',
-#     'ENSG00000185686'
-# ]
+mem_bl_no_extra_ensg = [
+    'ENSG00000255587',
+    'ENSG00000104537',
+    'ENSG00000135605',
+    'ENSG00000168421',
+    'ENSG00000276231',
+    'ENSG00000248905',
+    'ENSG00000165304',
+    'ENSG00000141293',
+    'ENSG00000185686'
+]
 
-# other_car = {
-#     'ENSG00000113361':'https://www.dl.begellhouse.com/download/article/2975dc725ae0753a/JEP(T)-40339.pdf',
-#     'ENSG00000134258':'https://pubmed.ncbi.nlm.nih.gov/27439899/',
-#     'ENSG00000102524':'https://pubmed.ncbi.nlm.nih.gov/35017485',
-#     'ENSG00000105369':'https://ashpublications.org/blood/article/140/Supplement%201/12716/493015/CRC-403-A-Phase-1-2-Study-of-bbT369-a-Dual-CD79a',
-#     'ENSG00000086548':'https://aacrjournals.org/cancerimmunolres/article/5/3_Supplement/A74/468728/Abstract-A74-CAR-T-cells-harboring-camelid-single',
-#     'ENSG00000066294':'https://ashpublications.org/blood/article/140/Supplement%201/7379/487194/CD84-A-Novel-Target-for-CAR-T-Cell-Therapy-for',
-#     'ENSG00000154269':'https://patentscope.wipo.int/search/es/detail.jsf;jsessionid=CCC5B7359899ECB0F03B7125D045EDF2.wapp2nC?docId=WO2024226829&_gid=202444',
-#     'ENSG00000172061':'https://pmc.ncbi.nlm.nih.gov/articles/PMC9604383/',
-#     'ENSG00000148848':'https://patents.google.com/patent/CA3133633A1/en',
-#     'ENSG00000114638':'https://patents.google.com/patent/WO2019232503A1/en',
-#     'ENSG00000137101':'https://ashpublications.org/blood/article/140/Supplement%201/7394/492100/Humanized-Nanobody-Anti-CD72-CAR-T-Cells',
-#     'ENSG00000137101':'https://pubmed.ncbi.nlm.nih.gov/36739093/',
+other_car = {
+    'ENSG00000113361':'https://www.dl.begellhouse.com/download/article/2975dc725ae0753a/JEP(T)-40339.pdf',
+    'ENSG00000134258':'https://pubmed.ncbi.nlm.nih.gov/27439899/',
+    'ENSG00000102524':'https://pubmed.ncbi.nlm.nih.gov/35017485',
+    'ENSG00000105369':'https://ashpublications.org/blood/article/140/Supplement%201/12716/493015/CRC-403-A-Phase-1-2-Study-of-bbT369-a-Dual-CD79a',
+    'ENSG00000086548':'https://aacrjournals.org/cancerimmunolres/article/5/3_Supplement/A74/468728/Abstract-A74-CAR-T-cells-harboring-camelid-single',
+    'ENSG00000066294':'https://ashpublications.org/blood/article/140/Supplement%201/7379/487194/CD84-A-Novel-Target-for-CAR-T-Cell-Therapy-for',
+    'ENSG00000154269':'https://patentscope.wipo.int/search/es/detail.jsf;jsessionid=CCC5B7359899ECB0F03B7125D045EDF2.wapp2nC?docId=WO2024226829&_gid=202444',
+    'ENSG00000172061':'https://pmc.ncbi.nlm.nih.gov/articles/PMC9604383/',
+    'ENSG00000148848':'https://patents.google.com/patent/CA3133633A1/en',
+    'ENSG00000114638':'https://patents.google.com/patent/WO2019232503A1/en',
+    'ENSG00000137101':'https://ashpublications.org/blood/article/140/Supplement%201/7394/492100/Humanized-Nanobody-Anti-CD72-CAR-T-Cells',
+    'ENSG00000137101':'https://pubmed.ncbi.nlm.nih.gov/36739093/',
 
-# }
-
-
-# # just bystander t cell
-# artifact_car = [
-#     'ENSG00000167286',
-#     'ENSG00000211753',
-#     'ENSG00000089692',
-#     'ENSG00000211697',
-#     'ENSG00000181847',
-#     'ENSG00000137078',
-#     'ENSG00000211689',
-#     'ENSG00000142484',
-#     'ENSG00000153283',
-#     'ENSG00000134460',
-#     'ENSG00000103522'
-# ]
-
-# known_car = pd.read_csv('cart_targets.txt',sep='\t')
-# known_car = known_car.loc[known_car['Category'] == 'in clinical trials',:]
-# known_car_ensg = known_car['Ensembl ID'].values.tolist()
-# known_car_ensg = known_car_ensg + ['ENSG00000184697','ENSG00000213420','ENSG00000079112']  # missed CLDN6, GPC2, CDH17 from the 71 targets list
-
-# membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_ensg)))
-# membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_no_extra_ensg)))
-# membrane_ensg = list(set(membrane_ensg).difference(set(artifact_car)))
-
-# ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
-# symbol2ensg = {v:k for k,v in ensg2symbol.items()}
-# all_genes = list(set(membrane_ensg).intersection(set(ensg2medians.keys())))
-# dic = process_tumor_gene()
-# ensg2tumors = {}
-# for gene in all_genes:
-#     data = []
-#     for k,v in dic.items():
-#         data.append(v.get(gene,[0]*21))
-#     ensg2tumors[gene] = data
-
-# all_data = []
-# for gene in all_genes:
-#     data = []
-#     data.extend(ensg2tumors[gene])
-#     data.extend(ensg2medians[gene])
-#     all_data.append(data)
-# df = pd.DataFrame.from_records(all_data,columns=cancers+all_tissues,index=all_genes)
+}
 
 
-# ori_array = [tuple(['cancer']*21+['normal']*43),tuple(df.columns.tolist())]
-# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-# df.columns = mi
+# just bystander t cell
+artifact_car = [
+    'ENSG00000167286',
+    'ENSG00000211753',
+    'ENSG00000089692',
+    'ENSG00000211697',
+    'ENSG00000181847',
+    'ENSG00000137078',
+    'ENSG00000211689',
+    'ENSG00000142484',
+    'ENSG00000153283',
+    'ENSG00000134460',
+    'ENSG00000103522'
+]
 
-# cond_col = []
-# for item in df.index:
-#     if item in ['ENSG00000048462','ENSG00000177455']:
-#         cond_col.append('1_FDR_approved')
-#     elif item in known_car_ensg:
-#         cond_col.append('2_clinical_trial')
-#     elif item in other_car.keys():
-#         cond_col.append('3_preclinical_test')
-#     else:
-#         cond_col.append('4_other_viable')
+known_car = pd.read_csv('cart_targets.txt',sep='\t')
+known_car = known_car.loc[known_car['Category'] == 'in clinical trials',:]
+known_car_ensg = known_car['Ensembl ID'].values.tolist()
+known_car_ensg = known_car_ensg + ['ENSG00000184697','ENSG00000213420','ENSG00000079112']  # missed CLDN6, GPC2, CDH17 from the 71 targets list
 
-# ori_array = [tuple(df.index.tolist()),
-#              tuple([ensg2symbol[item] for item in df.index]),
-#              tuple(cond_col)]
-# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-# df.index = mi
-# df.to_csv('gene_morpheus_mem.txt',sep='\t')
+membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_ensg)))
+membrane_ensg = list(set(membrane_ensg).difference(set(mem_bl_no_extra_ensg)))
+membrane_ensg = list(set(membrane_ensg).difference(set(artifact_car)))
 
+ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
+symbol2ensg = {v:k for k,v in ensg2symbol.items()}
+all_genes = list(set(membrane_ensg).intersection(set(ensg2medians.keys())))
+dic = process_tumor_gene()
+ensg2tumors = {}
+for gene in all_genes:
+    data = []
+    for k,v in dic.items():
+        data.append(v.get(gene,[0]*21))
+    ensg2tumors[gene] = data
+
+all_data = []
+for gene in all_genes:
+    data = []
+    data.extend(ensg2tumors[gene])
+    data.extend(ensg2medians[gene])
+    all_data.append(data)
+df = pd.DataFrame.from_records(all_data,columns=cancers+all_tissues,index=all_genes)
+
+
+ori_array = [tuple(['cancer']*21+['normal']*43),tuple(df.columns.tolist())]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+df.columns = mi
+
+cond_col = []
+for item in df.index:
+    if item in ['ENSG00000048462','ENSG00000177455']:
+        cond_col.append('1_FDR_approved')
+    elif item in known_car_ensg:
+        cond_col.append('2_clinical_trial')
+    elif item in other_car.keys():
+        cond_col.append('3_preclinical_test')
+    else:
+        cond_col.append('4_other_viable')
+
+ori_array = [tuple(df.index.tolist()),
+             tuple([ensg2symbol[item] for item in df.index]),
+             tuple(cond_col)]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+df.index = mi
+df.to_csv('gene_morpheus_mem.txt',sep='\t')
+print(df.shape[0])
 
 
 # previous main to generate ts_final
@@ -607,14 +534,18 @@ ts_final = final.loc[~final['ensgs'].isin(manual_bl_ensg),:]
 ts_final.to_csv('ts_final.txt',sep='\t',index=None) # stop here for safety screen
 
 
-
 ts_final = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
 ts_final = ts_final.loc[ts_final['typ'] == 'self_gene',:]
 all_genes = list(set(ts_final['ensgs'].values))
 
-mem = pd.read_csv('human_membrane_protein_postdoc_final_no_edit.txt',sep='\t')
+mem = pd.read_csv('human_membrane_proteins_acc2ens.txt',sep='\t')
+mem = mem.loc[mem['Ens'].notna(),:]
+membrane_ensg = mem['Ens'].values.tolist()
+mem = pd.read_csv('./compartment/human_cell_membrane_protein_postdoc_final.txt',sep='\t')
+mem = mem.loc[mem['Subcellular location [CC]'].str.contains('anchor'),:]
 mem = mem.loc[mem['ensg'].notna(),:]
-membrane_ensg = mem['ensg'].values.tolist()
+membrane_ensg_add = mem['ensg'].values.tolist()
+membrane_ensg = set(membrane_ensg + membrane_ensg_add)
 
 sc = pd.read_csv('zach_single_cell_data_ensg.txt',sep='\t',index_col=0)
 sc = sc.loc[[True if isinstance(item,str) and item.startswith('ENSG') else False for item in sc.index],:]
@@ -653,6 +584,8 @@ ori_array = [tuple(df.index.tolist()),
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
 df.to_csv('gene_morpheus.txt',sep='\t')
+print(df.shape[0])
+print(len(ts_final['pep'].unique()))
     
     
 
