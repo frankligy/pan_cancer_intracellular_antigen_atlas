@@ -155,6 +155,7 @@ for c in cancers:
     self_gene_dic[c] = mapping
     prop = np.count_nonzero(np.any(exp,axis=0)) / exp.shape[1]
     self_gene_dic_overall[c] = prop
+print(self_gene_dic_overall);sys.exit('stop')
 
 col = []
 for row in df.itertuples():
