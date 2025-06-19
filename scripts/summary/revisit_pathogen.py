@@ -156,36 +156,3 @@ for c,t in zip(cancers,n_samples):
 
 
 
-sys.exit('stop')
-
-# immunopeptidome result
-final = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/OV/antigen/fdr/final_enhanced.txt',sep='\t',index_col=0)
-cond = [False if '[]' in item else True for item in final['presented_by_each_sample_hla']]
-final = final.loc[cond,:]
-final = final.loc[final['unique']!=False,:]
-final = final.loc[final['typ']=='pathogen',:]
-strain = []
-protein = []
-uid = []
-for item in final['source']:
-    if 'NIACI' in item:
-        strain.append('Niallia Circulans')
-        protein.append(item.split('NIACI')[1].split('OS=')[0])
-    elif '9CLOT' in item:
-        strain.append('Clostridium Intestinale')
-        protein.append(item.split('9CLOT')[1].split('OS=')[0])
-    elif 'BPT4' in item:
-        strain.append('Enterobacteria phage T4')
-        protein.append(item.split('BPT4')[1].split('OS=')[0])
-    uid.append(item.split('|')[1])
-final['strain'] = strain
-final['protein'] = protein
-final['uid'] = uid
-
-final['id'] = ['cell_line' if 'UWB' in item else 'primary_tumor' for item in final['samples']]
-# final.to_csv('check.txt',sep='\t')
-
-for id_, sub_df in final.groupby('id'):
-    vc = sub_df['strain'].value_counts()
-    print(id_)
-    print(vc)

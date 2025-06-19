@@ -114,6 +114,11 @@ mat = np.array(mat)
 res = chi2_contingency(mat)
 print(res)
 
+mat_df = pd.concat([df1,df2],axis=0,keys=['DLBC','RT']).reset_index(level=-2).rename(columns={'level_0':'cancer'})
+mat_df.to_csv('pathway_immunoproteosome_df.txt',sep='\t',index=None)
+
+mat_df = pd.DataFrame(data=mat,index=['DLBC','RT'],columns=['acidic','non_acidic'])
+mat_df.to_csv('pathway_immunoproteosome_stat.txt',sep='\t')
 sys.exit('stop')
 
 genes = [
