@@ -147,5 +147,9 @@
   display: none;
 }
 
+#candidate td:hover {
+  font-weight:bold;
+}
+
 
 

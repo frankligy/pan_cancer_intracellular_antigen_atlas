@@ -111,6 +111,9 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
     final.insert(5,'Abundance',col)
     final.drop(columns='detailed_intensity',inplace=True)
 
+    # remove underscore for type
+    final['Antigen Class'] = [item.replace('_',' ') for item in final['Antigen Class']]
+
 
     # now act
     if n_clicks == 0:
@@ -289,7 +292,8 @@ def draw_diffential_and_intensity(cancer,active_cell,data,page_current,page_size
         source = data[row]['Source']
         source = modify_source_string(source)
 
-        
+        print(source)
+
         exist_percentile_plot_path = os.path.join(assets_dir,'{}_{}_{}.png'.format(cancer,pep,'percentile'))
         exist_rank_abundance_plot_path = os.path.join(assets_dir,'{}_{}_rank_abundance.png'.format(cancer,pep))
 
@@ -299,7 +303,7 @@ def draw_diffential_and_intensity(cancer,active_cell,data,page_current,page_size
         if source == 'not_unique':
             typ = 'not_unique'
 
-        if typ == 'self_gene':
+        if typ == 'self gene':
             ensg,enst,symbol = source.split('|')   
             exist_plot_gene_file_name =  '{}_{}_{}_expr_{}.png'.format(cancer,ensg,symbol,'boxplot+boxplot')
             cmd1 = 'curl -H "Cache-Control: no-cache" -o {} -k {}'.format(os.path.join(assets_dir,exist_plot_gene_file_name),os.path.join(cloud_dir,exist_plot_gene_file_name))
@@ -318,11 +322,11 @@ def draw_diffential_and_intensity(cancer,active_cell,data,page_current,page_size
             for cmd in [cmd1,cmd2,cmd3]:
                 subprocess.run(cmd,shell=True)
             return app.get_asset_url(exist_plot_splicing_file_name),None,app.get_asset_url(exist_percentile_plot_file_name),app.get_asset_url(exist_rank_abundance_plot_file_name)
-        elif typ == 'TE_chimeric_transcript':
+        elif typ == 'TE chimeric transcript':
             coords = source.split('|')[0]
             erv = source.split('|')[7].split(',')[1]
             exist_plot_splicing_file_name = '{}_{}_splicing.png'.format(cancer,coords)
-            exist_plot_erv_file_name = '{}_expr.png'.format(erv)
+            exist_plot_erv_file_name = '{}_{}_expr.png'.format(cancer,erv)
             cmd1 = 'curl -H "Cache-Control: no-cache" -o {} -k {}'.format(os.path.join(assets_dir,exist_plot_splicing_file_name),os.path.join(cloud_dir,exist_plot_splicing_file_name))
             cmd2 = 'curl -H "Cache-Control: no-cache" -o {} -k {}'.format(os.path.join(assets_dir,exist_plot_erv_file_name),os.path.join(cloud_dir,exist_plot_erv_file_name))
             cmd3 = 'curl -H "Cache-Control: no-cache" -o {} -k {}'.format(os.path.join(assets_dir,exist_percentile_plot_file_name),os.path.join(cloud_dir,exist_percentile_plot_file_name))
@@ -341,7 +345,7 @@ def draw_diffential_and_intensity(cancer,active_cell,data,page_current,page_size
                 subprocess.run(cmd,shell=True)
             return  app.get_asset_url(exist_plot_erv_file_name),None,app.get_asset_url(exist_percentile_plot_file_name),app.get_asset_url(exist_rank_abundance_plot_file_name)
         
-        elif typ == 'fusion' or typ == 'variant' or typ == 'pathogen' or typ == 'nuORF' or typ == 'intron_retention' or typ == 'not_unique':  # no diff plot
+        elif typ == 'fusion' or typ == 'variant' or typ == 'pathogen' or typ == 'nuORF' or typ == 'intron retention' or typ == 'not_unique':  # no diff plot
             cmd1 = 'curl -H "Cache-Control: no-cache" -o {} -k {}'.format(os.path.join(assets_dir,exist_percentile_plot_file_name),os.path.join(cloud_dir,exist_percentile_plot_file_name))
             cmd2 = 'curl -H "Cache-Control: no-cache" -o {} -k {}'.format(os.path.join(assets_dir,exist_rank_abundance_plot_file_name),os.path.join(cloud_dir,exist_rank_abundance_plot_file_name))
             for cmd in [cmd1,cmd2]:
@@ -361,8 +365,10 @@ def modify_source_string(source):
                 tmp.append(item)
         if len(tmp) == 1:
             source = tmp[0]
-        else:
+        elif len(tmp) > 1:
             source = 'not_unique'
+        else:
+            source = source
 
     # if not self_gene, further get rid of nc and nuorf
     if ';' in source:  
@@ -458,9 +464,10 @@ if __name__ == '__main__':
 
             # display row
             html.Div([
-                html.Div(html.H5('Please leave Peptide, Gene/Source, HLA blank if not specific (not case-sensitive), then click submit button'),style={'text-align':'left','color':'#4f6d7a'}),
-                html.H5("Please click any row/cell in the table below to expand visuals for each antigen",style={'text-align': 'left','color':'#4f6d7a'}),
-                html.H5(['Have a question or Experience intermittent rendering issue? ',html.A('Contact us',href='mailto:guangyuan.li@nyulangone.org',title='Click to send an email')],style={'text-align': 'left','color':'#4f6d7a'}),
+                html.Div(html.H5('Please leave Peptide, Gene/Source, HLA blank if not specific (not case-sensitive), then click submit button'),style={'text-align':'left','color':'#3B5998'}),
+                html.H5("Please click any row/cell in the table below to expand visuals for each antigen",style={'text-align': 'left','color':'#3B5998'}),
+                html.H5("When selecting All cancers, please allow up to 10 seconds to render the table",style={'text-align': 'left','color':'#3B5998'}),
+                html.H5(['Due to periodic HPC maintainence, please check back again if encountering rendering issues or ', html.A('Contact us',href='mailto:guangyuan.li@nyulangone.org',title='Click to send an email')],style={'text-align': 'left','color':'#3B5998'}),
 
                 html.Div(dash_table.DataTable(id='candidate',
                                               page_size=10, page_current=0, page_action='native',hidden_columns=['presented_by_each_sample_hla','additional_query','Source'],
@@ -492,19 +499,20 @@ if __name__ == '__main__':
                                                 {
                                                     'if': {'row_index': 'odd'},
                                                     'backgroundColor': 'rgb(242, 242, 242)',
-                                                }]
+                                                },
+                                              ]
                                               ),className='main_table'),
 
 
                 html.Div([html.H2(id='output_header'),html.P(id='output_text')]),
-                html.Div([html.H2('PSM plot')]),
-                html.Img(id='psm',width='45%'),
 
                 html.Div([
                         html.H2('Differential plots'),
                         html.Img(id='differential_1',width='45%',style={'float':'left'}),
                         html.Img(id='differential_2',width='45%',style={'float':'right'})
                     ],style={'overflow':'hidden'}),
+
+                html.Div([html.H2('PSM plot'),html.Img(id='psm',width='45%')]),
 
                 html.Div([
                         html.H2('Intensity plots'),
