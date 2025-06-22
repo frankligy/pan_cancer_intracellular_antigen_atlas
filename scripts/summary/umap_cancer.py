@@ -85,11 +85,31 @@ for c in cancers:
             item = literal_eval(item)
             for tup in item:
                 sample2data.setdefault(tup[0],[]).append(tup[1])
-        sample2value = {k:np.sum(v) for k,v in sample2data.items()}   # sample1:0.56
+        sample2value = {k:np.median(v) for k,v in sample2data.items()}   # sample1:0.56
         gene2data[ensg] = sample2value
     c_df = pd.DataFrame.from_dict(gene2data,orient='columns')
     c_df_list.append(c_df)
-df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers).fillna(value=0).T
+
+# add serum
+final_add = pd.read_csv('/gpfs/data/yarmarkovichlab/lung_cancer/antigen/other_alg/final_enhanced.txt',sep='\t')
+cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_add['presented_by_each_sample_hla']]
+final_add = final_add.loc[cond,:]
+final_add = final_add.loc[final_add['typ']=='self_gene',:]
+final_add = final_add.loc[final_add['unique'],:]
+gene2data = {}
+for ensg,sub_df in tqdm(final_add.groupby(by='ensgs')):
+    sample2data = {}
+    for item in sub_df['detailed_intensity']:
+        item = literal_eval(item)
+        for tup in item:
+            sample2data.setdefault(tup[0],[]).append(tup[1])
+    sample2value = {k:np.median(v) for k,v in sample2data.items()}   # sample1:0.56
+    gene2data[ensg] = sample2value
+c_df = pd.DataFrame.from_dict(gene2data,orient='columns')  # sample * gene
+c_df_list.append(c_df)
+
+
+df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers+['serum']).fillna(value=0).T
 
 mi = df.columns
 mi_df = mi.to_frame(index=False)
