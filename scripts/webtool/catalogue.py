@@ -56,40 +56,71 @@ cancers = [
     'SKCM'
 ]
 
-# # molecular_catalogue, I'll manually add mutation
-# for c in cancers:
-#     atlas_dir = os.path.join(root_atlas_dir,c)
-#     gene_tpm = os.path.join(atlas_dir,'gene_tpm.txt')
-#     gene_lfc = os.path.join(atlas_dir,'gene_lfc.txt')
-#     pathogen_all = os.path.join(atlas_dir,'pathogen_all.txt')
-#     pathogen_rec = os.path.join(atlas_dir,'pathogen_rec.txt')
-#     intron_all = os.path.join(atlas_dir,'intron_all.txt')
-#     intron_peptide_all = os.path.join(atlas_dir,'intron_peptide_all.txt')
-#     intron_rec = os.path.join(atlas_dir,'intron_rec.txt')
-#     splicing_all = os.path.join(atlas_dir,'splicing_all.txt')
-#     splicing_rec = os.path.join(atlas_dir,'splicing_rec.txt')
-#     fusion_all = os.path.join(atlas_dir,'fusion.txt')
-#     fusion_recurrent = os.path.join(atlas_dir,'fusion_recurrent.txt')
-#     hla_types = os.path.join(atlas_dir,'hla_types.txt')
-#     mutation_rec = os.path.join(atlas_dir,'mutation_rec.txt')
-#     te_all = os.path.join(atlas_dir,'tumor_erv.h5ad')
-#     te_rec = os.path.join(atlas_dir,'ERV.txt')
-#     te_good = os.path.join(atlas_dir,'good_erv.txt')
+added_cancer = [
+    'ALL_BALL_P1',
+    'KICH',
+    'WT',
+    'CCSK',
+    'KIRP',
+    'LGG',
+    'READ',
+    'UCS',
+    'SARC',
+    'TGCT',
+    'THYM',
+    'THCA',
+    'UVM',
+    'OS',
+    'PRAD'
+]
 
-#     need_to_cp = [gene_tpm,gene_lfc,pathogen_all,pathogen_rec,intron_all,intron_peptide_all,intron_rec,splicing_all,splicing_rec,
-#                   fusion_all,fusion_recurrent, hla_types, mutation_rec, te_all, te_rec, te_good]
+# molecular_catalogue, I'll manually add mutation
+for c in cancers + added_cancer:
+    atlas_dir = os.path.join(root_atlas_dir,c)
+    gene_tpm = os.path.join(atlas_dir,'gene_tpm.txt')
+    gene_lfc = os.path.join(atlas_dir,'gene_lfc.txt')
+    pathogen_all = os.path.join(atlas_dir,'pathogen_all.txt')
+    pathogen_rec = os.path.join(atlas_dir,'pathogen_rec.txt')
+    intron_all = os.path.join(atlas_dir,'intron_all.txt')
+    intron_peptide_all = os.path.join(atlas_dir,'intron_peptide_all.txt')
+    intron_rec = os.path.join(atlas_dir,'intron_rec.txt')
+    splicing_all = os.path.join(atlas_dir,'splicing_all.txt')
+    splicing_rec = os.path.join(atlas_dir,'splicing_rec.txt')
+    if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1']:
+        fusion_all = os.path.join(atlas_dir,'fusion.txt')
+    else:
+        fusion_all = os.path.join(atlas_dir,'fusion_all.txt')
+    if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1']:
+        fusion_recurrent = os.path.join(atlas_dir,'fusion_recurrent.txt')
+    else:
+        fusion_recurrent = os.path.join(atlas_dir,'fusion_rec.txt')
+    if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1']:
+        hla_types = os.path.join(atlas_dir,'hla_types.txt')
+    else:
+        hla_types = None
+    if not c in ['RT','CCSK','ALL_BALL_P1']:
+        mutation_rec = os.path.join(atlas_dir,'mutation_rec.txt')
+    else:
+        mutation_rec = None
+    te_all = os.path.join(atlas_dir,'tumor_erv.h5ad')
+    te_rec = os.path.join(atlas_dir,'ERV.txt')
+    te_good = os.path.join(atlas_dir,'good_erv.txt')
 
-#     des_dir = os.path.join(root_des_dir,c)
-#     if not os.path.exists(des_dir):
-#         os.mkdir(des_dir)
+    need_to_cp = [gene_tpm,gene_lfc,pathogen_all,pathogen_rec,intron_all,intron_peptide_all,intron_rec,splicing_all,splicing_rec,
+                  fusion_all,fusion_recurrent, hla_types, mutation_rec, te_all, te_rec, te_good]
 
-#     for f in need_to_cp:
-#         subprocess.run('cp {} {}'.format(f,des_dir),shell=True)
+    des_dir = os.path.join(root_des_dir,c)
+    if not os.path.exists(des_dir):
+        os.mkdir(des_dir)
+
+    for f in need_to_cp:
+        if f is not None:
+            subprocess.run('cp {} {}'.format(f,des_dir),shell=True)
 
 # search space
-root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space_tesorai'
-for c in cancers:
-    db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta_tesorai')
+root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space'
+for c in cancers + added_cancer:
+    db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta')
     des_dir = os.path.join(root_des_dir,c)
     if not os.path.exists(des_dir):
         os.mkdir(des_dir)
