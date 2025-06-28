@@ -292,8 +292,6 @@ def draw_diffential_and_intensity(cancer,active_cell,data,page_current,page_size
         source = data[row]['Source']
         source = modify_source_string(source)
 
-        print(source)
-
         exist_percentile_plot_path = os.path.join(assets_dir,'{}_{}_{}.png'.format(cancer,pep,'percentile'))
         exist_rank_abundance_plot_path = os.path.join(assets_dir,'{}_{}_rank_abundance.png'.format(cancer,pep))
 
@@ -467,7 +465,7 @@ if __name__ == '__main__':
                 html.Div(html.H5('Please leave Peptide, Gene/Source, HLA blank if not specific (not case-sensitive), then click submit button'),style={'text-align':'left','color':'#3B5998'}),
                 html.H5("Please click any row/cell in the table below to expand visuals for each antigen",style={'text-align': 'left','color':'#3B5998'}),
                 html.H5("When selecting All cancers, please allow up to 10 seconds to render the table",style={'text-align': 'left','color':'#3B5998'}),
-                html.H5(['Due to periodic HPC maintainence, please check back again if encountering rendering issues or ', html.A('Contact us',href='mailto:guangyuan.li@nyulangone.org',title='Click to send an email')],style={'text-align': 'left','color':'#3B5998'}),
+                html.H5(['Due to periodic NYU HPC maintainence, please check back again if encountering rendering issues or  ', html.A('Contact us',href='mailto:guangyuan.li@nyulangone.org',title='Click to send an email')],style={'text-align': 'left','color':'#3B5998'}),
 
                 html.Div(dash_table.DataTable(id='candidate',
                                               page_size=10, page_current=0, page_action='native',hidden_columns=['presented_by_each_sample_hla','additional_query','Source'],
@@ -512,7 +510,7 @@ if __name__ == '__main__':
                         html.Img(id='differential_2',width='45%',style={'float':'right'})
                     ],style={'overflow':'hidden'}),
 
-                html.Div([html.H2('PSM plot'),html.Img(id='psm',width='45%')]),
+                html.Div([html.H2('PSM plot'),html.Img(id='psm',alt='Due to periodic NYU HPC maintainence, please check back again if encountering rendering issues',width='45%')]),
 
                 html.Div([
                         html.H2('Intensity plots'),
@@ -564,7 +562,7 @@ if __name__ == '__main__':
         html.Div([
             html.Div([
                 html.Div([
-                    html.H3("27,541", className="stat-number"),
+                    html.H3("28,446", className="stat-number"),
                     html.P("Tumor-specific Antigens", className="stat-label")
                 ], className="stat-box"),
 
