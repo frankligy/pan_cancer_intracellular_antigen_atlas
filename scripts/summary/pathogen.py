@@ -344,19 +344,18 @@ common_hpv = {
 
 synthesized_bac = [
     'TIDELQKI',
-    'LSDLGSGIYR',
+    'LSDLGSGIYR', # stringent safety screen not passed
     'IEKEVISKY',
     'QPKTKLLLL',
-    'LDIHTFGLYY',
+    'LDIHTFGLYY',    # stringent safety screen not passed
     'KLKPGILKK',
-    'KMAEVIGLSK',
-    'LVGPNGVGK'
+    'LVGPNGVGK' # >70 and >5, not identified
 ]
 
 ebv_peptides = ['LVEMALAGQR','GLKDAVYFL']  # gastric and hnc
 hpv_peptides = ['LESRITVFE']  # in hnc
 
-raw_total = list(common_cmv.keys()) + list(common_hbv.keys()) + list(common_hpv.keys()) + synthesized_bac + fuso + circ + intes + ureo + pylori + ebv_peptides + hpv_peptides 
+raw_total = list(common_cmv.keys()) + [k for k,v in common_hbv.items() if v] + list(common_hpv.keys()) + synthesized_bac + fuso + circ + intes + ureo + pylori + ebv_peptides + hpv_peptides 
 raw_total = list(set(raw_total))
 
 final_now = final.loc[final['pep'].isin(raw_total),:]
