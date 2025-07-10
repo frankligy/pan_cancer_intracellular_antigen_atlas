@@ -25,7 +25,7 @@ deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single li
 
 # Citation
 
-Guangyuan Li* , Omar Uriel Guzman-Bringas, Aman Sharma, Zachary Harpaz, Ethan Tardio, Aswin Natarajan, Xinya Liu, Darren Taylor, Rachel Yamin, Maxence Dellacherie, Michelle Krogsgaard, Conrad Russell Cruz, Mark Yarmarkovich, 2025 “A pan-cancer atlas of T cell targets”, BioRxiv, https://www.biorxiv.org/content/10.1101/2025.01.22.634237v1
+Li, Guangyuan*, Omar U. Guzmán-Bringas, Aman Sharma, Maxence Dellacherie, Palak Sekhri, Rachel Yamin, Dejan Stepec, et al. 2025. “A Pan-Cancer Atlas of Therapeutic T Cell Targets.” bioRxiv. https://www.biorxiv.org/content/10.1101/2025.01.22.634237v2 
 
 Manuscript in submission
 
