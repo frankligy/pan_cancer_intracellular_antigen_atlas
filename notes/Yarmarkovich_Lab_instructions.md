@@ -126,6 +126,77 @@ And again you need to modify your `json` file, please locate to `python_script` 
 
 After this step, you should have a folder called `db_fasta` in your `immunoverse_result`, which contains sample-specific search space, please use this to search your immunopeptidome data using Tesorai.
 
+## Step 4: Generate final tabular output from Tesorai result
+
+placeholder
+
+## Appendix I: How to interpret the source aberration name?
+
+- Self gene
+
+```bash
+placeholder
+```
+
+- Splicing, TE chimeric transcript, self translated TE
+
+```bash
+# splicing junction (format 1): Junction coordinate (hs1 reference)|strand|Supporting RNA read count|phase|splicing site 1/2 gene symbols|nth discontinous peptide fragment from this junction
+chr9:33946622-33951162|-|14|0|None,UBAP2|1
+
+# splicing junction (format 2): Junction coordinate (hs1 reference)|strand|Supporting RNA read count|This junction is in a documented isoform ENST ID|splicing site 1/2 gene symbols
+chr1:9774594-9775848|+|12|ENST00000377083|KIF1B,KIF1B
+
+# TE chimeric transcript: Junction coordinate (hs1 reference)|strand|Supporting RNA read count|phase|TE element contributing to exonization (TE gene ID, TE transcript ID, TE family ID, TE class ID, server as splicing donor or acceptor, strand, coordinates)|splicing site 1/2 gene symbols|nth discontinous peptide
+chr12:96898675-96908677|+|7|1|TE_info:L1ME2,L1ME2_dup1895,L1,LINE,donor,-,96897569,96898675|None,NEDD1|29
+
+# self trasnlated TE: TE transcript ID|tumor read count in this sample|coordiante and strand|median tumor read count in tumor cohort|mean normal read count in gtex|fold change|# samples having this TE in tumor cohort|nth discontinous peptide fragment from this TE|phase|sense or anti-sense translation for TE
+HERVH-int_dup2802|349.44|chr7:26026526-26029368:-|3.75|0.04|7781.16|4|71|3|sense
+```
+
+To explain `phase` in the context of splicing:
+
+```bash
+# phase 0
+* * * * * *, * * * * * *
+----- -----  ----- -----
+# phase 1
+* * * * * *, * * * * * *
+        ------
+# phase 2
+* * * * * *, * * * * * *
+          ------
+```
+
+To explain `phase` in self translated TE:
+
+```bash
+# phase 1, starting from first nt
+* * * * * *
+-----
+# phase 2, starting from second nt
+* * * * * *
+  -----
+# phase 3, starting from third nt
+* * * * * *
+    -----
+```
+
+- nuORF
+
+```bash
+# we adopted nuORF database convention, hg19 coordinate and the ENST transcript which carries this cryptic ORF
+ENST00000534336.1_1_11:65268195-65268336:+|nuORF
+```
+
+- variant 
+
+```bash
+# ENSG ID|ENST ID|gene symbol|TPM expresion|mutation|type of mutation|likely RNA edit event or not|variant allele frequency or clonalities
+ENSG00000206503|ENST00000376809|HLA-A|tpm:294.778174|L10V|missense_variant|possible_rna_edit_False|0.987297554779295
+```
+
+
 
 
 
