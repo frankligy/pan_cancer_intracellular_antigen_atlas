@@ -4,7 +4,7 @@
 
 This tutorial assumes you already have a bigpurple account, and have permission to access yarmarkovich lab drive, and have some basic understanding on how to run linux command and submit jobs through slurm scheduler. If you are not familiar with this, please carefully read through [yarmarkovich lab HPC tutorial](https://docs.google.com/document/d/14PZOJr-cr6z3JhHkEptWw5fPAztqVsmYXn3FvTKL4Zs/edit?usp=sharing).
 
-This tutorial also assumes you have basic understanding of RNA-Seq data, immunopeptidome data, for instance, what is FASTQ file, what is read alignment step. I'd recommend you to use `chatGPT` for all your inquiries along this line.
+This tutorial also assumes you have basic understanding of RNA-Seq data, immunopeptidome data, for instance, what is FASTQ file, what is read alignment step. Although following the steps should be straightford, I'd recommend you to use `chatGPT` for all any inquiry you may have as you go through this tutorial.
 
 You should have some tumor RNA-Seq and some tumor immunopeptidome data at hand when you are reading this tutorial.
 
@@ -13,12 +13,12 @@ You should have some tumor RNA-Seq and some tumor immunopeptidome data at hand w
 I recommend you to have a folder structure like following:
 
 ```bash
-./RNA_raw_data
+/path/to/RNA_raw_data
     sample1_R1.fastq.gz
     sample1_R2.fastq.gz
     sample2_R1.fastq.gz
     sample2_R2.fastq.gz
-./immunopeptidome_raw_data
+/path/to/immunopeptidome_raw_data
     ./sample1
         sample1_rep1.raw
         sample1_rep2.raw
@@ -32,24 +32,10 @@ I recommend you to have a folder structure like following:
 Besides the inputs, I also recommend you have the following folder, I will explain some of the files in a bit:
 
 ```bash
-./RNA_raw_data
-    sample1_R1.fastq.gz
-    sample1_R2.fastq.gz
-    sample2_R1.fastq.gz
-    sample2_R2.fastq.gz
-./immunopeptidome_raw_data
-    ./sample1
-        sample1_rep1.raw
-        sample1_rep2.raw
-        sample1_rep3.raw
-    ./sample2
-        sample2_rep1.d
-        sample2_rep2.d
-        sample2_rep3.d
-./codes
+/path/to/codes
     template.json
     sub_all.sbatch
-./result
+/path/to/result
     ./immunoverse_result
     samples.txt
 ```
@@ -59,8 +45,8 @@ The `template.json` and `sub_all.sbatch` are the keys for running the program, `
 I have created two template files, please copy them to your `codes` directory:
 
 ```bash
-cp /gpfs/data/yarmarkovichlab/softwares/NeoVerse/template.json ./codes
-cp /gpfs/data/yarmarkovichlab/softwares/NeoVerse/sub_all.sbatch ./codes
+cp /gpfs/data/yarmarkovichlab/softwares/NeoVerse/template.json /path/to/codes
+cp /gpfs/data/yarmarkovichlab/softwares/NeoVerse/sub_all.sbatch /path/to/codes
 ```
 
 The `result` folder will be the place where the output will go into, within which there will be another subfolder called `immunoverse_result` which will contain more summarizied data, normally, all the results you care about should be in `immunoverse_result` folder. You don't have to manually create these two folders, but I want to illustrate in this way so you won't get too confused as you continue reading this tutorials. Another thing is to manually create a `samples.txt` file, it should be as following in this dummy case:
@@ -128,7 +114,7 @@ After this step, you should have a folder called `db_fasta` in your `immunoverse
 
 ## Step 4: Generate final tabular output from Tesorai result
 
-placeholder
+Placeholder
 
 ## Appendix I: How to interpret the source aberration name?
 
