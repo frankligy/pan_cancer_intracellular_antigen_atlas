@@ -79,9 +79,9 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
 
     cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
     final = final.loc[cond,:]
-    selected_columns = ['cancer','pep','typ','source','highest_score','depmap_median','sc_pert','presented_by_each_sample_hla','additional_query','detailed_intensity']
+    selected_columns = ['cancer','pep','typ','source','highest_score','recurrence','depmap_median','sc_pert','presented_by_each_sample_hla','additional_query','detailed_intensity']
     final = final.loc[:,selected_columns]
-    final.columns = ['Cancer','Peptide','Antigen Class','Source','Spectral Score','Essentiality','Homogeneity','presented_by_each_sample_hla','additional_query','detailed_intensity']
+    final.columns = ['Cancer','Peptide','Antigen Class','Source','Spectral Score','Recurrence','Essentiality','Homogeneity','presented_by_each_sample_hla','additional_query','detailed_intensity']
 
 
     # round
@@ -121,7 +121,7 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
 
     # filter
     if query_type != 'All':
-        final = final.loc[final['Antigen Class']==query_type,:]
+        final = final.loc[final['Antigen Class']==query_type.replace('_',' '),:]
 
     if isinstance(query_source,str):
         query_source = query_source.upper()
@@ -138,7 +138,7 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
 
     # sort
     is_ascending = True
-    if sort_by_column in ['Spectral Score','Abundance']:
+    if sort_by_column in ['Spectral Score','Abundance','Recurrence']:
         is_ascending = False
     final = final.sort_values(by=sort_by_column,ascending=is_ascending)
 
@@ -192,7 +192,10 @@ def get_hla_info(meta,lists,hlas):
     for k,vs in considered.items():
         hla = k.split('HLA-')[1]
         sub_meta = meta.loc[meta['HLA'].notna(),:]
-        samples = sub_meta.loc[sub_meta['HLA'].str.contains(hla),:]['biology'].unique().tolist()
+        try:
+            samples = sub_meta.loc[sub_meta['HLA'].str.contains(hla),:]['biology'].unique().tolist() # for RT
+        except:
+            samples = []
         try:
             frac = len(vs)/len(samples)
         except ZeroDivisionError:
@@ -391,6 +394,7 @@ def display_hla_table(cancer,active_cell,data,page_current,page_size):
         if cancer == 'All':
             cancer = data[row]['Cancer']
         meta = pd.read_csv('./static/{}_metadata.txt'.format(cancer),sep='\t')
+        meta = meta.loc[~meta['study'].str.startswith('phase2_'),:] # only consider phase 1
         lists = literal_eval(data[row]['additional_query'])
         hlas = literal_eval(data[row]['presented_by_each_sample_hla'])
         df = get_hla_info(meta,lists,hlas)
@@ -451,11 +455,11 @@ if __name__ == '__main__':
             # query row
             html.Div([
                 html.Div([html.Div('Cancer:',className='body_query_note'),dcc.Dropdown(id='cancer_dropdown',options=['All','BRCA','KIRC','COAD','STAD','MESO','LIHC','ESCA','CESC','BLCA','RT','AML','DLBC','GBM','NBL','PAAD','HNSC','OV','LUSC','LUAD','CHOL','SKCM'],value='NBL',className='body_query_func')],className='body_query_row'),
-                html.Div([html.Div('Antigen Class:',className='body_query_note'),dcc.Dropdown(id='query_type',options=['All','self_gene','splicing','TE_chimeric','TE_self_translate','nuORF','intron_retention','fusion','variant','pathogen'],value='All',className='body_query_func')],className='body_query_row'),
+                html.Div([html.Div('Antigen Class:',className='body_query_note'),dcc.Dropdown(id='query_type',options=['All','self_gene','splicing','TE_chimeric_transcript','ERV','nuORF','intron_retention','fusion','variant','pathogen'],value='All',className='body_query_func')],className='body_query_row'),
                 html.Div([html.Div('Peptide:',className='body_query_note'),dcc.Input(id='query_peptide',placeholder='QYNPIRTTF',className='body_query_func')],className='body_query_row'),
                 html.Div([html.Div('Gene/Source:',className='body_query_note'),dcc.Input(id='query_source',placeholder='PHOX2B',className='body_query_func')],className='body_query_row'),
                 html.Div([html.Div('HLA:',className='body_query_note'),dcc.Input(id='query_hla',placeholder='A*24:02',className='body_query_func')],className='body_query_row'),
-                html.Div([html.Div('Sort by:',className='body_query_note'),dcc.Dropdown(id='sort_dropdown',options=['Peptide','Spectral Score','Abundance'],value='Spectral Score',className='body_query_func')],className='body_query_row'),
+                html.Div([html.Div('Sort by:',className='body_query_note'),dcc.Dropdown(id='sort_dropdown',options=['Peptide','Spectral Score','Abundance','Recurrence'],value='Spectral Score',className='body_query_func')],className='body_query_row'),
                 html.Div([html.Div('Download Table:',className='body_query_note'),dcc.Dropdown(id='download_table',options=['Yes','No'],value='No',className='body_query_func'),dcc.Download(id='downloader')],className='body_query_row'),
                 html.Button('Submit', id='submit_button', n_clicks=0, className='body_query_row'),
             ],className='body_query_div'),
@@ -475,6 +479,7 @@ if __name__ == '__main__':
                                                  'Antigen Class':'Class of Molecular Event',
                                                  'Simplified Source':'Source Aberration',
                                                  'Spectral Score':'Confidence of MS identification, the higher the better',
+                                                 'Recurrence':'Fraction of immunopeptidome samples in which this peptide gets evidenced',
                                                  'Abundance':'Percentile in descending order, the higher the more abundant',
                                                  'Essentiality':'Depmap Chrono Score, the lower the more essential',
                                                  'Homogeneity':'Single Cell coverage in percentile, the higher the better, ranging from 0-1'
@@ -578,7 +583,9 @@ if __name__ == '__main__':
             ], className="stats-row"),
 
             html.Div([
-                html.A("Read the Research Paper", href="https://www.biorxiv.org/content/10.1101/2025.01.22.634237v1", className="cta-link", target="_blank")
+                html.A("Read the Research Paper", href="https://www.biorxiv.org/content/10.1101/2025.01.22.634237v2", className="cta-link", target="_blank"),
+                html.Span(style={"display": "inline-block", "width": "100px"}),
+                html.A("Try ImmunoVerse Pipeline", href="https://frankligy.github.io/pan_cancer_intracellular_antigen_atlas/notes/deployed_pipeline_latest.pdf", className="cta-link", target="_blank"),
             ], className="stats-cta")
         ], className="stats-section"),
 
