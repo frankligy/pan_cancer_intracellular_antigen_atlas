@@ -186,6 +186,30 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
 
 ```
 
+In certain cases, the correspondance between your RNA and immunopeptidome is not exactly one-to-one or even more complexed. You may have noticed `overwrite_hla_dic` and `overwrite_hla_nested` parameters to allow you to specify HLA types for each immunopeptidome samples instead of reading from your RNA-Seq based pipeline. You should set `hla_mapping` to `null` as you don't need this mapping anymore.
+
+* Scenario 1:
+
+```json
+# [] means no HLA annotaiton for that immunopeptidome sample
+"overwrite_hla_dic":{
+    "sample1":["A*32:01","B*40:01","C*03:04"],
+    "sample2":[]
+}
+```
+
+* Scenario 2:
+
+```json
+# Sometimes, we group multiple samples in one study
+"overwrite_hla_dic":{
+    "study1@sample1.raw":["A*32:01","B*40:01","C*03:04"],
+    "study1@sample2.raw":["A*31:01","A*32:01","B*14:01","B*27:05","C*02:02","C*08:02"],
+    "sample2@sample1.raw":[]
+},
+"overwrite_hla_nested":true,
+```
+
 ## Appendix I: How to interpret the source aberration name?
 
 - Self gene
