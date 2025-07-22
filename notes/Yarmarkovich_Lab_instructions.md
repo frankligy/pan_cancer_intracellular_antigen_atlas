@@ -125,6 +125,7 @@ Again, the actual code you need to run is as easy as:
 Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to intimating at first glance, but most of the parameters can be left untouched (the one I left as na). And for now, I assume we will be using the tesorai `quantified_psm` file, you shall remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code), and put this processed file to `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/processed_tesorai.tsv`, my program will particularly look for this path to pick up the result file.
 
 ```json
+    # technology should be keyed on rna sample name
     "outdir":"/path/to/immunoverse_result/result",
     "db_fasta":"db_fasta",
     "immunopeptidome_dir":"/path/to/immunopeptidome_raw_data",
@@ -209,6 +210,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 },
 "overwrite_hla_nested":true,
 ```
+
 
 ## Appendix I: How to interpret the source aberration name?
 
