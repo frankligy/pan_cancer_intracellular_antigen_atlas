@@ -7,8 +7,6 @@ Accompanying codes for pan cancer atlas of intracellular tumor antigens
 
 # Notes
 
-* We formally proposed [7-criteria](./notes/seven_criteria.md) for therapeutic pHLA selection
-
 * Codes for generating the figures in the manuscript can be found [scripts](./scripts).
 
 * The whole [ImmunoVerse pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?usp=sharing) have been 
