@@ -1,9 +1,5 @@
 # Seven Criteria for therapeutic pHLA selection
 
-We formally outlined 7 criteria for therapeutic pHLA selection
-
-![seven](../images/seven.png)
-
 1. `MS confidence`: the peptide must be evidenced from empirical MS study, not pure computational prediction
 
 2. `Peptide Abundance`: the peptide needs to be abundant in tumor
@@ -17,5 +13,9 @@ We formally outlined 7 criteria for therapeutic pHLA selection
 6. `Homogeneity`: Peptide needs to be homogeneous across tumor clones
 
 7. `Dependency`: Source protein needs to be depenedent for tumor growth
+
+
+![seven](../images/seven.png)
+
 
 
