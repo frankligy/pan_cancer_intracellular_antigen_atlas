@@ -220,7 +220,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 placeholder
 ```
 
-- Splicing, TE chimeric transcript, self translated TE
+- Splicing, TE chimeric transcript, self translated TE, circular RNA
 
 ```bash
 # splicing junction (format 1): Junction coordinate (hs1 reference)|strand|Supporting RNA read count|phase|splicing site 1/2 gene symbols|nth discontinous peptide fragment from this junction
@@ -234,9 +234,12 @@ chr12:96898675-96908677|+|7|1|TE_info:L1ME2,L1ME2_dup1895,L1,LINE,donor,-,968975
 
 # self trasnlated TE: TE transcript ID|tumor read count in this sample|coordiante and strand|median tumor read count in tumor cohort|mean normal read count in gtex|fold change|# samples having this TE in tumor cohort|nth discontinous peptide fragment from this TE|phase|sense or anti-sense translation for TE
 HERVH-int_dup2802|349.44|chr7:26026526-26029368:-|3.75|0.04|7781.16|4|71|3|sense
+
+# circular rna: Junction coordinate|strand|phase|rna_count|nth discontinous peptide|circRNA
+chr11:65499306-65500372|+|0|1|seq:2|circRNA
 ```
 
-To explain `phase` in the context of splicing:
+To explain `phase` in the context of splicing and circular RNA:
 
 ```bash
 # phase 0
