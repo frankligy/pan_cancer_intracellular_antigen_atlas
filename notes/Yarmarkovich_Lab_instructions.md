@@ -217,7 +217,8 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 - Self gene
 
 ```bash
-placeholder
+# ENSG|ENST|gene_symbol|TPM in this sample
+ENSG00000138182|ENST00000371728|KIF20B|tpm:29.147336
 ```
 
 - Splicing, TE chimeric transcript, self translated TE, circular RNA
@@ -232,14 +233,14 @@ chr1:9774594-9775848|+|12|ENST00000377083|KIF1B,KIF1B
 # TE chimeric transcript: Junction coordinate (hs1 reference)|strand|Supporting RNA read count|phase|TE element contributing to exonization (TE gene ID, TE transcript ID, TE family ID, TE class ID, server as splicing donor or acceptor, strand, coordinates)|splicing site 1/2 gene symbols|nth discontinous peptide
 chr12:96898675-96908677|+|7|1|TE_info:L1ME2,L1ME2_dup1895,L1,LINE,donor,-,96897569,96898675|None,NEDD1|29
 
-# self trasnlated TE: TE transcript ID|tumor read count in this sample|coordiante and strand|median tumor read count in tumor cohort|mean normal read count in gtex|fold change|# samples having this TE in tumor cohort|nth discontinous peptide fragment from this TE|phase|sense or anti-sense translation for TE
+# self trasnlated TE: TE transcript ID|tumor read count in this sample|coordiante (hg38) and strand|median tumor read count in tumor cohort|mean normal read count in gtex|fold change|# samples having this TE in tumor cohort|nth discontinous peptide fragment from this TE|phase|sense or anti-sense translation for TE
 HERVH-int_dup2802|349.44|chr7:26026526-26029368:-|3.75|0.04|7781.16|4|71|3|sense
 
-# circular rna: Junction coordinate|strand|phase|rna_count|nth discontinous peptide|circRNA
+# circular rna: Junction coordinate (hg38)|strand|phase|rna_count|nth discontinous peptide|circRNA
 chr11:65499306-65500372|+|0|1|seq:2|circRNA
 ```
 
-To explain `phase` in the context of splicing and circular RNA:
+To explain `phase` in the context of splicing and circular RNA, `,` means junction:
 
 ```bash
 # phase 0
