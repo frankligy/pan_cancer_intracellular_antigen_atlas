@@ -125,7 +125,7 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
 
     if isinstance(query_source,str):
         query_source = query_source.upper()
-        final = final.loc[final['Source'].str.contains(query_source),:]
+        final = final.loc[final['Source'].str.upper().str.contains(query_source),:]
 
     if isinstance(query_peptide,str):
         query_peptide = query_peptide.upper()
