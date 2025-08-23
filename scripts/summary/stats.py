@@ -68,7 +68,60 @@ def run_self_gene_de(ensgs,cancer):
     os.rename('./diff_dir/altanalyze_output/ExpressionInput/DEGs-LogFold_0.0_adjp/GE.tumor_vs_normal.txt','DE_result_{}.txt'.format(cancer))
     subprocess.run('rm -rf ./diff_dir',shell=True)
 
+def run_te_de(tes,cancer):
+    tumor_erv = ad.read_h5ad(os.path.join(root_atlas_dir,cancer,'tumor_erv.h5ad'))
+    tumor_erv_aux = pd.read_csv(os.path.join(root_atlas_dir,cancer,'tumor_erv_aux_df.txt'),sep='\t',index_col=0)
+    normal_erv = pd.read_csv(os.path.join(HG38_NORMAL_DIR,'normal_erv.txt'),sep='\t',index_col=0)
+    normal_erv_aux = pd.read_csv(os.path.join(HG38_NORMAL_DIR,'normal_erv_aux_df.txt'),sep='\t',index_col=0)
+
+    n_data = normal_erv.values / normal_erv_aux['total_count'].values.reshape(1,-1) * 1e6
+
+    # reorg
+    tumor_erv.X = tumor_erv.layers['cpm']
+    del tumor_erv.layers['cpm']
+    normal_erv = pd.DataFrame(data=n_data,index=normal_erv.index,columns=normal_erv.columns)
+
+    # use simple name
+    tumor_erv.obs_names = [index.split(':')[0] for index in tumor_erv.obs_names]
+    normal_erv.index = [index.split(':')[0] for index in normal_erv.index]
     
+    # extract tumor 
+    common = list(set(tes).intersection(set(tumor_erv.obs_names)))
+    tumor_expr = tumor_erv[common,:].X.toarray()
+    tumor_df = pd.DataFrame(data=tumor_expr,index=common,columns=['tumor{}'.format(i+1) for i in range(tumor_expr.shape[1])])
+
+    # extract normal
+    common = list(set(tes).intersection(set(normal_erv.index)))
+    normal_df = normal_erv.loc[common,:]
+
+    # combine
+    final_df = pd.concat([tumor_df,normal_df],axis=1,join='outer').fillna(value=0)
+
+    # LIMMA
+    final_df.to_csv('exp.original-steady-state.txt',sep='\t')
+    with open('groups.txt','w') as f:
+        for item in tumor_df.columns:
+            f.write('{}\t1\ttumor\n'.format(item))
+        for item in normal_df.columns:
+            f.write('{}\t2\tnormal\n'.format(item))
+    with open('comps.txt','w') as f:
+        f.write('1\t2\n')
+
+    # run altanalyze, assuming singularity is enabled
+    os.makedirs('./diff_dir/altanalyze_output/ExpressionInput')
+    os.rename('exp.original-steady-state.txt','./diff_dir/altanalyze_output/ExpressionInput/exp.original-steady-state.txt')
+    os.rename('groups.txt','./diff_dir/groups.txt')
+    os.rename('comps.txt','./diff_dir/comps.txt')
+    old_dir = os.getcwd()
+    os.chdir('./diff_dir')
+    writable_path = '/gpfs/data/yarmarkovichlab/Frank/SNAF_ecosystem/altanalyze'
+    cmd = 'singularity run -B $PWD:/mnt --writable {} DE altanalyze_output groups.txt'.format(writable_path)
+    subprocess.run(cmd,shell=True)
+    os.chdir(old_dir)
+    os.rename('./diff_dir/altanalyze_output/ExpressionInput/DEGs-LogFold_0.0_adjp/GE.tumor_vs_normal.txt','DE_result_TE_{}.txt'.format(cancer))
+    subprocess.run('rm -rf ./diff_dir',shell=True)
+
+
 
 
 cancers = [
@@ -122,6 +175,7 @@ n_samples = [
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 database_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database'
 bayests_xy_path = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt'
+HG38_NORMAL_DIR = '/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/hg38_telocal_intron'
 
 # self_gene 
 final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
@@ -134,15 +188,42 @@ total_ensg = list(set(total_ensg_intra + total_ensg_mem))
 # for cancer in cancers:
 #     run_self_gene_de(total_ensg,cancer)
 
+# TE
+final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
+final = final.loc[final['typ']=='self_translate_te',:]
+col = []
+for items in final['source']:
+    valid_items = []
+    for item in items.split(';'):
+        if (not item.startswith('nc|')) and (not 'nuORF' in item) and (not 'TE_info' in item):
+            valid_items.append(item)
+    designated_te = None
+    min_lfc = 1e5
+    for item in valid_items:
+        lfc = float(item.split('|')[4])
+        if lfc < min_lfc:
+            designated_te = item
+            min_lfc = lfc
+    col.append(designated_te)
+final['designated_te'] = col
+final = final.loc[final['designated_te'].notna(),:]
+total_tes = final['designated_te'].values.tolist()
+total_tes = list(set([item.split('|')[0] for item in total_tes]))
+
+# for cancer in cancers:
+#     run_te_de(total_tes,cancer)
+
+
 col1 = []
 col2 = []
 for row in final.itertuples():
-    if row.typ == 'self_gene':
+    if row.typ == 'self_translate_te':
         c = row.cancer
-        ensg = row.ensgs
-        df = pd.read_csv('DE_result_{}.txt'.format(c),sep='\t',index_col=0)
-        rawp = df.loc[ensg,:]['rawp']
-        adjp = df.loc[ensg,:]['adjp']
+        source = row.designated_te
+        source = source.split('|')[0]
+        df = pd.read_csv('DE_result_TE_{}.txt'.format(c),sep='\t',index_col=0)
+        rawp = df.loc[source,:]['rawp']
+        adjp = df.loc[source,:]['adjp']
         col1.append(rawp)
         col2.append(adjp)
     else:
