@@ -12,7 +12,7 @@ from ast import literal_eval
 import anndata as ad
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
-from scipy.stats import mannwhitneyu,chi2
+from scipy.stats import mannwhitneyu,chi2,binomtest
 from statsmodels.stats.multitest import multipletests
 import statsmodels.api as sm
 from statsmodels.othermod.betareg import BetaModel
@@ -197,7 +197,7 @@ def run_splicing_de(events,cancer,te):
         de_df.to_csv('DE_splicing_{}.txt'.format(cancer),sep='\t')
 
     
-def run_nuorf_de(nuorfs,cancer,method):
+def run_nuorf_de(nuorfs,cancer):
 
     # extract normal df, percentile
     normal = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.05_tesorai.txt',sep='\t')
@@ -236,22 +236,38 @@ def run_nuorf_de(nuorfs,cancer,method):
     rawps = []
     for nuorf in tqdm(nuorfs):
         t = tumor.loc[tumor['peptide']==nuorf,'percentile'].values
+        t[t == np.inf] = 1 - 1e-5
+        t[t == -np.inf] = 1e-5
+        t[t == 1] = 1 - 1e-5
+        t[t == 0] = 1e-5
         if len(t) > 0:
             n = normal.loc[normal['peptide']==nuorf,'percentile'].values
-            if len(n) == 0:
-                n = np.full(n_normal,fill_value=1e-5)
-            endog = pd.Series(data=np.concatenate([t,n]),name='y')
+            n[n == np.inf] = 1 - 1e-5
+            n[n == -np.inf] = 1e-5
+            n[n == 1] = 1 - 1e-5
+            n[n == 0] = 1e-5
+            diff = n_normal - len(n)
+            diff = np.full(diff,fill_value=1e-5)
+            n = np.concatenate([n,diff])
+            endog = pd.Series(data=np.concatenate([t,n]),name='y').fillna(1e-5)
             total = len(t) + n_normal
             exog = pd.DataFrame(data={'const':[1]*total,'group':[0]*len(t)+[1]*n_normal})
 
             def lrt(endog,exog):
+
                 # alt
-                model = BetaModel(endog.values,exog.values)
+                a = endog.values.reshape(-1)
+                b = exog.values.reshape(-1,2)
+                assert len(a) == b.shape[0]
+                model = BetaModel(a,b)
                 results = model.fit()
                 alt_llf = results.llf
 
                 # null
-                model = BetaModel(endog.values,exog.values[:,0])
+                a = endog.values.reshape(-1)
+                b = exog.values[:,0].reshape(-1,1)
+                assert len(a) == b.shape[0]
+                model = BetaModel(a,b)
                 results = model.fit()
                 null_llf = results.llf
 
@@ -261,12 +277,7 @@ def run_nuorf_de(nuorfs,cancer,method):
                 
                 return p
 
-            while True:
-                try:
-                    p = lrt(endog,exog)
-                    break
-                except:
-                    continue
+            p = lrt(endog,exog)
 
         else:
             p = 1
@@ -277,13 +288,44 @@ def run_nuorf_de(nuorfs,cancer,method):
     _,adjps,_,_ = multipletests(rawps,alpha=0.05,method='fdr_bh',is_sorted=False,returnsorted=False)
     de_df = pd.DataFrame(data={'rawp':rawps,'adjp':adjps},index=nuorfs)
     de_df.to_csv('DE_nuorf_{}.txt'.format(cancer),sep='\t')
-    sys.exit('stop')
 
 
+def run_quantile_de(features,cancer,typ):
+    if typ == 'pathogen':
+        df = pd.read_csv(os.path.join(root_atlas_dir,cancer,'pathogen_all.txt'),sep='\t')
+        rawps = []
+        for feature in features:
+            t = df.loc[df['taxonomy'].str.contains(feature),'count'].values
+            if len(t) > 0 :
+                total_tumor = n_samples[cancers.index(cancer)]
+                q0 = 0
+                n_above = np.sum(t>q0)
+                res = binomtest(n_above,total_tumor,p=0.2,alternative='greater')
+                p = res.pvalue
+            else:
+                p = 1
+            rawps.append(p)
+        _,adjps,_,_ = multipletests(rawps,alpha=0.05,method='fdr_bh',is_sorted=False,returnsorted=False)
+        de_df = pd.DataFrame(data={'rawp':rawps,'adjp':adjps},index=features)
+        de_df.to_csv('DE_pathogen_{}.txt'.format(cancer),sep='\t')
 
-
-
-
+    elif typ == 'intron_retention':
+        df = pd.read_csv(os.path.join(root_atlas_dir,cancer,'intron_all.txt'),sep='\t')
+        rawps = []
+        for feature in features:
+            t = df.loc[df['feature']==feature,'coverage'].values
+            if len(t) > 0 :
+                total_tumor = n_samples[cancers.index(cancer)]
+                q0 = 0
+                n_above = np.sum(t>q0)
+                res = binomtest(n_above,total_tumor,p=0.15,alternative='greater')
+                p = res.pvalue
+            else:
+                p = 1
+            rawps.append(p)
+        _,adjps,_,_ = multipletests(rawps,alpha=0.05,method='fdr_bh',is_sorted=False,returnsorted=False)
+        de_df = pd.DataFrame(data={'rawp':rawps,'adjp':adjps},index=features)
+        de_df.to_csv('DE_intron_retention_{}.txt'.format(cancer),sep='\t')
 
 
 
@@ -459,10 +501,45 @@ final = final.loc[final['typ']=='nuORF',:]
 nuorfs = list(set(final['pep'].values))
 
 
-for cancer in cancers:
-    run_nuorf_de(nuorfs,cancer)
+# for cancer in cancers:
+#     run_nuorf_de(nuorfs,cancer)
 
+
+
+# pathogen
+final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
+final = final.loc[final['typ']=='pathogen',:]
+strains = ['Niallia circulans','Campylobacter ureolyticus','Clostridium intestinale','Helicobacter pylori','Fusobacterium nucleatum']
+
+# for cancer in cancers:
+#     run_quantile_de(strains,cancer,'pathogen')
+
+# intron retention
+final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
+final = final.loc[final['typ']=='intron_retention',:]
+col = []
+for items in final['source']:
+    valid_items = []
+    for item in items.split(';'):
+        if (not item.startswith('nc|')) and (not 'nuORF' in item):
+            valid_items.append(item)
+    designated_ir = None
+    min_expr = 1e5
+    for item in valid_items:
+        expr = float(item.split('|')[2])
+        if expr < min_expr:
+            designated_ir = item
+            min_expr = expr
+    col.append(designated_ir)
+final['designated_ir'] = col
+final = final.loc[final['designated_ir'].notna(),:]
+total_irs = final['designated_ir'].values.tolist()
+total_irs = list(set([item.split('|')[0] for item in total_irs]))
+
+for cancer in cancers:
+    run_quantile_de(total_irs,cancer,'intron_retention')
 sys.exit('stop')
+
 
 col1 = []
 col2 = []
