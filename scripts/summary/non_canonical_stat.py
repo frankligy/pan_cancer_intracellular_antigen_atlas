@@ -64,9 +64,6 @@ n_samples = [
 ]
 
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
-bayests_xy_path = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt'
-gtex_median_path = '/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/bulk-gex_v8_rna-seq_GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct'
-membrane_path = '/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/human_membrane_proteins_acc2ens.txt'
 
 
 df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')

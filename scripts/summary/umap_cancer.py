@@ -14,6 +14,7 @@ import anndata as ad
 import scanpy as sc
 from sctriangulate import *
 from sctriangulate.preprocessing import *
+from sctriangulate.colors import *
 
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
@@ -91,7 +92,7 @@ for c in cancers:
     c_df_list.append(c_df)
 
 # add serum
-final_add = pd.read_csv('/gpfs/data/yarmarkovichlab/lung_cancer/antigen/other_alg/final_enhanced.txt',sep='\t')
+final_add = pd.read_csv('/gpfs/data/yarmarkovichlab/plasma_gbm_PXD008127/antigen/other_alg/final_enhanced.txt',sep='\t')
 cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_add['presented_by_each_sample_hla']]
 final_add = final_add.loc[cond,:]
 final_add = final_add.loc[final_add['typ']=='self_gene',:]
@@ -109,7 +110,7 @@ c_df = pd.DataFrame.from_dict(gene2data,orient='columns')  # sample * gene
 c_df_list.append(c_df)
 
 
-df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers+['serum']).fillna(value=0).T
+df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers+['plasma_gbm']).fillna(value=0).T
 
 mi = df.columns
 mi_df = mi.to_frame(index=False)
@@ -126,13 +127,19 @@ sc.tl.pca(adata,n_comps=50)
 sc.pp.neighbors(adata)
 sc.tl.umap(adata)
 umap_dual_view_save(adata,cols=['cancer'])
-
 sys.exit('stop')
+
+# markers
+sc.pl.umap(adata,color=['ENSG00000185664','ENSG00000185686','ENSG00000181143','ENSG00000005381'],frameon=True,cmap=bg_greyed_cmap('viridis'),vmin=1e-5)
+plt.savefig('umap_markers_genes.pdf',bbox_inches='tight')
+plt.close()
+sc.tl.rank_genes_groups(adata, groupby="cancer", method="wilcoxon")
+sc.pl.rank_genes_groups_heatmap(adata,groupby="cancer", n_genes=2,cmap="viridis", dendrogram=True,swap_axes=True,show_gene_labels=True)
+plt.savefig('heatmap_markers_genes.pdf',bbox_inches='tight')
+plt.close()
+sys.exit('stop')
+
         
-
-
-
-
 
 # use transcriptome to cluster TCGA
 rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'

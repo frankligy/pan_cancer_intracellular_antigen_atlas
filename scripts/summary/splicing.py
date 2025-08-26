@@ -160,10 +160,11 @@ final['coord'] = col1
 final['anno'] = col2
 final.to_csv('all_splicing.txt',sep='\t',index=None)
 
-df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 final = df.loc[df['typ']=='splicing',:]
 cond = [False if 'nc|ENSG00000100146|P56693|SOX10' in item else True for item in final['source']]
 final = final.loc[cond,:]
+final.to_csv('all_splicing_final.txt',sep='\t',index=None)
 
 
 # peptide view

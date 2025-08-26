@@ -236,8 +236,10 @@ final = final.loc[final['strain']!='unknown',:]
 final.to_csv('all_pathogen.txt',sep='\t',index=None)
 
 
-df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 final = df.loc[df['typ']=='pathogen',:]
+final.to_csv('all_pathogen_final.txt',sep='\t',index=None)
 
 # select representative
 final_sub = final.loc[final['strain']=='F.Nucleatum',:].sort_values(by='n_psm',ascending=False)

@@ -82,13 +82,10 @@ for c in cancers:
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
 final.to_csv('all_fusion.txt',sep='\t',index=None)
 
-sys.exit('stop')
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
+final = df.loc[df['typ']=='fusion',:]
+final.to_csv('all_fusion_final.txt',sep='\t',index=None)
 
-safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
-safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
-final = final.loc[~final['pep'].isin(safety_screen_bl),:]
 
-final.to_csv('all_fusion_ts.txt',sep='\t',index=None)
 
 

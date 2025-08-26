@@ -173,7 +173,7 @@ mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
 df.to_csv('peptide_view_orf1.txt',sep='\t')
 
-sys.exit('stop')
+
 
 # original main
 data = []
@@ -188,7 +188,9 @@ final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns
 final.to_csv('te_all_antigens.txt',sep='\t',index=None)
 
 
-
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
+final2 = df.loc[df['typ'].isin(['self_translate_te','TE_chimeric_transcript']),:]
+final2.to_csv('all_te_final.txt',sep='\t',index=None)
 
 tid2cid = process_te_gtf()
 

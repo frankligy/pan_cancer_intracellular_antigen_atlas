@@ -140,6 +140,12 @@ def get_ts_gene(atlas_dir):
 
     return real_common,real_common_membrane
 
+# real_common, _ = get_ts_gene(os.path.join(root_atlas_dir,'HNSC'))
+# with open('HNSC_ts.txt','w') as f:
+#     for item in real_common:
+#         f.write('{}\n'.format(item))
+
+
 def get_ts_splicing(atlas_dir,s):
     splicing_path = os.path.join(atlas_dir,'splicing_rec.txt')
     total_sample = s
@@ -213,7 +219,10 @@ def get_ts_pathogen(c):
 
 def get_ts_fusion(atlas_dir):
 
-    df = pd.read_csv(os.path.join(atlas_dir,'fusion_recurrent.txt'),sep='\t',index_col=0)
+    try:
+        df = pd.read_csv(os.path.join(atlas_dir,'fusion_recurrent.txt'),sep='\t',index_col=0)
+    except:
+        df = pd.read_csv(os.path.join(atlas_dir,'fusion_rec.txt'),sep='\t',index_col=0)
 
     return df
 
@@ -227,7 +236,6 @@ for c,s in zip(cancers,n_samples):
     df_list.append(s)
 df = pd.concat(df_list,axis=0,keys=cancers)
 df.to_csv('my_filter_membrane.txt',sep='\t')
-
 
 safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
 safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
@@ -269,21 +277,16 @@ fusion_df = pd.read_csv('all_fusion.txt',sep='\t')
 fusion_df = fusion_df.loc[~fusion_df['source'].str.contains('nc'),:]
 fusion_df = fusion_df.loc[~fusion_df['pep'].isin(safety_screen_bl),:]
 
-
 ir_df = pd.read_csv('all_ir.txt',sep='\t')
 ir_df = ir_df.loc[~ir_df['pep'].isin(safety_screen_bl),:]
 
-
 pathogen_df = pd.read_csv('all_pathogen.txt',sep='\t')
 pathogen_df = pathogen_df.loc[~pathogen_df['pep'].isin(safety_screen_bl),:]
-
 
 patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
 # patent_df.to_csv('for_safety_screen.txt',sep='\t',index=None)   # you can generate for safety screen as well
 patent_df.to_csv('final_all_ts_antigens.txt',sep='\t',index=None)
 print(len(patent_df['pep'].unique()))
-
-
 
 
 data = []
@@ -542,12 +545,18 @@ dic = {}
 total_rna = 0  
 with pd.ExcelWriter('all_rna_manifest.xlsx') as writer:
     for c in cancers:
+        print(c)
         cmd = 'find {} -type f -name "manifest_*_*.tsv"'.format(os.path.join(root_atlas_dir,c))
         possible_f = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1][0]
         df = pd.read_csv(possible_f,sep='\t',index_col=0)
+        df = df.loc[df['sample_id'].notna(),:]
+        tid = [int(item.split('-')[-1][:-1]) for item in df['sample_id']]
+        cond = [False if item == 10 or item ==11 else True for item in tid]
+        df = df.loc[cond,:]
         total_rna += df.shape[0]
         dic[c] = df.shape[0]
         df.to_excel(writer,sheet_name=c)
+print(total_rna)
 
 fig,ax = plt.subplots()
 bars = ax.bar(x=np.arange(len(dic)),height=list(dic.values()))

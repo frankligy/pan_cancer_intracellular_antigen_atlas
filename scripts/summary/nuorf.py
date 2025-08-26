@@ -121,7 +121,6 @@ mapping = {
 pd.Series(mapping,name='full_name').to_csv('abbreviation.txt',sep='\t')
 
 
-
 data = []
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
@@ -133,12 +132,16 @@ for c in cancers:
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
 final.to_csv('all_nuorf.txt',sep='\t',index=None)
 
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
+final2 = df.loc[df['typ']=='nuORF',:]
+final2.to_csv('all_nuorf_final.txt',sep='\t',index=None)
+
 vc = final['pep'].value_counts()
 candidates = vc.loc[vc>9].index.tolist()
 added = ['STIRVLSGY','RYLPSSVFL','LYLETRSEF','VLMEVTLEGK','AYPASLQTL','KSLAAELLVLK']
 candidates = candidates + added
 
-bl = ['RPRAVGLGL','RLQDPQAGISK','VYKPVSIYL']  # not tumor specific
+bl = ['RPRAVGLGL','RLQDPQAGISK','VYKPVSIYL']  # not tumor specific, this list needs to be post-hocly determined
 wl = ['QSQREFTLK'] # pseudogene
 
 for item in bl:

@@ -170,47 +170,46 @@ safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
 df = df.loc[~df['pep'].isin(safety_screen_bl),:]
 
 
-# for cancer in cancers:
-#     root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
-#     # splicing_dic = process_cancer_splicing(os.path.join(root_atlas_dir,cancer,'splicing_all.txt'))
-#     # ir_dic = process_cancer_intron(os.path.join(root_atlas_dir,cancer,'intron_all.txt'))
+for cancer in cancers:
+    root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+    # splicing_dic = process_cancer_splicing(os.path.join(root_atlas_dir,cancer,'splicing_all.txt'))
+    # ir_dic = process_cancer_intron(os.path.join(root_atlas_dir,cancer,'intron_all.txt'))
 
-#     # with open('splicing_ir_dic/{}_splicing_dic.p'.format(cancer),'wb') as f:
-#     #     pickle.dump(splicing_dic,f)
+    # with open('splicing_ir_dic/{}_splicing_dic.p'.format(cancer),'wb') as f:
+    #     pickle.dump(splicing_dic,f)
 
-#     # with open('splicing_ir_dic/{}_ir_dic.p'.format(cancer),'wb') as f:
-#     #     pickle.dump(ir_dic,f)
+    # with open('splicing_ir_dic/{}_ir_dic.p'.format(cancer),'wb') as f:
+    #     pickle.dump(ir_dic,f)
 
 
-#     with open('splicing_ir_dic/{}_splicing_dic.p'.format(cancer),'rb') as f:
-#         splicing_dic = pickle.load(f)
+    with open('splicing_ir_dic/{}_splicing_dic.p'.format(cancer),'rb') as f:
+        splicing_dic = pickle.load(f)
 
-#     with open('splicing_ir_dic/{}_ir_dic.p'.format(cancer),'rb') as f:
-#         ir_dic = pickle.load(f)
+    with open('splicing_ir_dic/{}_ir_dic.p'.format(cancer),'rb') as f:
+        ir_dic = pickle.load(f)
 
-#     df_now = df.loc[df['cancer']==cancer,:]
-#     col1 = []
-#     col2 = []
-#     for row in df_now.itertuples():
-#         cancer = row.cancer
-#         coord = row.source.split('|')[1]
-#         flag = has_splicing_site(coord,splicing_dic)
-#         col1.append(flag)
-#         flag = has_ir(coord,ir_dic)
-#         col2.append(flag)
-#     df_now['not_has_ss'] = col1
-#     df_now['not_in_ir'] = col2
-#     df_now.to_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(cancer),sep='\t')
+    df_now = df.loc[df['cancer']==cancer,:]
+    col1 = []
+    col2 = []
+    for row in df_now.itertuples():
+        cancer = row.cancer
+        coord = row.source.split('|')[1]
+        flag = has_splicing_site(coord,splicing_dic)
+        col1.append(flag)
+        flag = has_ir(coord,ir_dic)
+        col2.append(flag)
+    df_now['not_has_ss'] = col1
+    df_now['not_in_ir'] = col2
+    df_now.to_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(cancer),sep='\t')
 
 
 # assemble
-# df_list = []
-# for c in cancers:
-#     df = pd.read_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(c),sep='\t')
-#     df_list.append(df)
-# final = pd.concat(df_list,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'}).drop(columns='Unnamed: 0')
-# final.to_csv('splicing_ir_dic/final.txt',sep='\t',index=None)
-
+df_list = []
+for c in cancers:
+    df = pd.read_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(c),sep='\t')
+    df_list.append(df)
+final = pd.concat(df_list,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'}).drop(columns='Unnamed: 0')
+final.to_csv('splicing_ir_dic/final.txt',sep='\t',index=None)
 
 
 # draw

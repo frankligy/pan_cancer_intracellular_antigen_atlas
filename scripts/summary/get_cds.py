@@ -96,6 +96,7 @@ for tid,sub_df in tqdm(gtf.groupby(by='tid')):
             phase = span % 3
             accumulated_residue += n_residue
             stop_phase = phase
+
         try:
             assert stop_phase == 0
         except:   # seems to be CDS incomplete
@@ -103,6 +104,8 @@ for tid,sub_df in tqdm(gtf.groupby(by='tid')):
             dic = None
         enst2coord[tid] = coord
         enst2dic[tid] = dic
+
+
 
 # assemble
 df = pd.Series(enst2ensg,name='ensg').to_frame()

@@ -98,38 +98,38 @@ def process_tumor_gene():
 pan_cancer_ensgs = pd.read_csv('pan_cancer_cluster.txt',sep='\t',header=None)[0].values.tolist()
 
 # peptide versus rna
-# df = pd.read_csv('ts_final.txt',sep='\t')
-# pep_data = []
-# rna_data = []
-# ts_data = []
-# for i1,i2,i3 in zip(df['median_tumor'],df['max_median_gtex'],df['detailed_intensity']):
-#     i3 = literal_eval(i3)
-#     median_pep = np.median(i3)
-#     pep_data.append(median_pep)
-#     rna_data.append(math.log2(i1))
-#     ts_data.append(math.log2(i1/i2))
-# pd.DataFrame(data={'rna_data':rna_data,'pep_data':pep_data,'ts_data':ts_data}).to_csv('pep_vs_rna.txt',sep='\t')
-# fig,ax = plt.subplots()
-# scatter = ax.scatter(rna_data,pep_data,c=ts_data,s=1,cmap='YlOrRd')
-# cbar = fig.colorbar(scatter)
-# cbar.set_label('log fold change')
-# ax.set_xlabel('log2(median_rna_tpm)')
-# ax.set_ylabel('median peptide percentile')
-# plt.savefig('pep_vs_rna.pdf',bbox_inches='tight')
-# plt.close()
+df = pd.read_csv('ts_final.txt',sep='\t')
+pep_data = []
+rna_data = []
+ts_data = []
+for i1,i2,i3 in zip(df['median_tumor'],df['max_median_gtex'],df['detailed_intensity']):
+    i3 = literal_eval(i3)
+    median_pep = np.median(i3)
+    pep_data.append(median_pep)
+    rna_data.append(math.log2(i1))
+    ts_data.append(math.log2(i1/i2))
+pd.DataFrame(data={'rna_data':rna_data,'pep_data':pep_data,'ts_data':ts_data}).to_csv('pep_vs_rna.txt',sep='\t')
+fig,ax = plt.subplots()
+scatter = ax.scatter(rna_data,pep_data,c=ts_data,s=1,cmap='YlOrRd')
+cbar = fig.colorbar(scatter)
+cbar.set_label('log fold change')
+ax.set_xlabel('log2(median_rna_tpm)')
+ax.set_ylabel('median peptide percentile')
+plt.savefig('pep_vs_rna.pdf',bbox_inches='tight')
+plt.close()
 
 # pan-cancer cell cycle plot, let's just use the 68 that I selected and saved in fig2_raw
-# result = pd.read_csv('Reactome_Pathways_2024_table.txt',sep='\t').iloc[:6,:]
-# fig,ax = plt.subplots()
-# ax.barh(y=np.arange(result.shape[0]),width=np.flip(np.negative(np.log10(result['Adjusted P-value'].values))))
-# ax.set_xlabel('-log10(adjusted p-value)')
-# ax.set_yticks(np.arange(result.shape[0]))
-# ax.set_yticklabels(np.flip(result['Term'].values),fontsize=4)
-# plt.savefig('pan_cancer_cell_cycle_enrichr.pdf',bbox_inches='tight')
-# plt.close()
+result = pd.read_csv('Reactome_Pathways_2024_table.txt',sep='\t').iloc[:6,:]
+fig,ax = plt.subplots()
+ax.barh(y=np.arange(result.shape[0]),width=np.flip(np.negative(np.log10(result['Adjusted P-value'].values))))
+ax.set_xlabel('-log10(adjusted p-value)')
+ax.set_yticks(np.arange(result.shape[0]))
+ax.set_yticklabels(np.flip(result['Term'].values),fontsize=4)
+plt.savefig('pan_cancer_cell_cycle_enrichr.pdf',bbox_inches='tight')
+plt.close()
 
 # for ts gene, coverage for patients, also consider all antigens
-df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 # remove pan-cancer gene, because they are not ideal as single target
 cond = []
 for item1,item2 in zip(df['typ'],df['ensgs']):
@@ -155,7 +155,6 @@ for c in cancers:
     self_gene_dic[c] = mapping
     prop = np.count_nonzero(np.any(exp,axis=0)) / exp.shape[1]
     self_gene_dic_overall[c] = prop
-print(self_gene_dic_overall);sys.exit('stop')
 
 col = []
 for row in df.itertuples():
@@ -295,6 +294,7 @@ plt.savefig('self_gene_coverage.pdf',bbox_inches='tight')
 plt.close()
 
 
+'''below two parts do not need to be execuated everytime'''
 # ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
 # symbol2ensg = {v:k for k,v in ensg2symbol.items()}
 # df = pd.read_csv('uniprotkb_proteome_UP000005640_AND_revi_2024_12_26.tsv',sep='\t')
@@ -343,32 +343,13 @@ plt.close()
 #     now_df.to_csv('./compartment/human_{}_protein_postdoc_final.txt'.format(v),sep='\t',index=None)
 
 
-# sc_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_sc'
-# lis = [
-#     'BLCA_var.csv',
-#     'BRCA_var.csv',
-#     'COAD_var.csv',
-#     'GBM_var.csv',
-#     'HNSC_var.csv',
-#     'LUAD_var.csv',
-#     'LUSC_var.csv',
-#     'OV_var.csv',
-#     'PAAD_var.csv',
-#     'RT_var.csv',
-#     'SARC_var.csv',
-#     'STAD_var.csv',
-#     'THCA_var.csv',
-#     'UCEC_sc.csv',
-# ]
-# d_lis = []
-# c_lis = []
-# for l in lis:
-#     c = l.split('_')[0]
-#     c_lis.append(c)
-#     d = pd.read_csv(os.path.join(sc_dir,l),sep=',',index_col=0)
-#     d_lis.append(d)
-# d = pd.concat(d_lis,axis=1,join='outer')
-# d.columns = c_lis
+# all_cancers = ['PAAD','OV','GBM','COAD','LUAD','LUSC','STAD','LIHC','BLCA','BRCA','KIRC','SKCM','HNSC','ESCA']
+# var_list = []
+# for c in all_cancers:
+#     var = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/logic_finder_v2/output_{}/var.csv'.format(c),sep=',',index_col=0)
+#     var_list.append(var)
+# d = pd.concat(var_list,axis=1,join='outer')
+# d.columns = all_cancers
 # d.to_csv('zach_single_cell_data.txt',sep='\t')
 # mapping = pd.read_csv('gProfiler_hsapiens_zach_sc.csv',sep=',',index_col=0)['converted_alias'].to_dict()
 # col = []
@@ -376,6 +357,16 @@ plt.close()
 #     col.append(mapping.get(item,None))
 # d.index = col
 # d.to_csv('zach_single_cell_data_ensg.txt',sep='\t')
+
+# construct ensg2adjp
+de_list = []
+for c_ in cancers:
+    de = pd.read_csv('./stats/DE_result_{}.txt'.format(c_),sep='\t',index_col=0)
+    de_list.append(de['adjp'])
+de_df = pd.concat(de_list,axis=1,join='outer')
+de_df.columns = cancers
+s = de_df.min(axis=1)
+ensg2adjp = pd.Series(data=[True if i < 1e-5 else False for i in s],index=s.index)
 
 # membrane protein coverage
 mem = pd.read_csv('my_filter_membrane.txt',sep='\t')
@@ -500,6 +491,7 @@ for item in df.index:
 
 ori_array = [tuple(df.index.tolist()),
              tuple([ensg2symbol[item] for item in df.index]),
+             tuple([ensg2adjp[item] for item in df.index]),
              tuple(cond_col)]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
@@ -535,8 +527,10 @@ ts_final = final.loc[~final['ensgs'].isin(manual_bl_ensg),:]
 ts_final.to_csv('ts_final.txt',sep='\t',index=None) # stop here for safety screen
 
 
-ts_final = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+
+ts_final = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 ts_final = ts_final.loc[ts_final['typ'] == 'self_gene',:]
+ts_final.to_csv('ts_final_final.txt',sep='\t',index=None)
 all_genes = list(set(ts_final['ensgs'].values))
 
 mem = pd.read_csv('human_membrane_proteins_acc2ens.txt',sep='\t')
@@ -581,6 +575,7 @@ ori_array = [tuple(df.index.tolist()),
              tuple([ensg2symbol[item] for item in df.index]),
              tuple([True if item in membrane_ensg else False for item in df.index]),
              tuple([ensg2dep[item] for item in df.index]),
+             tuple([ensg2adjp[item] for item in df.index]),
              tuple([s_map.get(item,None) for item in df.index])]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi

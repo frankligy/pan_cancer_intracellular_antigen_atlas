@@ -108,9 +108,8 @@ final['recurrency'] = [item.split('|')[2] for item in final['real_source']]
 final.to_csv('all_variants.txt',sep='\t',index=None)
 
 
-df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 final = df.loc[df['typ']=='variant',:]
-
 
 # plot cancer
 col1 = []
@@ -124,6 +123,7 @@ for c in other_c:
     col2.append(0)
 df = pd.DataFrame(data={'cancer':col1,'value':col2}).sort_values(by='value',ascending=True)
 df.plot.barh(x='cancer', y='value', rot=0)
+df.to_csv('variant_by_cancer.txt',sep='\t',index=None)
 plt.savefig('variant_by_cancer.pdf',bbox_inches='tight')
 plt.close()
 
@@ -135,6 +135,7 @@ for g,sub_df in final.groupby(by='gene'):
     col2.append(sub_df.shape[0])
 df = pd.DataFrame(data={'gene':col1,'value':col2}).sort_values(by='value',ascending=True)
 df.plot.barh(x='gene', y='value', rot=0,fontsize=1)
+df.to_csv('variant_by_gene.txt',sep='\t',index=None)
 plt.savefig('variant_by_gene.pdf',bbox_inches='tight')
 plt.close()
 
@@ -147,6 +148,7 @@ for g,sub_df in final_sub.groupby(by='gene'):
     col2.append(sub_df.shape[0])
 df = pd.DataFrame(data={'gene':col1,'value':col2}).sort_values(by='value',ascending=True)
 df.plot.barh(x='gene', y='value', rot=0,fontsize=5)
+df.to_csv('variant_by_gene_driver.txt',sep='\t',index=None)
 plt.savefig('variant_by_gene_driver.pdf',bbox_inches='tight')
 plt.close()
 
@@ -160,6 +162,12 @@ df = pd.DataFrame(data={'mutation_type':col1,'value':col2}).sort_values(by='valu
 df.plot.barh(x='mutation_type',y='value',rot=0,fontsize=5)
 plt.savefig('variant_by_mutation_type.pdf',bbox_inches='tight')
 plt.close()
+df.set_index(keys='mutation_type',inplace=True)
+df.plot.pie(y='value',figsize=(5,5))
+plt.savefig('variant_by_mutation_type_pie.pdf',bbox_inches='tight')
+plt.close()
+df['prop'] = df['value']/df['value'].sum()
+df.to_csv('variant_by_mutation_type.txt',sep='\t')
 
 
 # compare with common database
@@ -190,6 +198,7 @@ for c,p in zip(final['cancer'],final['pep']):
         cond.append(False)
 final['in_tesorai'] = cond
 final.to_csv('annotated_variant_antigen.txt',sep='\t',index=None)
+print(len(final['pep'].unique()))
 
 item3 = categorize_sets(set(pep_tsnadb),set(final['pep'].values))
 length3 = [len(item) for item in item3]
