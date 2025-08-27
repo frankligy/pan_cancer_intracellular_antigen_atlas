@@ -88,12 +88,11 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
     for column in ['Essentiality','Homogeneity']:
         col = []
         for item in final[column]:
-            if isinstance(item,str):   # not empty
-                item = literal_eval(item)
-                if isinstance(item,float):  # single
-                    item = round(item,2)
-                elif isinstance(item,list):  # multiple
-                    item = str([i if i is None else round(i,2) for i in item])
+            try:
+                item = float(item)
+                item = round(item,2)
+            except:
+                item = item
             col.append(item)
         final[column] = col
 
