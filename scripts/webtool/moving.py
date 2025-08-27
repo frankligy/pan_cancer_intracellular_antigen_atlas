@@ -59,14 +59,20 @@ cancers = [
 
 
 # move final
+df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/stats/final_all_ts_antigens.txt',sep='\t')
+wl = {}
+for c,sub_df in df.groupby(by='cancer'):
+    wl[c] = set(sub_df['pep'])
 des_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/app/static'
 if not os.path.exists(des_dir):
     os.mkdir(des_dir)
 for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
-    previous = final_path
+    final = pd.read_csv(final_path,sep='\t')
+    valid_peps = wl[c]
+    final = final.loc[final['pep'].isin(valid_peps),:]
     after = os.path.join(des_dir,'{}_final_enhanced.txt'.format(c))
-    subprocess.run('cp {} {}'.format(previous,after),shell=True)
+    final.to_csv(after,sep='\t',index=None)
 
 
 # move meta
