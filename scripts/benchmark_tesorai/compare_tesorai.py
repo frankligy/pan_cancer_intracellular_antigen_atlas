@@ -229,26 +229,65 @@ def compare_result(tesorai,df):
 
 # plot all
 final_data_all = pd.read_csv('final_data_all.txt',sep='\t',index_col=0)
-a = final_data_all.iloc[:,[0,1,4,6]].sum(axis=1) 
-b = final_data_all.iloc[:,[0,1,4,6,2,5]].sum(axis=1) 
-c = final_data_all.iloc[:,[0,1,4,6,3,5]].sum(axis=1) 
+a = final_data_all.iloc[:,[0,2,4,6]].sum(axis=1) 
+b = final_data_all.iloc[:,[0,2,4,6,1,5]].sum(axis=1) 
+c = final_data_all.iloc[:,[0,2,4,6,3,5]].sum(axis=1) 
 to_plot = pd.concat([a,b,c],axis=1)
 to_plot.columns = ['maxquant','rescore','tesorai']
+
+# no break
 to_plot.plot.bar(rot=90)
 plt.savefig('final_data_all.pdf',bbox_inches='tight')
 plt.close()
+
+# break
+fig,axes = plt.subplots(nrows=2,ncols=1,sharex=True,gridspec_kw={'height_ratios':(0.7,0.3),'hspace':0.1})
+to_plot.plot.bar(rot=90,ax=axes[0])
+to_plot.plot.bar(rot=90,ax=axes[1])
+axes[0].set_ylim((10000,350000))
+axes[1].set_ylim((0,10000))
+axes[0].spines['bottom'].set_visible(False)
+axes[1].spines['top'].set_visible(False)
+axes[0].tick_params(bottom=False)
+d = 0.015
+axes[0].plot((-d,d),(-d,d),transform=axes[0].transAxes,clip_on=False,color='k')
+axes[0].plot((1-d,1+d),(-d,d),transform=axes[0].transAxes,clip_on=False,color='k')
+axes[1].plot((-d,d),(1-d,1+d),transform=axes[1].transAxes,clip_on=False,color='k')
+axes[1].plot((1-d,1+d),(1-d,1+d),transform=axes[1].transAxes,clip_on=False,color='k')
+plt.savefig('final_data_all_break.pdf',bbox_inches='tight')
+plt.close()
+
+# stats
 to_plot['rescore_increase_by'] = (to_plot['rescore'] - to_plot['maxquant']) / to_plot['maxquant']
 to_plot['tesorai_increase_by'] = (to_plot['tesorai'] - to_plot['maxquant']) / to_plot['maxquant']
 to_plot.to_csv('increase_by_data_all.txt',sep='\t')
 
+
+# plot hq
 final_data_hq = pd.read_csv('final_data_hq.txt',sep='\t',index_col=0)
-a = final_data_hq.iloc[:,[0,1,4,6]].sum(axis=1) 
-b = final_data_hq.iloc[:,[0,1,4,6,2,5]].sum(axis=1) 
-c = final_data_hq.iloc[:,[0,1,4,6,3,5]].sum(axis=1) 
+a = final_data_hq.iloc[:,[0,2,4,6]].sum(axis=1) 
+b = final_data_hq.iloc[:,[0,2,4,6,1,5]].sum(axis=1) 
+c = final_data_hq.iloc[:,[0,2,4,6,3,5]].sum(axis=1) 
 to_plot = pd.concat([a,b,c],axis=1)
 to_plot.columns = ['maxquant','rescore','tesorai']
 to_plot.plot.bar(rot=90)
 plt.savefig('final_data_hq.pdf',bbox_inches='tight')
+plt.close()
+
+fig,axes = plt.subplots(nrows=2,ncols=1,sharex=True,gridspec_kw={'height_ratios':(0.7,0.3),'hspace':0.1})
+to_plot.plot.bar(rot=90,ax=axes[0])
+to_plot.plot.bar(rot=90,ax=axes[1])
+axes[0].set_ylim((2000,250000))
+axes[1].set_ylim((0,2000))
+axes[0].spines['bottom'].set_visible(False)
+axes[1].spines['top'].set_visible(False)
+axes[0].tick_params(bottom=False)
+d = 0.015
+axes[0].plot((-d,d),(-d,d),transform=axes[0].transAxes,clip_on=False,color='k')
+axes[0].plot((1-d,1+d),(-d,d),transform=axes[0].transAxes,clip_on=False,color='k')
+axes[1].plot((-d,d),(1-d,1+d),transform=axes[1].transAxes,clip_on=False,color='k')
+axes[1].plot((1-d,1+d),(1-d,1+d),transform=axes[1].transAxes,clip_on=False,color='k')
+plt.savefig('final_data_hq_break.pdf',bbox_inches='tight')
 plt.close()
 to_plot['rescore_increase_by'] = (to_plot['rescore'] - to_plot['maxquant']) / to_plot['maxquant']
 to_plot['tesorai_increase_by'] = (to_plot['tesorai'] - to_plot['maxquant']) / to_plot['maxquant']
