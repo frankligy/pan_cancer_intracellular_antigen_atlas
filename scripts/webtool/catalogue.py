@@ -74,6 +74,81 @@ added_cancer = [
     'PRAD'
 ]
 
+cancers2immuno = {
+    'BRCA':'breast_cancer',
+    'KIRC':'kidney_clear_cell',
+    'COAD':'colon_cancer',
+    'STAD':'stomach_cancer',
+    'MESO':'mesothelioma',
+    'LIHC':'liver_cancer',
+    'ESCA':'esophageal_cancer',
+    'CESC':'cervical_cancer',
+    'BLCA':'bladder_cancer',
+    'RT':'rhabdoid_tumor',
+    'AML':'AML',
+    'DLBC':'DLBC',
+    'GBM':'GBM',
+    'NBL':'neuroblastoma',
+    'PAAD':'pancreatic_cancer',
+    'HNSC':'head_and_neck',
+    'OV':'ovarian_cancer',
+    'LUSC':'lung_LUSC',
+    'LUAD':'lung_LUAD',
+    'CHOL':'bile_duct_cancer',
+    'SKCM':'melanoma'
+}
+
+
+# raw ms
+root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
+root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
+## tesorai
+tesorai_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches'
+for c in cancers:
+    tesorai_path = os.path.join(tesorai_dir,'tesorai_peptide_fdr_{}.tsv'.format(c))
+    subprocess.run("cp {} {}".format(tesorai_path,os.path.join(root_des_dir,'tesorai')),shell=True)
+## rescore
+for c in cancers:
+    if not os.path.exists(os.path.join(root_des_dir,'rescore',c)):
+        os.mkdir(os.path.join(root_des_dir,'rescore',c))
+    atlas_dir = os.path.join(root_atlas_dir,c)
+    rescore_dir = os.path.join(atlas_dir,'rescore')
+    old_dir = os.getcwd()
+    os.chdir(rescore_dir)
+    psms = subprocess.run('find . -mindepth 2 -maxdepth 2 -type f -name "ms2rescore.mokapot.psms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    for psm in psms:
+        d = psm.split('/')[1]
+        if not os.path.exists(os.path.join(root_des_dir,'rescore',c,d)):
+            os.mkdir(os.path.join(root_des_dir,'rescore',c,d))
+        subprocess.run("cp {} {}".format(psm,os.path.join(root_des_dir,'rescore',c,d)),shell=True)
+    os.chdir(old_dir)
+## maxquant
+for c in cancers:
+    if not os.path.exists(os.path.join(root_des_dir,'maxquant',c)):
+        os.mkdir(os.path.join(root_des_dir,'maxquant',c))
+    immuno_dir = os.path.join(root_immuno_dir,cancers2immuno[c])
+    old_dir = os.getcwd()
+    os.chdir(immuno_dir)
+    ### msms.txt
+    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    for msms in msms_all:
+        d = msms.split('/')[1]
+        if not os.path.exists(os.path.join(root_des_dir,'maxquant',c,d)):
+            os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
+        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
+    ### msmsScans.txt
+    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msmsScans.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    for msms in msms_all:
+        d = msms.split('/')[1]
+        if not os.path.exists(os.path.join(root_des_dir,'maxquant',c,d)):
+            os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
+        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
+    os.chdir(old_dir)
+sys.exit('stop')
+
+
+
+
 # molecular_catalogue, I'll manually add mutation
 for c in cancers + added_cancer:
     atlas_dir = os.path.join(root_atlas_dir,c)
@@ -125,3 +200,5 @@ for c in cancers + added_cancer:
     if not os.path.exists(des_dir):
         os.mkdir(des_dir)
     subprocess.run('cp -R {} {}'.format(db_fasta_dir,des_dir),shell=True)
+
+# raw ms result
