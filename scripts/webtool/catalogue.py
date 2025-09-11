@@ -144,7 +144,40 @@ for c in cancers:
             os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
     os.chdir(old_dir)
-sys.exit('stop')
+## tesorai normal
+source = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_healthy.tsv'
+destination = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result/HLA_ligand_atlas/tesorai'
+subprocess.run('cp {} {}'.format(source,destination),shell=True)
+## maxquant normal
+result_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/immuno'
+old_dir = os.getcwd()
+os.chdir(result_dir)
+all_tissues = subprocess.run("for f in *; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+os.chdir(old_dir)
+root_des_dir_normal = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result/HLA_ligand_atlas'
+for t in all_tissues:
+    if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t)):
+        os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t))
+    immuno_dir = os.path.join(result_dir,t)
+    old_dir = os.getcwd()
+    os.chdir(immuno_dir)
+    ### msms.txt
+    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    for msms in msms_all:
+        d = msms.split('/')[1]
+        if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t,d)):
+            os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
+        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
+    ### msmsScans.txt
+    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msmsScans.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    for msms in msms_all:
+        d = msms.split('/')[1]
+        if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t,d)):
+            os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
+        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
+    os.chdir(old_dir)
+
+
 
 
 
@@ -201,4 +234,4 @@ for c in cancers + added_cancer:
         os.mkdir(des_dir)
     subprocess.run('cp -R {} {}'.format(db_fasta_dir,des_dir),shell=True)
 
-# raw ms result
+
