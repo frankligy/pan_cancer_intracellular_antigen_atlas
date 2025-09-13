@@ -16,6 +16,8 @@ deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single li
 
 * [Whole molecular catalogues](./notes/molecular_catalogue.md) and [search space](./notes/search_space.md) for each cancer, along with [normal controls](./notes/normal.md) are released.
 
+* [Corresponded search space nucleotide sequence and genomic mapping](./notes/search_space_nt.md) are released as well.
+
 * We released all [Raw MS results](./notes/raw_ms_result.md) to enable reanalysis using different analytical procedures (i.e. tuning FDR stringency).
 
 * Web portal are live (Watch [tutorial video](https://www.youtube.com/watch?v=olhNYVycJ2w)):
