@@ -42,15 +42,98 @@ cancers = [
     'CHOL',
     'SKCM'
 ]  
+
+n_samples = [
+    1118,
+    542,
+    483,
+    412,
+    87,
+    374,
+    185,
+    306,
+    412,
+    63,
+    151,
+    48,
+    170,
+    157,
+    179,
+    522,
+    429,
+    502,
+    541,
+    35,
+    472
+]
+
+
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 
 
+# # across cancer
+# df_list = []
+# for c,t in zip(cancers,n_samples):
+#     df = pd.read_csv(os.path.join(root_atlas_dir,c,'pathogen_rec.txt'),sep='\t',index_col=0)
+#     df['proportion'] = [item/t for item in df['count']]
+#     df = df.loc[df['strain']=='Niallia circulans',:]
+#     df_list.append(df)
+# total = pd.concat(df_list,axis=0,keys=cancers).reset_index(level=-1).rename(columns={'level_1':'taxonomy'}).sort_values(by='proportion',ascending=False)
+# tcmbio_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/pathogen/TCMbio'
+# col = []
+# for c in total.index:
+#     if not c in ['NBL','RT']:
+#         s = pd.read_csv(os.path.join(tcmbio_dir,'{}_table_gz'.format(c),'{}_otutable_bacteria_species.csv'.format(c)),sep=',',index_col=0)['s__Niallia_circulans']
+#         p = (s > 0).sum() / len(s)
+#     else:
+#         p = None
+#     col.append(p)
+# total['TCMbio_proportion'] = col
+# total.to_csv('revisit_stat.txt',sep='\t')
+
+
+# # get manifest files to programmatically download
+# tcga_ids = [
+#     'TCGA-13-0899-01A',
+#     'TCGA-23-1021-01B',
+#     'TCGA-10-0931-01A',
+#     'TCGA-LN-A49R-01A',
+#     'TCGA-Q9-A6FW-01A',
+#     'TCGA-IG-A4QS-01A',
+#     'TCGA-BR-A4QM-01A',
+#     'TCGA-CG-5721-01A',
+#     'TCGA-HU-A4GC-01A'
+# ]
+
+# df_list = []
+# for c in cancers:
+#     cmd = 'find {} -type f -name "manifest_*_*.tsv"'.format(os.path.join(root_atlas_dir,c))
+#     possible_f = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1][0]
+#     df = pd.read_csv(possible_f,sep='\t')
+#     df_list.append(df)
+# manifest = pd.concat(df_list,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
+# manifest = manifest.loc[manifest['sample_id'].isin(tcga_ids),:]
+# manifest.to_csv('manifest.txt',sep='\t',index=None)
+
+'''
+run kraken2
+'''
+
+
+'''
+Go to NCBI assembly to download the species reference assembly, including
+genome fasta *
+annotation gtf *
+cds fasta * 
+protein fasta (didn't use because does not have genomic mapping location)
+'''
+
 # get ncbi derived proteome
-genome_dict = {}
-with open('GCA_013267435.1/GCA_013267435.1_ASM1326743v1_genomic.fna','r') as in_handle:
-    for title,seq in SimpleFastaParser(in_handle):
-        genome_dict[title] = seq
-ref = genome_dict['CP053989.1 Niallia circulans strain FDAARGOS_783 chromosome, complete genome']
+# genome_dict = {}
+# with open('GCA_013267435.1/GCA_013267435.1_ASM1326743v1_genomic.fna','r') as in_handle:
+#     for title,seq in SimpleFastaParser(in_handle):
+#         genome_dict[title] = seq
+# ref = genome_dict['CP053989.1 Niallia circulans strain FDAARGOS_783 chromosome, complete genome']
 
 # df = pd.read_csv('GCA_013267435.1/genomic.gtf',sep='\t',skiprows=5,header=None)
 # df.columns = ['chrom','source','feature','start','end','score','strand','phase','attribute']
@@ -96,7 +179,9 @@ ref = genome_dict['CP053989.1 Niallia circulans strain FDAARGOS_783 chromosome, 
 #     for k,v in ncbi_pro.items():
 #         f.write('>{}\n{}\n'.format(k,v))
 
-# draw circos plot for peptide
+'''run tesorai'''
+
+# add peptide ov peptide part from tesorai when drawing circos plot later
 result = pd.read_csv('tesorai_peptide_fdr_OV_ncbi_pathogen.tsv',sep='\t')
 cond = []
 for item in result['possible_protein_ids']:
@@ -119,6 +204,7 @@ for item in result['possible_protein_ids']:
         cond.append(False)
 
 result = result.loc[cond,:]
+result.to_csv('tesorai_alignment_validation_n_circulans_hit.txt',sep='\t',index=None);sys.exit('stop')
 proteins = []
 for item1,item2 in zip(result['clean_sequence'],result['possible_protein_ids']):
     for source in item2.split(';;'):
@@ -133,44 +219,7 @@ for pro in proteins:
     col2_p.append(width)
 
 
-# # get manifest files to programmatically download
-# tcga_ids = [
-#     'TCGA-13-0899-01A',
-#     'TCGA-23-1021-01B',
-#     'TCGA-10-0931-01A',
-#     'TCGA-LN-A49R-01A',
-#     'TCGA-Q9-A6FW-01A',
-#     'TCGA-IG-A4QS-01A',
-#     'TCGA-BR-A4QM-01A',
-#     'TCGA-CG-5721-01A',
-#     'TCGA-HU-A4GC-01A'
-# ]
-
-# df_list = []
-# for c in cancers:
-#     cmd = 'find {} -type f -name "manifest_*_*.tsv"'.format(os.path.join(root_atlas_dir,c))
-#     possible_f = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1][0]
-#     df = pd.read_csv(possible_f,sep='\t')
-#     df_list.append(df)
-# manifest = pd.concat(df_list,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
-# manifest = manifest.loc[manifest['sample_id'].isin(tcga_ids),:]
-# manifest.to_csv('manifest.txt',sep='\t',index=None)
-
-
-'''
-Go to NCBI assembly to download the species reference assembly, including
-genome fasta
-annotation gtf
-cds fasta
-protein fasta
-
-But there are 35 assembly for different strains
-
-color code the cds
-
-only look for ones that mapped to reference assembly
-'''
-
+# map classifed reads to 
 genome_dict = {}
 with open('GCA_013267435.1/GCA_013267435.1_ASM1326743v1_genomic.fna','r') as in_handle:
     for title,seq in SimpleFastaParser(in_handle):
@@ -182,7 +231,6 @@ sample_dict = {
     'ESCA':['TCGA-Q9-A6FW-01A','TCGA-IG-A4QS-01A','TCGA-LN-A49R-01A'],
     'STAD':['TCGA-BR-A4QM-01A','TCGA-HU-A4GC-01A','TCGA-CG-5721-01A']
 }
-
 
 # sample_all_true_seqs = {}
 # for k,v in sample_dict.items():
@@ -203,10 +251,26 @@ sample_dict = {
 # with open('circulans_sample_all_true_seq.p','wb') as f:
 #     pickle.dump(sample_all_true_seqs,f)
 
-with open('circulans_sample_all_true_seq.p','rb') as f:
-    sample_all_true_seqs = pickle.load(f)
+# Jonas asked to get some uniquely mapped cds sequence
 
-# draw cds as cytoband
+# with open('circulans_sample_all_true_seq.p','rb') as f:
+#     sample_all_true_seqs = pickle.load(f)
+
+# cds_dict = {}
+# with open('GCA_013267435.1/cds_from_genomic.fna','r') as in_handle:
+#     for title,seq in SimpleFastaParser(in_handle):
+#         cds_dict[title] = seq
+
+# with open('aligned_seq_to_ref_genome_and_cds.fasta','w') as f:
+#     for i,item in tqdm(enumerate(sample_all_true_seqs['OV'])):
+#         for cds_title,cds_seq in cds_dict.items():
+#             if item in cds_seq:
+#                 f.write('>seq{}|{}|{}\n{}\n'.format(i+1,cds_title,'++',item))
+#             elif str(Seq(item).reverse_complement()) in cds_seq:
+#                 f.write('>seq{}|{}|{}\n{}\n'.format(i+1,cds_title,'+-',item))
+
+
+# start to draw actual circos plot, modidy for ov only or rna only
 df = pd.read_csv('GCA_013267435.1/genomic.gtf',sep='\t',skiprows=5,header=None)
 df.columns = ['chrom','source','feature','start','end','score','strand','phase','attribute']
 df_cds = df.loc[(df['attribute'].str.contains('16S ribosomal RNA')) & (df['feature']=='transcript'),:]
