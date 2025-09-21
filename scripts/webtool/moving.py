@@ -59,6 +59,7 @@ cancers = [
 
 
 # move final
+overwrite_peptides = ['SLLQHLIGL']
 df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/stats/final_all_ts_antigens.txt',sep='\t')
 wl = {}
 for c,sub_df in df.groupby(by='cancer'):
@@ -70,9 +71,12 @@ for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
     valid_peps = wl[c]
+    valid_peps.update(overwrite_peptides)
     final = final.loc[final['pep'].isin(valid_peps),:]
     after = os.path.join(des_dir,'{}_final_enhanced.txt'.format(c))
     final.to_csv(after,sep='\t',index=None)
+
+sys.exit('stop')
 
 
 # move meta

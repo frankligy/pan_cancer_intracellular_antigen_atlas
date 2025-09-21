@@ -526,12 +526,22 @@ manual_bl_ensg = [symbol2ensg[item] for item in manual_bl]
 ts_final = final.loc[~final['ensgs'].isin(manual_bl_ensg),:]
 ts_final.to_csv('ts_final.txt',sep='\t',index=None) # stop here for safety screen
 
-
-
 ts_final = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 ts_final = ts_final.loc[ts_final['typ'] == 'self_gene',:]
 ts_final.to_csv('ts_final_final.txt',sep='\t',index=None)
 all_genes = list(set(ts_final['ensgs'].values))
+
+# most common 
+with pd.ExcelWriter('self_gene_common/self_peptide_common.xlsx') as writer:
+    for cancer_,sub_df in ts_final.groupby(by='cancer'):
+        sub_df.sort_values(by='recurrence',ascending=False).to_excel(writer,sheet_name='{}_recurrence'.format(cancer_),index=None)
+    vc = ts_final['pep'].value_counts()
+    lis = []
+for p in vc.index:
+    lis.append(ts_final.loc[ts_final['pep']==p,:])
+s = pd.concat(lis,axis=0)
+s.to_csv('self_gene_common/common_by_cancer.txt',sep='\t')
+sys.exit('stop')
 
 mem = pd.read_csv('human_membrane_proteins_acc2ens.txt',sep='\t')
 mem = mem.loc[mem['Ens'].notna(),:]
