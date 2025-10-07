@@ -177,6 +177,18 @@ for t in all_tissues:
         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
     os.chdir(old_dir)
 
+# consolidated ms
+root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
+root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+for c in cancers:
+    if not os.path.exists(os.path.join(root_des_dir,'consolidated',c)):
+        os.mkdir(os.path.join(root_des_dir,'consolidated',c))
+    df_path = os.path.join(root_atlas_dir,c,'antigen','fdr','msmsScans_all_add_tesorai.txt')
+    cmd = 'cp {} {}'.format(df_path,os.path.join(root_des_dir,'consolidated',c))
+    subprocess.run(cmd,shell=True)
+
+
+
 
 
 

@@ -13,3 +13,12 @@ We ran MaxQuant by batches for parallelization which are more scalable. All the 
 ## MS2Rescore
 We ran MS2Rescore on top of each MaxQuant batch, `ms2rescore.mokapot.psms.txt` file was included in each rescore run. `mokapot q-value` was used for FDR estimation as confirmed by the author (https://github.com/CompOmics/ms2rescore/discussions/196).
 
+## Consolidated Table
+We also provided consolidated table meaning how we consolidated three sets of results for all MS/MS scans. Each cancer has one table, the most important columns are as below:
+
+1. `Identified`: `+` is the identified hit
+2. `Reverse`: `+` is reversed decoy, can filter out
+3. `Precursor intensity`: This is the raw intensity/abundance we use throughout the paper
+4. `Proteins`: This is the full source annotations
+5. `final_identity`: class of molecular aberrations
+
