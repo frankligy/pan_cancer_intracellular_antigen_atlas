@@ -130,12 +130,12 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
     "db_fasta":"db_fasta",
     "immunopeptidome_dir":"/path/to/immunopeptidome_raw_data",
     "technology":{
-        "sample1":"orbitrap",
-        "sample2":"bruker"
+        "rna_sample1":"orbitrap",
+        "rna_sample2":"bruker"
     },
     "rna2immuno":{
-        "sample1":"sample1",
-        "sample1":"sample1"
+        "rna_sample1":"immuno_sample1",
+        "rna_sample2":"immuno_sample2"
     },
     "peptide_fdr":na,
     "hla_class":na,
@@ -154,8 +154,8 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
 
     "mode":"other_alg",
     "hla_mapping":{
-        "sample1":"sample1",
-        "sample2":"sample2"
+        "rna_type_sample1":"immuno_sample1",
+        "rna_type_sample2":"immuno_sample2"
     },
     "overwrite_hla_dic":null,
     "overwrite_hla_nested":false,
