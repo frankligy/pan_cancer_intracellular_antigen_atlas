@@ -76,10 +76,8 @@ for c in cancers:
     after = os.path.join(des_dir,'{}_final_enhanced.txt'.format(c))
     final.to_csv(after,sep='\t',index=None)
 
-sys.exit('stop')
 
-
-# move meta
+# move meta, for both web and hub
 des_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/app/static'
 if not os.path.exists(des_dir):
     os.mkdir(des_dir)
@@ -112,6 +110,61 @@ for c in cancers:
     previous = final_path
     after = os.path.join(des_dir,'{}_metadata.txt'.format(c))
     subprocess.run('cp {} {}'.format(previous,after),shell=True)
+
+t1 = 0
+t2 = 0
+des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/ImmunoVerse_Hub'
+if not os.path.exists(des_dir):
+    os.mkdir(des_dir)
+mapping = {
+    'BRCA':'breast_cancer',
+    'KIRC':'kidney_clear_cell',
+    'COAD':'colon_cancer',
+    'STAD':'stomach_cancer',
+    'MESO':'mesothelioma',
+    'LIHC':'liver_cancer',
+    'ESCA':'esophageal_cancer',
+    'CESC':'cervical_cancer',
+    'BLCA':'bladder_cancer',
+    'RT':'rhabdoid_tumor',
+    'AML':'AML',
+    'DLBC':'DLBC',
+    'GBM':'GBM',
+    'NBL':'neuroblastoma',
+    'PAAD':'pancreatic_cancer',
+    'HNSC':'head_and_neck',
+    'OV':'ovarian_cancer',
+    'LUSC':'lung_LUSC',
+    'LUAD':'lung_LUAD',
+    'CHOL':'bile_duct_cancer',
+    'SKCM':'melanoma',
+    'BALL':'B_ALL',
+    'TALL':'T_ALL',
+    'CML':'CML',
+    'CLL':'CLL',
+    'MCL':'MCL',
+    'FL':'follicular_lymphoma',
+    'meningioma':'meningioma'
+}
+for c in mapping.keys():
+    final_path = os.path.join(root_dir,mapping[c],'metadata.txt')
+    previous = final_path
+    after = os.path.join(des_dir,'{}_metadata.txt'.format(c))
+    subprocess.run('cp {} {}'.format(previous,after),shell=True)
+
+    df = pd.read_csv(final_path,sep='\t')
+    t1 += df.shape[0]
+    t2 += len(df['biology'].unique())
+
+    final_path = os.path.join(root_dir,mapping[c],'download.sbatch')
+    previous = final_path
+    after = os.path.join(des_dir,'{}_download.sbatch'.format(c))
+    subprocess.run('cp {} {}'.format(previous,after),shell=True)
+
+print(t1)
+print(t2)
+
+sys.exit('stop')
 
 
 # special
