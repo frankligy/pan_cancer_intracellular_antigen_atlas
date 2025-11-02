@@ -59,7 +59,16 @@ cancers = [
 
 
 # move final
-overwrite_peptides = ['SLLQHLIGL']
+overwrite_peptides_df = pd.read_csv('whitelist.txt',sep='\t')
+raw_overwrite_peptides_dict = {}
+for c_,sub_df in overwrite_peptides_df.groupby('cancer'):
+    raw_overwrite_peptides_dict[c_] = sub_df['peptide'].tolist()
+real_overwrite_peptides_dict = {}
+for c_ in cancers:
+    tmp1 = raw_overwrite_peptides_dict.get(c_,[])
+    tmp2 = raw_overwrite_peptides_dict.get('All',[])
+    real_overwrite_peptides_dict[c_] = set(tmp1+tmp2)
+
 df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/stats/final_all_ts_antigens.txt',sep='\t')
 wl = {}
 for c,sub_df in df.groupby(by='cancer'):
@@ -71,6 +80,7 @@ for c in cancers:
     final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
     valid_peps = wl[c]
+    overwrite_peptides = real_overwrite_peptides_dict[c]
     valid_peps.update(overwrite_peptides)
     final = final.loc[final['pep'].isin(valid_peps),:]
     after = os.path.join(des_dir,'{}_final_enhanced.txt'.format(c))
