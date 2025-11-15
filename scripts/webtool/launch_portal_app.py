@@ -124,6 +124,12 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
 
     if isinstance(query_source,str):
         query_source = query_source.upper()
+
+        # first check mapping
+        ensg = mapping.get(query_source,None)
+        if ensg is not None:
+            query_source = ensg
+            
         final = final.loc[final['Source'].str.upper().str.contains(query_source),:]
 
     if isinstance(query_peptide,str):
@@ -433,6 +439,10 @@ if __name__ == '__main__':
     for pep,sub_df in deepimmuno_df.groupby(by='peptide'):
         mapping = sub_df.loc[:,['HLA','immunogenicity']].set_index(keys='HLA')['immunogenicity'].to_dict()
         deepimmuno_dic[pep] = mapping
+
+    # preprocess mapping
+    mapping = pd.read_csv('./static/mapping.txt',sep='\t',index_col=0)
+    mapping = mapping['ensg'].to_dict()
 
     # start to build app
     app = Dash(__name__,assets_folder='./assets')
