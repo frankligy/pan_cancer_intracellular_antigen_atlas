@@ -9,6 +9,38 @@ from snaf.deepimmuno import run_deepimmuno
 from ast import literal_eval
 
 
+
+# gs and ensg
+# 1. get tmp.txt run https://www.syngoportal.org/convert
+# 2. get mapping.txt
+# 3. manually add to that if needed
+df = pd.read_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/bulk-gex_v8_rna-seq_GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct',sep='\t',index_col=0,skiprows=2)
+df.index = [item.split('.')[0] for item in df.index]
+df.to_csv('tmp.txt',sep='\t')
+df = pd.read_csv('idmap.txt',sep='\t')
+data = []
+for row in tqdm(df.itertuples()):
+    gs = row.symbol
+    ensg = row.query
+    alias = row.alias
+    if isinstance(gs,str):
+        gs = gs.upper()
+        data.append((gs,ensg))
+    if isinstance(alias,str):
+        for item in alias.split(','):
+            item = item.strip(' ')
+            item = item.upper()
+            data.append((item,ensg))
+add = [
+    ('MAGE-A3','ENSG00000221867')
+]
+data.extend(add)
+pd.DataFrame(data=data,columns=['gs','ensg']).to_csv('mapping.txt',sep='\t',index=None)
+sys.exit('stop')
+
+
+
+# deepimmuno
 meta_dic = {}
 
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
