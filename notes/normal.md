@@ -19,6 +19,7 @@ adata.obs_names_make_unique()
 
 * File: `GTEx_junction_counts.h5ad`, `tcga_matched_control_junction_count.h5ad`
 * Sample Size: GTEx (n=2,638), TCGA matched controls (n=701), most of GTEx tissues have around 25 samples
+* The h5ad file use AltAnalyze internal identifiers, we also provided the correspoinding hg38 coordinates in bed format ([GTEx](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/normal/gtex_tmp_prelift.bed), [TCGA](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/normal/tcga_tmp_prelift.bed)), REMEMBER, bed format the start position is 0-based.
 
 ```python
 # both are n_splicing * n_sample
