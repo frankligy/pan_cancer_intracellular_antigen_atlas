@@ -154,7 +154,10 @@ mapping = {
     'CLL':'CLL',
     'MCL':'MCL',
     'FL':'follicular_lymphoma',
-    'meningioma':'meningioma'
+    'meningioma':'meningioma',
+    'UCEC':'endometrioid_cancer',
+    'ependymoma':'ependymoma',
+    'EWS':'erwin_sarcoma'
 }
 for c in mapping.keys():
     final_path = os.path.join(root_dir,mapping[c],'metadata.txt')
@@ -176,13 +179,18 @@ print(t2)
 
 sys.exit('stop')
 
-
 # special
+des_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/app/static'
 freq = '/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv'
 subprocess.run('cp {} {}'.format(freq,des_dir),shell=True)
 
 deepimmuno_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/all_deepimmuno_immunogenicity.txt'
 subprocess.run('cp {} {}'.format(deepimmuno_result,des_dir),shell=True)
+
+mapping_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/mapping.txt'
+subprocess.run('cp {} {}'.format(mapping_result,des_dir),shell=True)
+
+sys.exit('stop')
 
 
 # move figures
