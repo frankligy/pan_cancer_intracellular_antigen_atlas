@@ -125,10 +125,11 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
     if isinstance(query_source,str):
         query_source = query_source.upper()
 
-        # first check mapping
-        ensg = mapping.get(query_source,None)
-        if ensg is not None:
-            query_source = ensg
+        # first check mapping, only if query_type self_gene or All
+        if query_type in ['All','self_gene']:
+            ensg = mapping.get(query_source,None)
+            if ensg is not None:
+                query_source = ensg
             
         final = final.loc[final['Source'].str.upper().str.contains(query_source),:]
 
