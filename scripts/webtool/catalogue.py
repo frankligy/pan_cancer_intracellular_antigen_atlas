@@ -71,7 +71,8 @@ added_cancer = [
     'THCA',
     'UVM',
     'OS',
-    'PRAD'
+    'PRAD',
+    'UCEC'
 ]
 
 cancers2immuno = {
@@ -206,14 +207,8 @@ for c in cancers + added_cancer:
     intron_rec = os.path.join(atlas_dir,'intron_rec.txt')
     splicing_all = os.path.join(atlas_dir,'splicing_all.txt')
     splicing_rec = os.path.join(atlas_dir,'splicing_rec.txt')
-    if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1']:
-        fusion_all = os.path.join(atlas_dir,'fusion.txt')
-    else:
-        fusion_all = os.path.join(atlas_dir,'fusion_all.txt')
-    if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1']:
-        fusion_recurrent = os.path.join(atlas_dir,'fusion_recurrent.txt')
-    else:
-        fusion_recurrent = os.path.join(atlas_dir,'fusion_rec.txt')
+    fusion_all = os.path.join(atlas_dir,'fusion.txt')
+    fusion_recurrent = os.path.join(atlas_dir,'fusion_recurrent.txt')
     if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1']:
         hla_types = os.path.join(atlas_dir,'hla_types.txt')
     else:
