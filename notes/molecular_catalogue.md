@@ -1,6 +1,6 @@
 # Instructions on released molecular catalogue
 
-We released the whole molecular catalogues for 36 cancers [here](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/molecular_catalogue/), including all the modalities investigated in our study, including statistics on both sample and cohort level. We explain those files as below.
+We released the whole molecular catalogues for 37 cancers [here](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/molecular_catalogue/), including all the modalities investigated in our study, including statistics on both sample and cohort level. We explain those files as below.
 
 ## Gene
 

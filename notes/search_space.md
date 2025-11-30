@@ -1,6 +1,6 @@
 # Instructions on released search space
 
-We released the search space for 36 cancers [here](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/search_space/). The 
+We released the search space for 37 cancers [here](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/search_space/). The 
 intended usage is when the users have in-house immunopeptidome data, such as pancreatic cancer without
 matched RNA or genomics data, the `PAAD` search space can be readily
 used for immunopeptidome search to find more non-canonical tumor specific antigens
