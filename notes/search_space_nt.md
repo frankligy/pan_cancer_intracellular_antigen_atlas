@@ -3,7 +3,7 @@
 Along with released peptide fasta for searching immunopeptiomic data, it would be helpful to know where these peptide fragments come from, where are they located in
 genome. Although it is possible to perform BLAT to get possible mapping directly from peptide to genomic region, it does not always return a hit and even when it works, the BLAT may return partial mapping or incorrect mapping. In light of that, we release mapping tables connecting each peptide fragment to its coding sequence (cDNA) and the genomic regions where it gets generated to facilitate downstream analysis.
 
-It is released [here](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/search_space_tesorai_nt/), in each cancer, we have:
+It is released [here](https://genome.med.nyu.edu/public/yarmarkovichlab/ImmunoVerse/search_space_nt/), in each cancer, we have:
 
 1. `canonical_protein.txt`
 2. `fusion.txt`

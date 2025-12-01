@@ -283,4 +283,29 @@ for c in cancers + added_cancer:
         os.mkdir(des_dir)
     subprocess.run('cp -R {} {}'.format(db_fasta_dir,des_dir),shell=True)
 
+# search space tesorai
+root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space_tesorai'
+for c in cancers:
+    db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta_tesorai')
+    des_dir = os.path.join(root_des_dir,c)
+    if not os.path.exists(des_dir):
+        os.mkdir(des_dir)
+    subprocess.run('cp -R {} {}'.format(db_fasta_dir,des_dir),shell=True)
+
+# search space nt
+root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space_nt'
+for c in ['HNSC','PRAD','UCEC','NBL']:
+    db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta_nt')
+    if not os.path.exists(db_fasta_dir):
+        db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta_tesorai_nt')
+    des_dir = os.path.join(root_des_dir,c)
+    if not os.path.exists(des_dir):
+        os.mkdir(des_dir)
+    ori_dir = os.getcwd()
+    os.chdir(db_fasta_dir)
+    all_fs = subprocess.run("for file in *.txt; do echo $file; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    os.chdir(ori_dir)
+    for f in all_fs:
+        subprocess.run('cp {} {}'.format(os.path.join(db_fasta_dir,f),des_dir),shell=True)
+
 
