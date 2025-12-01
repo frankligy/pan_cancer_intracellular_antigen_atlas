@@ -24,7 +24,8 @@ We released the whole molecular catalogues for 37 cancers [here](https://genome.
 ## Mutation
 
 1. `TCGA-cancer.mutect2_snv.tsv`: or similar suffix, documenting sample level somatic mutations
-2. `mutation_rec.txt`: cohort level, how frequenty they are and whether they are driver gene mutation.
+2. `gProfiler_hsapiens_KICH.csv`: or similar suffix, a table mapping gene symbol to ensg ID
+3. `mutation_rec.txt`: cohort level, how frequenty they are and whether they are driver gene mutation
 
 ## Fusion
 

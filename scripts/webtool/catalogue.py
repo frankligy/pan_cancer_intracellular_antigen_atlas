@@ -191,11 +191,49 @@ for c in cancers:
 
 
 
-
-
-
-
 # molecular_catalogue, I'll manually add mutation
+variant_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/variants'
+variant_dic = {
+    'BRCA':['TCGA-BRCA.mutect2_snv.tsv','gProfiler_hsapiens_brca.csv'],
+    'KIRC':['TCGA-KIRC.mutect2_snv.tsv','gProfiler_hsapiens_kirc.csv'],
+    'COAD':['TCGA-COAD.mutect2_snv.tsv','gProfiler_hsapiens_coad.csv'],
+    'STAD':['TCGA-STAD.somaticmutation_wxs.tsv','gProfiler_hsapiens_stad.csv'],
+    'MESO':['TCGA-MESO.mutect2_snv.tsv','gProfiler_hsapiens_meso.csv'],
+    'LIHC':['TCGA-LIHC.mutect2_snv.tsv','gProfiler_hsapiens_lihc.csv'],
+    'ESCA':['TCGA-ESCA.somaticmutation_wxs.tsv','gProfiler_hsapiens_esca.csv'],
+    'CESC':['TCGA-CESC.mutect2_snv.tsv','gProfiler_hsapiens_cesc.csv'],
+    'BLCA':['TCGA-BLCA.somaticmutation_wxs.tsv','gProfiler_hsapiens_blca.csv'],
+    'RT':[None,None],
+    'AML':['TCGA-LAML.mutect2_snv.tsv','gProfiler_hsapiens_aml.csv'],
+    'DLBC':['TCGA-DLBC.mutect2_snv.tsv','gProfiler_hsapiens_dlbc.csv'],
+    'GBM':['TCGA-GBM.mutect2_snv.tsv','gProfiler_hsapiens_gbm.csv'],
+    'NBL':['TARGET-NBL.mutect2_snv.tsv','gProfiler_hsapiens_nbl.csv'],
+    'PAAD':['TCGA-PAAD.mutect2_snv.tsv','gProfiler_hsapiens_paad.csv'],
+    'HNSC':['TCGA-HNSC.mutect2_snv.tsv','gProfiler_hsapiens_hnsc.csv'],
+    'OV':['TCGA-OV.mutect2_snv.tsv','gProfiler_hsapiens_ov.csv'],
+    'LUSC':['TCGA-LUSC.somaticmutation_wxs.tsv','gProfiler_hsapiens_lusc.csv'],
+    'LUAD':['TCGA-LUAD.mutect2_snv.tsv','gProfiler_hsapiens_luad.csv'],
+    'CHOL':['TCGA-CHOL.somaticmutation_wxs.tsv','gProfiler_hsapiens_chol.csv'],
+    'SKCM':['TCGA-SKCM.mutect2_snv.tsv','gProfiler_hsapiens_skcm.csv'],
+    'ALL_BALL_P1':[None,None],
+    'KICH':['TCGA-KICH.somaticmutation_wxs.tsv','gProfiler_hsapiens_KICH.csv'],
+    'WT':['TARGET-WT.somaticmutation_wxs.tsv','gProfiler_hsapiens_wt.csv'],
+    'CCSK':[None,None],
+    'KIRP':['TCGA-KIRP.somaticmutation_wxs.tsv','gProfiler_hsapiens_KIRP.csv'],
+    'LGG':['TCGA-LGG.somaticmutation_wxs.tsv','gProfiler_hsapiens_LGG.csv'],
+    'READ':['TCGA-READ.somaticmutation_wxs.tsv','gProfiler_hsapiens_READ.csv'],
+    'UCS':['TCGA-UCS.somaticmutation_wxs.tsv','gProfiler_hsapiens_UCS.csv'],
+    'SARC':['TCGA-SARC.somaticmutation_wxs.tsv','gProfiler_hsapiens_sarc.csv'],
+    'TGCT':['TCGA-TGCT.somaticmutation_wxs.tsv','gProfiler_hsapiens_TGCT.csv'],
+    'THYM':['TCGA-THYM.somaticmutation_wxs.tsv','gProfiler_hsapiens_THYM.csv'],
+    'THCA':['TCGA-THCA.somaticmutation_wxs.tsv','gProfiler_hsapiens_thca.csv'],
+    'UVM':['TCGA-UVM.somaticmutation_wxs.tsv','gProfiler_hsapiens_uvm.csv'],
+    'OS':['TARGET-OS.mutect2_snv.tsv','gProfiler_hsapiens_os.csv'],
+    'PRAD':['TCGA-PRAD.mutect2_snv.tsv','gProfiler_hsapiens_prad.csv'],
+    'UCEC':['TCGA-UCEC.somaticmutation_wxs.tsv','gProfiler_hsapiens_ucec.csv']
+}
+
+
 for c in cancers + added_cancer:
     atlas_dir = os.path.join(root_atlas_dir,c)
     gene_tpm = os.path.join(atlas_dir,'gene_tpm.txt')
@@ -213,16 +251,20 @@ for c in cancers + added_cancer:
         hla_types = os.path.join(atlas_dir,'hla_types.txt')
     else:
         hla_types = None
-    if not c in ['RT','CCSK','ALL_BALL_P1']:
-        mutation_rec = os.path.join(atlas_dir,'mutation_rec.txt')
-    else:
+    if variant_dic[c][0] is None:
+        raw_mutation = None
+        map_mutation = None
         mutation_rec = None
+    else:
+        raw_mutation = os.path.join(variant_dir,variant_dic[c][0])
+        map_mutation = os.path.join(variant_dir,variant_dic[c][1])
+        mutation_rec = os.path.join(atlas_dir,'mutation_rec.txt')
     te_all = os.path.join(atlas_dir,'tumor_erv.h5ad')
     te_rec = os.path.join(atlas_dir,'ERV.txt')
     te_good = os.path.join(atlas_dir,'good_erv.txt')
 
     need_to_cp = [gene_tpm,gene_lfc,pathogen_all,pathogen_rec,intron_all,intron_peptide_all,intron_rec,splicing_all,splicing_rec,
-                  fusion_all,fusion_recurrent, hla_types, mutation_rec, te_all, te_rec, te_good]
+                  fusion_all,fusion_recurrent, hla_types, mutation_rec, raw_mutation, map_mutation, te_all, te_rec, te_good]
 
     des_dir = os.path.join(root_des_dir,c)
     if not os.path.exists(des_dir):
