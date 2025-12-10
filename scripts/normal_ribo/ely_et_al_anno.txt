@@ -1,0 +1,52 @@
+GEO Run ID	BioProject	BioSample	Experiment	Fraction	GEO_Accession (exp)	source_name	SRA Study	Treatment	Cell_type
+SRR15513148	PRJNA756018	SAMN20849933	SRX11811942	ribosome-protected mRNA fragments	GSM5527673	untreated normal human brain tissue	SRP333128	untreated	Brain
+SRR15513149	PRJNA756018	SAMN20849934	SRX11811943	ribosome-protected mRNA fragments	GSM5527674	untreated normal human brain tissue	SRP333128	untreated	Brain
+SRR15513151	PRJNA756018	SAMN20849936	SRX11811945	ribosome-protected mRNA fragments	GSM5527676	untreated normal human brain tissue	SRP333128	untreated	Brain
+SRR15513152	PRJNA756018	SAMN20849937	SRX11811946	ribosome-protected mRNA fragments	GSM5527677	untreated normal human brain tissue	SRP333128	untreated	Brain
+SRR15513159	PRJNA756018	SAMN20849944	SRX11811953	ribosome-protected mRNA fragments	GSM5527684	untreated normal human fat tissue	SRP333128	untreated	fat
+SRR15513160	PRJNA756018	SAMN20849945	SRX11811954	ribosome-protected mRNA fragments	GSM5527685	untreated normal human fat tissue	SRP333128	untreated	fat
+SRR15513161	PRJNA756018	SAMN20849946	SRX11811955	ribosome-protected mRNA fragments	GSM5527686	untreated normal human fat tissue	SRP333128	untreated	fat
+SRR15513162	PRJNA756018	SAMN20849947	SRX11811956	ribosome-protected mRNA fragments	GSM5527687	untreated normal human fat tissue	SRP333128	untreated	fat
+SRR15513163	PRJNA756018	SAMN20849903	SRX11811957	ribosome-protected mRNA fragments	GSM5527688	untreated normal human fat tissue	SRP333128	untreated	fat
+SRR15513164	PRJNA756018	SAMN20849904	SRX11811958	ribosome-protected mRNA fragments	GSM5527689	untreated normal human fat tissue	SRP333128	untreated	fat
+SRR15513165	PRJNA756018	SAMN20849905	SRX11811959	ribosome-protected mRNA fragments	GSM5527690	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513172	PRJNA756018	SAMN20849909	SRX11811966	ribosome-protected mRNA fragments	GSM5527697	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513174	PRJNA756018	SAMN20849911	SRX11811968	ribosome-protected mRNA fragments	GSM5527699	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513179	PRJNA756018	SAMN20849873	SRX11811973	ribosome-protected mRNA fragments	GSM5527704	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513180	PRJNA756018	SAMN20849874	SRX11811974	ribosome-protected mRNA fragments	GSM5527705	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513186	PRJNA756018	SAMN20849880	SRX11811980	ribosome-protected mRNA fragments	GSM5527711	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513191	PRJNA756018	SAMN20849885	SRX11811985	ribosome-protected mRNA fragments	GSM5527716	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513193	PRJNA756018	SAMN20849887	SRX11811987	ribosome-protected mRNA fragments	GSM5527718	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513195	PRJNA756018	SAMN20849889	SRX11811989	ribosome-protected mRNA fragments	GSM5527720	untreated normal human fibroblast	SRP333128	untreated	Fibroblast
+SRR15513197	PRJNA756018	SAMN20849891	SRX11811991	ribosome-protected mRNA fragments	GSM5527722	untreated human aortic endothelial cells	SRP333128	untreated	HA_EC (human aortic endothelial cells)
+SRR15513199	PRJNA756018	SAMN20849893	SRX11811993	ribosome-protected mRNA fragments	GSM5527724	untreated human aortic endothelial cells	SRP333128	untreated	HA_EC (human aortic endothelial cells)
+SRR15513200	PRJNA756018	SAMN20849894	SRX11811994	ribosome-protected mRNA fragments	GSM5527725	untreated human aortic endothelial cells	SRP333128	untreated	HA_EC (human aortic endothelial cells)
+SRR15513201	PRJNA756018	SAMN20849895	SRX11811995	ribosome-protected mRNA fragments	GSM5527726	untreated human aortic endothelial cells	SRP333128	untreated	HA_EC (human aortic endothelial cells)
+SRR15513202	PRJNA756018	SAMN20849896	SRX11811996	ribosome-protected mRNA fragments	GSM5527727	untreated human aortic endothelial cells	SRP333128	untreated	HA_EC (human aortic endothelial cells)
+SRR15513203	PRJNA756018	SAMN20849897	SRX11811997	ribosome-protected mRNA fragments	GSM5527728	untreated human coronary artery endothelial cells	SRP333128	untreated	HCAEC (human coronary artery endothelial cells)
+SRR15513204	PRJNA756018	SAMN20849898	SRX11811998	ribosome-protected mRNA fragments	GSM5527729	untreated human coronary artery endothelial cells	SRP333128	untreated	HCAEC (human coronary artery endothelial cells)
+SRR15513205	PRJNA756018	SAMN20849899	SRX11811999	ribosome-protected mRNA fragments	GSM5527730	untreated human coronary artery endothelial cells	SRP333128	untreated	HCAEC (human coronary artery endothelial cells)
+SRR15513206	PRJNA756018	SAMN20849900	SRX11812000	ribosome-protected mRNA fragments	GSM5527731	untreated human coronary artery endothelial cells	SRP333128	untreated	HCAEC (human coronary artery endothelial cells)
+SRR15513207	PRJNA756018	SAMN20849901	SRX11812001	ribosome-protected mRNA fragments	GSM5527732	untreated human coronary artery endothelial cells	SRP333128	untreated	HCAEC (human coronary artery endothelial cells)
+SRR15513208	PRJNA756018	SAMN20849925	SRX11812002	ribosome-protected mRNA fragments	GSM5527733	untreated normal human hepatocytes	SRP333128	untreated	Hepatocytes
+SRR15513209	PRJNA756018	SAMN20849926	SRX11812003	ribosome-protected mRNA fragments	GSM5527734	untreated normal human hepatocytes	SRP333128	untreated	Hepatocytes
+SRR15513210	PRJNA756018	SAMN20849927	SRX11812004	ribosome-protected mRNA fragments	GSM5527735	untreated normal human hepatocytes	SRP333128	untreated	Hepatocytes
+SRR15513211	PRJNA756018	SAMN20849928	SRX11812005	ribosome-protected mRNA fragments	GSM5527736	untreated normal human hepatocytes	SRP333128	untreated	Hepatocytes
+SRR15513212	PRJNA756018	SAMN20849929	SRX11812006	ribosome-protected mRNA fragments	GSM5527737	untreated normal human hepatocytes	SRP333128	untreated	Hepatocytes
+SRR15513216	PRJNA756018	SAMN20849915	SRX11812010	ribosome-protected mRNA fragments	GSM5527741	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513217	PRJNA756018	SAMN20849916	SRX11812011	ribosome-protected mRNA fragments	GSM5527742	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513218	PRJNA756018	SAMN20849917	SRX11812012	ribosome-protected mRNA fragments	GSM5527743	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513219	PRJNA756018	SAMN20849918	SRX11812013	ribosome-protected mRNA fragments	GSM5527744	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513220	PRJNA756018	SAMN20849919	SRX11812014	ribosome-protected mRNA fragments	GSM5527745	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513221	PRJNA756018	SAMN20849920	SRX11812015	ribosome-protected mRNA fragments	GSM5527746	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513222	PRJNA756018	SAMN20849921	SRX11812016	ribosome-protected mRNA fragments	GSM5527747	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513223	PRJNA756018	SAMN20849922	SRX11812017	ribosome-protected mRNA fragments	GSM5527748	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513224	PRJNA756018	SAMN20849923	SRX11812018	ribosome-protected mRNA fragments	GSM5527749	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513225	PRJNA756018	SAMN20849924	SRX11812019	ribosome-protected mRNA fragments	GSM5527750	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513226	PRJNA756018	SAMN20849870	SRX11812020	ribosome-protected mRNA fragments	GSM5527751	untreated normal human vascular smooth muscle cells	SRP333128	untreated	VSMC (vascular smooth muscle cells)
+SRR15513150	PRJNA756018	SAMN20849935	SRX11811944	ribosome-protected mRNA fragments	GSM5527675	untreated normal human brain tissue	SRP333128	untreated	Brain
+SRR15513198	PRJNA756018	SAMN20849892	SRX11811992	ribosome-protected mRNA fragments	GSM5527723	untreated human aortic endothelial cells	SRP333128	untreated	HA_EC (human aortic endothelial cells)
+SRR1528686	PRJNA256316	SAMN02943066	SRX663295	ribosome-protected mRNA fragments (not listed in SRA metadata)	GSM1446874	Kidney normal tissue 1 RP	SRP044937	untreated (not listed in SRA metatable)	Kidney
+SRR1528687	PRJNA256316	SAMN02943066	SRX663295	ribosome-protected mRNA fragments (not listed in SRA metadata)	GSM1446874	Kidney normal tissue 1 RP	SRP044937	untreated (not listed in SRA metatable)	Kidney
+SRR1528688	PRJNA256316	SAMN02943068	SRX663296	ribosome-protected mRNA fragments (not listed in SRA metadata)	GSM1446875	Kidney normal tissue 2 RP	SRP044937	untreated (not listed in SRA metatable)	Kidney
+SRR1528689	PRJNA256316	SAMN02943068	SRX663296	ribosome-protected mRNA fragments (not listed in SRA metadata)	GSM1446875	Kidney normal tissue 2 RP	SRP044937	untreated (not listed in SRA metatable)	Kidney
