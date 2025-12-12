@@ -141,8 +141,8 @@ def row2orf(row):
 HG19_SEQ = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.fa"
 HG19_GTF = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGene.gtf"
 HG19_DIC = "/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/gtf_dic.p"
-RIBORF_RESULT = "/gpfs/data/yarmarkovichlab/russell_data/result/RIBO-SJCRH30/outputDir/repre.valid.pred.pvalue.parameters.txt"
-FASTA_OUTDIR = "/gpfs/data/yarmarkovichlab/russell_data/immunoverse_result/db_fasta/RNA-SJCRH30_trimmed"
+RIBORF_RESULT = "/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result/SRR15513148/outputDir/repre.valid.pred.pvalue.parameters.txt"
+FASTA_OUTDIR = "/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result/SRR15513148/outputDir"
 
 
 # gtf_dic = process_gtf('hg19.ensGene.gtf')  # download from ucsc
@@ -195,7 +195,7 @@ result['no_stop'] = cond
 
 result = result.loc[result['no_stop'],:]
 result['actual_pep'] = [item.rstrip('*') if item.endswith('*') else item for item in result['pep']]
-result.to_csv('riborf_table.txt',sep='\t',index=None)
+result.to_csv(os.path.join(FASTA_OUTDIR,'riborf_table.txt'),sep='\t',index=None)
 
 with open(os.path.join(FASTA_OUTDIR,'riborf.fasta'),'w') as f:
     for uid,tran,pep in zip(result['uid'],result['translatability'],result['actual_pep']):

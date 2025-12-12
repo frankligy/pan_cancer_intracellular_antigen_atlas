@@ -35,6 +35,11 @@ function run_riborf_part1 () {
     perl ${RIBORF_CODE}/RibORF.2.0/readDist.pl -f ${OUTDIR}/outputDir/accepted_hits.sam -g ${HG19_GENEPRED} -o ${OUTDIR}/outputDir 
     module purge
 
+    rm ${OUTDIR}/${SAMPLE}.fastq
+    rm ${OUTDIR}/adapter.${SAMPLE}.fastq
+    rm ${OUTDIR}/norrna.adapter.${SAMPLE}.fastq
+    rm ${OUTDIR}/ribosome.adapter.${SAMPLE}.sam
+
 
 }
 
@@ -77,7 +82,7 @@ HG19_GTF=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGe
 HG19_GENEPRED=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGene.genePred.txt  # gtfToGenePred file.gtf file.genePred.txt
 HG19_CANDIDATE_ORF=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/candidateORF.genepred.txt # perl ORFannotate.pl hg19.fa -t file.genePred.txt -o .
 HG19_CANDIDATE_SEQ=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/candidateORF.fa  # same as above
-FASTQ=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/raw/SRR15513148.fastq.gz
+FASTQ=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/raw/SRR15513149.fastq.gz
 ROOT_DIR=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result
 ADAPTER_SEQ=AGATCGGAAG  # using fastqc sample.fastq.gz to infer, first 10nt
 CUTADAPT=/gpfs/data/yarmarkovichlab/russell_data/cutadapt_env/bin/cutadapt
