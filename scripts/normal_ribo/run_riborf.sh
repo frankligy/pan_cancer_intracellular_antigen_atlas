@@ -96,8 +96,8 @@ if [ ! -d ${OUTDIR} ]; then
     mkdir ${OUTDIR}
 fi
 
-run_riborf_part1
-# run_riborf_part2
-
+# run_riborf_part1
+run_riborf_part2
+./get_riborf_fasta.py --srr ${SAMPLE}
 
 

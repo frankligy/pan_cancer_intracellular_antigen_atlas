@@ -136,71 +136,76 @@ def row2orf(row):
 
         
         
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='get_riborf_fasta')
+    parser.add_argument('--srr',type=str,default='',help='srr')
+    args = parser.parse_args()
+
+    srr = arg.srr
+
+    HG19_SEQ = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.fa"
+    HG19_GTF = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGene.gtf"
+    HG19_DIC = "/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/gtf_dic.p"
+    RIBORF_RESULT = "/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result/{}/outputDir/repre.valid.pred.pvalue.parameters.txt".format(srr)
+    FASTA_OUTDIR = "/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result/{}/outputDir".format(srr)
 
 
-HG19_SEQ = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.fa"
-HG19_GTF = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGene.gtf"
-HG19_DIC = "/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/gtf_dic.p"
-RIBORF_RESULT = "/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result/SRR15513148/outputDir/repre.valid.pred.pvalue.parameters.txt"
-FASTA_OUTDIR = "/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result/SRR15513148/outputDir"
+    # gtf_dic = process_gtf('hg19.ensGene.gtf')  # download from ucsc
+    # with open(HG19_DIC,'wb') as f:
+    #     pickle.dump(gtf_dic,f)
 
+    fa_dic = process_fasta(HG19_SEQ)   # download from ucsc
+    with open(HG19_DIC,'rb') as f:
+        gtf_dic = pickle.load(f)
 
-# gtf_dic = process_gtf('hg19.ensGene.gtf')  # download from ucsc
-# with open(HG19_DIC,'wb') as f:
-#     pickle.dump(gtf_dic,f)
+    df = pd.read_csv(RIBORF_RESULT,sep='\t',index_col=0)   # from nuORF paper
+    df.rename(columns={'pred.pvalue':'pvalue'},inplace=True)
+    df['plotType'] = [item.split('|')[-2] for item in df.index]
+    df = df.loc[df['plotType'].isin(['dORF','odORF','ouORF','uORF','iORF','noncoding']),:]
+    df = df.loc[[item.startswith('ENST') for item in df.index],:]
 
-fa_dic = process_fasta(HG19_SEQ)   # download from ucsc
-with open(HG19_DIC,'rb') as f:
-    gtf_dic = pickle.load(f)
+    data = []
+    for row in tqdm(df.itertuples(),total=df.shape[0]):
+        orf_seq = row2orf(row)
+        ori_orf_length = row.length
+        data.append((row.Index,orf_seq,ori_orf_length,row.pvalue))
+    result = pd.DataFrame.from_records(data=data,columns=['uid','orf_seq','ori_orf_length','translatability'])
+    result = result.loc[(result['orf_seq']!='ENST NOT IN HG19 ANNOTATION') & (result['orf_seq']!='FALL INTO INTRON') & (result['orf_seq']!='NOT VALID CHROM'),:]
+    result['now_orf_length'] = [len(item)-1 for item in result['orf_seq']]  # we know this is +1 issue
+    result['cond'] = result['ori_orf_length'] == result['now_orf_length']
+    result = result.loc[result['cond'],:]
 
-df = pd.read_csv(RIBORF_RESULT,sep='\t',index_col=0)   # from nuORF paper
-df.rename(columns={'pred.pvalue':'pvalue'},inplace=True)
-df['plotType'] = [item.split('|')[-2] for item in df.index]
-df = df.loc[df['plotType'].isin(['dORF','odORF','ouORF','uORF','iORF','noncoding']),:]
-df = df.loc[[item.startswith('ENST') for item in df.index],:]
+    actual_orf_seq = []
+    for item in result['orf_seq']:
+        if item[:3] in set(['ATG','TTG','CTG','GTG']):
+            actual_orf_seq.append(item[:-1])
+        elif item[1:4] in set(['ATG','TTG','CTG','GTG']):
+            actual_orf_seq.append(item[1:])
+        else:
+            actual_orf_seq.append('NO CLEAR NTG')   # PRICE pipeline allows hamming distance = 1
+    result['actual_orf_seq'] = actual_orf_seq
+    result = result.loc[result['actual_orf_seq'] != 'NO CLEAR NTG',:]
 
-data = []
-for row in tqdm(df.itertuples(),total=df.shape[0]):
-    orf_seq = row2orf(row)
-    ori_orf_length = row.length
-    data.append((row.Index,orf_seq,ori_orf_length,row.pvalue))
-result = pd.DataFrame.from_records(data=data,columns=['uid','orf_seq','ori_orf_length','translatability'])
-result = result.loc[(result['orf_seq']!='ENST NOT IN HG19 ANNOTATION') & (result['orf_seq']!='FALL INTO INTRON') & (result['orf_seq']!='NOT VALID CHROM'),:]
-result['now_orf_length'] = [len(item)-1 for item in result['orf_seq']]  # we know this is +1 issue
-result['cond'] = result['ori_orf_length'] == result['now_orf_length']
-result = result.loc[result['cond'],:]
+    col = []
+    cond = []
+    for item in result['actual_orf_seq']:
+        pep = str(Seq(item).translate(to_stop=False))
+        col.append(pep)
+        if ('*' in pep) and (not pep.endswith('*')):  # it might be ok that * is the last one
+            cond.append(False)
+        else:
+            cond.append(True)
+    result['pep'] = col
+    result['no_stop'] = cond
 
-actual_orf_seq = []
-for item in result['orf_seq']:
-    if item[:3] in set(['ATG','TTG','CTG','GTG']):
-        actual_orf_seq.append(item[:-1])
-    elif item[1:4] in set(['ATG','TTG','CTG','GTG']):
-        actual_orf_seq.append(item[1:])
-    else:
-        actual_orf_seq.append('NO CLEAR NTG')   # PRICE pipeline allows hamming distance = 1
-result['actual_orf_seq'] = actual_orf_seq
-result = result.loc[result['actual_orf_seq'] != 'NO CLEAR NTG',:]
+    result = result.loc[result['no_stop'],:]
+    result['actual_pep'] = [item.rstrip('*') if item.endswith('*') else item for item in result['pep']]
+    result.to_csv(os.path.join(FASTA_OUTDIR,'riborf_table.txt'),sep='\t',index=None)
 
-col = []
-cond = []
-for item in result['actual_orf_seq']:
-    pep = str(Seq(item).translate(to_stop=False))
-    col.append(pep)
-    if ('*' in pep) and (not pep.endswith('*')):  # it might be ok that * is the last one
-        cond.append(False)
-    else:
-        cond.append(True)
-result['pep'] = col
-result['no_stop'] = cond
-
-result = result.loc[result['no_stop'],:]
-result['actual_pep'] = [item.rstrip('*') if item.endswith('*') else item for item in result['pep']]
-result.to_csv(os.path.join(FASTA_OUTDIR,'riborf_table.txt'),sep='\t',index=None)
-
-with open(os.path.join(FASTA_OUTDIR,'riborf.fasta'),'w') as f:
-    for uid,tran,pep in zip(result['uid'],result['translatability'],result['actual_pep']):
-        if len(pep) >= 8:
-            f.write('>{}|{}|{}\n{}\n'.format(uid,str(tran),'nuORF',pep))
+    with open(os.path.join(FASTA_OUTDIR,'riborf.fasta'),'w') as f:
+        for uid,tran,pep in zip(result['uid'],result['translatability'],result['actual_pep']):
+            if len(pep) >= 8:
+                f.write('>{}|{}|{}\n{}\n'.format(uid,str(tran),'nuORF',pep))
 
 
 
