@@ -43,6 +43,61 @@ cancers2immuno = {
     'SKCM':'melanoma'
 }
 
+# process new healthy
+# ks = ['normal 1-1 r1 frank change_pep_fdr.tsv',
+#       'normal 2-3 r1 frank change_pep_fdr.tsv',
+#       'normal 3-3 r1 frank change_pep_fdr.tsv']
+
+# dfs = []
+# for k in ks:
+#     df = pd.read_csv('./rescue_raw/{}'.format(k),sep='\t',index_col=0)
+#     df = df.loc[~df['is_decoy'],:]
+#     df = df.loc[df['possible_protein_ids'].notna(),:]
+#     df['filename'] = [item.split('.zip')[0] + '.d' if item.endswith('.zip') else item for item in df['filename']]
+#     df['filename'] = [item.split('.RAW')[0] + '.raw' if item.endswith('.RAW') else item for item in df['filename']]
+#     df.drop(columns=['job_id','is_decoy','retention_time_normalized','precursor_charge'],inplace=True)
+#     df['possible_protein_ids'] = [';;'.join(item.split(';')) for item in df['possible_protein_ids']]
+#     df.rename(columns={'precursor_intensity':'intensity'},inplace=True)
+#     dfs.append(df)
+# df = pd.concat(dfs,axis=0)
+# df.to_csv('tesorai_peptide_fdr_normal.tsv',sep='\t',index=None)
+
+
+# ori_dir = os.getcwd()
+# os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/immuno')
+# cmd = 'find . -type f -name "*.raw" -exec echo {} \; | xargs -n1 basename'
+# all_raw = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# os.chdir(ori_dir)
+
+# ori_dir = os.getcwd()
+# os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches')
+# cmd = 'cut -f1 tesorai_peptide_fdr_normal.tsv | sort | uniq'
+# all_have = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# os.chdir(ori_dir)
+
+# common = set(all_have).intersection(set(all_raw))
+# diff = set(all_have).difference(set(all_raw))
+# print(len(common))
+# print(diff)
+
+
+
+# df = pd.read_csv('tesorai_peptide_fdr_normal.tsv',sep='\t')
+# col = []
+# mapping = {
+#     '170517_AM_AUT01-DN12_Ovary_W6-32_10_DDA_3_400-650mz_msms8_standard_1.raw':'170517_AM_AUT01-DN12_Ovary_W6-32_10_DDA_3_400-650mz_msms8_standard.raw',
+#     '191126_AM_OVA01-DN281_Ovary_W6-32_20_DDA_2_400-650mz_msms14_TS0h_DirectInject_1.raw':'191126_AM_OVA01-DN281_Ovary_W6-32_20_DDA_2_400-650mz_msms14_TS0h_DirectInject.raw'
+# }
+# for item in df['filename']:
+#     if item in mapping.keys():
+#         col.append(mapping[item])
+#     else:
+#         col.append(item)
+# df['filename'] = col
+# df.to_csv('tesorai_peptide_fdr_normal.tsv',sep='\t',index=None)
+
+
+
 # # make sure no suffix added
 # all_tesorai = subprocess.run("for file in tesorai_peptide_fdr_*.tsv; do echo $file; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 # for tesorai in all_tesorai:
@@ -57,6 +112,7 @@ cancers2immuno = {
 #         except AssertionError:
 #             print(tesorai,print(all_file.difference(doced_file)))
 
+
 # # fix suffix
 # df = pd.read_csv('tesorai_peptide_fdr_PAAD_rescue_1.tsv',sep='\t')
 # col = []
@@ -70,12 +126,14 @@ cancers2immuno = {
 
 
 
-# make sure no RAW no ZIP
+
+# make sure no RAW no zip
 all_tesorai = subprocess.run("for file in tesorai_peptide_fdr_*.tsv; do echo $file; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 for tesorai in all_tesorai:
     df = pd.read_csv(tesorai,sep='\t')
-    cond = np.any(df['filename'].str.endswith('RAW').values)
-    print(tesorai,cond)
+    cond = np.any(df['filename'].str.endswith('zip').values)
+    if cond:
+        print(tesorai,cond)
 
 
 # tesorai_peptide_fdr_CANCER_suffix.tsv
@@ -88,7 +146,9 @@ mapping = {
     'frank_coad_rescue_1_pep_fdr.tsv':'tesorai_peptide_fdr_COAD_rescue_1.tsv',
     'frank_paad_rescue_1_pep_fdr.tsv':'tesorai_peptide_fdr_PAAD_rescue_1.tsv',
     'frank_hnsc_rescue_1_pep_fdr.tsv':'tesorai_peptide_fdr_HNSC_rescue_1.tsv',
-    'frank_hnsc_rescue_2_pep_fdr.tsv':'tesorai_peptide_fdr_HNSC_rescue_2.tsv'
+    'frank_hnsc_rescue_2_pep_fdr.tsv':'tesorai_peptide_fdr_HNSC_rescue_2.tsv',
+    'frank_LUAD_rescue_1_pep_fdr.tsv':'tesorai_peptide_fdr_LUAD_rescue_1.tsv',
+    'frank_LUSC_rescue_1_pep_fdr.tsv':'tesorai_peptide_fdr_LUSC_rescue_1.tsv'
 }
 
 for k,v in mapping.items():

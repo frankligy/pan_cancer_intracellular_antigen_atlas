@@ -8,6 +8,7 @@ import subprocess
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+from scipy.stats import rankdata
 
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
@@ -61,7 +62,7 @@ os.chdir(result_dir)
 all_tissues = subprocess.run("for f in *; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 os.chdir(old_dir)
 
-
+# # derive maxquant 0.05 
 # fdr = 0.05
 # # rederive
 # for t in all_tissues:
@@ -77,10 +78,10 @@ os.chdir(old_dir)
 #         valids = {'vanilla':valid}
 #         rewrite_msmsScans_new(valids,fold,fdr)
 
-
 # # append tesorai result to each 5% FDR msmsScan
 # fdr = 0.05
-# tesorai = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_healthy.tsv',sep='\t')
+# tesorai = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_normal.tsv',sep='\t')
+# tesorai = tesorai.loc[tesorai['qval']<0.01,:]
 # tesorai['uid'] = [','.join([item1.split('.')[0],str(item2)]) for item1,item2 in zip(tesorai['filename'],tesorai['scan_id'])]
 # uid2seq = pd.Series(index=tesorai['uid'].values,data=tesorai['clean_sequence'].values).to_dict()
 # uid2protein = pd.Series(index=tesorai['uid'].values,data=tesorai['possible_protein_ids'].values).to_dict()
@@ -126,11 +127,18 @@ os.chdir(old_dir)
 #                 col4.append(False)
 #                 continue
 #             if i2 == i5:     # same sequence
-#                 col1.append(i1)
-#                 col2.append(i2)
-#                 col3.append(i3)
-#                 col4.append(False)
-#                 continue  
+#                 if i1 == '+':
+#                     col1.append(i1)
+#                     col2.append(i2)
+#                     col3.append(i3)
+#                     col4.append(False)
+#                     continue  
+#                 else:
+#                     col1.append('+')
+#                     col2.append(i5)
+#                     col3.append(';'.join(i6.split(';;')))
+#                     col4.append(True)
+#                     continue
 #             if i1 == '+':
 #                 if (i4 >= 70 and i7 >= 5) or (i4 < 70 and i7 < 5):
 #                     col1.append(None)
@@ -166,8 +174,7 @@ os.chdir(old_dir)
 #         final.to_csv(os.path.join(fold,'combined','txt','{}_new_{}_tesorai.txt'.format(name,fdr)),sep='\t',index=None)
 
 
-
-
+# # combining and renaming to resolve small case issue
 # fdr = 0.05
 # total_dfs = []
 # for t in all_tissues:
@@ -183,9 +190,8 @@ os.chdir(old_dir)
 #         msms = pd.read_csv(msms_path,sep='\t')
 #         msms = msms.loc[msms['Identified']=='+',:]
 #         for raw,sub_df in msms.groupby(by='Raw file'):
-#             sub_df['Precursor intensity'] = sub_df['Precursor intensity'].fillna(value=0)
-#             sub_df = sub_df.sort_values(by='Precursor intensity',ascending=True)
-#             sub_df['percentile'] = [(i+1)/sub_df.shape[0] for i in range(sub_df.shape[0])]
+#             sub_df['Precursor intensity'] = sub_df['Precursor intensity'].fillna(value=1e-5)
+#             sub_df['percentile'] = rankdata(sub_df['Precursor intensity'].values,method='min') / sub_df.shape[0]
 #             each_raw_data = []
 #             for p,sub_df2 in sub_df.groupby(by='Sequence'):
 #                 # take the highest
@@ -215,86 +221,49 @@ os.chdir(old_dir)
 # final.to_csv('hla_ligand_atlas_now_{}_tesorai.txt'.format(fdr),sep='\t',index=None)
 
 
-# just use this tesorai combined one and previous two
+# just use this tesorai combined one and original hla ligand atlas
+df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/for_safety_screen.txt',sep='\t')
+final = df
 
-# df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/for_safety_screen.txt',sep='\t')
-# te_taa = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/te_all_antigens.txt',sep='\t')
-# orf2_taa = te_taa.loc[te_taa['source'].str.contains('L1_ORF2'),:]
-# final = pd.concat([df,orf2_taa],axis=0)
+fdr = 0.05
+df = pd.read_csv('hla_ligand_atlas_now_{}_tesorai.txt'.format(fdr),sep='\t')
+dic = {}
+for pep,sub_df in df.groupby(by='peptide'):
+    ts = ','.join(list(set(sub_df['tissue'].values.tolist())))
+    dic[pep] = ts
+col = []
+for item in final['pep']:
+    col.append(dic.get(item,''))
+final['normal_{}'.format(fdr)] = col
 
-# fdr = 0.01
-# df = pd.read_csv('hla_ligand_atlas_now_0.01.txt',sep='\t')
-# dic = {}
-# for pep,sub_df in df.groupby(by='peptide'):
-#     ts = ','.join(list(set(sub_df['tissue'].values.tolist())))
-#     dic[pep] = ts
-# col = []
-# for item in final['pep']:
-#     col.append(dic.get(item,''))
-# final['normal_{}'.format(fdr)] = col
+all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
+                'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
+                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
 
-# fdr = 0.05
-# df = pd.read_csv('hla_ligand_atlas_now_0.05_tesorai.txt',sep='\t')
-# dic = {}
-# for pep,sub_df in df.groupby(by='peptide'):
-#     ts = ','.join(list(set(sub_df['tissue'].values.tolist())))
-#     dic[pep] = ts
-# col = []
-# for item in final['pep']:
-#     col.append(dic.get(item,''))
-# final['normal_{}'.format(fdr)] = col
+non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus']
+essential = list(set(all_tissues).difference(set(non_essential)))
 
-
-# all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
-#                 'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
-#                 'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
-
-# non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus']
-# essential = list(set(all_tissues).difference(set(non_essential)))
-
-# cond = []
-# for i1,i2 in zip(final['hla_ligand_atlas'],final['normal_0.01']):
-#     lis = []
-#     for i in [i1,i2]:
-#         if isinstance(i,str):
-#             lis.extend(i.split(','))
-#     common = set(lis).intersection(set(essential))
-#     if len(common) > 0:
-#         cond.append(False)
-#     else:
-#         cond.append(True)
-# final['cond'] = cond
-
-# cond = []
-# for i1,i2,i3 in zip(final['hla_ligand_atlas'],final['normal_0.01'],final['normal_0.05']):
-#     lis = []
-#     for i in [i1,i2,i3]:
-#         if isinstance(i,str):
-#             lis.extend(i.split(','))
-#     common = set(lis).intersection(set(essential))
-#     if len(common) > 0:
-#         cond.append(False)
-#     else:
-#         cond.append(True)
-# final['cond_stringent'] = cond
-
-
-# final.to_csv('post_safety_screen.txt',sep='\t',index=None)
-
+cond = []
+for i1,i2 in zip(final['hla_ligand_atlas'],final['normal_0.05']):
+    lis = []
+    for i in [i1,i2]:
+        if isinstance(i,str):
+            lis.extend(i.split(','))
+    common = set(lis).intersection(set(essential))
+    if len(common) > 0:
+        cond.append(False)
+    else:
+        cond.append(True)
+final['cond_stringent'] = cond
+final.to_csv('post_safety_screen.txt',sep='\t',index=None)
+sys.exit('stop')
 
 
 # making db
 df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/for_safety_screen.txt',sep='\t')
-te_taa = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/te_all_antigens.txt',sep='\t')
-orf2_taa = te_taa.loc[te_taa['source'].str.contains('L1_ORF2'),:]
-orf1_taa = te_taa.loc[te_taa['source'].str.contains('L1_ORF1'),:]
 with open('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/db_fasta/peptides.fasta','w') as f:
     for cancer,pep,typ in zip(df['cancer'],df['pep'],df['typ']):
         f.write('>query|{}|{}|{}\n{}\n'.format(pep,typ,cancer,pep))
-    for cancer,pep,typ in zip(orf2_taa['cancer'],orf2_taa['pep'],orf2_taa['typ']):
-        f.write('>query|{}|{}|{}|ORF2_TAA\n{}\n'.format(pep,typ,cancer,pep))
-    for cancer,pep,typ in zip(orf1_taa['cancer'],orf1_taa['pep'],orf1_taa['typ']):
-        f.write('>query|{}|{}|{}|ORF1_TAA\n{}\n'.format(pep,typ,cancer,pep))
 sys.exit('stop')
 
 # transfer
