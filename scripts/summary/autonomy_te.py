@@ -161,14 +161,16 @@ def has_ir(coord,ir_dic):
     return flag
 
 
-df = pd.read_csv('ts_te_antigen.txt',sep='\t')
-
-safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
-safety_screen_df = safety_screen_df.loc[~safety_screen_df['cond_stringent'],:]
-safety_screen_bl = list(set(safety_screen_df['pep'].values.tolist()))
-
-df = df.loc[~df['pep'].isin(safety_screen_bl),:]
-
+root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+data = []
+for c in cancers:
+    final_path = os.path.join(root_atlas_dir,c,'antigen','0.05','final_enhanced.txt')
+    final = pd.read_csv(final_path,sep='\t')
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
+    final = final.loc[cond,:]
+    final = final.loc[final['typ'].isin(['ERV']),:]
+    data.append(final)
+df = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
 
 for cancer in cancers:
     root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
@@ -193,23 +195,35 @@ for cancer in cancers:
     col2 = []
     for row in df_now.itertuples():
         cancer = row.cancer
-        coord = row.source.split('|')[1]
-        flag = has_splicing_site(coord,splicing_dic)
-        col1.append(flag)
-        flag = has_ir(coord,ir_dic)
-        col2.append(flag)
+        sou = row.source.split(';')
+        flag1_list = []
+        flag2_list = []
+        for s_ in sou:
+            if ('TE_info' in s_) or (s_.startswith('nc|')) or ('nuORF' in s_):
+                continue
+            else:
+                coord = s_.split('|')[1]
+                flag = has_splicing_site(coord,splicing_dic)
+                flag1_list.append(flag)
+                flag = has_ir(coord,ir_dic)
+                flag2_list.append(flag)
+        flag1 = np.any(flag1_list)
+        flag2 = np.any(flag2_list)
+        col1.append(flag1)
+        col2.append(flag2)
     df_now['not_has_ss'] = col1
     df_now['not_in_ir'] = col2
-    df_now.to_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(cancer),sep='\t')
+    df_now.to_csv('splicing_ir_dic/autonomy_erv_antigens_{}.txt'.format(cancer),sep='\t')
 
 
 # assemble
 df_list = []
 for c in cancers:
-    df = pd.read_csv('splicing_ir_dic/autonomy_ts_te_antigens_{}.txt'.format(c),sep='\t')
+    df = pd.read_csv('splicing_ir_dic/autonomy_erv_antigens_{}.txt'.format(c),sep='\t')
     df_list.append(df)
 final = pd.concat(df_list,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'}).drop(columns='Unnamed: 0')
 final.to_csv('splicing_ir_dic/final.txt',sep='\t',index=None)
+sys.exit('stop')
 
 
 # draw

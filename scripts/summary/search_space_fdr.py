@@ -11,6 +11,7 @@ import matplotlib as mpl
 from ast import literal_eval
 from tqdm import tqdm
 import pickle
+from scipy.stats import ttest_ind
 
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
@@ -124,54 +125,56 @@ immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
 iedb = pd.read_csv('all_epitope_no_b_human_linear_mhc_i.tsv',sep='\t')
 iedb_peptides = set(iedb['Epitope - Name'].unique())
 
-cancers = ['BRCA','KIRC']
+# # search_space
+# cats = ['contaminant','variant','pathogen','fusion','intron_retention','nuORF','TE_chimeric_transcript','splicing','ERV','unknown','nc_isoform','self_gene']
+# data = np.empty((len(cancers),len(cats)),dtype=np.float64)
+# for i,c in enumerate(cancers):
+#     space_dict = {}
+#     combined_fasta = os.path.join(immuno_dir,cancers2immuno[c],'combined_{}_pan_cancer.fasta'.format(c))
+#     with open(combined_fasta,'r') as in_handle:
+#         for title,seq in SimpleFastaParser(in_handle):
+#             identity = classify_source(title)
+#             if identity in space_dict.keys():
+#                 space_dict[identity] += len(seq)
+#             else:
+#                 space_dict[identity] = 0
+#                 space_dict[identity] += len(seq)
 
-# search_space
-cats = ['contaminant','variant','pathogen','fusion','intron_retention','nuORF','TE_chimeric_transcript','splicing','ERV','unknown','nc_isoform','self_gene']
-data = np.empty((len(cancers),len(cats)),dtype=np.float64)
-for i,c in enumerate(cancers):
-    space_dict = {}
-    combined_fasta = os.path.join(immuno_dir,cancers2immuno[c],'combined_{}_pan_cancer.fasta'.format(c))
-    with open(combined_fasta,'r') as in_handle:
-        for title,seq in SimpleFastaParser(in_handle):
-            identity = classify_source(title)
-            if identity in space_dict.keys():
-                space_dict[identity] += len(seq)
-            else:
-                space_dict[identity] = 0
-                space_dict[identity] += len(seq)
+#     for cat in cats:
+#         if cat not in space_dict.keys():
+#             space_dict[cat] = 0
+#     data[i,:] = pd.Series(space_dict).loc[cats].values
 
-    for cat in cats:
-        if cat not in space_dict.keys():
-            space_dict[cat] = 0
-    data[i,:] = pd.Series(space_dict).loc[cats].values
+# df = pd.DataFrame(data=data,index=cancers,columns=cats)
+# df['tmp'] = df['nc_isoform'] + df['self_gene']
+# df['self_gene'] = df['tmp']
+# df.drop(columns=['unknown','nc_isoform','tmp'],inplace=True)
+# increase_by = df.iloc[:,:9].sum(axis=1) / df.iloc[:,9]
+# print(np.median(increase_by.values))
+# print(np.mean(increase_by.values))
+# print(np.min(increase_by.values))
+# print(np.max(increase_by.values))
 
-df = pd.DataFrame(data=data,index=cancers,columns=cats)
-df['tmp'] = df['nc_isoform'] + df['self_gene']
-df['self_gene'] = df['tmp']
-df.drop(columns=['unknown','nc_isoform','tmp'],inplace=True)
-increase_by = df.iloc[:,:9].sum(axis=1) / df.iloc[:,9]
-
-data = df.values
-fig,ax = plt.subplots()
-ax.bar(cancers,data[:,0],label='contaminant')
-ax.bar(cancers,data[:,1],bottom=data[:,0],label='variant')
-ax.bar(cancers,data[:,2],bottom=data[:,:2].sum(axis=1),label='pathogen')
-ax.bar(cancers,data[:,3],bottom=data[:,:3].sum(axis=1),label='fusion')
-ax.bar(cancers,data[:,4],bottom=data[:,:4].sum(axis=1),label='intron_retention')
-ax.bar(cancers,data[:,5],bottom=data[:,:5].sum(axis=1),label='nuORF')
-ax.bar(cancers,data[:,6],bottom=data[:,:6].sum(axis=1),label='TE_chimeric_transcript')
-ax.bar(cancers,data[:,7],bottom=data[:,:7].sum(axis=1),label='splicing')
-ax.bar(cancers,data[:,8],bottom=data[:,:8].sum(axis=1),label='self_translating_TE')
-ax.bar(cancers,data[:,9],bottom=data[:,:9].sum(axis=1),label='self_gene')
-for i,c in enumerate(cancers):
-    ax.text(x=i,y=data[:,:10].sum(axis=1)[i],s=round(increase_by.iloc[i],2))
-ax.set_ylabel('value')
-# ax.set_ylim([0,1.05])
-ax.set_xticklabels(cancers,rotation=60)
-ax.legend()
-plt.savefig('search_space_total.pdf',bbox_inches='tight')
-plt.close()
+# data = df.values
+# fig,ax = plt.subplots()
+# ax.bar(cancers,data[:,0],label='contaminant')
+# ax.bar(cancers,data[:,1],bottom=data[:,0],label='variant')
+# ax.bar(cancers,data[:,2],bottom=data[:,:2].sum(axis=1),label='pathogen')
+# ax.bar(cancers,data[:,3],bottom=data[:,:3].sum(axis=1),label='fusion')
+# ax.bar(cancers,data[:,4],bottom=data[:,:4].sum(axis=1),label='intron_retention')
+# ax.bar(cancers,data[:,5],bottom=data[:,:5].sum(axis=1),label='nuORF')
+# ax.bar(cancers,data[:,6],bottom=data[:,:6].sum(axis=1),label='TE_chimeric_transcript')
+# ax.bar(cancers,data[:,7],bottom=data[:,:7].sum(axis=1),label='splicing')
+# ax.bar(cancers,data[:,8],bottom=data[:,:8].sum(axis=1),label='self_translating_TE')
+# ax.bar(cancers,data[:,9],bottom=data[:,:9].sum(axis=1),label='self_gene')
+# for i,c in enumerate(cancers):
+#     ax.text(x=i,y=data[:,:10].sum(axis=1)[i],s=round(increase_by.iloc[i],2))
+# ax.set_ylabel('value')
+# # ax.set_ylim([0,1.05])
+# ax.set_xticklabels(cancers,rotation=60)
+# ax.legend()
+# plt.savefig('search_space_total.pdf',bbox_inches='tight')
+# plt.close()
 
 # 70 and iedb
 # data_list = []
@@ -203,41 +206,84 @@ plt.close()
 #     data_list.append(data_m+data_r)
 
 # df = pd.DataFrame.from_records(data=data_list,index=cancers,columns=['maxquant_iedb_only_5','maxquant_hc_1','maxquant_hc_5','rescore_iedb_only_5','rescore_hc_1','rescore_hc_5'])
-# df1 = df.loc[:,['maxquant_hc_1','maxquant_hc_5']]
-# df1.plot.bar(rot=0)
-# plt.savefig('maxquant_hc.pdf',bbox_inches='tight')
-# plt.close()
+# df.to_csv('search_space_fdr.txt',sep='\t')
+df = pd.read_csv('search_space_fdr.txt',sep='\t',index_col=0)
+df1 = df.loc[:,['maxquant_hc_1','maxquant_hc_5']]
+print(ttest_ind(df1['maxquant_hc_1'].values,df1['maxquant_hc_5'].values))
+df1.plot.bar(rot=0)
+plt.savefig('maxquant_hc.pdf',bbox_inches='tight')
+plt.close()
 
-# df1 = df.loc[:,['rescore_hc_1','rescore_hc_5']]
-# df1.plot.bar(rot=0)
-# plt.savefig('rescore_hc.pdf',bbox_inches='tight')
-# plt.close()
+df1 = df.loc[:,['rescore_hc_1','rescore_hc_5']]
+print(ttest_ind(df1['rescore_hc_1'].values,df1['rescore_hc_5'].values))
+df1.plot.bar(rot=0)
+plt.savefig('rescore_hc.pdf',bbox_inches='tight')
+plt.close()
 
-# df1 = df.loc[:,['maxquant_iedb_only_5','rescore_iedb_only_5']]
-# df1.plot.bar(rot=0)
-# plt.savefig('iedb_miss.pdf',bbox_inches='tight')
-# plt.close()
+df1 = df.loc[:,['maxquant_iedb_only_5','rescore_iedb_only_5']]
+df1.plot.bar(rot=0)
+plt.savefig('iedb_miss.pdf',bbox_inches='tight')
+plt.close()
 
 # anchor
 data = []
 anchors = {
-    'KIRC':['ATFLGSLTGK', 'KLIAGLIFLK', 'DLSRRDVSL']
+    'BRCA':[],
+    'KIRC':['ATFLGSLTGK', 'KLIAGLIFLK'],
+    'COAD':['VVVGAVGVGK'],
+    'STAD':[],
+    'MESO':[],
+    'LIHC':[],
+    'ESCA':[],
+    'CESC':[],
+    'BLCA':[],
+    'RT':[],
+    'AML':['AVEEVSLRK'],
+    'DLBC':[],
+    'GBM':[],
+    'NBL':['QYNPIRTTF'],
+    'PAAD':['KLFLWPYKV','IQIGWVTQK'],
+    'HNSC':[],
+    'OV':[],
+    'LUSC':[],
+    'LUAD':[],
+    'CHOL':[],
+    'SKCM':['GVYDGREHTV','KVAELVHFL','EVDPIGHLY']
 }
 
+tesorai_folder = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches'
 for k,vs in anchors.items():
-    msms5 = pd.read_csv(os.path.join(root_atlas_dir,k,'antigen','0.05','msmsScans_all_add_tesorai.txt'),sep='\t')
-    for v in vs:
-        sub = msms5.loc[(msms5['Sequence']==v) & (msms5['Identified']=='+'),:]
-        # maxquant range
-        sub2 = sub.loc[sub['Identified_vanilla']==True,:]
-        min_m = sub2['qval_vanilla'].min()
-        max_m = sub2['qval_vanilla'].max()
-        # rescore range
-        sub2 = sub.loc[sub['Identified_rescore']==True,:]
-        min_r = sub2['qval_rescore'].min()
-        max_r = sub2['qval_rescore'].max()
-        data.append((k,v,min_m,max_m,min_r,max_r))
-df = pd.DataFrame(data=data,columns=['cancer','antigen','maxquant_qval_min','maxquant_qval_max','rescore_qval_min','rescore_qval_max'])
+    if len(vs) > 0:
+        # get maxquant and ms2rescore
+        msms5 = pd.read_csv(os.path.join(root_atlas_dir,k,'antigen','0.05','msmsScans_all_add_tesorai.txt'),sep='\t')
+        # get all tesorai
+        old_dir = os.getcwd()
+        os.chdir(tesorai_folder)
+        cmd = 'for f in tesorai_peptide_fdr_*.tsv; do echo $f; done | grep "{}"'.format(k)
+        needed_files = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+        os.chdir(old_dir)
+        tmp = []
+        for tesorai_file in needed_files:
+            tesorai = pd.read_csv(os.path.join(tesorai_folder,tesorai_file),sep='\t')
+            tmp.append(tesorai)
+        total_tesorai = pd.concat(tmp,axis=0)
+        # start extract info
+        for v in vs:
+            sub = msms5.loc[(msms5['Sequence']==v) & (msms5['Identified']=='+'),:]
+            # maxquant range
+            sub2 = sub.loc[sub['Identified_vanilla']==True,:]
+            min_m = sub2['qval_vanilla'].min()
+            max_m = sub2['qval_vanilla'].max()
+            # rescore range
+            sub2 = sub.loc[sub['Identified_rescore']==True,:]
+            min_r = sub2['qval_rescore'].min()
+            max_r = sub2['qval_rescore'].max()
+            # tesorai range
+            sub2 = total_tesorai.loc[total_tesorai['clean_sequence']==v,:]
+            min_t = sub2['qval'].min()
+            max_t = sub2['qval'].max()
+            data.append((k,v,min_m,max_m,min_r,max_r,min_t,max_t))
+df = pd.DataFrame(data=data,columns=['cancer','antigen','maxquant_qval_min','maxquant_qval_max','rescore_qval_min','rescore_qval_max','tesorai_qval_min','tesorai_qval_max'])
 df.to_csv('anchor_qval_range.txt',sep='\t',index=None)
 
 

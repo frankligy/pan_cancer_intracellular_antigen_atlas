@@ -12,7 +12,7 @@ from ast import literal_eval
 import anndata as ad
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
-from scipy.stats import mannwhitneyu,chi2,binomtest
+from scipy.stats import mannwhitneyu,chi2,binomtest,rankdata
 from statsmodels.stats.multitest import multipletests
 import statsmodels.api as sm
 from statsmodels.othermod.betareg import BetaModel
@@ -212,14 +212,12 @@ def run_nuorf_de(nuorfs,cancer):
         msms = msms.loc[msms['Identified']=='+',:]
         each_raw_data = []
         msms['Precursor intensity'] = msms['Precursor intensity'].fillna(value=0)
-        msms = msms.sort_values(by='Precursor intensity',ascending=True)
-        msms['percentile'] = [(i+1)/msms.shape[0] for i in range(msms.shape[0])]
+        msms['percentile'] = rankdata(msms['Precursor intensity'].values,method='min') / msms.shape[0]
         for p,sub_df2 in msms.groupby(by='Sequence'):
             intensity = sub_df2['Precursor intensity'].values.max()
             percentile = sub_df2['percentile'].values.max()
             each_raw_data.append((p,intensity,percentile))
         each_raw_df = pd.DataFrame.from_records(data=each_raw_data,columns=['peptide','intensity','percentile'])
-        each_raw_df = each_raw_df.loc[each_raw_df['intensity']>0,:]
         if each_raw_df.shape[0] > 0:
             upper = np.quantile(each_raw_df['intensity'].values,0.75)
             each_raw_df['norm'] = np.log2(each_raw_df['intensity'].values/upper)
@@ -381,7 +379,10 @@ root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 database_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database'
 HG38_NORMAL_DIR = '/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/hg38_telocal_intron'
 
-# self_gene 
+
+
+
+# self_gene, need to module load singularity/3.1
 final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
 final = final.loc[final['typ']=='self_gene',:]
 total_ensg_intra = list(set(final['ensgs'].values))
@@ -406,6 +407,7 @@ final['ts_rawp'] = col1
 final['ts_adjp'] = col2
 final_self_gene = final
 
+
 # TE
 final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
 final = final.loc[final['typ']=='self_translate_te',:]
@@ -424,8 +426,6 @@ for items in final['source']:
             min_lfc = lfc
     col.append(designated_te)
 final['designated_te'] = col
-final_abn = final.loc[~final['designated_te'].notna(),:]
-final = final.loc[final['designated_te'].notna(),:]
 total_tes = final['designated_te'].values.tolist()
 total_tes = list(set([item.split('|')[0] for item in total_tes]))
 
@@ -445,7 +445,7 @@ for row in final.itertuples():
     col2.append(adjp)
 final['ts_rawp'] = col1
 final['ts_adjp'] = col2
-final_self_te = pd.concat([final,final_abn],axis=0)
+final_self_te = final
 
 
 # splicing
@@ -466,8 +466,6 @@ for items in final['source']:
             min_lfc = lfc
     col.append(designated_event)
 final['designated_event'] = col
-final_abn = final.loc[~final['designated_event'].notna(),:]
-final = final.loc[final['designated_event'].notna(),:]
 total_events = final['designated_event'].values.tolist()
 total_events = list(set([item.split('|')[0] for item in total_events]))
 
@@ -487,7 +485,7 @@ for row in final.itertuples():
     col2.append(adjp)
 final['ts_rawp'] = col1
 final['ts_adjp'] = col2
-final_splicing = pd.concat([final,final_abn],axis=0)
+final_splicing = final
 
 # TE chimeric part I 
 final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
@@ -511,8 +509,10 @@ final = final.loc[final['designated_event'].notna(),:]
 total_events = final['designated_event'].values.tolist()
 total_events = list(set([item.split('|')[0] for item in total_events]))
 
+
 # for cancer in cancers:
 #     run_splicing_de(total_events,cancer,True)
+
 
 col1 = []
 col2 = []
@@ -529,7 +529,7 @@ final['ts_rawp'] = col1
 final['ts_adjp'] = col2
 final_te_chi_i = final
 
-# TE chimeric part II
+# TE chimeric part II (reclassified from self-translating)
 final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
 final = final.loc[final['typ']=='TE_chimeric_transcript',:]
 col = []
@@ -550,6 +550,7 @@ final['designated_te'] = col
 final = final.loc[final['designated_te'].notna(),:]
 total_tes = final['designated_te'].values.tolist()
 total_tes = list(set([item.split('|')[0] for item in total_tes]))
+
 
 # for cancer in cancers:
 #     run_te_de(total_tes,cancer,True)
@@ -600,6 +601,31 @@ strains = ['Niallia circulans','Campylobacter ureolyticus','Clostridium intestin
 # for cancer in cancers:
 #     run_quantile_de(strains,cancer,'pathogen')
 
+
+col = []
+for item in final['source']:
+    if '_HCMV' in item:
+        col.append('CMV')
+    elif '_FUSNU' in item:
+        col.append('F.Nucleatum')
+    elif '_EBV' in item:
+        col.append('EBV')
+    elif '_HPV' in item:
+        col.append('HPV')
+    elif '_HBV' in item:
+        col.append('HBV')
+    elif '_HELPJ' in item:
+        col.append('H.Pylori')
+    elif '_NIACI' in item:
+        col.append('N.Circulans')
+    elif '_9CLOT' in item:
+        col.append('C.Intestinale')
+    elif '_9BACT' in item:
+        col.append('C.Ureolyticus')
+    else:
+        col.append('unknown')
+final['strain'] = col
+
 col1 = []
 col2 = []
 for row in final.itertuples():
@@ -644,8 +670,6 @@ for items in final['source']:
             min_expr = expr
     col.append(designated_ir)
 final['designated_ir'] = col
-final_abn = final.loc[~final['designated_ir'].notna(),:]
-final = final.loc[final['designated_ir'].notna(),:]
 total_irs = final['designated_ir'].values.tolist()
 total_irs = list(set([item.split('|')[0] for item in total_irs]))
 
@@ -665,7 +689,7 @@ for row in final.itertuples():
     col2.append(adjp)
 final['ts_rawp'] = col1
 final['ts_adjp'] = col2
-final_intron_retention = pd.concat([final,final_abn],axis=0)
+final_intron_retention = final
 
 # variant, fusion
 final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
@@ -674,11 +698,9 @@ final_variant = final.loc[final['typ']=='variant',:]
 final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
 final_fusion = final.loc[final['typ']=='fusion',:]
 
-# assemble and impute
+# assemble, maybe shorter than original final_all_ts_antigens, some are in two classes per cancer, 8, not a big deal
 final_new = pd.concat([final_self_gene,final_self_te,final_splicing,final_te_chi_i,final_te_chi_ii,final_nuorf,final_pathogen,final_intron_retention,final_variant,final_fusion],axis=0)
-
-# check
-final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
-assert final.shape[0] == final_new.shape[0]
-
+final_new['uid'] = ['{};{}'.format(i1,i2) for i1,i2 in zip(final_new['cancer'],final_new['pep'])]
+final_new.drop_duplicates(subset='uid',inplace=True)
+final_new.drop(columns=['uid'],inplace=True)
 final_new.to_csv('final_all_ts_antigens.txt',sep='\t',index=None)

@@ -78,16 +78,9 @@ def categorize_sets(set1, set2):
     ]
 
 driver = set(pd.read_csv(driver_genes,sep='\t')['gene'])
-data = []
-for c in cancers:
-    final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
-    final = pd.read_csv(final_path,sep='\t')
-    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
-    final = final.loc[cond,:]
-    final = final.loc[final['typ']=='variant',:]
-    final = final.loc[final['unique'],:]
-    data.append(final)
-final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
+
+final = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
+final = final.loc[final['typ']=='variant',:]
 col = []
 for item in final['source']:
     if ';' not in item:
@@ -106,10 +99,6 @@ final['mutation'] = ['|'.join([item.split('|')[0],item.split('|')[1]]) for item 
 final['mutation_type'] = [item.split('|')[-1] for item in final['real_source']]
 final['recurrency'] = [item.split('|')[2] for item in final['real_source']]
 final.to_csv('all_variants.txt',sep='\t',index=None)
-
-
-df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
-final = df.loc[df['typ']=='variant',:]
 
 # plot cancer
 col1 = []
@@ -187,9 +176,24 @@ common3 = set(final['pep'].values).intersection(set(pep_tsnadb_shared))
 final['in_iedb'] = [True if item in common1 else False for item in final['pep']]
 final['in_tsnadb'] = [True if item in common2 else False for item in final['pep']]
 
+tesorai_folder = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches'
 tesorai_dict = {}
 for c in cancers:
-    tesorai_dict[c] = set(pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_{}.tsv'.format(c),sep='\t')['clean_sequence'].values.tolist())
+    # get all tesorai
+    old_dir = os.getcwd()
+    os.chdir(tesorai_folder)
+    cmd = 'for f in tesorai_peptide_fdr_*.tsv; do echo $f; done | grep "{}"'.format(c)
+    needed_files = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    os.chdir(old_dir)
+
+    # concat all seq
+    t = []
+    for tesorai_file in needed_files:
+        tesorai = pd.read_csv(os.path.join(tesorai_folder,tesorai_file),sep='\t')
+        a = tesorai['clean_sequence'].values.tolist()
+        t.extend(a)
+    tesorai_dict[c] = set(t)
+
 cond = []
 for c,p in zip(final['cancer'],final['pep']):
     if p in tesorai_dict[c]:

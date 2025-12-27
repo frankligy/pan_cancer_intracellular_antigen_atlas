@@ -97,27 +97,6 @@ def process_tumor_gene():
 # so it really does not change that much, this list versus the 66 that I used for enrichment
 pan_cancer_ensgs = pd.read_csv('pan_cancer_cluster.txt',sep='\t',header=None)[0].values.tolist()
 
-# peptide versus rna
-df = pd.read_csv('ts_final.txt',sep='\t')
-pep_data = []
-rna_data = []
-ts_data = []
-for i1,i2,i3 in zip(df['median_tumor'],df['max_median_gtex'],df['detailed_intensity']):
-    i3 = literal_eval(i3)
-    median_pep = np.median(i3)
-    pep_data.append(median_pep)
-    rna_data.append(math.log2(i1))
-    ts_data.append(math.log2(i1/i2))
-pd.DataFrame(data={'rna_data':rna_data,'pep_data':pep_data,'ts_data':ts_data}).to_csv('pep_vs_rna.txt',sep='\t')
-fig,ax = plt.subplots()
-scatter = ax.scatter(rna_data,pep_data,c=ts_data,s=1,cmap='YlOrRd')
-cbar = fig.colorbar(scatter)
-cbar.set_label('log fold change')
-ax.set_xlabel('log2(median_rna_tpm)')
-ax.set_ylabel('median peptide percentile')
-plt.savefig('pep_vs_rna.pdf',bbox_inches='tight')
-plt.close()
-
 # pan-cancer cell cycle plot, let's just use the 68 that I selected and saved in fig2_raw
 result = pd.read_csv('Reactome_Pathways_2024_table.txt',sep='\t').iloc[:6,:]
 fig,ax = plt.subplots()
@@ -192,12 +171,10 @@ for row in df.itertuples():
         col.append(0)
 
 df['g_prop'] = col
-
 df = df.loc[df['typ']=='self_gene',:]
 
 data = []
 for c in cancers:
-    print(c)
     # now consider hla
     if c in ['RT','NBL']:
         dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
@@ -256,12 +233,14 @@ for c in cancers:
 
     final_prop = 1
     for k,v in mapping_norm_sb.items():
-        final_prop *= (1-v)
+        if not math.isnan(v):
+            final_prop *= (1-v)
     final_sb_prop = 1-final_prop
 
     final_prop = 1
     for k,v in mapping_norm_wb.items():
-        final_prop *= (1-v)
+        if not math.isnan(v):
+            final_prop *= (1-v)
     final_wb_prop = 1-final_prop
 
     data.append((self_gene_dic_overall[c],'gene_prop',c))
@@ -270,13 +249,12 @@ for c in cancers:
 
 plot_df = pd.DataFrame.from_records(data,columns=['value','category','cancer'])
 
-plot_df_now = plot_df.loc[plot_df['category']=='wb_prop',:].sort_values(by='value',ascending=False)
+plot_df_now = plot_df.loc[plot_df['category']=='sb_prop',:].sort_values(by='value',ascending=False)
 cancer2n_sample = pd.Series(index=cancers,data=n_samples).to_dict()
 plot_df_now['n_sample'] = plot_df_now['cancer'].map(cancer2n_sample).values
 coverage = 0
 for i1,i2 in zip(plot_df_now['n_sample'],plot_df_now['value']):
     coverage += round(i1*i2)
-print(coverage/sum(n_samples))  # sb 78% and wb 87%
 
 c2c = plot_df_now.set_index(keys='cancer')['value'].to_dict()
 c2c = {k:round(v,2) for k,v in c2c.items()}
@@ -294,69 +272,69 @@ plt.savefig('self_gene_coverage.pdf',bbox_inches='tight')
 plt.close()
 
 
-'''below two parts do not need to be execuated everytime'''
-# ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
-# symbol2ensg = {v:k for k,v in ensg2symbol.items()}
-# df = pd.read_csv('uniprotkb_proteome_UP000005640_AND_revi_2024_12_26.tsv',sep='\t')
-# col = []
-# for i1,i2 in zip(df['Entry Name'],df['Gene Names']):
-#     gs_lis = []
-#     gs_lis.append(i1.split('_')[0])
-#     if isinstance(i2,str):
-#         for item in i2.split(' '):
-#             gs_lis.append(item)
-#     gs_lis = list(set(gs_lis))
-#     for gs in gs_lis:
-#         ensg = symbol2ensg.get(gs,None)
-#         if not ensg is None:
-#             break
-#     col.append(ensg)
-# df['ensg'] = col
+# get comparments, mainly for membrane protein
+ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
+symbol2ensg = {v:k for k,v in ensg2symbol.items()}
+df = pd.read_csv('uniprotkb_proteome_UP000005640_AND_revi_2024_12_26.tsv',sep='\t')
+col = []
+for i1,i2 in zip(df['Entry Name'],df['Gene Names']):
+    gs_lis = []
+    gs_lis.append(i1.split('_')[0])
+    if isinstance(i2,str):
+        for item in i2.split(' '):
+            gs_lis.append(item)
+    gs_lis = list(set(gs_lis))
+    for gs in gs_lis:
+        ensg = symbol2ensg.get(gs,None)
+        if not ensg is None:
+            break
+    col.append(ensg)
+df['ensg'] = col
 
-# keyword_map = {
-#     'Cell membrane':'cell_membrane',
-#     'Secreted':'secreted',
-#     'Lysosome':'lysosome',
-#     'Endosome':'endosome',
-#     'Golgi apparatus': 'golgi',
-#     'Endoplasmic reticulum':'er',
-#     'Nucleus':'nucleus',
-#     'Cytoplasm':'cytoplasma',
-#     'Mitochondrion': 'mitochondria',
-#     'Peroxisome':'peroxisome' 
-# }
-
-
-# for k,v in keyword_map.items():
-#     col = []
-#     for item in df['Subcellular location [CC]']:
-#         if isinstance(item,str) and k in item:  
-#             col.append(True)
-#         else:
-#             col.append(False)
-#     now_df = df.copy()
-#     now_df['is_cell_membrane'] = col
-#     now_df = now_df.loc[:,['ensg','Entry Name','Entry','is_cell_membrane','Subcellular location [CC]']]
-
-#     now_df = now_df.loc[now_df['is_cell_membrane']]
-#     now_df['gs'] = [item.split('_')[0] for item in now_df['Entry Name']]
-#     now_df.to_csv('./compartment/human_{}_protein_postdoc_final.txt'.format(v),sep='\t',index=None)
+keyword_map = {
+    'Cell membrane':'cell_membrane',
+    'Secreted':'secreted',
+    'Lysosome':'lysosome',
+    'Endosome':'endosome',
+    'Golgi apparatus': 'golgi',
+    'Endoplasmic reticulum':'er',
+    'Nucleus':'nucleus',
+    'Cytoplasm':'cytoplasma',
+    'Mitochondrion': 'mitochondria',
+    'Peroxisome':'peroxisome' 
+}
 
 
-# all_cancers = ['PAAD','OV','GBM','COAD','LUAD','LUSC','STAD','LIHC','BLCA','BRCA','KIRC','SKCM','HNSC','ESCA']
-# var_list = []
-# for c in all_cancers:
-#     var = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/logic_finder_v2/output_{}/var.csv'.format(c),sep=',',index_col=0)
-#     var_list.append(var)
-# d = pd.concat(var_list,axis=1,join='outer')
-# d.columns = all_cancers
-# d.to_csv('zach_single_cell_data.txt',sep='\t')
-# mapping = pd.read_csv('gProfiler_hsapiens_zach_sc.csv',sep=',',index_col=0)['converted_alias'].to_dict()
-# col = []
-# for item in d.index:
-#     col.append(mapping.get(item,None))
-# d.index = col
-# d.to_csv('zach_single_cell_data_ensg.txt',sep='\t')
+for k,v in keyword_map.items():
+    col = []
+    for item in df['Subcellular location [CC]']:
+        if isinstance(item,str) and k in item:  
+            col.append(True)
+        else:
+            col.append(False)
+    now_df = df.copy()
+    now_df['is_cell_membrane'] = col
+    now_df = now_df.loc[:,['ensg','Entry Name','Entry','is_cell_membrane','Subcellular location [CC]']]
+
+    now_df = now_df.loc[now_df['is_cell_membrane']]
+    now_df['gs'] = [item.split('_')[0] for item in now_df['Entry Name']]
+    now_df.to_csv('./compartment/human_{}_protein_postdoc_final.txt'.format(v),sep='\t',index=None)
+
+
+all_cancers = ['PAAD','OV','GBM','COAD','LUAD','LUSC','STAD','LIHC','BLCA','BRCA','KIRC','SKCM','HNSC','ESCA']
+var_list = []
+for c in all_cancers:
+    var = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/logic_finder_v2/output_{}/var.csv'.format(c),sep=',',index_col=0)
+    var_list.append(var)
+d = pd.concat(var_list,axis=1,join='outer')
+d.columns = all_cancers
+d.to_csv('zach_single_cell_data.txt',sep='\t')
+mapping = pd.read_csv('gProfiler_hsapiens_zach_sc.csv',sep=',',index_col=0)['converted_alias'].to_dict()
+col = []
+for item in d.index:
+    col.append(mapping.get(item,None))
+d.index = col
+d.to_csv('zach_single_cell_data_ensg.txt',sep='\t')
 
 # construct ensg2adjp
 de_list = []
@@ -499,35 +477,14 @@ df.to_csv('gene_morpheus_mem.txt',sep='\t')
 print(df.shape[0])
 
 
-# previous main to generate ts_final
-data = []
-for c in cancers:
-    final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
-    final = pd.read_csv(final_path,sep='\t')
-    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
-    final = final.loc[cond,:]
-    final = final.loc[final['typ']=='self_gene',:]
-    final = final.loc[final['unique']!=False,:]
-    data.append(final)
-final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
-
-
-ensg2dep = {}
-for item1,item2 in zip(final['ensgs'],final['depmap_median']):
-    ensg2dep[item1] = item2
-
-with open('manual_bl.txt','r') as f:
-    manual_bl = [gene.rstrip('\n') for gene in f.readlines()]
-
-ensg2medians,all_tissues,ensg2symbol = process_gtex(gtex_median_path)
-symbol2ensg = {v:k for k,v in ensg2symbol.items()}
-manual_bl_ensg = [symbol2ensg[item] for item in manual_bl]
-
-ts_final = final.loc[~final['ensgs'].isin(manual_bl_ensg),:]
-ts_final.to_csv('ts_final.txt',sep='\t',index=None) # stop here for safety screen
-
+# intracellular
 ts_final = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 ts_final = ts_final.loc[ts_final['typ'] == 'self_gene',:]
+
+ensg2dep = {}
+for item1,item2 in zip(ts_final['ensgs'],ts_final['depmap_median']):
+    ensg2dep[item1] = item2
+
 ts_final.to_csv('ts_final_final.txt',sep='\t',index=None)
 all_genes = list(set(ts_final['ensgs'].values))
 
@@ -541,7 +498,6 @@ for p in vc.index:
     lis.append(ts_final.loc[ts_final['pep']==p,:])
 s = pd.concat(lis,axis=0)
 s.to_csv('self_gene_common/common_by_cancer.txt',sep='\t')
-sys.exit('stop')
 
 mem = pd.read_csv('human_membrane_proteins_acc2ens.txt',sep='\t')
 mem = mem.loc[mem['Ens'].notna(),:]
