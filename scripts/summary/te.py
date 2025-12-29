@@ -115,169 +115,119 @@ def process_tumor_te():
 
 
 
-# analyze ORF2 and ORF1
-df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
-df_orf = df.loc[(df['typ'].isin(['self_translate_te'])) & (df['source'].str.contains('L1_ORF1')),:]
-prioritized_peps = list(set(df_orf['pep'].values.tolist()))
+# # analyze ORF2 and ORF1
+# df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
+# df_orf = df.loc[df['source'].str.contains('L1_ORF2'),:]
+# prioritized_peps = list(set(df_orf['pep'].values.tolist()))
 
-orf1 = 'MGKKQNRKTGNSKTQSASPPPKERSSSPATEQSWMENDFDELREEGFRRSNYSELREDIQTKGKEVENFEKNLEECITRITNTEKCLKELMELKTKARELREECRSLRSRCDQLEERVSAMEDEMNEMKREGKFREKRIKRNEQSLQEIWDYVKRPNLRLIGVPESDVENGTKLENTLQDIIQENFPNLARQANVQIQEIQRTPQRYSSRRATPRHIIVRFTKVEMKEKMLRAAREKGRVTLKGKPIRLTADLSAETLQARREWGPIFNILKEKNFQPRISYPAKLSFISEGEIKYFIDKQMLRDFVTTRPALKELLKEALNMERNNRYQPLQNHAKM'
-orf2 = 'MTGSNSHITILTLNVNGLNSPIKRHRLASWIKSQDPSVCCIQETHLTCRDTHRLKIKGWRKIYQANGKQKKAGVAILVSDKTDFKPTKIKRDKEGHYIMVKGSIQQEELTILNIYAPNTGAPRFIKQVLSDLQRDLDSHTLIMGDFNTPLSILDRSTRQKVNKDTQELNSALHQTDLIDIYRTLHPKSTEYTFFSAPHHTYSKIDHIVGSKALLSKCKRTEIITNYLSDHSAIKLELRIKNLTQSRSTTWKLNNLLLNDYWVHNEMKAEIKMFFETNENKDTTYQNLWDAFKAVCRGKFIALNAYKRKQERSKIDTLTSQLKELEKQEQTHSKASRRQEITKIRAELKEIETQKTLQKINESRSWFFERINKIDRPLARLIKKKREKNQIDTIKNDKGDITTDPTEIQTTIREYYKHLYANKLENLEEMDTFLDTYTLPRLNQEEVESLNRPITGSEIVAIINSLPTKKSPGPDGFTAEFYQRYKEELVPFLLKLFQSIEKEGILPNSFYEASIILIPKPGRDTTKKENFRPISLMNIDAKILNKILANRIQQHIKKLIHHDQVGFIPGMQGWFNIRKSINVIQHINRAKDKNHVIISIDAEKAFDKIQQPFMLKTLNKLGIDGMYLKIIRAIYDKPTANIILNGQKLEAFPLKTGTRQGCPLSPLLFNIVLEVLARAIRQEKEIKGIQLGKEEVKLSLFADDMIVYLENPIVSAQNLLKLISNFSKVSGYKINVQKSQAFLYNNNRQTESQIMGELPFTIASKRIKYLGIQLTRDVKDLFKENYKPLLKEIKEDTNKWKNIPCSWVGRINIVKMAILPKVIYRFNAIPIKLPMTFFTELEKTTLKFIWNQKRARIAKSILSQKNKAGGITLPDFKLYYKATVTKTAWYWYQNRDIDQWNRTEPSEIMPHIYNYLIFDKPEKNKQWGKDSLLNKWCWENWLAICRKLKLDPFLTPYTKINSRWIKDLNVKPKTIKTLEENLGITIQDIGVGKDFMSKTPKAMATKDKIDKWDLIKLKSFCTAKETTIRVNRQPTTWEKIFATYSSDKGLISRIYNELKQIYKKKTNNPIKKWAKDMNRHFSKEDIYAAKKHMKKCSSSLAIREMQIKTTMRYHLTPVRMAIIKKSGNNRCWRGCGEIGTLVHCWWDCKLVQPLWKSVWRFLRDLELEIPFDPAIPLLGIYPKDYKSCCYKDTCTRMFIAALFTIAKTWNQPNCPTMIDWIKKMWHIYTMEYYAAIKNDEFISFVGTWMKLETIILSKLSQEQKTKHRIFSLIGGN'
-data = []
-for pep,sub_df in df_orf.groupby(by='pep'):
-    cancers_ = sub_df['cancer'].values.tolist()
-    pos = orf1.index(pep)
-    hla = sub_df['additional_query'].iloc[0]
-    data.append((pep,pos,len(cancers_),','.join(cancers_),hla))
-final_orf_df = pd.DataFrame.from_records(data,columns=['pep','pos','rec','cancers','hla']).sort_values(by='pos')
-final_orf_df.to_csv('orf1_stat.txt',sep='\t',index=None)
+# orf1 = 'MGKKQNRKTGNSKTQSASPPPKERSSSPATEQSWMENDFDELREEGFRRSNYSELREDIQTKGKEVENFEKNLEECITRITNTEKCLKELMELKTKARELREECRSLRSRCDQLEERVSAMEDEMNEMKREGKFREKRIKRNEQSLQEIWDYVKRPNLRLIGVPESDVENGTKLENTLQDIIQENFPNLARQANVQIQEIQRTPQRYSSRRATPRHIIVRFTKVEMKEKMLRAAREKGRVTLKGKPIRLTADLSAETLQARREWGPIFNILKEKNFQPRISYPAKLSFISEGEIKYFIDKQMLRDFVTTRPALKELLKEALNMERNNRYQPLQNHAKM'
+# orf2 = 'MTGSNSHITILTLNVNGLNSPIKRHRLASWIKSQDPSVCCIQETHLTCRDTHRLKIKGWRKIYQANGKQKKAGVAILVSDKTDFKPTKIKRDKEGHYIMVKGSIQQEELTILNIYAPNTGAPRFIKQVLSDLQRDLDSHTLIMGDFNTPLSILDRSTRQKVNKDTQELNSALHQTDLIDIYRTLHPKSTEYTFFSAPHHTYSKIDHIVGSKALLSKCKRTEIITNYLSDHSAIKLELRIKNLTQSRSTTWKLNNLLLNDYWVHNEMKAEIKMFFETNENKDTTYQNLWDAFKAVCRGKFIALNAYKRKQERSKIDTLTSQLKELEKQEQTHSKASRRQEITKIRAELKEIETQKTLQKINESRSWFFERINKIDRPLARLIKKKREKNQIDTIKNDKGDITTDPTEIQTTIREYYKHLYANKLENLEEMDTFLDTYTLPRLNQEEVESLNRPITGSEIVAIINSLPTKKSPGPDGFTAEFYQRYKEELVPFLLKLFQSIEKEGILPNSFYEASIILIPKPGRDTTKKENFRPISLMNIDAKILNKILANRIQQHIKKLIHHDQVGFIPGMQGWFNIRKSINVIQHINRAKDKNHVIISIDAEKAFDKIQQPFMLKTLNKLGIDGMYLKIIRAIYDKPTANIILNGQKLEAFPLKTGTRQGCPLSPLLFNIVLEVLARAIRQEKEIKGIQLGKEEVKLSLFADDMIVYLENPIVSAQNLLKLISNFSKVSGYKINVQKSQAFLYNNNRQTESQIMGELPFTIASKRIKYLGIQLTRDVKDLFKENYKPLLKEIKEDTNKWKNIPCSWVGRINIVKMAILPKVIYRFNAIPIKLPMTFFTELEKTTLKFIWNQKRARIAKSILSQKNKAGGITLPDFKLYYKATVTKTAWYWYQNRDIDQWNRTEPSEIMPHIYNYLIFDKPEKNKQWGKDSLLNKWCWENWLAICRKLKLDPFLTPYTKINSRWIKDLNVKPKTIKTLEENLGITIQDIGVGKDFMSKTPKAMATKDKIDKWDLIKLKSFCTAKETTIRVNRQPTTWEKIFATYSSDKGLISRIYNELKQIYKKKTNNPIKKWAKDMNRHFSKEDIYAAKKHMKKCSSSLAIREMQIKTTMRYHLTPVRMAIIKKSGNNRCWRGCGEIGTLVHCWWDCKLVQPLWKSVWRFLRDLELEIPFDPAIPLLGIYPKDYKSCCYKDTCTRMFIAALFTIAKTWNQPNCPTMIDWIKKMWHIYTMEYYAAIKNDEFISFVGTWMKLETIILSKLSQEQKTKHRIFSLIGGN'
+# data = []
+# for pep,sub_df in df_orf.groupby(by='pep'):
+#     cancers_ = sub_df['cancer'].values.tolist()
+#     pos = orf2.index(pep)
+#     hla = sub_df['additional_query'].iloc[0]
+#     data.append((pep,pos,len(cancers_),','.join(cancers_),hla))
+# final_orf_df = pd.DataFrame.from_records(data,columns=['pep','pos','rec','cancers','hla']).sort_values(by='pos')
+# final_orf_df.to_csv('orf2_stat.txt',sep='\t',index=None)
 
 
-safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.05_tesorai.txt',sep='\t')
-all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
-                'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
-                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
-final = df_orf
-store_data = []
-for k in prioritized_peps:
-    final_p = final.loc[final['pep']==k,:]
-    all_occur = final_p['cancer'].values.tolist()
-    tmp = []
-    for c in cancers:
-        if c in all_occur:
-            sub = final_p.loc[final_p['cancer']==c,:]
-            all_intensity = []
-            for item in sub['detailed_intensity']:
-                all_intensity.extend(literal_eval(item))
-            med_intensity = np.median(all_intensity)
-            tmp.append(med_intensity)
-        else:
-            tmp.append(0)
+# safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.05_tesorai.txt',sep='\t')
+# all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
+#                 'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
+#                 'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
+# final = df_orf
+# store_data = []
+# for k in prioritized_peps:
+#     final_p = final.loc[final['pep']==k,:]
+#     all_occur = final_p['cancer'].values.tolist()
+#     tmp = []
+#     for c in cancers:
+#         if c in all_occur:
+#             sub = final_p.loc[final_p['cancer']==c,:]
+#             all_intensity = []
+#             for item in sub['detailed_intensity']:
+#                 all_intensity.extend(literal_eval(item))
+#             med_intensity = np.median(all_intensity)
+#             tmp.append(med_intensity)
+#         else:
+#             tmp.append(0)
 
-    all_tissues = np.array(all_tissues)
-    tmp_normal = np.full(shape=len(all_tissues),fill_value=0.0)
-    tmp_normal_df = safety_screen_df.loc[safety_screen_df['peptide']==k,:]
-    for t,sub_df in tmp_normal_df.groupby(by='tissue'):
-        med_intensity = np.median(sub_df['percentile'].values)
-        indices = np.where(all_tissues == t)[0]
-        tmp_normal[indices[0]] = med_intensity
+#     all_tissues = np.array(all_tissues)
+#     tmp_normal = np.full(shape=len(all_tissues),fill_value=0.0)
+#     tmp_normal_df = safety_screen_df.loc[safety_screen_df['peptide']==k,:]
+#     for t,sub_df in tmp_normal_df.groupby(by='tissue'):
+#         med_intensity = np.median(sub_df['percentile'].values)
+#         indices = np.where(all_tissues == t)[0]
+#         tmp_normal[indices[0]] = med_intensity
     
-    tmp = tmp + tmp_normal.tolist()
-    store_data.append(tmp)
+#     tmp = tmp + tmp_normal.tolist()
+#     store_data.append(tmp)
 
-df = pd.DataFrame(data=store_data,index=prioritized_peps,columns=cancers+list(all_tissues))
-ori_array = [tuple(['cancer']*21+['normal']*30),tuple(df.columns.tolist())]
-mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-df.columns = mi
-ori_array = [tuple(df.index.tolist())]
-mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-df.index = mi
-df.to_csv('peptide_view_orf1.txt',sep='\t')
-
-
-
-# original main
-data = []
-for c in cancers:
-    final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
-    final = pd.read_csv(final_path,sep='\t')
-    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
-    final = final.loc[cond,:]
-    final = final.loc[final['typ'].isin(['TE_chimeric_transcript','ERV']),:]
-    data.append(final)
-final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
-final.to_csv('te_all_antigens.txt',sep='\t',index=None)
+# df = pd.DataFrame(data=store_data,index=prioritized_peps,columns=cancers+list(all_tissues))
+# ori_array = [tuple(['cancer']*21+['normal']*30),tuple(df.columns.tolist())]
+# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+# df.columns = mi
+# ori_array = [tuple(df.index.tolist())]
+# mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+# df.index = mi
+# df.to_csv('peptide_view_orf2.txt',sep='\t')
 
 
+
+
+# main
 df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
-final2 = df.loc[df['typ'].isin(['self_translate_te','TE_chimeric_transcript']),:]
-final2.to_csv('all_te_final.txt',sep='\t',index=None)
+final = df.loc[df['typ'].isin(['self_translate_te','TE_chimeric_transcript']),:]
 
 tid2cid = process_te_gtf()
-
-# find tumor specific one
-# tid2medians,all_tissues = process_te_gtex()
-# dic = process_tumor_te()
-
-# with open('tid2medians.p','wb') as f:
-#     pickle.dump(tid2medians,f)
-# with open('all_tissues.p','wb') as f:
-#     pickle.dump(all_tissues,f)
-# with open('dic.p','wb') as f:
-#     pickle.dump(dic,f)
-
-with open('tid2medians.p','rb') as f:
-    tid2medians = pickle.load(f)
-with open('all_tissues.p','rb') as f:
-    all_tissues = pickle.load(f)
-with open('dic.p','rb') as f:
-    dic = pickle.load(f)
-
-final_ts = final.loc[(final['typ']=='ERV') & (final['unique']) & (~final['source'].str.contains(';')),:]
-all_tids = []
-tid2full = {}
-for item in final_ts['source']:
-    tid = item.split('|')[0]
-    all_tids.append(tid)
-    tid2full.setdefault(tid,[]).append(item)
-all_tids = list(set(all_tids))
-
-tmp = {}
-for k,v in tid2full.items():
-    if len(v) == 1:
-        tmp[k] = v[0]
+col1 = []
+col2 = []
+col3 = []
+for items in final['source']:
+    tmp1 = []
+    tmp2 = []
+    for item in items.split(';'):
+        if 'TE_info' in item:
+            tid = item.split('TE_info:')[1].split(',')[1]
+            tmp1.append(tid)
+            tmp2.append(tid2cid[tid])
+        elif '_dup' in item or item.endswith('sense'):
+            tid = item.split('|')[0]
+            tmp1.append(tid)
+            tmp2.append(tid2cid[tid])
+        else:
+            continue
+    col1.append(','.join(tmp1))
+    col2.append(','.join(tmp2))
+    if len(set(tmp2)) == 1:
+        col3.append(tmp2[0])
     else:
-        lfcs = []
-        for item in v:
-            lfcs.append(float(item.split('|')[4]))
-        tmp[k] = v[np.argmax(lfcs)]
-tid2full = tmp
+        col3.append('ambiguous')
+final['tid'] = col1
+final['cid'] = col2
+final['verdict'] = col3
+final.to_csv('all_te_final.txt',sep='\t',index=None)
 
 
-tid2tumors = {}
-for tid in all_tids:
-    data = []
-    for k,v in dic.items():
-        data.append(v[tid])
-    tid2tumors[tid] = data
 
-all_data = []
-for tid in all_tids:
-    data = []
-    data.extend(tid2tumors[tid])
-    data.extend(tid2medians.get(tid,[0]*31))
-    all_data.append(data)
+col1 = []
+col2 = []
+col3 = []
+for cid, sub_df in final.groupby(by='verdict'):
+    n_auto = sub_df.loc[sub_df['typ']=='self_translate_te',:].shape[0]
+    n_chi = sub_df.loc[sub_df['typ']=='TE_chimeric_transcript',:].shape[0]
+    col1.append(n_auto)
+    col2.append(n_chi)
+    col3.append(cid)
+df = pd.DataFrame(index=col3,data={'autonomous':col1,'chimera':col2})
 
-df = pd.DataFrame.from_records(all_data,columns=cancers+all_tissues,index=all_tids)
 
-ori_array = [tuple(['cancer']*21+['normal']*31),tuple(df.columns.tolist())]
-mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-df.columns = mi
+df.T.plot.pie(subplots=True,figsize=(20,6))
+plt.savefig('te_auto_chi_pie.pdf',bbox_inches='tight')
+plt.close()
 
-tmp1 = tuple(df.index.tolist()) # for later
-tmp2 = tuple([tid2full[item].split('|')[4] for item in df.index]) # for later, because multiindex will mess up things
-tmp3 = tuple([tid2cid[item] for item in df.index])
-tmp4 = tuple([tid2full[item].split('|')[-1] for item in df.index])
-
-ori_array = [tuple(df.index.tolist()),
-             tuple([tid2full[item].split('|')[4] for item in df.index]),
-             tuple([tid2cid[item] for item in df.index]),
-             tuple([tid2full[item].split('|')[-1] for item in df.index])]
-mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
-df.index = mi
-df.to_csv('te_holy.txt',sep='\t')
-
-ts_te = []
-ts_tid2cid = {}
-ts_tid2lfc = {}
-for item1,item2,item3,item4 in zip(tmp1,tmp2,tmp3,tmp4):
-    if float(item2) > 5:
-        ts_te.append(item1)
-        ts_tid2cid[item1] = item3
-        ts_tid2lfc[item1] = item2
-final_ts = final_ts.loc[[True if item.split('|')[0] in ts_te else False for item in final_ts['source']],:]
-final_ts['cid'] = [ts_tid2cid[item.split('|')[0]] for item in final_ts['source']]
-final_ts['lfc'] = [ts_tid2lfc[item.split('|')[0]] for item in final_ts['source']]
-final_ts.to_csv('ts_te_antigen.txt',sep='\t',index=None)
+df.to_csv('te_auto_chi.txt',sep='\t')
 
 
 

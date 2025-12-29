@@ -131,15 +131,8 @@ def process_tumor_splicing():
 
 
 
-data = []
-for c in cancers:
-    final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
-    final = pd.read_csv(final_path,sep='\t')
-    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
-    final = final.loc[cond,:]
-    final = final.loc[final['typ']=='splicing',:]
-    data.append(final)
-final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
+final = df.loc[df['typ']=='splicing',:]
 col1 = []
 col2 = []
 for item in final['source']:
@@ -158,21 +151,20 @@ for item in final['source']:
         col2.append(anno)
 final['coord'] = col1
 final['anno'] = col2
-final.to_csv('all_splicing.txt',sep='\t',index=None)
-
-df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
-final = df.loc[df['typ']=='splicing',:]
-cond = [False if 'nc|ENSG00000100146|P56693|SOX10' in item else True for item in final['source']]
-final = final.loc[cond,:]
 final.to_csv('all_splicing_final.txt',sep='\t',index=None)
 
 
 # peptide view
-prioritized_peps = final.sort_values(by='n_psm',ascending=False).iloc[:40]['pep'].values.tolist()
-peptide = pd.read_csv('splicing_peptides.txt',sep='\t',index_col=0)
-peptide = peptide.loc[peptide.index.isin(final['pep']),:]
-prioritized_peps.extend(peptide.index.tolist())
-prioritized_peps = list(set(prioritized_peps))
+peptide_df = pd.read_csv('splicing_peptides.txt',sep='\t')
+peptide_df = peptide_df.loc[(peptide_df['remove_by_safety_screen']=='no') & (peptide_df['remove_by_fdr']=='no'),:]
+pep2g = {}
+pep2t = {}
+for row in peptide_df.itertuples():
+    g = row.annotation.split('_')[0]
+    t = '_'.join(row.annotation.split('_')[1:])
+    pep2g[row.peptide] = g
+    pep2t[row.peptide] = t
+prioritized_peps = list(set(peptide_df['peptide']))
 
 pep2coord = {i1:i2 for i1,i2 in zip(final['pep'],final['coord'])}
 pep2anno = {i1:i2 for i1,i2 in zip(final['pep'],final['anno'])}
@@ -184,7 +176,8 @@ all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cer
 
 store_data = []
 store_coord = []
-store_anno = []
+store_g = []
+store_t = []
 for k in prioritized_peps:
     final_p = final.loc[final['pep']==k,:]
     all_occur = final_p['cancer'].values.tolist()
@@ -211,7 +204,8 @@ for k in prioritized_peps:
     tmp = tmp + tmp_normal.tolist()
     store_data.append(tmp)
     store_coord.append(pep2coord[k])
-    store_anno.append(pep2anno[k])
+    store_g.append(pep2g[k])
+    store_t.append(pep2t[k])
     
 df = pd.DataFrame(data=store_data,index=prioritized_peps,columns=cancers+list(all_tissues))
 ori_array = [tuple(['cancer']*21+['normal']*30),tuple(df.columns.tolist())]
@@ -219,7 +213,8 @@ mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.columns = mi
 ori_array = [tuple(df.index.tolist()),
              tuple(store_coord),
-             tuple(store_anno)]
+             tuple(store_g),
+             tuple(store_t)]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
 df.to_csv('peptide_view_splicing.txt',sep='\t')

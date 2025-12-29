@@ -226,33 +226,7 @@ final.to_csv('splicing_ir_dic/final.txt',sep='\t',index=None)
 sys.exit('stop')
 
 
-# draw
-final = pd.read_csv('splicing_ir_dic/final.txt',sep='\t')
-te_all = pd.read_csv('te_all_antigens.txt',sep='\t')
-te_all = te_all.loc[~te_all['pep'].isin(safety_screen_bl),:]
-te_all = te_all.loc[te_all['typ']=='TE_chimeric_transcript',:]
-te_all = te_all.loc[te_all['unique'],:]
-te_all['cid'] = [item.split('TE_info:')[1].split(',')[3] for item in te_all['source']]
 
-col1 = []
-col2 = []
-col3 = []
-for cid, sub_df in final.groupby(by='cid'):
-    n_auto = sub_df.loc[(sub_df['not_has_ss']) & (sub_df['not_in_ir']),:].shape[0]
-    n_chi = sub_df.shape[0] - n_auto + te_all.loc[te_all['cid']==cid,:].shape[0]
-    col1.append(n_auto)
-    col2.append(n_chi)
-    col3.append(cid)
-df = pd.DataFrame(index=col3,data={'autonomous':col1,'chimera':col2})
-df.plot.bar(rot=90)
-plt.savefig('te_auto_chi.pdf',bbox_inches='tight')
-plt.close()
-
-df.T.plot.pie(subplots=True,figsize=(20,6))
-plt.savefig('te_auto_chi_pie.pdf',bbox_inches='tight')
-plt.close()
-
-df.to_csv('te_auto_chi.txt',sep='\t')
     
 
 
