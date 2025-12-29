@@ -66,18 +66,19 @@ n_samples = [
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 
 
-df = pd.read_csv('final_all_ts_antigens.txt',sep='\t')
+df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 splicing_df = df.loc[df['typ']=='splicing',:]
 nuorf_df = df.loc[df['typ']=='nuORF',:]
 variant_df = df.loc[df['typ']=='variant',:]
 fusion_df = df.loc[df['typ']=='fusion',:]
 ir_df = df.loc[df['typ']=='intron_retention',:]
 self_translate_te_df = df.loc[df['typ']=='self_translate_te',:]
-te_chimeric_df = df.loc[df['typ']=='TE_chimeric_transcript']
+te_chimeric_df = df.loc[df['typ']=='TE_chimeric_transcript',:]
+pathogen_df = df.loc[df['typ']=='pathogen',:]
 
 
-data = np.empty((21,7),dtype=np.float64)
-for i,df in enumerate([fusion_df,variant_df,ir_df,splicing_df,nuorf_df,self_translate_te_df,te_chimeric_df]):
+data = np.empty((21,8),dtype=np.float64)
+for i,df in enumerate([fusion_df,variant_df,ir_df,splicing_df,nuorf_df,self_translate_te_df,te_chimeric_df,pathogen_df]):
     tmp = []
     all_c = df['cancer'].unique().tolist()
     for c in cancers:
@@ -89,7 +90,7 @@ for i,df in enumerate([fusion_df,variant_df,ir_df,splicing_df,nuorf_df,self_tran
 
 data = data / data.sum(axis=1).reshape(-1,1)
 
-df = pd.DataFrame(data=data,index=cancers,columns=['fusion','variant','intron','splicing','nuORF','self_translating_TE','te_chimeric'])
+df = pd.DataFrame(data=data,index=cancers,columns=['fusion','variant','intron','splicing','nuORF','self_translating_TE','te_chimeric','pathogen'])
 df.to_csv('non_canonical_stat_df.txt',sep='\t')
 
 
@@ -101,6 +102,7 @@ ax.bar(cancers,data[:,3],bottom=data[:,:3].sum(axis=1),label='splicing')
 ax.bar(cancers,data[:,4],bottom=data[:,:4].sum(axis=1),label='nuORF')
 ax.bar(cancers,data[:,5],bottom=data[:,:5].sum(axis=1),label='self_translating')
 ax.bar(cancers,data[:,6],bottom=data[:,:6].sum(axis=1),label='te_chimeric')
+ax.bar(cancers,data[:,7],bottom=data[:,:7].sum(axis=1),label='pathogen')
 ax.set_ylabel('Proportion')
 ax.set_ylim([0,1.05])
 ax.set_xticklabels(cancers,rotation=60)
