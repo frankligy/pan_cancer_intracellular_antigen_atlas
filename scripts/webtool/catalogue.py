@@ -100,93 +100,99 @@ cancers2immuno = {
 }
 
 
-# raw ms
-root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
-root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
-## tesorai
-tesorai_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches'
-for c in cancers:
-    tesorai_path = os.path.join(tesorai_dir,'tesorai_peptide_fdr_{}.tsv'.format(c))
-    subprocess.run("cp {} {}".format(tesorai_path,os.path.join(root_des_dir,'tesorai')),shell=True)
-## rescore
-for c in cancers:
-    if not os.path.exists(os.path.join(root_des_dir,'rescore',c)):
-        os.mkdir(os.path.join(root_des_dir,'rescore',c))
-    atlas_dir = os.path.join(root_atlas_dir,c)
-    rescore_dir = os.path.join(atlas_dir,'rescore')
-    old_dir = os.getcwd()
-    os.chdir(rescore_dir)
-    psms = subprocess.run('find . -mindepth 2 -maxdepth 2 -type f -name "ms2rescore.mokapot.psms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-    for psm in psms:
-        d = psm.split('/')[1]
-        if not os.path.exists(os.path.join(root_des_dir,'rescore',c,d)):
-            os.mkdir(os.path.join(root_des_dir,'rescore',c,d))
-        subprocess.run("cp {} {}".format(psm,os.path.join(root_des_dir,'rescore',c,d)),shell=True)
-    os.chdir(old_dir)
-## maxquant
-for c in cancers:
-    if not os.path.exists(os.path.join(root_des_dir,'maxquant',c)):
-        os.mkdir(os.path.join(root_des_dir,'maxquant',c))
-    immuno_dir = os.path.join(root_immuno_dir,cancers2immuno[c])
-    old_dir = os.getcwd()
-    os.chdir(immuno_dir)
-    ### msms.txt
-    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-    for msms in msms_all:
-        d = msms.split('/')[1]
-        if not os.path.exists(os.path.join(root_des_dir,'maxquant',c,d)):
-            os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
-        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
-    ### msmsScans.txt
-    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msmsScans.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-    for msms in msms_all:
-        d = msms.split('/')[1]
-        if not os.path.exists(os.path.join(root_des_dir,'maxquant',c,d)):
-            os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
-        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
-    os.chdir(old_dir)
-## tesorai normal
-source = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_healthy.tsv'
-destination = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result/HLA_ligand_atlas/tesorai'
-subprocess.run('cp {} {}'.format(source,destination),shell=True)
-## maxquant normal
-result_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/immuno'
-old_dir = os.getcwd()
-os.chdir(result_dir)
-all_tissues = subprocess.run("for f in *; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-os.chdir(old_dir)
-root_des_dir_normal = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result/HLA_ligand_atlas'
-for t in all_tissues:
-    if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t)):
-        os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t))
-    immuno_dir = os.path.join(result_dir,t)
-    old_dir = os.getcwd()
-    os.chdir(immuno_dir)
-    ### msms.txt
-    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-    for msms in msms_all:
-        d = msms.split('/')[1]
-        if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t,d)):
-            os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
-        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
-    ### msmsScans.txt
-    msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msmsScans.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-    for msms in msms_all:
-        d = msms.split('/')[1]
-        if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t,d)):
-            os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
-        subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
-    os.chdir(old_dir)
+# # raw ms
+# root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
+# root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
+# ## tesorai
+# tesorai_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches'
+# for c in cancers:
+#     old_dir = os.getcwd()
+#     os.chdir(tesorai_dir)
+#     cmd = 'for f in tesorai_peptide_fdr_*.tsv; do echo $f; done | grep "{}"'.format(c)
+#     needed_files = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     os.chdir(old_dir)
+#     for tesorai_file in needed_files:
+#         tesorai_path = os.path.join(tesorai_dir,tesorai_file)
+#         subprocess.run("cp {} {}".format(tesorai_path,os.path.join(root_des_dir,'tesorai')),shell=True)
+# ## rescore
+# for c in cancers:
+#     if not os.path.exists(os.path.join(root_des_dir,'rescore',c)):
+#         os.mkdir(os.path.join(root_des_dir,'rescore',c))
+#     atlas_dir = os.path.join(root_atlas_dir,c)
+#     rescore_dir = os.path.join(atlas_dir,'rescore')
+#     old_dir = os.getcwd()
+#     os.chdir(rescore_dir)
+#     psms = subprocess.run('find . -mindepth 2 -maxdepth 2 -type f -name "ms2rescore.mokapot.psms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     for psm in psms:
+#         d = psm.split('/')[1]
+#         if not os.path.exists(os.path.join(root_des_dir,'rescore',c,d)):
+#             os.mkdir(os.path.join(root_des_dir,'rescore',c,d))
+#         subprocess.run("cp {} {}".format(psm,os.path.join(root_des_dir,'rescore',c,d)),shell=True)
+#     os.chdir(old_dir)
+# ## maxquant
+# for c in cancers:
+#     if not os.path.exists(os.path.join(root_des_dir,'maxquant',c)):
+#         os.mkdir(os.path.join(root_des_dir,'maxquant',c))
+#     immuno_dir = os.path.join(root_immuno_dir,cancers2immuno[c])
+#     old_dir = os.getcwd()
+#     os.chdir(immuno_dir)
+#     ### msms.txt
+#     msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     for msms in msms_all:
+#         d = msms.split('/')[1]
+#         if not os.path.exists(os.path.join(root_des_dir,'maxquant',c,d)):
+#             os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
+#         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
+#     ### msmsScans.txt
+#     msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msmsScans.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     for msms in msms_all:
+#         d = msms.split('/')[1]
+#         if not os.path.exists(os.path.join(root_des_dir,'maxquant',c,d)):
+#             os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
+#         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
+#     os.chdir(old_dir)
+# ## tesorai normal
+# source = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_normal.tsv'
+# destination = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result/HLA_ligand_atlas/tesorai'
+# subprocess.run('cp {} {}'.format(source,destination),shell=True)
+# ## maxquant normal
+# result_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/immuno'
+# old_dir = os.getcwd()
+# os.chdir(result_dir)
+# all_tissues = subprocess.run("for f in *; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# os.chdir(old_dir)
+# root_des_dir_normal = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result/HLA_ligand_atlas'
+# for t in all_tissues:
+#     if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t)):
+#         os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t))
+#     immuno_dir = os.path.join(result_dir,t)
+#     old_dir = os.getcwd()
+#     os.chdir(immuno_dir)
+#     ### msms.txt
+#     msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msms.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     for msms in msms_all:
+#         d = msms.split('/')[1]
+#         if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t,d)):
+#             os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
+#         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
+#     ### msmsScans.txt
+#     msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "msmsScans.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     for msms in msms_all:
+#         d = msms.split('/')[1]
+#         if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t,d)):
+#             os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
+#         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
+#     os.chdir(old_dir)
 
-# consolidated ms
-root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
-root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
-for c in cancers:
-    if not os.path.exists(os.path.join(root_des_dir,'consolidated',c)):
-        os.mkdir(os.path.join(root_des_dir,'consolidated',c))
-    df_path = os.path.join(root_atlas_dir,c,'antigen','fdr','msmsScans_all_add_tesorai.txt')
-    cmd = 'cp {} {}'.format(df_path,os.path.join(root_des_dir,'consolidated',c))
-    subprocess.run(cmd,shell=True)
+# # consolidated ms
+# root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
+# root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+# for c in cancers:
+#     if not os.path.exists(os.path.join(root_des_dir,'consolidated',c)):
+#         os.mkdir(os.path.join(root_des_dir,'consolidated',c))
+#     df_path = os.path.join(root_atlas_dir,c,'antigen','0.01','msmsScans_all_add_tesorai.txt')
+#     cmd = 'cp {} {}'.format(df_path,os.path.join(root_des_dir,'consolidated',c))
+#     subprocess.run(cmd,shell=True)
 
 
 
@@ -233,7 +239,7 @@ variant_dic = {
     'UCEC':['TCGA-UCEC.somaticmutation_wxs.tsv','gProfiler_hsapiens_ucec.csv']
 }
 
-
+root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/molecular_catalogue'
 for c in cancers + added_cancer:
     atlas_dir = os.path.join(root_atlas_dir,c)
     gene_tpm = os.path.join(atlas_dir,'gene_tpm.txt')
@@ -294,10 +300,8 @@ for c in cancers:
 
 # search space nt
 root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space_nt'
-for c in ['HNSC','PRAD','UCEC','NBL']:
-    db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta_nt')
-    if not os.path.exists(db_fasta_dir):
-        db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta_tesorai_nt')
+for c in cancers:
+    db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta_tesorai_nt')
     des_dir = os.path.join(root_des_dir,c)
     if not os.path.exists(des_dir):
         os.mkdir(des_dir)
