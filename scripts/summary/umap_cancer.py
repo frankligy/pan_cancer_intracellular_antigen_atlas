@@ -69,75 +69,68 @@ n_samples = [
 ]
 
 
-# use peptide abudance to cluster immunopeptidome samples
-rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
-c_df_list = []
-for c in cancers:
-    print(c)
-    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','fdr','final_enhanced_all.txt'),sep='\t')
-    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_all['presented_by_each_sample_hla']]
-    final_all = final_all.loc[cond,:]
-    final_all = final_all.loc[final_all['typ']=='self_gene',:]
-    final_all = final_all.loc[final_all['unique'],:]
-    gene2data = {}
-    for ensg,sub_df in tqdm(final_all.groupby(by='ensgs')):
-        sample2data = {}
-        for item in sub_df['detailed_intensity']:
-            item = literal_eval(item)
-            for tup in item:
-                sample2data.setdefault(tup[0],[]).append(tup[1])
-        sample2value = {k:np.median(v) for k,v in sample2data.items()}   # sample1:0.56
-        gene2data[ensg] = sample2value
-    c_df = pd.DataFrame.from_dict(gene2data,orient='columns')
-    c_df_list.append(c_df)
+# # use peptide abudance to cluster immunopeptidome samples
+# rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+# c_df_list = []
+# for c in cancers:
+#     print(c)
+#     final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','0.01','final_enhanced_all.txt'),sep='\t')
+#     cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_all['presented_by_each_sample_hla']]
+#     final_all = final_all.loc[cond,:]
+#     final_all = final_all.loc[final_all['typ']=='self_gene',:]
+#     final_all = final_all.loc[final_all['unique'],:]
+#     gene2data = {}
+#     for ensg,sub_df in tqdm(final_all.groupby(by='ensgs')):
+#         sample2data = {}
+#         for item in sub_df['detailed_intensity']:
+#             item = literal_eval(item)
+#             for tup in item:
+#                 sample2data.setdefault(tup[0],[]).append(tup[1])
+#         sample2value = {k:np.median(v) for k,v in sample2data.items()}   # sample1:0.56
+#         gene2data[ensg] = sample2value
+#     c_df = pd.DataFrame.from_dict(gene2data,orient='columns')
+#     c_df_list.append(c_df)
 
-# add serum
-final_add = pd.read_csv('/gpfs/data/yarmarkovichlab/plasma_gbm_PXD008127/antigen/other_alg/final_enhanced.txt',sep='\t')
-cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_add['presented_by_each_sample_hla']]
-final_add = final_add.loc[cond,:]
-final_add = final_add.loc[final_add['typ']=='self_gene',:]
-final_add = final_add.loc[final_add['unique'],:]
-gene2data = {}
-for ensg,sub_df in tqdm(final_add.groupby(by='ensgs')):
-    sample2data = {}
-    for item in sub_df['detailed_intensity']:
-        item = literal_eval(item)
-        for tup in item:
-            sample2data.setdefault(tup[0],[]).append(tup[1])
-    sample2value = {k:np.median(v) for k,v in sample2data.items()}   # sample1:0.56
-    gene2data[ensg] = sample2value
-c_df = pd.DataFrame.from_dict(gene2data,orient='columns')  # sample * gene
-c_df_list.append(c_df)
-
-
-df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers+['plasma_gbm']).fillna(value=0).T
-
-mi = df.columns
-mi_df = mi.to_frame(index=False)
-df.columns = mi_df[1].values
+# # # add serum
+# # final_add = pd.read_csv('/gpfs/data/yarmarkovichlab/plasma_gbm_PXD008127/antigen/other_alg/final_enhanced.txt',sep='\t')
+# # cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_add['presented_by_each_sample_hla']]
+# # final_add = final_add.loc[cond,:]
+# # final_add = final_add.loc[final_add['typ']=='self_gene',:]
+# # final_add = final_add.loc[final_add['unique'],:]
+# # gene2data = {}
+# # for ensg,sub_df in tqdm(final_add.groupby(by='ensgs')):
+# #     sample2data = {}
+# #     for item in sub_df['detailed_intensity']:
+# #         item = literal_eval(item)
+# #         for tup in item:
+# #             sample2data.setdefault(tup[0],[]).append(tup[1])
+# #     sample2value = {k:np.median(v) for k,v in sample2data.items()}   # sample1:0.56
+# #     gene2data[ensg] = sample2value
+# # c_df = pd.DataFrame.from_dict(gene2data,orient='columns')  # sample * gene
+# # c_df_list.append(c_df)
 
 
-df = df.T
-adata = ad.AnnData(X=df.values,obs=pd.DataFrame(index=df.index,data={'cancer':mi_df[0].values}),var=pd.DataFrame(index=df.columns))  
-sc.pp.highly_variable_genes(adata,flavor='seurat',n_top_genes=5000)
-adata.raw = adata
-adata = adata[:,adata.var['highly_variable']]
-sc.pp.scale(adata,max_value=10)
-sc.tl.pca(adata,n_comps=50)
-sc.pp.neighbors(adata)
-sc.tl.umap(adata)
-umap_dual_view_save(adata,cols=['cancer'])
-sys.exit('stop')
+# df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers).fillna(value=0).T
 
-# markers
-sc.pl.umap(adata,color=['ENSG00000185664','ENSG00000185686','ENSG00000181143','ENSG00000005381'],frameon=True,cmap=bg_greyed_cmap('viridis'),vmin=1e-5)
-plt.savefig('umap_markers_genes.pdf',bbox_inches='tight')
-plt.close()
-sc.tl.rank_genes_groups(adata, groupby="cancer", method="wilcoxon")
-sc.pl.rank_genes_groups_heatmap(adata,groupby="cancer", n_genes=2,cmap="viridis", dendrogram=True,swap_axes=True,show_gene_labels=True)
-plt.savefig('heatmap_markers_genes.pdf',bbox_inches='tight')
-plt.close()
-sys.exit('stop')
+# mi = df.columns
+# mi_df = mi.to_frame(index=False)
+# df.columns = mi_df[1].values
+
+
+# df = df.T
+# adata = ad.AnnData(X=df.values,obs=pd.DataFrame(index=df.index,data={'cancer':mi_df[0].values}),var=pd.DataFrame(index=df.columns))  
+# print(adata)
+# sc.pp.highly_variable_genes(adata,flavor='seurat',n_top_genes=5000)
+# adata.raw = adata
+# adata = adata[:,adata.var['highly_variable']]
+# sc.pp.scale(adata,max_value=10)
+# sc.tl.pca(adata,n_comps=50)
+# sc.pp.neighbors(adata)
+# sc.tl.umap(adata)
+# umap_dual_view_save(adata,cols=['cancer'])
+
+
+
 
         
 
@@ -145,7 +138,7 @@ sys.exit('stop')
 rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 genes = set()
 for c in cancers:
-    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','fdr','final_enhanced_full.txt'),sep='\t')
+    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','0.01','final_enhanced_all.txt'),sep='\t')
     cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_all['presented_by_each_sample_hla']]
     final_all = final_all.loc[cond,:]
     final_all = final_all.loc[final_all['typ']=='self_gene',:]
