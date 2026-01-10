@@ -121,33 +121,52 @@ df = pd.read_csv('SraRunTable.csv')
 #     cmd = 'gunzip -c ./raw/{} > ./NTC/{}'.format(ori_r2,des_r2)
 #     subprocess.run(cmd,shell=True)
 
-# DB
-cond = []
-for item in df['Specimen_Name']:
-    item = item.upper()
-    if 'DB' in item:
-        cond.append(True)
-    else:
-        cond.append(False)
-sub_df = df.loc[cond,:]
-for srr in sub_df['Run']:
-    print(srr)
-    ori_r1 = '{}_1.fastq.gz'.format(srr)
-    ori_r2 = '{}_2.fastq.gz'.format(srr)
-    des_r1 = '{}_1.fastq'.format(srr)
-    des_r2 = '{}_2.fastq'.format(srr)
-    cmd = 'gunzip -c ./raw/{} > ./DB/{}'.format(ori_r1,des_r1)
-    subprocess.run(cmd,shell=True)
-    cmd = 'gunzip -c ./raw/{} > ./DB/{}'.format(ori_r2,des_r2)
-    subprocess.run(cmd,shell=True)
+# # DB
+# cond = []
+# for item in df['Specimen_Name']:
+#     item = item.upper()
+#     if 'DB' in item:
+#         cond.append(True)
+#     else:
+#         cond.append(False)
+# sub_df = df.loc[cond,:]
+# for srr in sub_df['Run']:
+#     print(srr)
+#     ori_r1 = '{}_1.fastq.gz'.format(srr)
+#     ori_r2 = '{}_2.fastq.gz'.format(srr)
+#     des_r1 = '{}_1.fastq'.format(srr)
+#     des_r2 = '{}_2.fastq'.format(srr)
+#     cmd = 'gunzip -c ./raw/{} > ./DB/{}'.format(ori_r1,des_r1)
+#     subprocess.run(cmd,shell=True)
+#     cmd = 'gunzip -c ./raw/{} > ./DB/{}'.format(ori_r2,des_r2)
+#     subprocess.run(cmd,shell=True)
 
 
 
 '''analysis'''
-# taxa = pd.read_csv('PORT/df_taxa.txt',sep='\t',index_col=0)
-# taxa = taxa.loc[taxa['Genus']=='Niallia',:]
-# all_asv = taxa.index.tolist()
-# count = pd.read_csv('PORT/df.txt',sep='\t',index_col=0)
-# count = count.loc[:,all_asv]
-# count.to_csv('check.txt',sep='\t')
+data = []
+stream_of_data = []
+conditions = ['FTO','CX','PG','PORT','AIR','NTC','DB']
+ns = [369,152,122,81,130,111,36]
+taxa_level = 'Genus'
+name = 'Clostridium'
+for c in conditions:
+    taxa = pd.read_csv('{}/df_taxa.txt'.format(c),sep='\t',index_col=0)
+    taxa = taxa.loc[taxa[taxa_level]==name,:]
+    all_asv = taxa.index.tolist()
+    count = pd.read_csv('{}/df.txt'.format(c),sep='\t',index_col=0)
+    count = count.loc[:,all_asv]
+    s = count.sum(axis=1)
+    stream_of_data.append(s.values.tolist())
+    for item in s:
+        data.append((c,item))
+df = pd.DataFrame.from_records(data=data,columns=['condition','count'])
+fig,ax = plt.subplots()
+sns.stripplot(data=df,x='condition',y='count',ax=ax)
+ax.boxplot(x=stream_of_data,positions=np.arange(len(conditions)),patch_artist=False,showfliers=False)
+l = ['{}\nn={}'.format(i1,i2) for i1,i2 in zip(conditions,ns)]
+ax.set_xticklabels(l)
+plt.savefig('{}_{}.pdf'.format(taxa_level,name),bbox_inches='tight')
+plt.close()
+    
 

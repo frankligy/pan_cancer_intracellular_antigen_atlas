@@ -47,5 +47,5 @@
 # singularity run -B ./PORT:/mnt --writable ./DATA2/ Rscript rRNA.R
 
 module load singularity/3.9.8
-singularity run -B ./FTO:/mnt --writable ./DATA2/ Rscript /mnt/rRNA.R
+singularity run -B ./CX:/mnt --writable ./DATA2/ Rscript /mnt/rRNA.R
 
