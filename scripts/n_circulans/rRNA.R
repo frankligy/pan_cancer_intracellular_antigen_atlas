@@ -1,9 +1,5 @@
 
-# module load singularity/3.9.8
-# https://github.com/blekhmanlab/docker_dada2/tree/main
-# singularity build --sandbox ./DADA2/ docker://blekhmanlab/dada2 (but I think sif works as well, for sandbox, you need to mkdir /gpfs)
-# singularity shell -B ./test_raw:/mnt --writable ./DADA2/
-# launch R
+
 
 library(dada2)
 packageVersion('dada2')
@@ -29,7 +25,7 @@ names(filtRs) <- sample.names
 
 out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(260,260),
               maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
-              compress=TRUE, multithread=TRUE)  # On Windows set multithread=FALSE (only needed for filterAndTrim)
+              compress=TRUE, multithread=TRUE)  
 head(out)
 
 errF <- learnErrors(filtFs, multithread=TRUE)
