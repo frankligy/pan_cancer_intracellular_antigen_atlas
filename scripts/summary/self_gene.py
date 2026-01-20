@@ -548,6 +548,76 @@ df.index = mi
 df.to_csv('gene_morpheus.txt',sep='\t')
 print(df.shape[0])
 print(len(ts_final['pep'].unique()))
+
+# AML
+all_genes_dict = {
+    "FUT1":"ENSG00000174951",
+    "FUT2":"ENSG00000176920",
+    "FUT3":"ENSG00000171124",
+    "CD33":"ENSG00000105383",
+    "IL3RA":"ENSG00000185291",
+    "FLT3":"ENSG00000122025",
+    "CD38":"ENSG00000004468",
+    "CD44":"ENSG00000026508",
+    "KLRK1":"ENSG00000213809",
+    "CD7":"ENSG00000173762",
+    "CLEC12A":"ENSG00000172322",
+    "ADGRE2":"ENSG00000127507",
+    "CCR1":"ENSG00000163823",
+    "CD70":"ENSG00000125726",
+    "LILRB2":"ENSG00000131042",
+    "KIT":"ENSG00000157404",
+    "IL1RAP":"ENSG00000196083",
+    "HAVCR2":"ENSG00000135077",
+    "FOLR2":"ENSG00000165457",
+    "CD276":"ENSG00000103855",
+    "HSPA5":"ENSG00000044574",
+    "TMEM37":"ENSG00000171227",
+    "ANPEP":"ENSG00000166825",
+    "CD83":"ENSG00000112149",
+    "SIGLEC6":"ENSG00000105492",
+    "CD93":"ENSG00000125810",
+    "MLN":"ENSG00000096395",
+    "FOLR1":"ENSG00000110195",
+    "CSF1R":"ENSG00000182578",
+    "CD86":"ENSG00000114013",
+    "ITGB2":"ENSG00000160255",
+    "WT1":"ENSG00000184937",
+    "CD37":"ENSG00000104894",
+    "IL10RA":"ENSG00000110324",
+    "TPBG":"ENSG00000146242",
+    "CD4":"ENSG00000010610",
+    "LILRB4":"ENSG00000186818",
+    "IL3":"ENSG00000164399",
+    "CLEC2A":"ENSG00000188393",
+    "FCGR1A":"ENSG00000150337",
+    "LAMP5":"ENSG00000125869",
+    "SNRNP200":"ENSG00000144028",
+    "SSX1":"ENSG00000126752",
+    "NPM1":"ENSG00000181163"
+}
+all_genes = list(all_genes_dict.values())
+all_data = []
+for gene in all_genes:
+    data = []
+    data.extend(ensg2medians[gene])
+    all_data.append(data)
+df = pd.DataFrame.from_records(all_data,columns=all_tissues,index=all_genes)
+
+ori_array = [tuple(['normal']*43),tuple(df.columns.tolist())]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+df.columns = mi
+
+ori_array = [tuple(df.index.tolist()),
+             tuple([ensg2symbol[item] for item in df.index]),
+             tuple([True if item in membrane_ensg else False for item in df.index]),
+             tuple([ensg2dep.get(item,None) for item in df.index]),
+             tuple([ensg2adjp.get(item,None) for item in df.index]),
+             tuple([s_map.get(item,None) for item in df.index])]
+mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
+df.index = mi
+df.to_csv('gene_morpheus_AML.txt',sep='\t')
+
     
     
 
