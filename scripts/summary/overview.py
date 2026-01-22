@@ -11,6 +11,7 @@ import matplotlib as mpl
 from ast import literal_eval
 from tqdm import tqdm
 import math
+import itertools
 
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
@@ -93,7 +94,49 @@ with open('manual_bl.txt','r') as f:
 
 root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 bayests_xy_path = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt'
+protein_path = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/ensembl_protein.fasta'
 
+
+def chop_normal_pep_db(fasta_path,output_path,mers,allow_duplicates):
+    '''
+    chop any normal human proteome to certain mers
+
+    :param fasta_path: string, the path to the human protein fasta file
+    :param output_path: string, the path to the output fasta file
+    :param mers: list, like [9,10] will generate 9mer and 10mer
+    :param allow_duplicates: boolean. whether allow duplicate or not
+
+    Example::
+
+        chop_normal_pep_db(fasta_path='human_uniprot_proteome.fasta',output_path='./human_uniprot_proteome_mer9_10.fasta',mers=[9,10],allow_duplicates=False)
+    '''
+    # for human genome in uniprot, 9-10mer, remove duplicates will decrease from 44,741,578 to 41,638,172
+    if allow_duplicates:
+        with open(fasta_path,'r') as in_handle, open(output_path,'w') as out_handle:
+            for title,seq in tqdm(SimpleFastaParser(in_handle)):
+                count = 0
+                length = len(seq)
+                for i in range(length):
+                    for mer in mers:
+                        if i+mer <= length:
+                            out_handle.write('>{}_{}_{}\n'.format(title,mer,count))
+                            out_handle.write('{}\n'.format(seq[i:i+mer]))
+                            count += 1
+    else:
+        with open(fasta_path,'r') as in_handle, open(output_path,'w') as out_handle:
+            existing = set()
+            for title,seq in tqdm(SimpleFastaParser(in_handle)):
+                count = 0
+                length = len(seq)
+                for i in range(length):
+                    for mer in mers:
+                        if i+mer <= length:
+                            subseq = seq[i:i+mer]
+                            if subseq not in existing:                                
+                                out_handle.write('>{}_{}_{}\n'.format(title,mer,count))
+                                out_handle.write('{}\n'.format(subseq))
+                                existing.add(subseq)
+                                count += 1  
 
 def get_ts_gene(atlas_dir):
 
@@ -195,7 +238,7 @@ def get_ts_pathogen(c):
         'MESO':0,
         'LIHC':2,
         'ESCA':5,
-        'CESC':2,
+        'CESC':3,
         'BLCA':0,
         'RT':0,
         'AML':0,
@@ -204,7 +247,7 @@ def get_ts_pathogen(c):
         'NBL':1,
         'PAAD':0,
         'HNSC':3,
-        'OV':3,
+        'OV':4,
         'LUSC':0,
         'LUAD':0,
         'CHOL':0,
@@ -245,57 +288,105 @@ for c in cancers:
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
 final.to_csv('for_safety_screen.txt',sep='\t',index=None)
 
-# safety screen, collage, get number
-# safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
+# making db
+df = pd.read_csv('for_safety_screen.txt',sep='\t')
+with open('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/db_fasta/peptides.fasta','w') as f:
+    for cancer,pep,typ in zip(df['cancer'],df['pep'],df['typ']):
+        f.write('>query|{}|{}|{}\n{}\n'.format(pep,typ,cancer,pep))
 
-# old_dir = os.getcwd()
-# os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result')
-# all_fasta = subprocess.run('find . -type f -name "riborf.fasta"',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-# anno_ribo = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/ely_et_al_anno.txt',sep='\t',index_col=0)
-# srr2tissue = anno_ribo['Cell_type'].to_dict()
-# meta_dict = {}
-# for f in all_fasta:
-#     _,srr,_,_ = f.split('/')
-#     micro_dict = {}
-#     with open(f,'r') as in_handle:
-#         for title,seq in SimpleFastaParser(in_handle):
-#             micro_dict[title] = seq
-#     tissue = srr2tissue[srr]
-#     meta_dict['{};{}'.format(srr,tissue)] = micro_dict
-# os.chdir(old_dir)
+# post safety screen, add normal ribo, conduct I/L
+safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/post_safety_screen.txt',sep='\t')
 
-# condensed_dict = {}   # tissue:[seq1,seq2,...]
-# for k,v in meta_dict.items():
-#     srr,tissue = k.split(';')
-#     condensed_dict.setdefault(tissue,[]).extend(list(v.values()))
-# condensed_dict = {k:set(v) for k,v in condensed_dict.items()}
+# for mer in [8,9,10,11,12,13,14,15]:
+#     print(mer)
+#     chop_normal_pep_db(fasta_path=protein_path,
+#                        output_path='ensembl_protein_{}.fasta'.format(mer),mers=[mer],allow_duplicates=False)
 
-# col = []
-# not_in_normal_ribo = []
-# for row in tqdm(safety_screen_df.itertuples(),total=safety_screen_df.shape[0]):
-#     if row.typ == 'nuORF':
-#         normal_tissues = []
-#         pep = row.pep
-#         for t,ss in condensed_dict.items():
-#             for s in ss:
-#                 if pep in s:
-#                     normal_tissues.append(t)
-#                     break
-#         col.append(','.join(normal_tissues))
-#         if len(normal_tissues) > 0:
-#             not_in_normal_ribo.append(False)
-#         else:
-#             not_in_normal_ribo.append(True)
-#     else:
-#         col.append(None)
-#         not_in_normal_ribo.append(True)
-# safety_screen_df['normal_ribo'] = col
-# safety_screen_df['not_in_normal_ribo'] = not_in_normal_ribo
-# safety_screen_df.to_csv('post_safety_screen_add_ribo.txt',sep='\t',index=None)
+
+fasta_dic = {}
+for mer in [8,9,10,11,12,13,14,15]:
+    lis = []
+    with open('ensembl_protein_{}.fasta'.format(mer),'r') as in_handle:
+        for title,seq in SimpleFastaParser(in_handle):
+            lis.append(seq)
+    lis = set(lis)
+    fasta_dic[mer] = lis
+
+col = []
+for pep,typ in tqdm(zip(safety_screen_df['pep'],safety_screen_df['typ']),total=safety_screen_df.shape[0]):
+    if typ == 'self_gene':
+        col.append(False)
+    else:
+        if 'I' in pep or 'L' in pep:
+            options = []
+            for c in pep:
+                if c == 'I' or c == 'L':
+                    options.append(['I','L'])
+                else:
+                    options.append([c])
+            expanded = [''.join(p) for p in itertools.product(*options)]
+            l = len(pep)
+            lis = fasta_dic[l]
+            flag = False
+            for item in expanded:
+                if item in lis:
+                    flag = True
+                    break
+            col.append(flag)
+                
+        else:
+            col.append(False)
+
+safety_screen_df['is_ambiguous_IL'] = col
+
+old_dir = os.getcwd()
+os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result')
+all_fasta = subprocess.run('find . -type f -name "riborf.fasta"',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+anno_ribo = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/ely_et_al_anno.txt',sep='\t',index_col=0)
+srr2tissue = anno_ribo['Cell_type'].to_dict()
+meta_dict = {}
+for f in all_fasta:
+    _,srr,_,_ = f.split('/')
+    micro_dict = {}
+    with open(f,'r') as in_handle:
+        for title,seq in SimpleFastaParser(in_handle):
+            micro_dict[title] = seq
+    tissue = srr2tissue[srr]
+    meta_dict['{};{}'.format(srr,tissue)] = micro_dict
+os.chdir(old_dir)
+
+condensed_dict = {}   # tissue:[seq1,seq2,...]
+for k,v in meta_dict.items():
+    srr,tissue = k.split(';')
+    condensed_dict.setdefault(tissue,[]).extend(list(v.values()))
+condensed_dict = {k:set(v) for k,v in condensed_dict.items()}
+
+col = []
+not_in_normal_ribo = []
+for row in tqdm(safety_screen_df.itertuples(),total=safety_screen_df.shape[0]):
+    if row.typ == 'nuORF':
+        normal_tissues = []
+        pep = row.pep
+        for t,ss in condensed_dict.items():
+            for s in ss:
+                if pep in s:
+                    normal_tissues.append(t)
+                    break
+        col.append(','.join(normal_tissues))
+        if len(normal_tissues) > 0:
+            not_in_normal_ribo.append(False)
+        else:
+            not_in_normal_ribo.append(True)
+    else:
+        col.append(None)
+        not_in_normal_ribo.append(True)
+safety_screen_df['normal_ribo'] = col
+safety_screen_df['not_in_normal_ribo'] = not_in_normal_ribo
+safety_screen_df.to_csv('post_safety_screen_add_ribo.txt',sep='\t',index=None)
 
 
 safety_screen_df = pd.read_csv('post_safety_screen_add_ribo.txt',sep='\t')
-safety_screen_bl = set(safety_screen_df.loc[(~safety_screen_df['cond_stringent']) | (~safety_screen_df['not_in_normal_ribo']),:]['pep'].values)
+safety_screen_bl = set(safety_screen_df.loc[(~safety_screen_df['cond_stringent']) | (~safety_screen_df['not_in_normal_ribo']) | (safety_screen_df['is_ambiguous_IL']),:]['pep'].values)
 
 data = []
 for c in cancers:
@@ -346,6 +437,14 @@ pathogen_df = final.loc[final['typ']=='pathogen',:]
 patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
 patent_df.to_csv('final_all_ts_antigens.txt',sep='\t',index=None)
 print(len(patent_df['pep'].unique()))
+
+# compare with iedb
+iedb_df = pd.read_csv('all_epitope_no_b_human_linear_mhc_i.tsv',sep='\t')
+iedb_pep = set(iedb_df['Epitope - Name'].values)
+immunoverse_pep = set(patent_df['pep'].values)
+novel = immunoverse_pep.difference(iedb_pep)
+novel_rate = len(novel)/len(immunoverse_pep)
+print(novel_rate)
 
 data = []
 for pep,patent_sub_df in patent_df.groupby(by='pep'):

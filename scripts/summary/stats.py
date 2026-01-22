@@ -439,7 +439,10 @@ for row in final.itertuples():
     source = row.designated_te
     source = source.split('|')[0]
     df = pd.read_csv('DE_result_TE_{}.txt'.format(c),sep='\t',index_col=0)
-    rawp = df.loc[source,:]['rawp']
+    try:
+        rawp = df.loc[source,:]['rawp']
+    except:
+        print(c,df);sys.exit('stop')
     adjp = df.loc[source,:]['adjp']
     col1.append(rawp)
     col2.append(adjp)
@@ -509,10 +512,8 @@ final = final.loc[final['designated_event'].notna(),:]
 total_events = final['designated_event'].values.tolist()
 total_events = list(set([item.split('|')[0] for item in total_events]))
 
-
 # for cancer in cancers:
 #     run_splicing_de(total_events,cancer,True)
-
 
 col1 = []
 col2 = []
@@ -550,7 +551,6 @@ final['designated_te'] = col
 final = final.loc[final['designated_te'].notna(),:]
 total_tes = final['designated_te'].values.tolist()
 total_tes = list(set([item.split('|')[0] for item in total_tes]))
-
 
 # for cancer in cancers:
 #     run_te_de(total_tes,cancer,True)
@@ -598,8 +598,8 @@ final = pd.read_csv('../final_all_ts_antigens.txt',sep='\t')
 final = final.loc[final['typ']=='pathogen',:]
 strains = ['Niallia circulans','Campylobacter ureolyticus','Clostridium intestinale','Helicobacter pylori','Fusobacterium nucleatum']
 
-# for cancer in cancers:
-#     run_quantile_de(strains,cancer,'pathogen')
+for cancer in cancers:
+    run_quantile_de(strains,cancer,'pathogen')
 
 
 col = []

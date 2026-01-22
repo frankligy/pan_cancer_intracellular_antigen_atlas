@@ -358,6 +358,7 @@ mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
 
 df.to_csv('peptide_view_pathogen.txt',sep='\t')
+sys.exit('stop')
 
 # n.circulans
 tmp = final.loc[final['strain']=='N.Circulans',:]
