@@ -16,6 +16,7 @@ from dash import Dash, Input, Output, callback, dash_table, html, dcc, State
 import re
 from ast import literal_eval
 import dash
+import dash_auth
 
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
@@ -401,6 +402,7 @@ def display_hla_table(cancer,active_cell,data,page_current,page_size):
             cancer = data[row]['Cancer']
         meta = pd.read_csv('./static/{}_metadata.txt'.format(cancer),sep='\t')
         meta = meta.loc[~meta['study'].str.startswith('phase2_'),:] # only consider phase 1
+        meta = meta.loc[meta['special_note'].isna(),:] # some are excluded
         lists = literal_eval(data[row]['additional_query'])
         hlas = literal_eval(data[row]['presented_by_each_sample_hla'])
         df = get_hla_info(meta,lists,hlas)
@@ -448,6 +450,13 @@ if __name__ == '__main__':
     # start to build app
     app = Dash(__name__,assets_folder='./assets')
     app.title = 'ImmunoVerse'
+
+    # # authentification
+    # VALID_USERNAME_PASSWORD_PAIRS = {
+    #     'hello': 'world'
+    # }
+    # auth = dash_auth.BasicAuth(app,VALID_USERNAME_PASSWORD_PAIRS)
+
     app.layout = html.Div([
 
         # # url
@@ -577,7 +586,7 @@ if __name__ == '__main__':
         html.Div([
             html.Div([
                 html.Div([
-                    html.H3("28,446", className="stat-number"),
+                    html.H3("16,687", className="stat-number"),
                     html.P("Tumor-specific Antigens", className="stat-label")
                 ], className="stat-box"),
 
