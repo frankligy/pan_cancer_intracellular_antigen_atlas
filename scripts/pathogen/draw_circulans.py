@@ -204,11 +204,16 @@ for item in result['possible_protein_ids']:
         cond.append(False)
 
 result = result.loc[cond,:]
-result.to_csv('tesorai_alignment_validation_n_circulans_hit.txt',sep='\t',index=None);sys.exit('stop')
+result.to_csv('tesorai_alignment_validation_n_circulans_hit.txt',sep='\t',index=None)
+result = result.loc[~result['possible_protein_ids'].str.contains(';;'),:]
 proteins = []
 for item1,item2 in zip(result['clean_sequence'],result['possible_protein_ids']):
     for source in item2.split(';;'):
         proteins.append(source)
+print(len(set(result['clean_sequence'])))
+print(len(set(proteins)))
+sys.exit('stop')
+
 col1_p = []
 col2_p = []
 for pro in proteins:
@@ -234,7 +239,7 @@ sample_dict = {
 
 # sample_all_true_seqs = {}
 # for k,v in sample_dict.items():
-#     all_true_seqs = []
+#     all_true_seqs = {'f':[],'r':[]}
 #     for s in v:
 #         print(s)
 #         tmp = subprocess.run('grep -A1 \'kraken:taxid|1397\' {}/test_cseqs_1.fq'.format(s),shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
@@ -244,30 +249,34 @@ sample_dict = {
 #         seqs = seqs1 + seqs2
 #         true_seqs_f = [item for item in tqdm(seqs) if item in ref]
 #         true_seqs_r = [str(Seq(item).reverse_complement()) for item in tqdm(seqs) if str(Seq(item).reverse_complement()) in ref]
-#         true_seqs = true_seqs_f + true_seqs_r
-#         all_true_seqs.extend(true_seqs)
+#         print(len(true_seqs_f))
+#         print(len(true_seqs_r))
+#         all_true_seqs['f'].extend(true_seqs_f)
+#         all_true_seqs['r'].extend(true_seqs_r)
 #     sample_all_true_seqs[k] = all_true_seqs
 
 # with open('circulans_sample_all_true_seq.p','wb') as f:
 #     pickle.dump(sample_all_true_seqs,f)
 
-# Jonas asked to get some uniquely mapped cds sequence
 
-# with open('circulans_sample_all_true_seq.p','rb') as f:
-#     sample_all_true_seqs = pickle.load(f)
+# Jonas asked to get some uniquely mapped cds sequence, also answered the number of reads uniquely mapped to genome
 
-# cds_dict = {}
-# with open('GCA_013267435.1/cds_from_genomic.fna','r') as in_handle:
-#     for title,seq in SimpleFastaParser(in_handle):
-#         cds_dict[title] = seq
+with open('circulans_sample_all_true_seq.p','rb') as f:
+    sample_all_true_seqs = pickle.load(f)
 
-# with open('aligned_seq_to_ref_genome_and_cds.fasta','w') as f:
-#     for i,item in tqdm(enumerate(sample_all_true_seqs['OV'])):
-#         for cds_title,cds_seq in cds_dict.items():
-#             if item in cds_seq:
-#                 f.write('>seq{}|{}|{}\n{}\n'.format(i+1,cds_title,'++',item))
-#             elif str(Seq(item).reverse_complement()) in cds_seq:
-#                 f.write('>seq{}|{}|{}\n{}\n'.format(i+1,cds_title,'+-',item))
+cds_dict = {}
+with open('GCA_013267435.1/cds_from_genomic.fna','r') as in_handle:
+    for title,seq in SimpleFastaParser(in_handle):
+        cds_dict[title] = seq
+
+with open('aligned_seq_to_ref_genome_and_cds.fasta','w') as f:
+    for i,item in tqdm(enumerate(sample_all_true_seqs['OV'])):
+        for cds_title,cds_seq in cds_dict.items():
+            if item in cds_seq:
+                f.write('>seq{}|{}|{}\n{}\n'.format(i+1,cds_title,'++',item))
+            elif str(Seq(item).reverse_complement()) in cds_seq:
+                f.write('>seq{}|{}|{}\n{}\n'.format(i+1,cds_title,'+-',item))
+
 
 
 # start to draw actual circos plot, modidy for ov only or rna only
