@@ -13,13 +13,14 @@ from io import StringIO
 import multiprocessing as mp
 import math
 import bisect
-from scipy.stats import ttest_ind
+from scipy.stats import ttest_ind,rankdata,mannwhitneyu
+
 
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
 mpl.rcParams['font.family'] = 'Arial'
 
-rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/melanoma'
+
 peptides = {
     'PMEL_splicing':'KTWDQVPFSV',
     'ImmTAC':'YLEPGPVTA',
@@ -34,33 +35,37 @@ peptides = {
 #     'non_canonical':'QAQLEVSVQY',
 #     'canonical':'DADFDEVQY'
 # }
-col = 'percentile'
+col = 'norm'
+antigen_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/SKCM/antigen/0.01'
 
-# all_txts = subprocess.run('find {} -type f -name "msmsScans_new.txt"'.format(rootdir),shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# giant_msms = pd.read_csv(os.path.join(antigen_dir,'msmsScans_all_add_tesorai.txt'),sep='\t')
 # tumor_dfs = []
 # tumor_raws = []
-# for txt in tqdm(all_txts):
-#     msms = pd.read_csv(txt,sep='\t')
+# tumor_raw_dict = {}
+# for raw,msms in giant_msms.groupby(by='Raw file'):
 #     msms = msms.loc[msms['Identified']=='+',:]
-#     for raw,sub_df in msms.groupby(by='Raw file'):
-#         each_raw_data = []
-#         for p,sub_df2 in sub_df.groupby(by='Sequence'):
-#             intensity = sub_df2['Precursor intensity'].values.max()
-#             each_raw_data.append((p,intensity))
-#         each_raw_df = pd.DataFrame.from_records(data=each_raw_data,columns=['peptide','intensity'])
-#         each_raw_df = each_raw_df.loc[each_raw_df['intensity'].notna(),:]
+#     each_raw_data = []
+#     msms['Precursor intensity'] = msms['Precursor intensity'].fillna(value=1e-5)
+#     msms['Precursor intensity'] = msms['Precursor intensity'].replace(0,1e-5)
+#     # msms = msms.sort_values(by='Precursor intensity',ascending=True)
+#     # msms['percentile'] = [(i+1)/msms.shape[0] for i in range(msms.shape[0])]
+#     msms['percentile'] = rankdata(msms['Precursor intensity'].values,method='min') / msms.shape[0]
+#     for p,sub_df2 in msms.groupby(by='Sequence'):
+#         intensity = sub_df2['Precursor intensity'].values.max()
+#         percentile = sub_df2['percentile'].values.max()
+#         each_raw_data.append((p,intensity,percentile))
+#     each_raw_df = pd.DataFrame.from_records(data=each_raw_data,columns=['peptide','intensity','percentile'])
+#     if each_raw_df.shape[0] > 0:
 #         upper = np.quantile(each_raw_df['intensity'].values,0.75)
 #         each_raw_df['norm'] = np.log2(each_raw_df['intensity'].values/upper)
-#         # also add percentile
-#         each_raw_df = each_raw_df.sort_values(by='intensity')
-#         each_raw_df['percentile'] = [(i+1)/each_raw_df.shape[0] for i in range(each_raw_df.shape[0])]
-#         # add to list
-#         tumor_dfs.append(each_raw_df)
-#         tumor_raws.append(raw)
+#     else:   # if no peptide identified in that raw file
+#         each_raw_df['norm'] = []
+#     tumor_raw_dict[raw] = each_raw_df
+#     tumor_dfs.append(each_raw_df)
+#     tumor_raws.append(raw)
 # final = pd.concat(tumor_dfs,axis=0,keys=tumor_raws).reset_index(level=-2).rename(columns={'level_0':'raw_file'})
 # final['log_intensity'] = np.log2(final['intensity'].values)
-# final.to_csv('final_melanoma.txt',sep='\t',index=None)
-
+# final.to_csv('final_melanoma.txt',sep='\t')
 
 final = pd.read_csv('final_melanoma.txt',sep='\t')
 data = {}
@@ -72,12 +77,13 @@ for name,seq in peptides.items():
 selected_df = pd.concat(df_list,axis=0)
 selected_df.to_csv('check.txt',sep='\t')
 
-# compare_data = {}
-# for raw,sub_df in selected_df.groupby(by='raw_file'):
-#     if len(sub_df['peptide'].unique()) == 4:
-#         for name,seq in peptides.items():
-#             a = sub_df.loc[sub_df['peptide']==seq,col].values[0]
-#             compare_data.setdefault(name,[]).append(a)
+compare_data = {}
+for raw,sub_df in selected_df.groupby(by='raw_file'):
+    if len(sub_df['peptide'].unique()) == 4:
+        for name,seq in peptides.items():
+            a = sub_df.loc[sub_df['peptide']==seq,col].values[0]
+            compare_data.setdefault(name,[]).append(a)
+print(compare_data)
 
 # ratio1 = np.median(compare_data['PMEL_splicing']) / np.median(compare_data['ImmTAC'])
 # ratio2 = np.median(compare_data['PMEL_splicing']) / np.median(compare_data['canonical_KTW'])
@@ -97,15 +103,16 @@ selected_df.to_csv('check.txt',sep='\t')
 #     compare_data_new[k] = [item for item in v if item > 0]
 # compare_data = compare_data_new
 
-# # print(ttest_ind(compare_data['non_canonical'],compare_data['canonical']))
-# fig,ax = plt.subplots()
-# sns.boxplot(list(compare_data.values()),ax=ax)
-# ax.set_xticks((0,1,2,3))
-# ax.set_xticklabels(list(compare_data.keys()))
-# ax.set_ylabel(col)
-# # ax.set_ylim((-2.5,4))
-# plt.savefig('abundance_{}_4_full.pdf'.format(col),bbox_inches='tight')
-# plt.close()
+print(ttest_ind(compare_data['PMEL_splicing'],compare_data['canonical_ITD']))
+fig,ax = plt.subplots()
+sns.boxplot(list(compare_data.values()),ax=ax)
+ax.set_xticks((0,1,2,3))
+ax.set_xticklabels(list(compare_data.keys()))
+ax.set_ylabel(col)
+# ax.set_ylim((-2.5,4))
+plt.savefig('abundance_{}_4_full.pdf'.format(col),bbox_inches='tight')
+plt.close()
+sys.exit('stop')
 
 # plot by rank
 highest_list = []
