@@ -174,8 +174,6 @@ def process_tumor_te():
 # df.to_csv('peptide_view_orf2.txt',sep='\t')
 
 
-
-
 # main
 df = pd.read_csv('./stats/final_all_ts_antigens.txt',sep='\t')
 final = df.loc[df['typ'].isin(['self_translate_te','TE_chimeric_transcript']),:]

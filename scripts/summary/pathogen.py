@@ -260,7 +260,6 @@ tmp['documented_immunogenicity'] = [common_cmv.get(item,None) for item in tmp['p
 tmp.to_csv('annotated_cmv_table.txt',sep='\t',index=None)
 
 
-
 # select representative
 candidates = []
 
@@ -279,10 +278,10 @@ for c_,final_sub2 in final_sub.groupby(by='cancer'):
     tmp = final_sub2.sort_values(by='n_psm')['pep'].iloc[-2:]
     candidates.extend(list(tmp))
 
-final_sub = final.loc[final['strain']=='EBV',:]
-for c_,final_sub2 in final_sub.groupby(by='cancer'):
-    tmp = final_sub2.sort_values(by='n_psm')['pep'].iloc[-2:]
-    candidates.extend(list(tmp))
+# final_sub = final.loc[final['strain']=='EBV',:]
+# for c_,final_sub2 in final_sub.groupby(by='cancer'):
+#     tmp = final_sub2.sort_values(by='n_psm')['pep'].iloc[-2:]
+#     candidates.extend(list(tmp))
 
 final_sub = final.loc[final['strain']=='F.Nucleatum',:]
 for c_,final_sub2 in final_sub.groupby(by='cancer'):
@@ -294,10 +293,10 @@ for c_,final_sub2 in final_sub.groupby(by='cancer'):
     tmp = final_sub2.sort_values(by='n_psm')['pep'].iloc[-2:]
     candidates.extend(list(tmp))
 
-final_sub = final.loc[final['strain']=='C.Intestinale',:]
-for c_,final_sub2 in final_sub.groupby(by='cancer'):
-    tmp = final_sub2.sort_values(by='n_psm')['pep'].iloc[-2:]
-    candidates.extend(list(tmp))
+# final_sub = final.loc[final['strain']=='C.Intestinale',:]
+# for c_,final_sub2 in final_sub.groupby(by='cancer'):
+#     tmp = final_sub2.sort_values(by='n_psm')['pep'].iloc[-2:]
+#     candidates.extend(list(tmp))
 
 final_sub = final.loc[final['strain']=='C.Ureolyticus',:]
 for c_,final_sub2 in final_sub.groupby(by='cancer'):
@@ -358,39 +357,18 @@ mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.index = mi
 
 df.to_csv('peptide_view_pathogen.txt',sep='\t')
-sys.exit('stop')
+
 
 # n.circulans
-tmp = final.loc[final['strain']=='N.Circulans',:]
-tmp_ov = tmp.loc[tmp['cancer']=='OV',:]
-print(len(tmp_ov['pep'].unique()))
-unique_genes = set()
-for item in tmp_ov['source']:
-    unique_genes.add(item.split('|')[1])
-print(len(unique_genes))
+sub_ov = final.loc[(final['strain']=='N.Circulans') & (final['cancer']=='OV'),:]
+sub_ov = set(sub_ov['pep'])
+sub_nbl = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/nbl_neg/nbl_neg_niaci.txt',sep='\t')
+sub_nbl = sub_nbl.loc[~sub_nbl['samples'].str.contains('PA'),:]
+sub_nbl = set(sub_nbl['pep'])
+print(len(sub_ov))
+print(len(sub_nbl))
+print(len(sub_ov & sub_nbl))
 
-# assemble to tesorai nbl (only peptide, or whole)
-nia_peptide = set(tmp['pep'].unique())
-dic = {}
-with open('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/neuroblastoma/combined_NBL_pan_cancer.fasta','r') as in_handle:
-    for title,seq in SimpleFastaParser(in_handle):
-        dic[title] = seq
-for pep in tmp['pep']:
-    dic['test|{}'.format(pep)] = pep
-with open('nbl_neg_circulans_only_pep.fasta','w') as f:
-    for k,v in dic.items():
-        f.write('>{}\n{}\n'.format(k,v))
-
-dic = {}
-with open('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/neuroblastoma/combined_NBL_pan_cancer.fasta','r') as in_handle:
-    for title,seq in SimpleFastaParser(in_handle):
-        dic[title] = seq
-with open('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space_tesorai/OV/db_fasta_tesorai/Niallia_circulans_UP000319837.fasta','r') as in_handle:
-    for title,seq in SimpleFastaParser(in_handle):
-        dic[title] = seq
-with open('nbl_neg_circulans_whole_proteome.fasta','w') as f:
-    for k,v in dic.items():
-        f.write('>{}\n{}\n'.format(k,v))
 
 
 
