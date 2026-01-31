@@ -14,7 +14,7 @@ You shall have a list of antigen peptide sequence as fasta files, and let's say 
 Essentially, you just combine all fasta together, this can be easily done by manual copy-and-paste, or linux command `cat`, or your favorate coding language, let's assume after this step, you shall have a fasta named `combined_SKCM_pan_cancer.fasta`.
 
 
-### Step 2: Use Tesorai platform
+### Step 2: Upload Fasta file to Tesorai platform
 
 We host all public raw files on [Tesorai platform](https://console.tesorai.com/) under `tesorai_immunoverse` project, you shall follow the instructions on creating an account. If you don't have access to the workspace, email me (guangyuan.li@nyulangone.org) or the tesorai support. 
 
@@ -25,7 +25,7 @@ Now, upload your fasta file to the project and SKCM workspace.
 </p>
 
 
-### Step 3: Run
+### Step 3: Run Tesorai
 
 Now, just easily submit the job, and the search results will be sent to your email once finished, it takes about 1 hour!
 
@@ -39,7 +39,7 @@ Now, just easily submit the job, and the search results will be sent to your ema
 
 
 
-### Step 4: in silico validation
+### Step 4: in silico validation of candidates
 
 You can follow our [CGC pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?slide=id.g33cf7e06783_0_3#slide=id.g33cf7e06783_0_3) to conduct in silico validation on the fly.
 
