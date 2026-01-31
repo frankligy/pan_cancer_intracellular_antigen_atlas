@@ -2,7 +2,9 @@
 
 We provided a pipeline to validate whether any vaccine targets can be empirically evidenced from large-scale public Immunopeptidome data. We listed steps for using this function
 
-<img src="../images/vaccine.png" alt="vaccine" width="180" height="180">
+<p align="center">
+  <img src="../images/vaccine.png" alt="vaccine" width="300" height="300">
+</p>
 
 
 ### Step 1: Fasta File
