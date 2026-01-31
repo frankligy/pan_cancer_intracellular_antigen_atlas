@@ -20,7 +20,9 @@ We host all public raw files on [Tesorai platform](https://console.tesorai.com/)
 
 Now, upload your fasta file to the project and SKCM workspace.
 
-![tesorai_vaccine](../images/tesorai_vaccine.png)
+<p align="center">
+  <img src="../images/tesorai_vaccine.png" alt="vaccine" width="500" height="500">
+</p>
 
 
 ### Step 3: Run
@@ -32,7 +34,9 @@ Now, just easily submit the job, and the search results will be sent to your ema
 ![step2](../images/run_step2.png)
 
 
+### Step 4: in silico validation
 
+You can follow our [CGC pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?slide=id.g33cf7e06783_0_3#slide=id.g33cf7e06783_0_3) to conduct in silico validation on the fly.
 
 
 
