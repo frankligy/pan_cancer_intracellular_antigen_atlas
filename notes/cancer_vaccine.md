@@ -29,9 +29,14 @@ Now, upload your fasta file to the project and SKCM workspace.
 
 Now, just easily submit the job, and the search results will be sent to your email once finished, it takes about 1 hour!
 
-![step1](../images/run_step1.png)
+<p align="center">
+  <img src="../images/run_step1.png" alt="vaccine" width="500" height="500">
+</p>
 
-![step2](../images/run_step2.png)
+<p align="center">
+  <img src="../images/run_step2.png" alt="vaccine" width="500" height="500">
+</p>
+
 
 
 ### Step 4: in silico validation
