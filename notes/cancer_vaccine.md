@@ -3,7 +3,7 @@
 We provided a pipeline to validate whether any vaccine targets can be empirically evidenced from large-scale public Immunopeptidome data. We listed steps for using this function
 
 <p align="center">
-  <img src="../images/vaccine.png" alt="vaccine" width="300" height="300">
+  <img src="../images/vaccine.png" alt="vaccine" width="400" height="400">
 </p>
 
 
