@@ -126,7 +126,7 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
 
 ```json
     # technology should be keyed on rna sample name
-    "outdir":"/path/to/immunoverse_result/result",
+    "outdir":"/path/to/result/immunoverse_result",
     "db_fasta":"db_fasta",
     "immunopeptidome_dir":"/path/to/immunopeptidome_raw_data",
     "technology":{
@@ -206,7 +206,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 "overwrite_hla_dic":{
     "study1@sample1.raw":["A*32:01","B*40:01","C*03:04"],
     "study1@sample2.raw":["A*31:01","A*32:01","B*14:01","B*27:05","C*02:02","C*08:02"],
-    "sample2@sample1.raw":[]
+    "study2@sample1.raw":[]
 },
 "overwrite_hla_nested":true,
 ```
