@@ -177,6 +177,8 @@ def get_ts_gene(atlas_dir):
 
     membrane_ensg = set(membrane_ensg + membrane_ensg_add)
 
+    print('total membrane ensg: {}'.format(len(membrane_ensg)))
+
     real_common_membrane = []
     for item in real_common:
         if item in membrane_ensg:
@@ -396,6 +398,8 @@ for c in cancers:
     final = final.loc[cond,:]
     data.append(final)
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
+final['is_in_bl'] = final['pep'].isin(safety_screen_bl)
+final.to_csv('final_all_ts_antigens_record_bl.txt',sep='\t',index=None)
 final = final.loc[~final['pep'].isin(safety_screen_bl),:]
 
 self_df = final.loc[(final['typ']=='self_gene') & (final['unique']!=False),:] 
@@ -435,7 +439,6 @@ ir_df = final.loc[final['typ']=='intron_retention',:]
 pathogen_df = final.loc[final['typ']=='pathogen',:]
 
 patent_df = pd.concat([self_df,self_translate_te_df,te_chimeric_df,splicing_df,nuorf_df,variant_df,fusion_df,ir_df,pathogen_df])
-patent_df.to_csv('final_all_ts_antigens.txt',sep='\t',index=None)
 print(len(patent_df['pep'].unique()))
 
 # compare with iedb
@@ -445,6 +448,9 @@ immunoverse_pep = set(patent_df['pep'].values)
 novel = immunoverse_pep.difference(iedb_pep)
 novel_rate = len(novel)/len(immunoverse_pep)
 print(novel_rate)
+
+patent_df['overview_in_iedb'] = patent_df['pep'].isin(iedb_pep)
+patent_df.to_csv('final_all_ts_antigens.txt',sep='\t',index=None)
 
 data = []
 for pep,patent_sub_df in patent_df.groupby(by='pep'):

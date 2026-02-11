@@ -19,6 +19,47 @@ mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
 mpl.rcParams['font.family'] = 'Arial'
 
+def chop_normal_pep_db(fasta_path,output_path,mers,allow_duplicates):
+    '''
+    chop any normal human proteome to certain mers
+
+    :param fasta_path: string, the path to the human protein fasta file
+    :param output_path: string, the path to the output fasta file
+    :param mers: list, like [9,10] will generate 9mer and 10mer
+    :param allow_duplicates: boolean. whether allow duplicate or not
+
+    Example::
+
+        chop_normal_pep_db(fasta_path='human_uniprot_proteome.fasta',output_path='./human_uniprot_proteome_mer9_10.fasta',mers=[9,10],allow_duplicates=False)
+    '''
+    # for human genome in uniprot, 9-10mer, remove duplicates will decrease from 44,741,578 to 41,638,172
+    if allow_duplicates:
+        with open(fasta_path,'r') as in_handle, open(output_path,'w') as out_handle:
+            for title,seq in tqdm(SimpleFastaParser(in_handle)):
+                count = 0
+                length = len(seq)
+                for i in range(length):
+                    for mer in mers:
+                        if i+mer <= length:
+                            out_handle.write('>{}_{}_{}\n'.format(title,mer,count))
+                            out_handle.write('{}\n'.format(seq[i:i+mer]))
+                            count += 1
+    else:
+        with open(fasta_path,'r') as in_handle, open(output_path,'w') as out_handle:
+            existing = set()
+            for title,seq in tqdm(SimpleFastaParser(in_handle)):
+                count = 0
+                length = len(seq)
+                for i in range(length):
+                    for mer in mers:
+                        if i+mer <= length:
+                            subseq = seq[i:i+mer]
+                            if subseq not in existing:                                
+                                out_handle.write('>{}_{}_{}\n'.format(title,mer,count))
+                                out_handle.write('{}\n'.format(subseq))
+                                existing.add(subseq)
+                                count += 1  
+
 cancers = [
     'BRCA',
     'KIRC',
@@ -213,7 +254,45 @@ print(len(final['pep'].unique()))
 tmp = final.loc[final['in_iedb'],:]
 print(len(tmp['pep'].unique()))
 
-item3 = categorize_sets(set(pep_tsnadb),set(final['pep'].values))
+
+# need to make sure pep_tsnadb are in the search space
+titles = []
+seqs = []
+for c in cancers:
+    p = os.path.join(root_atlas_dir,c,'db_fasta_tesorai','mutation.fasta')
+    with open(p) as in_handle:
+        for title,seq in SimpleFastaParser(in_handle):
+            titles.append(title)
+            seqs.append(seq)
+with open('all_mutations_search_space.fasta','w') as f:
+    for t,s in zip(titles,seqs):
+        f.write('>{}\n{}\n'.format(t,s))
+
+# for mer in [8,9,10,11,12,13,14,15]:
+#     print(mer)
+#     chop_normal_pep_db(fasta_path='all_mutations_search_space.fasta',
+#                        output_path='all_mutations_search_space_{}.fasta'.format(mer),mers=[mer],allow_duplicates=False)
+
+
+fasta_dic = {}
+for mer in [8,9,10,11,12,13,14,15]:
+    print(mer)
+    lis = []
+    with open('all_mutations_search_space_{}.fasta'.format(mer),'r') as in_handle:
+        for title,seq in SimpleFastaParser(in_handle):
+            lis.append(seq)
+    lis = set(lis)
+    fasta_dic[mer] = lis
+
+valid_pep_tsnadb = []
+for pep in pep_tsnadb:
+    l = len(pep)
+    lis = fasta_dic[l]
+    if pep in lis:
+        valid_pep_tsnadb.append(pep)
+
+
+item3 = categorize_sets(set(valid_pep_tsnadb),set(final['pep'].values))
 length3 = [len(item) for item in item3]
 venn2(subsets=length3,set_labels=('TSNAdb','ImmunoVerse'))
 plt.savefig('immunoverse_tsnadb.pdf',bbox_inches='tight')
