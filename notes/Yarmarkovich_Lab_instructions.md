@@ -114,7 +114,7 @@ After this step, you should have a folder called `db_fasta` in your `immunoverse
 
 ## Step 4: Generate final tabular output from Tesorai result
 
-You are more than welcome to write your own code to tease apart the tesorai result at this point. I do have some post-hoc script that I normally run to conduct simple QC, separate different classes of antigens, and report a series of statistics. If you opt in doing the latter, you shall follow this section.
+**Note: This section is more for myself, I don't expect you to use the following code, instead, please contact Ritchlynn, Xinya or Aman on how to do the post-hoc analysis, mainly how to dissect differnet types of antigens, and how to conduct binding predictions.**
 
 Again, the actual code you need to run is as easy as:
 
@@ -122,7 +122,7 @@ Again, the actual code you need to run is as easy as:
 /gpfs/data/yarmarkovichlab/NeoVerse/post_maxquant.py --config template.json
 ```
 
-Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to intimating at first glance, but most of the parameters can be left untouched (the one I left as na). And for now, I assume we will be using the tesorai `quantified_psm` file, you shall remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code), and put this processed file to `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/processed_tesorai.tsv`, my program will particularly look for this path to pick up the result file.
+Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to intimating at first glance, but most of the parameters can be left untouched (the one I left as na). And for now, I assume we will be using the tesorai `quantified_psm` file, you shall remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code) under the column `filename` (no underscore), and put this processed file as `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/other_alg.txt`, my program will particularly look for this path to pick up the result file.
 
 ```json
     # technology should be keyed on rna sample name
@@ -137,20 +137,20 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
         "rna_sample1":"immuno_sample1",
         "rna_sample2":"immuno_sample2"
     },
-    "peptide_fdr":na,
-    "hla_class":na,
-    "dia_dir":na,
-    "tmt_info":na,
+    "peptide_fdr":"na",
+    "hla_class":"na",
+    "dia_dir":"na",
+    "tmt_info":"na",
 
-    "current_maxquant_run_mqpar":na,
+    "current_maxquant_run_mqpar":"na",
 
 
-    "rederive_mzml_dir":na,
-    "rederive_vanilla_fdr":na,
-    "rederive_mode":na,
-    "rederive_train_cutoff":na,
-    "rederive_rescore_fdr":na,
-    "rederive_samples":na,
+    "rederive_mzml_dir":"na",
+    "rederive_vanilla_fdr":"na",
+    "rederive_mode":"na",
+    "rederive_train_cutoff":"na",
+    "rederive_rescore_fdr":"na",
+    "rederive_samples":"na",
 
     "mode":"other_alg",
     "hla_mapping":{
@@ -164,8 +164,8 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
     "cores":20,
     "inquiry_mode":"i",
     "added_genes":[],
-    "use_genes_lfc":true,
-    "use_bayesTS":true,
+    "use_genes_lfc":true, # if not rna, use false
+    "use_bayesTS":true, # if not rna, use false
     "intensity_as_dict":false,
     "other_alg_mapping":{
         "filename":"Raw file",
@@ -194,8 +194,8 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 ```json
 # [] means no HLA annotaiton for that immunopeptidome sample
 "overwrite_hla_dic":{
-    "sample1":["A*32:01","B*40:01","C*03:04"],
-    "sample2":[]
+    "immuno_sample1":["A*32:01","B*40:01","C*03:04"],
+    "immuno_sample2":[]
 }
 ```
 
@@ -204,9 +204,9 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 ```json
 # Sometimes, we group multiple samples in one study
 "overwrite_hla_dic":{
-    "study1@sample1.raw":["A*32:01","B*40:01","C*03:04"],
-    "study1@sample2.raw":["A*31:01","A*32:01","B*14:01","B*27:05","C*02:02","C*08:02"],
-    "study2@sample1.raw":[]
+    "immuno_sample1@actual_sample1.raw":["A*32:01","B*40:01","C*03:04"],
+    "immuno_sample1@actual_sample2.raw":["A*31:01","A*32:01","B*14:01","B*27:05","C*02:02","C*08:02"],
+    "immuno_sample2@actual_sample1":[]
 },
 "overwrite_hla_nested":true,
 ```
