@@ -211,6 +211,35 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 "overwrite_hla_nested":true,
 ```
 
+## Step 5: Visualization
+
+**Notes: This part is written for me, if you'd like to visualize the PSM, consult tesorai team, if you'd like to visualize the differential plots, consult Aman**
+
+Again, the actual code you need to run is as easy as:
+
+```bash
+/gpfs/data/yarmarkovichlab/NeoVerse/launch_portal.py --config template.json --running_mode generate_figures
+```
+
+Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_mzml`, folder structure should match immunopeptidome raw data folder, then modify the json file
+as follow:
+
+```json
+    "raw_dir":"/path/to/immunopeptidome_raw_data",
+    "mzml_dir":"/path/to/tesorai_mzml",
+    "technology_setup":"bruker",
+    "cores":20,
+
+    "cancer":"cancer_alias",
+    "antigen_dir":"/path/to/result/immunoverse_result/antigen/other_alg",
+    "assets_dir":"/path/to/result/immunoverse_result/assets",
+
+    "template_json":"/path/to/codes/template.json",
+    "draw_diff":false,
+    "draw_psm":true
+
+```
+
 
 ## Appendix I: How to interpret the source aberration name?
 
