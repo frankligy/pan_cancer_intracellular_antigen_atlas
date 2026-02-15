@@ -1,5 +1,5 @@
 # ImmunoVerse
-Accompanying codes for pan cancer atlas of intracellular tumor antigens
+Accompanying codes, databases, websites for the pan-cancer atlas of therapeutic T cell targets.
 
 
 ![overview](./images/overview.png)
