@@ -221,8 +221,7 @@ Again, the actual code you need to run is as easy as:
 /gpfs/data/yarmarkovichlab/softwares/NeoVerse/launch_portal.py --config template.json --running_mode generate_figures
 ```
 
-Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_mzml`, folder structure should match immunopeptidome raw data folder, then modify the json file
-as follow:
+Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_mzml`, folder structure should match immunopeptidome raw data folder, file extension should be `mzML`, then modify the json file as follow.
 
 ```json
     "raw_dir":"/path/to/immunopeptidome_raw_data",
@@ -239,6 +238,27 @@ as follow:
     "draw_psm":true
 
 ```
+
+And remember, you have to modify the `python_interact/nuorf` part, you can leave others unchanged, but the `raw2bio`, see below.
+
+```json
+    "nuorf":{
+        "obj":"SLFEGIYTI",
+
+        "immuno_dir":"/gpfs/data/yarmarkovichlab/JH_AML/immuno",
+        "col":"percentile",
+
+        "raw2bio":{
+            "each_raw_file.raw":"immuno_sample1",
+            "each_raw_file.d":"immuno_sample2"
+        },
+
+        "final_path":"/gpfs/data/yarmarkovichlab/JH_AML/antigen/other_alg/final_enhanced.txt"
+
+    }
+```
+
+Lastly, you may overwrite `all_peps` and `png` in the `launch_portal.py` code temporarily.
 
 
 ## Appendix I: How to interpret the source aberration name?
