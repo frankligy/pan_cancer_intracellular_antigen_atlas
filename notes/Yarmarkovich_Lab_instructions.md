@@ -119,7 +119,7 @@ After this step, you should have a folder called `db_fasta` in your `immunoverse
 Again, the actual code you need to run is as easy as:
 
 ```bash
-/gpfs/data/yarmarkovichlab/NeoVerse/post_maxquant.py --config template.json
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/post_maxquant.py --config template.json
 ```
 
 Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to intimating at first glance, but most of the parameters can be left untouched (the one I left as na). And for now, I assume we will be using the tesorai `quantified_psm` file, you shall remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code) under the column `filename` (no underscore), and put this processed file as `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/other_alg.txt`, my program will particularly look for this path to pick up the result file.
@@ -218,7 +218,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 Again, the actual code you need to run is as easy as:
 
 ```bash
-/gpfs/data/yarmarkovichlab/NeoVerse/launch_portal.py --config template.json --running_mode generate_figures
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/launch_portal.py --config template.json --running_mode generate_figures
 ```
 
 Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_mzml`, folder structure should match immunopeptidome raw data folder, then modify the json file
