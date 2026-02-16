@@ -258,7 +258,7 @@ And remember, you have to modify the `python_interact/nuorf` part, you can leave
     }
 ```
 
-Lastly, you may overwrite `all_peps` and `png` in the `launch_portal.py` code temporarily.
+Lastly, you may overwrite `all_peps` and `png` in the `launch_portal.py` code temporarily, but also revert changes once you are done.
 
 
 ## Appendix I: How to interpret the source aberration name?
