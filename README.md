@@ -42,7 +42,7 @@ Manuscript in submission
 
 Guangyuan(Frank) Li
 
-Email: guangyuan.li@nyulangone.org
+Email: li2g2@mail.uc.edu
 
 Postdoc, Perlmutter Cancer Center
 
