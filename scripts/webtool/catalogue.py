@@ -99,7 +99,6 @@ cancers2immuno = {
     'SKCM':'melanoma'
 }
 
-
 # # raw ms
 # root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
 # root_immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
@@ -195,8 +194,6 @@ cancers2immuno = {
 #     subprocess.run(cmd,shell=True)
 
 
-
-
 # molecular_catalogue, I'll manually add mutation
 variant_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/variants'
 variant_dic = {
@@ -253,6 +250,8 @@ for c in cancers + added_cancer:
     splicing_rec = os.path.join(atlas_dir,'splicing_rec.txt')
     fusion_all = os.path.join(atlas_dir,'fusion.txt')
     fusion_recurrent = os.path.join(atlas_dir,'fusion_recurrent.txt')
+    real_common = os.path.join(atlas_dir,'real_common.txt')
+    real_common_membrane = os.path.join(atlas_dir,'real_common_membrane.txt')
     if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1']:
         hla_types = os.path.join(atlas_dir,'hla_types.txt')
     else:
@@ -270,7 +269,7 @@ for c in cancers + added_cancer:
     te_good = os.path.join(atlas_dir,'good_erv.txt')
 
     need_to_cp = [gene_tpm,gene_lfc,pathogen_all,pathogen_rec,intron_all,intron_peptide_all,intron_rec,splicing_all,splicing_rec,
-                  fusion_all,fusion_recurrent, hla_types, mutation_rec, raw_mutation, map_mutation, te_all, te_rec, te_good]
+                  fusion_all,fusion_recurrent, real_common, real_common_membrane, hla_types, mutation_rec, raw_mutation, map_mutation, te_all, te_rec, te_good]
 
     des_dir = os.path.join(root_des_dir,c)
     if not os.path.exists(des_dir):
@@ -280,14 +279,6 @@ for c in cancers + added_cancer:
         if f is not None:
             subprocess.run('cp {} {}'.format(f,des_dir),shell=True)
 
-# search space
-root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space'
-for c in cancers + added_cancer:
-    db_fasta_dir = os.path.join(root_atlas_dir,c,'db_fasta')
-    des_dir = os.path.join(root_des_dir,c)
-    if not os.path.exists(des_dir):
-        os.mkdir(des_dir)
-    subprocess.run('cp -R {} {}'.format(db_fasta_dir,des_dir),shell=True)
 
 # search space tesorai
 root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/search_space_tesorai'

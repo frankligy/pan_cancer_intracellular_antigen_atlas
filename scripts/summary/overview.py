@@ -160,10 +160,13 @@ def get_ts_gene(atlas_dir):
     gene_lfc = gene_lfc.loc[(gene_lfc['median_tumor']>20) & (gene_lfc['median_tumor'] > gene_lfc['max_median_gtex']),:]
     real_common = list(set(gene_lfc.index).intersection(set(common)))
 
-
     # remove the manual bl
     manual_bl_ensg = [symbol2ensg[item] for item in manual_bl]
     real_common = list(set(real_common).difference(set(manual_bl_ensg)))
+
+    with open(os.path.join(atlas_dir,'real_common.txt'),'w') as f:
+        for item in real_common:
+            f.write('{}\n'.format(item))
 
     # membrane
     mem = pd.read_csv('human_membrane_proteins_acc2ens.txt',sep='\t')
@@ -183,6 +186,10 @@ def get_ts_gene(atlas_dir):
     for item in real_common:
         if item in membrane_ensg:
             real_common_membrane.append(item)
+
+    with open(os.path.join(atlas_dir,'real_common_membrane.txt'),'w') as f:
+        for item in real_common_membrane:
+            f.write('{}\n'.format(item))
 
 
     return real_common,real_common_membrane
@@ -362,6 +369,8 @@ with open('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/db_fasta/pe
 #     srr,tissue = k.split(';')
 #     condensed_dict.setdefault(tissue,[]).extend(list(v.values()))
 # condensed_dict = {k:set(v) for k,v in condensed_dict.items()}
+# pd.Series(data=condensed_dict,name='normal_ribo_evidenced_orf_sequences').to_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/normal/condensed_dict.txt',sep='\t')
+
 
 # col = []
 # not_in_normal_ribo = []
