@@ -16,7 +16,7 @@ Essentially, you just combine all fasta together, this can be easily done by man
 
 ### Step 2: Upload Fasta file to Tesorai platform
 
-We host all public raw files on [Tesorai platform](https://console.tesorai.com/) under `tesorai_immunoverse` project, you shall follow the instructions on creating an account. If you don't have access to the workspace, email me (guangyuan.li@nyulangone.org) or the tesorai support. 
+We host all public raw files on [Tesorai platform](https://console.tesorai.com/) under `tesorai_immunoverse` project, you shall follow the instructions on creating an account. If you don't have access to the workspace, email me (li2g2@mail.uc.edu) or the tesorai support. 
 
 Now, upload your fasta file to the project and SKCM workspace.
 
