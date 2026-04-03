@@ -8,7 +8,7 @@ This tutorial also assumes you have basic understanding of RNA-Seq data, immunop
 
 You should have some tumor RNA-Seq and some tumor immunopeptidome data at hand when you are reading this tutorial. 
 
-There are optional preprocessing steps that might be necessary, please refer to disambiguation and infer_strandedness for more.
+There are optional preprocessing steps that might be necessary, please refer to [disambiguation](#appendix-ii-disambiguation) and infer_strandedness for more.
 
 ## Step 1: Organize your input data, codes, and outputs
 
