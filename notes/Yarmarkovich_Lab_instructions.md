@@ -6,7 +6,9 @@ This tutorial assumes you already have a bigpurple account, and have permission 
 
 This tutorial also assumes you have basic understanding of RNA-Seq data, immunopeptidome data, for instance, what is FASTQ file, what is read alignment step. Although following the steps should be straightford, I'd recommend you to use `chatGPT` for all any inquiry you may have as you go through this tutorial.
 
-You should have some tumor RNA-Seq and some tumor immunopeptidome data at hand when you are reading this tutorial.
+You should have some tumor RNA-Seq and some tumor immunopeptidome data at hand when you are reading this tutorial. 
+
+There are optional preprocessing steps that might be necessary, please refer to disambiguation and infer_strandedness for more.
 
 ## Step 1: Organize your input data, codes, and outputs
 
@@ -330,6 +332,53 @@ ENST00000534336.1_1_11:65268195-65268336:+|nuORF
 # ENSG ID|ENST ID|gene symbol|TPM expresion|mutation|type of mutation|likely RNA edit event or not|variant allele frequency or clonalities
 ENSG00000206503|ENST00000376809|HLA-A|tpm:294.778174|L10V|missense_variant|possible_rna_edit_False|0.987297554779295
 ```
+
+
+## Appendix II: Disambiguation
+
+In the case of PDX RNA-Seq data, it is important to get rid of the mouse reads. We provide disambiguation function, due to the heavy resource this function needs, practically please just follow my instructions. Imagine you have 16 samples:
+
+```bash
+sample1_R1.fastq.gz
+sample1_R2.fastq.gz
+...
+...
+sample16_R1.fastq.gz
+sample16_R2.fastq.gz
+```
+
+You create a sample file (`samples.txt`) with all sample names:
+
+```
+sample1
+sample2
+...
+sample16
+```
+
+And then split into multiple files in which each only contain 4 samples, you will get a bunch of xaa, xab, etc in the folder:
+
+```bash
+split -l samples.txt
+```
+
+Now everything single time, use `template.json` and `sub_all.sbatch` to submit 4 samples to run. For `template.json`, locate `preprocess`:
+
+```json
+    "tunable_parameters":{
+        "mode":"disambiguate",
+        "PDX_DIR":"/path/to/your/rna",
+        "TMP_DIR":"/gpfs/scratch/kid",
+        "sample_file":"/path/to/xaa",
+        "cores":4,
+        "strand_sample_include_dir":"na"
+    },
+```
+
+Then `sub_all.sbatch`, make sure 150GB and 4 cores with 2 days. Then repeatedly submit xab, xac, xad, etc.
+
+
+
 
 
 
