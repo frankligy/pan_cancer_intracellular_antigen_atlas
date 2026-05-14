@@ -77,7 +77,7 @@ des_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/app/static'
 if not os.path.exists(des_dir):
     os.mkdir(des_dir)
 for c in cancers:
-    final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
+    final_path = os.path.join(root_atlas_dir,c,'antigen','0.01','final_enhanced.txt')
     final = pd.read_csv(final_path,sep='\t')
     valid_peps = wl[c]
     overwrite_peptides = real_overwrite_peptides_dict[c]
@@ -158,7 +158,9 @@ mapping = {
     'meningioma':'meningioma',
     'UCEC':'endometrioid_cancer',
     'ependymoma':'ependymoma',
-    'EWS':'erwin_sarcoma'
+    'EWS':'erwin_sarcoma',
+    'MM':'multiple_myeloma',
+    'PRAD':'prostate_cancer'
 }
 for c in mapping.keys():
     final_path = os.path.join(root_dir,mapping[c],'metadata.txt')
@@ -170,13 +172,17 @@ for c in mapping.keys():
     t1 += df.shape[0]
     t2 += len(df['biology'].unique())
 
+    if c == 'LUAD':
+        n_lung1 = df.shape[0]
+        n_lung2 = len(df['biology'].unique())
+
     final_path = os.path.join(root_dir,mapping[c],'download.sbatch')
     previous = final_path
     after = os.path.join(des_dir,'{}_download.sbatch'.format(c))
     subprocess.run('cp {} {}'.format(previous,after),shell=True)
 
-print(t1)
-print(t2)
+print(t1-n_lung1)
+print(t2-n_lung2)
 
 
 # special
@@ -190,7 +196,7 @@ subprocess.run('cp {} {}'.format(deepimmuno_result,des_dir),shell=True)
 mapping_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/mapping.txt'
 subprocess.run('cp {} {}'.format(mapping_result,des_dir),shell=True)
 
-
+sys.exit('stop')
 
 # move figures
 des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/assets'
