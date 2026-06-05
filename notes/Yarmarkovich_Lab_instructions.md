@@ -120,8 +120,8 @@ After this step, you should have a folder called `db_fasta` in your `immunoverse
 
 From here, we will talk about validating using immunopeptidomic data, You can choose workflow from below.
 
-- [Using Tesorai](#Step-4.1:-Generate-final-tabular-output-from-Tesorai-result)
-- [Using MaxQuant](#Step-4.2:-Generate-final-tabular-output-from-MaxQuant)
+- [Using Tesorai](#step-41-generate-final-tabular-output-from-tesorai-result)
+- [Using MaxQuant](#step-42-generate-final-tabular-output-from-maxquant)
 
 ## Step 4.1: Generate final tabular output from Tesorai result
 
