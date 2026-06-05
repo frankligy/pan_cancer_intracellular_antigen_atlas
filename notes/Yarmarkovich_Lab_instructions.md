@@ -114,7 +114,16 @@ And again you need to modify your `json` file, please locate to `python_script` 
 
 After this step, you should have a folder called `db_fasta` in your `immunoverse_result`, which contains sample-specific search space, please use this to search your immunopeptidome data using Tesorai.
 
-## Step 4: Generate final tabular output from Tesorai result
+---
+---
+---
+
+From here, we will talk about validating using immunopeptidomic data, You can choose workflow from below.
+
+- [Using Tesorai](#Step-4.1:-Generate-final-tabular-output-from-Tesorai-result)
+- [Using MaxQuant](#Step-4.2:-Generate-final-tabular-output-from-MaxQuant)
+
+## Step 4.1: Generate final tabular output from Tesorai result
 
 **Note: This section is more for myself, I don't expect you to use the following code, instead, please contact Ritchlynn, Xinya or Aman on how to do the post-hoc analysis, mainly how to dissect differnet types of antigens, and how to conduct binding predictions.**
 
@@ -213,6 +222,8 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 },
 "overwrite_hla_nested":true,
 ```
+
+## Step 4.2: Generate final tabular output from MaxQuant
 
 ## Step 5: Visualization
 
