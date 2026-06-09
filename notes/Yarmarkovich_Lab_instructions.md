@@ -148,10 +148,10 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
         "rna_sample1":"immuno_sample1",
         "rna_sample2":"immuno_sample2"
     },
-    "peptide_fdr":"na",
-    "hla_class":"na",
-    "dia_dir":"na",
-    "tmt_info":"na",
+    "peptide_fdr":0.01,
+    "hla_class":1,
+    "dia_dir":null,
+    "tmt_info":null,
 
     "current_maxquant_run_mqpar":"na",
 
