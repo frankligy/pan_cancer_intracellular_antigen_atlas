@@ -187,7 +187,7 @@ print(t2-n_lung2)
 
 # special
 des_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/app/static'
-freq = '/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv'
+freq = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/US_HLA_frequency.csv'
 subprocess.run('cp {} {}'.format(freq,des_dir),shell=True)
 
 deepimmuno_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/all_deepimmuno_immunogenicity.txt'
