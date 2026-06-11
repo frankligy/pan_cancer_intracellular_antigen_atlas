@@ -160,7 +160,10 @@ mapping = {
     'ependymoma':'ependymoma',
     'EWS':'erwin_sarcoma',
     'MM':'multiple_myeloma',
-    'PRAD':'prostate_cancer'
+    'PRAD':'prostate_cancer',
+    'OS':'osteosarcoma',
+    'UCS':'uterine_serous_carcinoma',
+    'schwannoma':'schwannoma'
 }
 for c in mapping.keys():
     final_path = os.path.join(root_dir,mapping[c],'metadata.txt')
