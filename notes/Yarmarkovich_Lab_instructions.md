@@ -363,11 +363,11 @@ Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_m
     "raw_dir":"/path/to/immunopeptidome_raw_data",
     "mzml_dir":"/path/to/tesorai_mzml",
     "technology_setup":"bruker",
-    "bruker_format":"na",
+    "bruker_format":"na", # only used when generating mzml from bruker .d, not for plotting
     "cores":20,
 
     "cancer":"cancer_alias",
-    "antigen_dir":"/path/to/result/immunoverse_result/antigen/other_alg",
+    "antigen_dir":"/path/to/result/immunoverse_result/antigen/other_alg", # or antigen/fdr, change accordingly
     "assets_dir":"/path/to/result/immunoverse_result/assets",
 
     "template_json":"/path/to/codes/template.json",
@@ -376,7 +376,7 @@ Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_m
 
 ```
 
-And remember, you have to modify the `python_interact/nuorf` part, you can leave others unchanged, but the `raw2bio`, see below, optionaly, you can supply the path of metadata.txt to raw2bio.
+And remember, you have to modify the `python_interact/nuorf` part, you can leave others unchanged, but the `raw2bio`.
 
 ```json
     "nuorf":{
@@ -388,7 +388,7 @@ And remember, you have to modify the `python_interact/nuorf` part, you can leave
         "raw2bio":{
             "each_raw_file1(no_file_extension)":"immuno_sample1",
             "each_d_file2(no_file_extension)":"immuno_sample2"
-        },
+        }, # or path to metadata.txt
 
         "final_path":"/gpfs/data/yarmarkovichlab/JH_AML/antigen/other_alg/final_enhanced.txt"
 
