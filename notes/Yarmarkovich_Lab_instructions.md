@@ -224,6 +224,81 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 ```
 
 ## Step 4.2: Generate final tabular output from MaxQuant
+You need (1) configure maxquant, (2) run maxquant, (3) generate mzml file, (4) optionally run rescore to boost the identification, (5) run post_maxquant to get summary, let's talk about them one by one.
+
+```bash
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/configure_maxquant.py --config template.json 
+```
+
+And your json shall look like as below for configuring maxquant:
+
+```json
+    "outdir":"/path/to/result/immunoverse_result",
+    "db_fasta":"db_fasta",
+    "immunopeptidome_dir":"/path/to/immunopeptidome_raw_data",
+    "technology":{
+        "rna_sample1":"orbitrap",
+        "rna_sample2":"bruker"
+    },
+    "rna2immuno":{
+        "rna_sample1":"immuno_sample1",
+        "rna_sample2":"immuno_sample2"
+    },
+    "peptide_fdr":0.01,
+    "hla_class":1,
+    "dia_dir":null,
+    "tmt_info":null,
+```
+
+```bash
+# 2 days, 20 cores
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/run_maxquant.sh template.json
+```
+
+And your json shall look like as below for running maxquant, one mqpar.xml a time
+
+```json
+    "current_maxquant_run_mqpar":"/path/to/mqpar.xml",
+```
+
+```bash
+module load singularity/3.1
+# if bruker, directly use set_up_rescue, if orbitrap, use set_up first and only do set_up_rescue to check and rescue
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/launch_portal.py --config template.json --running_mode set_up_rescue
+```
+
+And your json shall look like as below for generating mzml:
+
+```json
+    "raw_dir":"/path/to/immunopeptidome_raw_data",
+    "mzml_dir":"/path/toimmunopeptidome_raw_data/mzml_dir",
+    "technology_setup":"bruker",
+    "bruker_format":"hdf",
+    "cores":20,
+
+    "cancer":"cancer_alias",
+    "antigen_dir":"/path/to/result/immunoverse_result/antigen/fdr",
+    "assets_dir":"/path/to/result/immunoverse_result/assets",
+
+    "template_json":"/path/to/codes/template.json",
+    "draw_diff":true,
+    "draw_psm":true
+```
+
+To optionally run rescore
+
+Finally, to run post_maxquant:
+
+```bash
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/post_maxquant.py --config template.json
+```
+
+And your json looks like this:
+
+```bash
+
+```
+
 
 ## Step 5: Visualization
 
@@ -241,6 +316,7 @@ Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_m
     "raw_dir":"/path/to/immunopeptidome_raw_data",
     "mzml_dir":"/path/to/tesorai_mzml",
     "technology_setup":"bruker",
+    "bruker_format":"na",
     "cores":20,
 
     "cancer":"cancer_alias",
@@ -248,7 +324,7 @@ Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_m
     "assets_dir":"/path/to/result/immunoverse_result/assets",
 
     "template_json":"/path/to/codes/template.json",
-    "draw_diff":false,
+    "draw_diff":true,
     "draw_psm":true
 
 ```
