@@ -224,6 +224,9 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 ```
 
 ## Step 4.2: Generate final tabular output from MaxQuant
+
+**Note: This section is more for myself, only if you know what you are doing, otherwise, use tesorai**
+
 You need (1) configure maxquant, (2) run maxquant, (3) generate mzml file, (4) optionally run rescore to boost the identification, (5) run post_maxquant to get summary, let's talk about them one by one.
 
 ```bash
