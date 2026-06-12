@@ -287,7 +287,22 @@ And your json shall look like as below for generating mzml:
     "draw_psm":true
 ```
 
-To optionally run rescore
+To optionally run rescore:
+
+```bash
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/run_maxquant.sh template.json
+```
+
+With json as:
+
+```json
+    "rederive_mzml_dir":"/path/toimmunopeptidome_raw_data/mzml_dir",
+    "rederive_vanilla_fdr":0.05,
+    "rederive_mode":"rescore", # first run rescore, then run rewrite, if don't run rescore, then run rewrite_vanilla
+    "rederive_train_cutoff":0.05, # might need to increase if training fail
+    "rederive_rescore_fdr":0.05,
+    "rederive_samples":["rna_sample1","rna_sample2"],
+```
 
 Finally, to run post_maxquant:
 
@@ -295,10 +310,40 @@ Finally, to run post_maxquant:
 /gpfs/data/yarmarkovichlab/softwares/NeoVerse/post_maxquant.py --config template.json
 ```
 
-And your json looks like this:
+And your json looks like this, refer to tesorai section for some detailed explanation:
 
-```bash
-
+```json
+    "mode":"fdr",
+    "hla_mapping":null,
+    "overwrite_hla_dic":{
+        "CNMC":[]
+    },
+    "overwrite_hla_nested":false,
+    "overwrite_additional_hla":false,
+    "additional_hla":[],
+    "cores":20,
+    "inquiry_mode":"i",
+    "added_genes":[],
+    "use_genes_lfc":true,
+    "use_bayesTS":true,
+    "intensity_as_dict":false,
+    "other_alg_mapping":{
+        "filename":"Raw file",
+        "clean_sequence":"Sequence",
+        "scan_id":"Scan number",
+        "possible_protein_ids":"Proteins",
+        "intensity":"Precursor intensity",
+        "score":"Score",
+        "qval":"PEP",
+        "charge":"Charge",
+        "precursor_mz":"m/z",
+        "retention_time":"Retention time"
+    }, # not used for maxquant, so just keep it as is
+    "other_alg_impute":{
+        "plot_logic":"mzml",
+        "Mass analyzer":"Bruker_TIMS_TOF"
+    }, # not used for maxquant, so just keep it as is
+    "protein_delimiter":";"
 ```
 
 
@@ -312,7 +357,7 @@ Again, the actual code you need to run is as easy as:
 /gpfs/data/yarmarkovichlab/softwares/NeoVerse/launch_portal.py --config template.json --running_mode generate_figures
 ```
 
-Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_mzml`, folder structure should match immunopeptidome raw data folder, file extension should be `mzML`, then modify the json file as follow.
+Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_mzml` (or if using maxquant, the `mzml_dir`), folder structure should match immunopeptidome raw data folder, file extension should be `mzML`, then modify the json file as follow.
 
 ```json
     "raw_dir":"/path/to/immunopeptidome_raw_data",
