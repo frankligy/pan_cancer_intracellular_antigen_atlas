@@ -388,7 +388,7 @@ And remember, you have to modify the `python_interact/nuorf` part, you can leave
         "raw2bio":{
             "each_raw_file1(no_file_extension)":"immuno_sample1",
             "each_d_file2(no_file_extension)":"immuno_sample2"
-        }, # or path to metadata.txt
+        }, # or path to metadata.txt, the biology column should be immuno_sample name
 
         "final_path":"/gpfs/data/yarmarkovichlab/JH_AML/antigen/other_alg/final_enhanced.txt"
 
