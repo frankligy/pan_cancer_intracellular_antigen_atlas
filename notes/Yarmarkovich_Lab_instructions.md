@@ -261,6 +261,8 @@ And your json shall look like as below for running maxquant, one mqpar.xml a tim
     "current_maxquant_run_mqpar":"/path/to/mqpar.xml",
 ```
 
+Then you need to generate the mzml from the raw file:
+
 ```bash
 module load singularity/3.1
 # if bruker, directly use set_up_rescue, if orbitrap, use set_up first and only do set_up_rescue to check and rescue
