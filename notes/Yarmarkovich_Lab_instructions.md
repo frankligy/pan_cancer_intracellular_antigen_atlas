@@ -216,8 +216,8 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 ```json
 # Sometimes, we group multiple samples in one study
 "overwrite_hla_dic":{
-    "immuno_sample1@actual_sample1.raw":["A*32:01","B*40:01","C*03:04"],
-    "immuno_sample1@actual_sample2.raw":["A*31:01","A*32:01","B*14:01","B*27:05","C*02:02","C*08:02"],
+    "immuno_sample1@actual_sample1":["A*32:01","B*40:01","C*03:04"],
+    "immuno_sample1@actual_sample2":["A*31:01","A*32:01","B*14:01","B*27:05","C*02:02","C*08:02"],
     "immuno_sample2@actual_sample1":[]
 },
 "overwrite_hla_nested":true,
