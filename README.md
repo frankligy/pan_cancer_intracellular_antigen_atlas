@@ -18,7 +18,7 @@ deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single li
 
 * [Corresponded search space nucleotide sequence and genomic mapping](./notes/search_space_nt.md) are released as well.
 
-* We released all [Raw MS results](./notes/raw_ms_result.md) to enable reanalysis using different analytical procedures (i.e. tuning FDR stringency).
+* We released all [Raw MS results](./notes/raw_ms_result.md) to enable reanalysis using different analytical procedures (i.e. tuning FDR stringency). Additionally, the maxquant `msms.txt` and `evidence.txt`, along with search space for each cancer, constitute comprehensive spectral libraries to search corresponding DIA data.
 
 * We released [ImmunoVerse-Hub](https://immuno-verse.com/hub/) and continue to curate all public cancer immunopeptidomic datasets, please email us if we missed your dataset and we can include. Last update: `2026/06/11`. Total: `4,387` runs across `1,075` biological samples over `36` cancers.
 
