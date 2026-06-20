@@ -150,6 +150,14 @@ cancers2immuno = {
 #             os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
 #         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
 #     os.chdir(old_dir)
+#     ### evidence.txt
+#     msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "evidence.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     for msms in msms_all:
+#         d = msms.split('/')[1]
+#         if not os.path.exists(os.path.join(root_des_dir,'maxquant',c,d)):
+#             os.mkdir(os.path.join(root_des_dir,'maxquant',c,d))
+#         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir,'maxquant',c,d)),shell=True)
+#     os.chdir(old_dir)
 # ## tesorai normal
 # source = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_normal.tsv'
 # destination = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result/HLA_ligand_atlas/tesorai'
@@ -182,6 +190,15 @@ cancers2immuno = {
 #             os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
 #         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
 #     os.chdir(old_dir)
+#     ### evidence.txt
+#     msms_all = subprocess.run('find . -mindepth 4 -maxdepth 4 -type f -name "evidence.txt" -exec echo {} \;',shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     for msms in msms_all:
+#         d = msms.split('/')[1]
+#         if not os.path.exists(os.path.join(root_des_dir_normal,'maxquant',t,d)):
+#             os.mkdir(os.path.join(root_des_dir_normal,'maxquant',t,d))
+#         subprocess.run("cp {} {}".format(msms,os.path.join(root_des_dir_normal,'maxquant',t,d)),shell=True)
+#     os.chdir(old_dir)
+
 
 # # consolidated ms
 # root_des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/raw_MS_result'
@@ -256,6 +273,10 @@ for c in cancers + added_cancer:
         hla_types = os.path.join(atlas_dir,'hla_types.txt')
     else:
         hla_types = None
+    if not c in ['NBL','OS','RT','CCSK','WT','ALL_BALL_P1','CHOL','MESO','UVM','SARC']:
+        deg_file = os.path.join(atlas_dir,'deg.txt')
+    else:
+        deg_file = None
     if variant_dic[c][0] is None:
         raw_mutation = None
         map_mutation = None
@@ -269,7 +290,7 @@ for c in cancers + added_cancer:
     te_good = os.path.join(atlas_dir,'good_erv.txt')
 
     need_to_cp = [gene_tpm,gene_lfc,pathogen_all,pathogen_rec,intron_all,intron_peptide_all,intron_rec,splicing_all,splicing_rec,
-                  fusion_all,fusion_recurrent, real_common, real_common_membrane, hla_types, mutation_rec, raw_mutation, map_mutation, te_all, te_rec, te_good]
+                  fusion_all,fusion_recurrent, real_common, real_common_membrane, hla_types, deg_file, mutation_rec, raw_mutation, map_mutation, te_all, te_rec, te_good]
 
     des_dir = os.path.join(root_des_dir,c)
     if not os.path.exists(des_dir):
