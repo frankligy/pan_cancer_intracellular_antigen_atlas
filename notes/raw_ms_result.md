@@ -8,7 +8,7 @@ Specially, since we employed three procedures, namely `maxquant`, `MS2rescore` a
 Each cancer has one single tsv file. Most of the columns are self-explainable, `qval` is the FDR corrected q-value used to control FDR stringency.
 
 ## MaxQuant
-We ran MaxQuant by batches for parallelization which are more scalable. All the batches information are available in our `Table S3`. Each batch has one dedicated subfolder, two main tables, namely `msms.txt` and `msmsScans.txt` are included for each run. We refer readers to the [offical website](https://cox-labs.github.io/coxdocs/output_tables.html) on each column in the table.
+We ran MaxQuant by batches for parallelization which are more scalable. All the batches information are available in our `Table S3`. Each batch has one dedicated subfolder, two main tables, namely `msms.txt`, `msmsScans.txt` and `evidence.txt` are included for each run. We refer readers to the [offical website](https://cox-labs.github.io/coxdocs/output_tables.html) on each column in the table. This also constitute the comprehensive spectral libraries to search immunopeptidome DIA data.
 
 ## MS2Rescore
 We ran MS2Rescore on top of each MaxQuant batch, `ms2rescore.mokapot.psms.txt` file was included in each rescore run. `mokapot q-value` was used for FDR estimation as confirmed by the author (https://github.com/CompOmics/ms2rescore/discussions/196).
