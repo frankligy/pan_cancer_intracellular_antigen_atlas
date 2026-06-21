@@ -20,7 +20,7 @@ deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single li
 
 * We released all [Raw MS results](./notes/raw_ms_result.md) to enable reanalysis using different analytical procedures (i.e. tuning FDR stringency). Additionally, the maxquant `msms.txt` and `evidence.txt`, along with search space for each cancer, constitute comprehensive spectral libraries to search corresponding DIA data.
 
-* We released [ImmunoVerse-Hub](https://immuno-verse.com/hub/) and continue to curate all public cancer immunopeptidomic datasets, please email us if we missed your dataset and we can include. Last update: `2026/06/11`. Total: `4,387` runs across `1,075` biological samples over `36` cancers.
+* We released [ImmunoVerse-Hub](https://immuno-verse.com/hub/) and continue to curate all public cancer immunopeptidomic datasets, please email us if we missed your dataset and we can include. Last update: `2026/06/21`. Total: `4,416` runs across `1,076` biological samples over `36` cancers.
 
 * **Cancer Vaccine Validation**: Use [our pipeline](./notes/cancer_vaccine.md) to validate any cancer vaccine candidates in less than 1 hour.
 
