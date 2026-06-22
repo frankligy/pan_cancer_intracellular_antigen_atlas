@@ -24,11 +24,12 @@ deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single li
 
 * **Cancer Vaccine Validation**: Use [our pipeline](./notes/cancer_vaccine.md) to validate any cancer vaccine candidates in less than 1 hour.
 
-* Web portal are live (Watch [tutorial video](https://www.youtube.com/watch?v=olhNYVycJ2w)):
+* Web portal are live :
 
-    * [Immunoverse Heroku App](https://immunoverse-web-5ef5cdbdcedf.herokuapp.com/). You can type in 
-      PHOX2B peptide `QYNPIRTTF` or source gene `MYCN` to view
-    * [Immunoverse CGC App](https://cgc.sbgenomics.com/webapps). Start ImmunoVerse with 2-3 minutes for launching.
+    * [ImmunoVerse main App](https://immuno-verse.com)
+    * [ImmunoVerse Heroku App](https://immunoverse-web-5ef5cdbdcedf.herokuapp.com/). You can type in 
+      PHOX2B peptide `QYNPIRTTF` or source gene `MYCN` to view (Watch [tutorial video](https://www.youtube.com/watch?v=olhNYVycJ2w)).
+    * [ImmunoVerse CGC App](https://cgc.sbgenomics.com/webapps). Start ImmunoVerse with 2-3 minutes for launching.
 
 
 # Citation
