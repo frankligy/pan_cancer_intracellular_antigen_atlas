@@ -26,10 +26,9 @@ deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single li
 
 * Web portal are live :
 
-    * [ImmunoVerse main App](https://immuno-verse.com)
-    * [ImmunoVerse Heroku App](https://immunoverse-web-5ef5cdbdcedf.herokuapp.com/). You can type in 
-      PHOX2B peptide `QYNPIRTTF` or source gene `MYCN` to view (Watch [tutorial video](https://www.youtube.com/watch?v=olhNYVycJ2w)).
-    * [ImmunoVerse CGC App](https://cgc.sbgenomics.com/webapps). Start ImmunoVerse with 2-3 minutes for launching.
+    * [ImmunoVerse main App](https://immuno-verse.com): Default entrance.
+    * [ImmunoVerse Heroku App]: Please Watch [tutorial video](https://www.youtube.com/watch?v=olhNYVycJ2w).
+    * [ImmunoVerse CGC App](https://cgc.sbgenomics.com/webapps): Start ImmunoVerse with 2-3 minutes for launching.
 
 
 # Citation
