@@ -1,6 +1,6 @@
 # Validating vaccine candidates by Immunopeptidome (using Tesorai)
 
-We provided a pipeline to validate whether any vaccine targets can be empirically evidenced from large-scale public Immunopeptidome data. We listed steps for using this function
+Leveraging large-scale publicly available immunopeptidomic data, one can rapidly search their antigen of interest for various applications. One of them will be validating the existence of cancer vaccine candidates.
 
 <p align="center">
   <img src="../images/vaccine.png" alt="vaccine" width="400" height="400">
@@ -37,11 +37,6 @@ Now, just easily submit the job, and the search results will be sent to your ema
   <img src="../images/run_step2.png" alt="vaccine" width="500" height="500">
 </p>
 
-
-
-### Step 4: in silico validation of candidates
-
-You can follow our [CGC pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?slide=id.g33cf7e06783_0_3#slide=id.g33cf7e06783_0_3) to conduct in silico validation on the fly.
 
 
 
