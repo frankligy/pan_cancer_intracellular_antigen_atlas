@@ -70,12 +70,13 @@ mapping = {
     'schwannoma':'schwannoma'
 }
 
-root_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/ImmunoVerse_Hub'
+root_dir = '/gpfs/data/yarmarkovichlab/Frank/ImmunoVerse_Hub'
 
 df_list = []
 for c in mapping.keys():
-    print(c)
     meta = pd.read_csv(os.path.join(root_dir,'{}_metadata.txt'.format(c)),sep='\t')
+    if 'acquisition' not in meta.columns:
+        print(c)
     sbatch = os.path.join(root_dir,'{}_download.sbatch'.format(c))
     col = []
     for row in meta.itertuples():

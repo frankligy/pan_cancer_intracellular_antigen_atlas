@@ -124,7 +124,7 @@ for c in cancers:
 
 t1 = 0
 t2 = 0
-des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/ImmunoVerse_Hub'
+des_dir = '/gpfs/data/yarmarkovichlab/Frank/ImmunoVerse_Hub'
 if not os.path.exists(des_dir):
     os.mkdir(des_dir)
 mapping = {
@@ -186,7 +186,6 @@ for c in mapping.keys():
 
 print(t1-n_lung1)
 print(t2-n_lung2)
-
 
 # special
 des_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/app/static'
