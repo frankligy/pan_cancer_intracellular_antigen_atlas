@@ -170,7 +170,7 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
     },
     "overwrite_hla_dic":null,
     "overwrite_hla_nested":false,
-    "overwrite_additional_hla":false,
+    "overwrite_additional_hla":false, # you can set to true and hten additional_hla will be used instead
     "additional_hla":[],
     "cores":20,
     "inquiry_mode":"i",
@@ -204,7 +204,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 
 ```json
 # [] means no HLA annotaiton for that immunopeptidome sample
-# optionally, you can create an immunoverse-compatible metadata.txt and supply the path to this 
+# optionally, you can create an text file with at least biology and HLA columns, if no HLA, make sure no empty string filled  
 "overwrite_hla_dic":{
     "immuno_sample1":["A*32:01","B*40:01","C*03:04"],
     "immuno_sample2":[]
