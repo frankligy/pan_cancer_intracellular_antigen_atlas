@@ -177,7 +177,7 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
     "added_genes":[],
     "use_genes_lfc":true, # if not rna, use false
     "use_bayesTS":true, # if not rna, use false
-    "intensity_as_dict":false,
+    "intensity_as":"both+tuple", # both, pert or raw + tuple or scalar
     "other_alg_mapping":{
         "filename":"Raw file",
         "clean_sequence":"Sequence",
