@@ -182,7 +182,7 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
         "filename":"Raw file",
         "clean_sequence":"Sequence",
         "scan_id":"Scan number",
-        "protein_ids":"Proteins",
+        "possible_protein_ids":"Proteins",
         "intensity":"Precursor intensity",
         "score":"Score",
         "qval":"PEP",
