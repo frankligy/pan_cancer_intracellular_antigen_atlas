@@ -204,7 +204,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 
 ```json
 # [] means no HLA annotaiton for that immunopeptidome sample
-# optionally, you can create an text file with at least biology and HLA columns, if no HLA, make sure no empty string filled  
+# optionally, you can create an text file with columns with at least study, batch, sample, biology, HLA, if the HLA column is empty, make sure it is truly empty. immuno_sample will be in bio in this case.
 "overwrite_hla_dic":{
     "immuno_sample1":["A*32:01","B*40:01","C*03:04"],
     "immuno_sample2":[]
