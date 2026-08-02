@@ -170,8 +170,8 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
     },
     "overwrite_hla_dic":null,
     "overwrite_hla_nested":false,
-    "overwrite_additional_hla":false, # you can set to true and hten additional_hla will be used instead
-    "additional_hla":[],
+    "overwrite_additional_hla":false, # you can set to true and then additional_hla will be used instead
+    "additional_hla":[], # HLA-A01:01
     "cores":20,
     "inquiry_mode":"i",
     "added_genes":[],
