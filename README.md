@@ -10,7 +10,7 @@ Accompanying codes, databases, websites for the pan-cancer atlas of therapeutic 
 * Codes for generating the figures in the manuscript can be found [scripts](./scripts).
 
 * The whole [ImmunoVerse pipeline](https://docs.google.com/presentation/d/1l66tpNRdFWWut33G6rKZaKtASeh96kiIOERkDgfNzsg/edit?usp=sharing) have been 
-deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single line of code required. 
+deployed to Cancer Genome Cloud (CGC) as modularly designed docker, no single line of code required. PDF version is [here](https://frankligy.github.io/pan_cancer_intracellular_antigen_atlas/notes/deployed_pipeline_latest.pdf).
 
 * [Whole molecular catalogues](./notes/molecular_catalogue.md) and [search space](./notes/search_space.md) for each cancer, along with [normal controls](./notes/normal.md) are released.
 
