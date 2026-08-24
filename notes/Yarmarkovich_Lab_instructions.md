@@ -112,7 +112,7 @@ And again you need to modify your `json` file, please locate to `python_script` 
     "kallisto_sample":"na"
 ```
 
-After this step, you should have a folder called `db_fasta` in your `immunoverse_result`, which contains sample-specific search space. Should you use these fasta file for your tesorai search, you shall combine all fasta file into a big one, as tesorai only accept one fasta file per search.
+After this step, you should have a folder called `db_fasta` in your `immunoverse_result`, which contains sample-specific search space. Should you use these fasta files for your tesorai search, you shall combine all fasta file into a big one, as tesorai only accept one fasta file per search.
 
 ---
 ---
@@ -131,7 +131,7 @@ Again, the actual code you need to run is as easy as:
 /gpfs/data/yarmarkovichlab/softwares/NeoVerse/post_maxquant.py --config template.json
 ```
 
-Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to intimating at first glance, but most of the parameters can be left untouched (the one I left as na). And for now, I assume we will be using the tesorai `quantified_psm` file, you shall (1) remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code) under the column `filename` (no underscore), (2) remove any row that is labelled as decoy, (3) and put this processed file as `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/other_alg.txt`, my program will particularly look for this path to pick up the result file.
+Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to be intimating at first glance, but most of the parameters can be left untouched. We will be using the tesorai `quantified_psm` file, you shall (1) remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code) under the column `filename` (no underscore), (2) remove any row that is labelled as decoy (is_decoy column must be FALSE), (3) and rename this processed file as `other_alg.txt` and put as `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/other_alg.txt` (new parental folders need to be made first), my program will particularly look for this path to pick up the result file.
 
 ```json
     # technology should be keyed on rna sample name
@@ -220,6 +220,8 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 },
 "overwrite_hla_nested":true,
 ```
+
+You may now go to [Visualization section](Step-5-Visualization).
 
 ## Step 4.2: Generate final tabular output from MaxQuant
 
