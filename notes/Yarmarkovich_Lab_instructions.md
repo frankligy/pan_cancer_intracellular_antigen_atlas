@@ -221,7 +221,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 "overwrite_hla_nested":true,
 ```
 
-You may now go to [Visualization section](Step-5-Visualization).
+You may now go to [Visualization section](#step-5-visualization).
 
 ## Step 4.2: Generate final tabular output from MaxQuant
 
