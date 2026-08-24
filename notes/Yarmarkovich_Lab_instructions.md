@@ -112,7 +112,7 @@ And again you need to modify your `json` file, please locate to `python_script` 
     "kallisto_sample":"na"
 ```
 
-After this step, you should have a folder called `db_fasta` in your `immunoverse_result`, which contains sample-specific search space, please use this to search your immunopeptidome data using Tesorai.
+After this step, you should have a folder called `db_fasta` in your `immunoverse_result`, which contains sample-specific search space. Should you use these fasta file for your tesorai search, you shall combine all fasta file into a big one, as tesorai only accept one fasta file per search.
 
 ---
 ---
@@ -125,15 +125,13 @@ From here, we will talk about validating using immunopeptidomic data, You can ch
 
 ## Step 4.1: Generate final tabular output from Tesorai result
 
-**Note: This section is more for myself, I don't expect you to use the following code, instead, please contact Ritchlynn, Xinya or Aman on how to do the post-hoc analysis, mainly how to dissect differnet types of antigens, and how to conduct binding predictions.**
-
 Again, the actual code you need to run is as easy as:
 
 ```bash
 /gpfs/data/yarmarkovichlab/softwares/NeoVerse/post_maxquant.py --config template.json
 ```
 
-Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to intimating at first glance, but most of the parameters can be left untouched (the one I left as na). And for now, I assume we will be using the tesorai `quantified_psm` file, you shall remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code) under the column `filename` (no underscore), remove any row that is labelled as decoy, and put this processed file as `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/other_alg.txt`, my program will particularly look for this path to pick up the result file.
+Hard part is to modify the `json` file, please locate `maxquant` and `tunable_parameter` section, it's going to intimating at first glance, but most of the parameters can be left untouched (the one I left as na). And for now, I assume we will be using the tesorai `quantified_psm` file, you shall (1) remove the file extension (so tesorai will report file.zip or file.raw, please remove the file extension using excel or writing code) under the column `filename` (no underscore), (2) remove any row that is labelled as decoy, (3) and put this processed file as `/path/to/immunopeptidome_raw_data/sample_x/combined/txt/other_alg.txt`, my program will particularly look for this path to pick up the result file.
 
 ```json
     # technology should be keyed on rna sample name
@@ -168,16 +166,16 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
         "rna_type_sample1":"immuno_sample1",
         "rna_type_sample2":"immuno_sample2"
     },
-    "overwrite_hla_dic":null,
-    "overwrite_hla_nested":false,
+    "overwrite_hla_dic":null, # see scenario 1 below
+    "overwrite_hla_nested":false, # see scenario 2 below
     "overwrite_additional_hla":false, # you can set to true and then additional_hla will be used instead
-    "additional_hla":[], # HLA-A01:01
+    "additional_hla":[], # use format like this HLA-A01:01
     "cores":20,
     "inquiry_mode":"i",
     "added_genes":[],
-    "use_genes_lfc":true, # if not rna, use false
-    "use_bayesTS":true, # if not rna, use false
-    "intensity_as":"both+tuple", # both, pert or raw + tuple or scalar
+    "use_genes_lfc":true, # if no matched rna sample, use false
+    "use_bayesTS":true, # if no matched rna sample, use false
+    "intensity_as":"pert+scalar", # determine how the detailed_intensity column will be reported, first half (before +) controls whether to show intensity as percentile (pert), raw unitless intensity (raw) or show both of them (both), second half (after +) controls whether to only show intensity value (scalar) or show sample-intensity pair as a tuple (tuple).
     "other_alg_mapping":{
         "filename":"Raw file",
         "clean_sequence":"Sequence",
@@ -189,11 +187,11 @@ Hard part is to modify the `json` file, please locate `maxquant` and `tunable_pa
         "precursor_charge":"Charge",
         "precursor_mz":"m/z",
         "retention_time":"Retention time"
-    },
+    }, # fixed for tesorai, no need to change
     "other_alg_impute":{
         "plot_logic":"mzml",
         "Mass analyzer":"Bruker_TIMS_TOF"
-    },
+    }, # fixed for tesorai, no need to change
     "protein_delimiter":";"
 
 ```
@@ -204,7 +202,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 
 ```json
 # [] means no HLA annotaiton for that immunopeptidome sample
-# optionally, you can create an text file with columns with at least study, batch, sample, biology, HLA, if the HLA column is empty, make sure it is truly empty. immuno_sample will be in bio in this case.
+# optionally, you can create an text file with columns study, batch, sample, biology, HLA, if the HLA column is empty, make sure it is truly empty. immuno_sample will be in bio in this case.
 "overwrite_hla_dic":{
     "immuno_sample1":["A*32:01","B*40:01","C*03:04"],
     "immuno_sample2":[]
@@ -352,8 +350,6 @@ And your json looks like this, refer to tesorai section for some detailed explan
 
 ## Step 5: Visualization
 
-**Notes: This part is written for me, if you'd like to visualize the PSM, consult tesorai team, if you'd like to visualize the differential plots, consult Aman**
-
 Again, the actual code you need to run is as easy as:
 
 ```bash
@@ -373,27 +369,27 @@ Make sure you requested mzml from tesorai, and put them into `/path/to/tesorai_m
     "antigen_dir":"/path/to/result/immunoverse_result/antigen/other_alg", # or antigen/fdr, change accordingly
     "assets_dir":"/path/to/result/immunoverse_result/assets",
 
-    "template_json":"/path/to/codes/template.json",
-    "draw_diff":true,
+    "template_json":"/path/to/codes/template.json", # put the path of this very json file you are editing right now
+    "draw_diff":true, 
     "draw_psm":true
 
 ```
 
-And remember, you have to modify the `python_interact/nuorf` part, you can leave others unchanged, but the `raw2bio`.
+And remember, you have to modify the `python_interact/nuorf` part down the bottom, you can leave others unchanged, but the `raw2bio`.
 
 ```json
     "nuorf":{
-        "obj":"SLFEGIYTI",
+        "obj":"na",
 
-        "immuno_dir":"/gpfs/data/yarmarkovichlab/JH_AML/immuno",
-        "col":"percentile",
+        "immuno_dir":"na",
+        "col":"na",
 
         "raw2bio":{
             "each_raw_file1(no_file_extension)":"immuno_sample1",
             "each_d_file2(no_file_extension)":"immuno_sample2"
-        }, # or path to metadata.txt, the biology column should be immuno_sample name
+        }, # or path to the metadata file that were explained in Scenerio 1 of Step 4.1
 
-        "final_path":"/gpfs/data/yarmarkovichlab/JH_AML/antigen/other_alg/final_enhanced.txt"
+        "final_path":"na"
 
     }
 ```
@@ -406,7 +402,7 @@ You can make sure all figures are generated by running below, it should output `
 
 Lastly, you may overwrite `all_peps` and `png` in the `launch_portal.py` code temporarily, but also revert changes once you are done.
 
-Now, you can launch the portal, **please contact Aman to get instructions on how to privately host your data on ImmunoVerse**.
+Now, you can launch the portal, **please contact Aman to get instructions on how to privately host your data on ImmunoVerse**, for the latter, you shall have three things at hand: `(1) assets folder`, `(2) final_enhanced.txt`, `(3) metadata.txt`.
 
 ```bash
 /gpfs/data/yarmarkovichlab/softwares/NeoVerse/launch_portal.py --config template.json --running_mode launch_portal
