@@ -439,7 +439,7 @@ HERVH-int_dup2802|349.44|chr7:26026526-26029368:-|3.75|0.04|7781.16|4|71|3|sense
 chr11:65499306-65500372|+|0|1|seq:2|circRNA
 ```
 
-To explain `phase` in the context of splicing and circular RNA, `,` means junction:
+To explain `phase` in the context of splicing and circular RNA, `,` means junction, it should be consistent with [Ensembl exon start phase](https://www.biostars.org/p/63864/) and GTF phase:
 
 ```bash
 # phase 0
