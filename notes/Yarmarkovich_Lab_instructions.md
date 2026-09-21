@@ -332,7 +332,7 @@ And your json looks like this, refer to tesorai section for some detailed explan
     "use_genes_lfc":true, # if no matched rna sample, use false
     "use_bayesTS":true, # if no matched rna sample, use false
     "filter_non_binder":true,
-    "intensity_as_dict":"pert+scalar", # determine how the detailed_intensity column will be reported, first half (before +) controls whether to show intensity as percentile (pert), raw unitless intensity (raw) or show both of them (both), second half (after +) controls whether to only show intensity value (scalar) or show sample-intensity pair as a tuple (tuple).
+    "intensity_as":"pert+scalar", # determine how the detailed_intensity column will be reported, first half (before +) controls whether to show intensity as percentile (pert), raw unitless intensity (raw) or show both of them (both), second half (after +) controls whether to only show intensity value (scalar) or show sample-intensity pair as a tuple (tuple).
     "other_alg_mapping":{
         "filename":"Raw file",
         "clean_sequence":"Sequence",
