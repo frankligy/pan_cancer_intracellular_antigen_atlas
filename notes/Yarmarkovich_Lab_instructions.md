@@ -317,19 +317,38 @@ And your json looks like this, refer to tesorai section for some detailed explan
 
 ```json
     "mode":"fdr",
-    "hla_mapping":null,
-    "overwrite_hla_dic":{
-        "CNMC":[]
+    "hla_mapping":{
+        "rna_type_sample1":"immuno_sample1",
+        "rna_type_sample2":"immuno_sample2"
     },
-    "overwrite_hla_nested":false,
-    "overwrite_additional_hla":false,
-    "additional_hla":[],
+    "overwrite_hla_dic":null, # see scenario 1 above
+    "overwrite_hla_nested":false, # see scenario 2 above
+    "overwrite_additional_hla":false, # you can set to true and then additional_hla will be used instead
+    "additional_hla":[], # use format like this HLA-A01:01
     "cores":20,
     "inquiry_mode":"i",
     "added_genes":[],
-    "use_genes_lfc":true,
-    "use_bayesTS":true,
-    "intensity_as_dict":false,
+    "use_genes_lfc":true, # if no matched rna sample, use false
+    "use_bayesTS":true, # if no matched rna sample, use false
+    "intensity_as_dict":"pert+scalar", # determine how the detailed_intensity column will be reported, first half (before +) controls whether to show intensity as percentile (pert), raw unitless intensity (raw) or show both of them (both), second half (after +) controls whether to only show intensity value (scalar) or show sample-intensity pair as a tuple (tuple).
+    "other_alg_mapping":{
+        "filename":"Raw file",
+        "clean_sequence":"Sequence",
+        "scan_id":"Scan number",
+        "possible_protein_ids":"Proteins",
+        "intensity":"Precursor intensity",
+        "score":"Score",
+        "qval":"PEP",
+        "precursor_charge":"Charge",
+        "precursor_mz":"m/z",
+        "retention_time":"Retention time"
+    }, # fixed for tesorai, no need to change
+    "other_alg_impute":{
+        "plot_logic":"mzml",
+        "Mass analyzer":"Bruker_TIMS_TOF"
+    }, # fixed for tesorai, no need to change
+    "protein_delimiter":";"
+
     "other_alg_mapping":{
         "filename":"Raw file",
         "clean_sequence":"Sequence",
