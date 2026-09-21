@@ -203,7 +203,7 @@ In certain cases, the correspondance between your RNA and immunopeptidome is not
 
 ```json
 # [] means no HLA annotaiton for that immunopeptidome sample
-# optionally, you can create an text file with columns study, batch, sample, biology, HLA, if the HLA column is empty, make sure it is truly empty. immuno_sample will be in bio in this case.
+# optionally, you can create an text file with columns study, batch, sample, biology, HLA, if the HLA column is empty, make sure it is truly empty. immuno_sample will be in biology in this case.
 "overwrite_hla_dic":{
     "immuno_sample1":["A*32:01","B*40:01","C*03:04"],
     "immuno_sample2":[]
@@ -333,24 +333,6 @@ And your json looks like this, refer to tesorai section for some detailed explan
     "use_bayesTS":true, # if no matched rna sample, use false
     "filter_non_binder":true,
     "intensity_as_dict":"pert+scalar", # determine how the detailed_intensity column will be reported, first half (before +) controls whether to show intensity as percentile (pert), raw unitless intensity (raw) or show both of them (both), second half (after +) controls whether to only show intensity value (scalar) or show sample-intensity pair as a tuple (tuple).
-    "other_alg_mapping":{
-        "filename":"Raw file",
-        "clean_sequence":"Sequence",
-        "scan_id":"Scan number",
-        "possible_protein_ids":"Proteins",
-        "intensity":"Precursor intensity",
-        "score":"Score",
-        "qval":"PEP",
-        "precursor_charge":"Charge",
-        "precursor_mz":"m/z",
-        "retention_time":"Retention time"
-    }, # fixed for tesorai, no need to change
-    "other_alg_impute":{
-        "plot_logic":"mzml",
-        "Mass analyzer":"Bruker_TIMS_TOF"
-    }, # fixed for tesorai, no need to change
-    "protein_delimiter":";"
-
     "other_alg_mapping":{
         "filename":"Raw file",
         "clean_sequence":"Sequence",
