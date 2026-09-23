@@ -1,0 +1,1002 @@
+Run	Sample Name	SRA Study	sample_type_01	sample_type_02	sample_type_03	participant	cancer_noncancer	surgery_type	stage	histology	grade
+SRR24687496	m91n728-s506	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707452	m69n724-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_056	non_cancer	robotic_case			
+SRR24707453	m69n724-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_127	cancer	open_case	2	endometrioid	3
+SRR24707454	m69n703-s505	SRP438987	AIR	AIR	Operating Room Air	part_105	cancer	open_case	1	endometrioid	3
+SRR24707455	m69n724-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_127	cancer	open_case	2	endometrioid	3
+SRR24707456	m69n724-s510	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707457	m69n724-s508	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707458	m69n724-s507	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707459	m69n724-s506	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707460	m69n724-s505	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707461	m69n724-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707462	m69n724-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707463	m69n723-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_105	cancer	open_case	1	endometrioid	3
+SRR24707464	m69n723-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_052	non_cancer	open_case			
+SRR24707465	m69n703-s503	SRP438987	AIR	AIR	Operating Room Air	part_052	non_cancer	open_case			
+SRR24707466	m69n719-s507	SRP438987	PG	PG	Paracolic Gutter	part_014	cancer	open_case	2	serous	3
+SRR24707467	m69n719-s506	SRP438987	PG	PG	Paracolic Gutter	part_129	non_cancer	robotic_case			
+SRR24707468	m69n719-s505	SRP438987	PG - RIGHT	PG	Paracolic Gutter	part_064	cancer	open_case	4	serous	3
+SRR24707469	m69n719-s503	SRP438987	PG - LEFT	PG	Paracolic Gutter	part_064	cancer	open_case	4	serous	3
+SRR24707470	m69n719-s502	SRP438987	PG	PG	Paracolic Gutter	part_128	non_cancer	open_case			
+SRR24707471	m69n702-s510	SRP438987	AIR	AIR	Operating Room Air	part_167	cancer	open_case	4	breast cancer metastasis	
+SRR24707472	m69n718-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_086	cancer	open_case	4	adenocarcinoma	3
+SRR24707473	m69n718-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_086	cancer	open_case	4	adenocarcinoma	3
+SRR24707474	m69n718-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_184	non_cancer	open_case			
+SRR24707475	m69n718-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_184	non_cancer	open_case			
+SRR24707476	m69n718-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_010	non_cancer	robotic_case			
+SRR24707477	m69n718-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_175	non_cancer	open_case			
+SRR24707478	m69n718-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_175	non_cancer	open_case			
+SRR24707479	m69n718-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_173	non_cancer	laparoscopy			
+SRR24707480	m69n718-s511	SRP438987	PG	PG	Paracolic Gutter	part_102	cancer	open_case	3	serous	3
+SRR24707481	m69n718-s510	SRP438987	PG	PG	Paracolic Gutter	part_103	cancer	open_case	4	serous	3
+SRR24707482	m69n702-s508	SRP438987	AIR	AIR	Operating Room Air	part_142	cancer	open_case	4	serous	3
+SRR24707483	m69n718-s508	SRP438987	PG	PG	Paracolic Gutter	part_069	non_cancer	open_case		borderline	
+SRR24707484	m69n718-s507	SRP438987	PG - RIGHT	PG	Paracolic Gutter	part_145	cancer	open_case	3	serous	1
+SRR24707485	m69n718-s506	SRP438987	PG - RIGHT	PG	Paracolic Gutter	part_177	cancer	laparoscopy	3	endometrioid 	2
+SRR24707486	m69n718-s505	SRP438987	PG - LEFT	PG	Paracolic Gutter	part_177	cancer	laparoscopy	3	endometrioid 	2
+SRR24707487	m69n718-s503	SRP438987	PG	PG	Paracolic Gutter	part_106	cancer	open_case	3	serous	3
+SRR24707488	m69n718-s502	SRP438987	PG	PG	Paracolic Gutter	part_182	cancer	open_case	3	serous	3
+SRR24707489	m69n716-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_173	non_cancer	laparoscopy			
+SRR24707490	m91n727-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707491	m91n727-s513	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707492	m91n726-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707493	m91n726-s508	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707494	m91n724-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707495	m91n723-s513	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707496	m91n722-s503	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707497	m91n721-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707498	m91n721-s507	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707499	m91n720-s513	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707500	m69n711-s508	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_137	non_cancer	robotic_case			
+SRR24707501	m91n719-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707502	m91n718-s511	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707503	m91n716-s513	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707504	m91n716-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707505	m91n715-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_038	non_cancer	robotic_case			
+SRR24707506	m91n711-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_181	cancer	open_case	3	serous	3
+SRR24707507	m69n711-s502	SRP438987	LP - PORT	LP	Laparoscopic Port	part_129	non_cancer	robotic_case			
+SRR24707508	m91n710-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_172	non_cancer	open_case			
+SRR24707509	m91n710-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_100	cancer	open_case	2	serous	3
+SRR24707510	m91n710-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_085	non_cancer	open_case			
+SRR24707511	m91n710-s518	SRP438987	CERVIX	CERVIX	CERVIX	part_158	non_cancer	open_case			
+SRR24707512	m91n710-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_049	cancer	open_case	1	endometrioid	2
+SRR24707513	m91n710-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_043	non_cancer	laparoscopy			
+SRR24707514	m91n710-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_152	cancer	open_case	3	serous	3
+SRR24707515	m91n710-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_164	non_cancer	robotic_case			
+SRR24707516	m91n710-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_073	cancer	open_case	3	serous	3
+SRR24707517	m91n710-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_079	cancer	open_case	1	clear cell 	3
+SRR24707518	m69n710-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_065	non_cancer	laparoscopy			
+SRR24707519	m91n710-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_141	cancer	open_case	1	endometrioid	3
+SRR24707520	m91n710-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_170	non_cancer	robotic_case			
+SRR24707521	m91n710-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_006	non_cancer	robotic_case			
+SRR24707522	m91n710-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_018	non_cancer	open_case			
+SRR24707523	m91n710-s503	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707524	m91n710-s502	SRP438987	CERVIX	CERVIX	CERVIX	part_110	cancer	open_case	3	serous	3
+SRR24707525	m91n707-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_156	cancer	open_case	1	endometrioid	1
+SRR24707526	m91n707-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_022	cancer	open_case	3	serous	3
+SRR24707527	m91n707-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_036	cancer	open_case	3	serous	3
+SRR24707528	m91n707-s518	SRP438987	CERVIX	CERVIX	CERVIX	part_082	non_cancer	robotic_case			
+SRR24707529	m69n710-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_145	cancer	open_case	3	serous	1
+SRR24707530	m91n702-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_072	cancer	open_case	1	clear cell	3
+SRR24707531	m91n702-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_057	non_cancer	laparoscopy			
+SRR24707532	m91n702-s518	SRP438987	CERVIX	CERVIX	CERVIX	part_010	non_cancer	robotic_case			
+SRR24707533	m91n702-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_076	non_cancer	laparoscopy			
+SRR24707534	m91n702-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_129	non_cancer	robotic_case			
+SRR24707535	m69n707-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_031	non_cancer	laparoscopy			
+SRR24707536	m91n702-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_028	non_cancer	laparoscopy			
+SRR24707537	m91n702-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_102	cancer	open_case	3	serous	3
+SRR24707538	m91n702-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_173	non_cancer	laparoscopy			
+SRR24707539	m91n702-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_064	cancer	open_case	4	serous	3
+SRR24707540	m91n702-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_128	non_cancer	open_case			
+SRR24707541	m91n702-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_103	cancer	open_case	4	serous	3
+SRR24707542	m91n702-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_069	non_cancer	open_case		borderline	
+SRR24707543	m91n702-s502	SRP438987	CERVIX	CERVIX	CERVIX	part_065	non_cancer	laparoscopy			
+SRR24707544	m91n701-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_004	non_cancer	robotic_case			
+SRR24707545	m91n701-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_145	cancer	open_case	3	serous	1
+SRR24707546	m69n707-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_031	non_cancer	laparoscopy			
+SRR24707547	m91n701-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_177	cancer	laparoscopy	3	endometrioid 	2
+SRR24707548	m91n701-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_106	cancer	open_case	3	serous	3
+SRR24707549	m91n701-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_146	cancer	open_case	4	transitional cell	
+SRR24707550	m91n701-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_009	non_cancer	laparoscopy			
+SRR24707551	m91n701-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_037	non_cancer	robotic_case			
+SRR24707552	m91n701-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_136	non_cancer	laparoscopy			
+SRR24707553	m91n701-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_144	non_cancer	laparoscopy			
+SRR24707554	m81n721-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_158	non_cancer	open_case			
+SRR24707555	m81n721-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_104	cancer	open_case	4	serous	3
+SRR24707556	m81n721-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_104	cancer	open_case	4	serous	3
+SRR24707557	m81n720-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_043	non_cancer	laparoscopy			
+SRR24707558	m81n720-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_152	cancer	open_case	3	serous	3
+SRR24707559	m81n720-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_152	cancer	open_case	3	serous	3
+SRR24707560	m81n720-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_164	non_cancer	robotic_case			
+SRR24707561	m81n720-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_164	non_cancer	robotic_case			
+SRR24707562	m81n720-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_181	cancer	open_case	3	serous	3
+SRR24707563	m69n706-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_155	cancer	open_case	1	clear cell	3
+SRR24707564	m81n720-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_181	cancer	open_case	3	serous	3
+SRR24707565	m81n719-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_156	cancer	open_case	1	endometrioid	1
+SRR24707566	m81n719-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_036	cancer	open_case	3	serous	3
+SRR24707567	m81n719-s506	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_036	cancer	open_case	3	serous	3
+SRR24707568	m81n719-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_073	cancer	open_case	3	serous	3
+SRR24707569	m81n719-s503	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_073	cancer	open_case	3	serous	3
+SRR24707570	m81n719-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_079	cancer	open_case	1	clear cell 	3
+SRR24707571	m81n718-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_082	non_cancer	robotic_case			
+SRR24707572	m81n718-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_082	non_cancer	robotic_case			
+SRR24707573	m81n718-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_141	cancer	open_case	1	endometrioid	3
+SRR24707574	m69n706-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_026	cancer	open_case	2	clear cell	3
+SRR24707575	m81n718-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_141	cancer	open_case	1	endometrioid	3
+SRR24707576	m81n718-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_006	non_cancer	robotic_case			
+SRR24707577	m81n718-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_006	non_cancer	robotic_case			
+SRR24707578	m81n707-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_088	cancer	open_case	1	clear cell	3
+SRR24707579	m81n707-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_088	cancer	open_case	1	clear cell	3
+SRR24707580	m69n705-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_121	cancer	open_case	1	mucinous 	
+SRR24707581	m81n707-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_186	non_cancer	laparoscopy			
+SRR24707582	m81n707-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_186	non_cancer	laparoscopy			
+SRR24707583	m81n707-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_150	non_cancer	laparoscopy			
+SRR24707584	m81n707-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_150	non_cancer	laparoscopy			
+SRR24707585	m81n707-s508	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707586	m81n707-s506	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707587	m81n707-s505	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707588	m81n707-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707589	m81n707-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707590	m81n706-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_055	cancer	open_case	3	serous	3
+SRR24707591	m69n705-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_093	cancer	open_case	3	serous	3
+SRR24707592	m81n706-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_055	cancer	open_case	3	serous	3
+SRR24707593	m81n706-s511	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_148	non_cancer	robotic_case			
+SRR24707594	m81n706-s510	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_007	non_cancer	laparoscopy			
+SRR24707595	m81n706-s508	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_007	non_cancer	laparoscopy			
+SRR24707596	m81n706-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_143	cancer	open_case	3	serous	3
+SRR24707597	m81n706-s503	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_143	cancer	open_case	3	serous	3
+SRR24707598	m81n706-s502	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_061	non_cancer	laparoscopy			
+SRR24707599	m81n705-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_015	non_cancer	laparoscopy			
+SRR24707600	m81n705-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_015	non_cancer	laparoscopy			
+SRR24707601	m81n705-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_131	non_cancer	robotic_case			
+SRR24707602	m80n729-s508	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707603	m80n729-s505	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707604	m80n729-s502	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_043	non_cancer	laparoscopy			
+SRR24707605	m80n728-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707606	m80n728-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707607	m80n728-s517	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707608	m69n705-s507	SRP438987	AIR	AIR	Operating Room Air	part_062	non_cancer	robotic_case			
+SRR24707609	m80n728-s513	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_002	non_cancer	laparoscopy			
+SRR24707610	m80n728-s511	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_043	non_cancer	laparoscopy			
+SRR24707611	m80n728-s510	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_164	non_cancer	robotic_case			
+SRR24707612	m80n728-s508	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_164	non_cancer	robotic_case			
+SRR24707613	m80n728-s507	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_082	non_cancer	robotic_case			
+SRR24707614	m80n728-s506	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_082	non_cancer	robotic_case			
+SRR24707615	m80n728-s505	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_170	non_cancer	robotic_case			
+SRR24707616	m80n728-s503	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_006	non_cancer	robotic_case			
+SRR24707617	m80n728-s502	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_051	non_cancer	laparoscopy			
+SRR24707618	m80n727-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707619	m69n705-s506	SRP438987	AIR	AIR	Operating Room Air	part_077	non_cancer	open_case			
+SRR24707620	m80n727-s511	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_114	non_cancer	robotic_case			
+SRR24707621	m80n727-s510	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_114	non_cancer	robotic_case			
+SRR24707622	m80n727-s508	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_171	non_cancer	robotic_case			
+SRR24707623	m80n727-s507	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_016	non_cancer	robotic_case			
+SRR24707624	m80n727-s506	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_016	non_cancer	robotic_case			
+SRR24707625	m80n727-s505	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_161	non_cancer	robotic_case			
+SRR24707626	m80n719-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707627	m80n719-s515	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707628	m80n719-s511	SRP438987	AIR	AIR	Operating Room Air	part_058	non_cancer	robotic_case			
+SRR24707629	m80n719-s510	SRP438987	AIR	AIR	Operating Room Air	part_135	non_cancer	robotic_case			
+SRR24707630	m80n719-s508	SRP438987	AIR	AIR	Operating Room Air	part_025	non_cancer	laparoscopy			
+SRR24707631	m80n719-s507	SRP438987	AIR	AIR	Operating Room Air	part_094	cancer	open_case	1	endometrioid	1
+SRR24707632	m80n719-s506	SRP438987	AIR	AIR	Operating Room Air	part_088	cancer	open_case	1	clear cell	3
+SRR24707633	m80n719-s505	SRP438987	AIR	AIR	Operating Room Air	part_186	non_cancer	laparoscopy			
+SRR24707634	m80n719-s502	SRP438987	AIR	AIR	Operating Room Air	part_055	cancer	open_case	3	serous	3
+SRR24707635	m69n704-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_069	non_cancer	open_case		borderline	
+SRR24707636	m69n701-s508	SRP438987	AIR	AIR	Operating Room Air	part_057	non_cancer	laparoscopy			
+SRR24707637	m80n718-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707638	m80n718-s521	SRP438987	PG	PG	Paracolic Gutter	part_134	non_cancer	open_case			
+SRR24707639	m80n718-s520	SRP438987	PG	PG	Paracolic Gutter	part_158	non_cancer	open_case			
+SRR24707640	m80n718-s518	SRP438987	PG	PG	Paracolic Gutter	part_104	cancer	open_case	4	serous	3
+SRR24707641	m80n718-s517	SRP438987	PG	PG	Paracolic Gutter	part_043	non_cancer	laparoscopy			
+SRR24707642	m80n718-s516	SRP438987	PG	PG	Paracolic Gutter	part_152	cancer	open_case	3	serous	3
+SRR24707643	m80n718-s515	SRP438987	PG	PG	Paracolic Gutter	part_164	non_cancer	robotic_case			
+SRR24707644	m80n718-s513	SRP438987	PG	PG	Paracolic Gutter	part_181	cancer	open_case	3	serous	3
+SRR24707645	m80n718-s511	SRP438987	AIR	AIR	Operating Room Air	part_125	cancer	open_case	3	clear cell	3
+SRR24707646	m80n718-s507	SRP438987	AIR	AIR	Operating Room Air	part_015	non_cancer	laparoscopy			
+SRR24707647	m69n704-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_065	non_cancer	laparoscopy			
+SRR24707648	m80n718-s506	SRP438987	AIR	AIR	Operating Room Air	part_131	non_cancer	robotic_case			
+SRR24707649	m80n718-s505	SRP438987	AIR	AIR	Operating Room Air	part_178	cancer	open_case	4	serous 	3
+SRR24707650	m80n705-s502	SRP438987	AIR	AIR	Operating Room Air	part_060	non_cancer	laparoscopy			
+SRR24707651	m80n704-s522	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_046	non_cancer	laparoscopy			
+SRR24707652	m80n704-s521	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_046	non_cancer	laparoscopy			
+SRR24707653	m80n704-s520	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_023	cancer	open_case	1	serous 	3
+SRR24707654	m80n704-s518	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_023	cancer	open_case	1	serous 	3
+SRR24707655	m80n704-s517	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_135	non_cancer	robotic_case			
+SRR24707656	m80n704-s516	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_135	non_cancer	robotic_case			
+SRR24707657	m80n704-s515	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_186	non_cancer	laparoscopy			
+SRR24707658	m80n704-s513	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_186	non_cancer	laparoscopy			
+SRR24707659	m80n704-s511	SRP438987	AIR	AIR	Operating Room Air	part_161	non_cancer	robotic_case			
+SRR24707660	m69n703-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_004	non_cancer	robotic_case			
+SRR24707661	m80n704-s508	SRP438987	AIR	AIR	Operating Room Air	part_047	cancer	open_case	3	serous 	3
+SRR24707662	m80n704-s507	SRP438987	AIR	AIR	Operating Room Air	part_067	non_cancer	open_case			
+SRR24707663	m80n704-s506	SRP438987	AIR	AIR	Operating Room Air	part_011	non_cancer	open_case			
+SRR24707664	m80n704-s505	SRP438987	AIR	AIR	Operating Room Air	part_140	cancer	open_case	3	serous	3
+SRR24707665	m80n704-s502	SRP438987	AIR	AIR	Operating Room Air	part_019	non_cancer	laparoscopy			
+SRR24707666	m80n703-s522	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_150	non_cancer	laparoscopy			
+SRR24707667	m80n703-s521	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_150	non_cancer	laparoscopy			
+SRR24707668	m80n703-s516	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_059	non_cancer	laparoscopy			
+SRR24707669	m80n703-s515	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_059	non_cancer	laparoscopy			
+SRR24707670	m80n703-s513	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_005	non_cancer	laparoscopy			
+SRR24707671	m69n703-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_004	non_cancer	robotic_case			
+SRR24707672	m80n703-s511	SRP438987	AIR	AIR	Operating Room Air	part_098	cancer	robotic_case	3	serous	3
+SRR24707673	m80n703-s510	SRP438987	AIR	AIR	Operating Room Air	part_044	non_cancer	laparoscopy			
+SRR24707674	m69n723-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_052	non_cancer	open_case			
+SRR24707675	m69n723-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_163	non_cancer	robotic_case			
+SRR24707676	m69n723-s511	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707677	m69n723-s510	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707678	m69n723-s508	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707679	m69n723-s507	SRP438987	PG	PG	Paracolic Gutter	part_077	non_cancer	open_case			
+SRR24707680	m69n723-s506	SRP438987	PG	PG	Paracolic Gutter	part_021	non_cancer	open_case		borderline	
+SRR24707681	m69n723-s505	SRP438987	PG	PG	Paracolic Gutter	part_160	cancer	open_case	3	serous	3
+SRR24707682	m69n723-s503	SRP438987	PG	PG	Paracolic Gutter	part_075	cancer	open_case	4	adenocarcinoma	
+SRR24707683	m69n722-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_137	non_cancer	robotic_case			
+SRR24707684	m69n703-s502	SRP438987	AIR	AIR	Operating Room Air	part_163	non_cancer	robotic_case			
+SRR24707685	m69n722-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_137	non_cancer	robotic_case			
+SRR24707686	m69n722-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_081	non_cancer	laparoscopy		borderline	
+SRR24707687	m69n722-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_081	non_cancer	laparoscopy		borderline	
+SRR24707688	m69n722-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_130	cancer	open_case	3	serous	3
+SRR24707689	m69n722-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_130	cancer	open_case	3	serous	3
+SRR24707690	m69n722-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_087	cancer	open_case	3	serous	3
+SRR24707691	m69n722-s511	SRP438987	PG	PG	Paracolic Gutter	part_008	non_cancer	open_case			
+SRR24707692	m69n722-s510	SRP438987	PG	PG	Paracolic Gutter	part_090	non_cancer	open_case			
+SRR24707693	m69n722-s508	SRP438987	PG	PG	Paracolic Gutter	part_034	cancer	open_case	1	clear cell	3
+SRR24707694	m69n722-s507	SRP438987	PG	PG	Paracolic Gutter	part_159	cancer	open_case	4	serous	3
+SRR24707695	m69n702-s521	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707696	m69n722-s506	SRP438987	PG	PG	Paracolic Gutter	part_133	cancer	open_case	3	serous	3
+SRR24707697	m69n722-s505	SRP438987	PG	PG	Paracolic Gutter	part_066	cancer	open_case	3	serous	3
+SRR24707698	m69n716-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_092	non_cancer	robotic_case			
+SRR24707699	m69n716-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_092	non_cancer	robotic_case			
+SRR24707700	m69n716-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_129	non_cancer	robotic_case			
+SRR24707701	m69n702-s507	SRP438987	AIR	AIR	Operating Room Air	part_076	non_cancer	laparoscopy			
+SRR24707702	m69n716-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_129	non_cancer	robotic_case			
+SRR24707703	m69n716-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_081	non_cancer	laparoscopy		borderline	
+SRR24707704	m69n716-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_081	non_cancer	laparoscopy		borderline	
+SRR24707705	m69n716-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_017	non_cancer	laparoscopy			
+SRR24707706	m69n716-s511	SRP438987	PG	PG	Paracolic Gutter	part_151	cancer	open_case	3	serous  	3
+SRR24707707	m69n716-s510	SRP438987	PG - LEFT	PG	Paracolic Gutter	part_155	cancer	open_case	1	clear cell	3
+SRR24707708	m69n716-s508	SRP438987	PG - RIGHT	PG	Paracolic Gutter	part_026	cancer	open_case	2	clear cell	3
+SRR24707709	m69n716-s507	SRP438987	PG - LEFT	PG	Paracolic Gutter	part_026	cancer	open_case	2	clear cell	3
+SRR24707710	m69n716-s506	SRP438987	PG	PG	Paracolic Gutter	part_146	cancer	open_case	4	transitional cell	
+SRR24707711	m69n716-s505	SRP438987	PG	PG	Paracolic Gutter	part_183	non_cancer	open_case			
+SRR24707712	m69n702-s506	SRP438987	AIR	AIR	Operating Room Air	part_072	cancer	open_case	1	clear cell	3
+SRR24707713	m69n716-s503	SRP438987	PG	PG	Paracolic Gutter	part_121	cancer	open_case	1	mucinous 	
+SRR24707714	m69n716-s502	SRP438987	PG - LEFT	PG	Paracolic Gutter	part_093	cancer	open_case	3	serous	3
+SRR24707715	m69n715-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_130	cancer	open_case	3	serous	3
+SRR24707716	m69n715-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_130	cancer	open_case	3	serous	3
+SRR24707717	m69n715-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_087	cancer	open_case	3	serous	3
+SRR24707718	m69n715-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_087	cancer	open_case	3	serous	3
+SRR24707719	m69n715-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_071	non_cancer	robotic_case			
+SRR24707720	m69n715-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_071	non_cancer	robotic_case			
+SRR24707721	m69n715-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_097	cancer	laparoscopy	3	serous	3
+SRR24707722	m80n701-s518	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_115	non_cancer	open_case			
+SRR24707723	m80n701-s517	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_091	non_cancer	open_case			
+SRR24707724	m80n701-s516	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_172	non_cancer	open_case			
+SRR24707725	m80n701-s515	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_172	non_cancer	open_case			
+SRR24707726	m80n701-s513	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_085	non_cancer	open_case			
+SRR24707727	m80n701-s511	SRP438987	AIR	AIR	Operating Room Air	part_149	cancer	open_case	1	granulosa cell	
+SRR24707728	m69n703-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_145	cancer	open_case	3	serous	1
+SRR24707729	m80n701-s510	SRP438987	AIR	AIR	Operating Room Air	part_024	non_cancer	robotic_case			
+SRR24707730	m80n701-s508	SRP438987	AIR	AIR	Operating Room Air	part_132	cancer	open_case	3	serous	3
+SRR24707731	m80n701-s507	SRP438987	AIR	AIR	Operating Room Air	part_099	non_cancer	open_case			
+SRR24707732	m80n701-s506	SRP438987	AIR	AIR	Operating Room Air	part_048	cancer	open_case	3	undifferentiated 	3
+SRR24707733	m80n701-s505	SRP438987	AIR	AIR	Operating Room Air	part_050	non_cancer	open_case		borderline	
+SRR24707734	m80n701-s503	SRP438987	AIR	AIR	Operating Room Air	part_162	cancer	laparoscopy	4	breast cancer metastasis	
+SRR24707735	m69n729-s522	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707736	m69n729-s521	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707737	m69n729-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707738	m69n729-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707739	m69n703-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_145	cancer	open_case	3	serous	1
+SRR24707740	m69n729-s517	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707741	m69n729-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707742	m69n729-s515	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707743	m69n729-s513	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707744	m69n729-s511	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_039	non_cancer	laparoscopy			
+SRR24707745	m69n729-s510	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_136	non_cancer	laparoscopy			
+SRR24707746	m69n722-s503	SRP438987	PG	PG	Paracolic Gutter	part_035	non_cancer	robotic_case			
+SRR24707747	m69n721-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_087	cancer	open_case	3	serous	3
+SRR24707748	m69n721-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_071	non_cancer	robotic_case			
+SRR24707749	m69n721-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_097	cancer	laparoscopy	3	serous	3
+SRR24707750	m69n721-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_097	cancer	laparoscopy	3	serous	3
+SRR24707751	m69n721-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_176	cancer	open_case	4	serous	4
+SRR24707752	m69n721-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_176	cancer	open_case	4	serous	4
+SRR24707753	m69n721-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_040	cancer	open_case	3	serous	3
+SRR24707754	m69n702-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707755	m69n721-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_068	non_cancer	laparoscopy			
+SRR24707756	m69n721-s511	SRP438987	PG	PG	Paracolic Gutter	part_163	non_cancer	robotic_case			
+SRR24707757	m69n721-s508	SRP438987	PG	PG	Paracolic Gutter	part_137	non_cancer	robotic_case			
+SRR24707758	m69n721-s507	SRP438987	PG	PG	Paracolic Gutter	part_074	cancer	open_case	1	endometrioid	
+SRR24707759	m69n721-s506	SRP438987	PG	PG	Paracolic Gutter	part_080	non_cancer	open_case		borderline	
+SRR24707760	m69n721-s505	SRP438987	PG	PG	Paracolic Gutter	part_072	cancer	open_case	1	clear cell	3
+SRR24707761	m69n721-s503	SRP438987	PG	PG	Paracolic Gutter	part_130	cancer	open_case	3	serous	3
+SRR24707762	m69n721-s502	SRP438987	PG	PG	Paracolic Gutter	part_087	cancer	open_case	3	serous	3
+SRR24707763	m69n720-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_068	non_cancer	laparoscopy			
+SRR24707764	m69n720-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_169	non_cancer	laparoscopy			
+SRR24707765	m69n702-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707766	m69n720-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_169	non_cancer	laparoscopy			
+SRR24707767	m69n720-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_123	cancer	open_case	4	serous	3
+SRR24707768	m69n720-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_123	cancer	open_case	4	serous	3
+SRR24707769	m69n720-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_014	cancer	open_case	2	serous	3
+SRR24707770	m69n715-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_097	cancer	laparoscopy	3	serous	3
+SRR24707771	m69n702-s505	SRP438987	AIR	AIR	Operating Room Air	part_074	cancer	open_case	1	endometrioid	
+SRR24707772	m69n715-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707773	m69n715-s505	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707774	m69n715-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707775	m69n714-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_176	cancer	open_case	4	serous	4
+SRR24707776	m69n714-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_176	cancer	open_case	4	serous	4
+SRR24707777	m69n714-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_057	non_cancer	laparoscopy			
+SRR24707778	m69n714-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_057	non_cancer	laparoscopy			
+SRR24707779	m69n714-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_040	cancer	open_case	3	serous	3
+SRR24707780	m69n714-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_076	non_cancer	laparoscopy			
+SRR24707781	m69n714-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_076	non_cancer	laparoscopy			
+SRR24707782	m69n702-s503	SRP438987	AIR	AIR	Operating Room Air	part_118	non_cancer	robotic_case			
+SRR24707783	m69n714-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_068	non_cancer	laparoscopy			
+SRR24707784	m69n714-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707785	m69n714-s507	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707786	m69n714-s506	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707787	m69n714-s505	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707788	m69n714-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707789	m69n712-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_068	non_cancer	laparoscopy			
+SRR24707790	m69n712-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_169	non_cancer	laparoscopy			
+SRR24707791	m69n712-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_169	non_cancer	laparoscopy			
+SRR24707792	m69n712-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_123	cancer	open_case	4	serous	3
+SRR24707793	m69n702-s502	SRP438987	AIR	AIR	Operating Room Air	part_017	non_cancer	laparoscopy			
+SRR24707794	m91n707-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_153	non_cancer	open_case			
+SRR24707795	m91n707-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_051	non_cancer	laparoscopy			
+SRR24707796	m91n707-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_114	non_cancer	robotic_case			
+SRR24707797	m91n707-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_030	non_cancer	open_case			
+SRR24707798	m91n707-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_060	non_cancer	laparoscopy			
+SRR24707799	m91n707-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_140	cancer	open_case	3	serous	3
+SRR24707800	m91n707-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_013	non_cancer	robotic_case			
+SRR24707801	m91n707-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_019	non_cancer	laparoscopy			
+SRR24707802	m91n707-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_098	cancer	robotic_case	3	serous	3
+SRR24707803	m91n706-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_016	non_cancer	robotic_case			
+SRR24707804	m69n710-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_145	cancer	open_case	3	serous	1
+SRR24707805	m91n706-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_165	cancer	open_case	4	serous	1
+SRR24707806	m91n706-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_020	non_cancer	open_case			
+SRR24707807	m91n706-s518	SRP438987	CERVIX	CERVIX	CERVIX	part_161	non_cancer	robotic_case			
+SRR24707808	m91n706-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_047	cancer	open_case	3	serous 	3
+SRR24707809	m91n706-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_067	non_cancer	open_case			
+SRR24707810	m91n706-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_011	non_cancer	open_case			
+SRR24707811	m91n706-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_044	non_cancer	laparoscopy			
+SRR24707812	m91n706-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_124	cancer	open_case	3	serous	3
+SRR24707813	m91n706-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_148	non_cancer	robotic_case			
+SRR24707814	m91n706-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_007	non_cancer	laparoscopy			
+SRR24707815	m69n710-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_039	non_cancer	laparoscopy			
+SRR24707816	m69n701-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707817	m91n706-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_061	non_cancer	laparoscopy			
+SRR24707818	m91n701-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_182	cancer	open_case	3	serous	3
+SRR24707819	m91n701-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_151	cancer	open_case	3	serous  	3
+SRR24707820	m91n701-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_155	cancer	open_case	1	clear cell	3
+SRR24707821	m69n707-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_106	cancer	open_case	3	serous	3
+SRR24707822	m91n701-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_093	cancer	open_case	3	serous	3
+SRR24707823	m81n729-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707824	m81n729-s510	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707825	m81n729-s507	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707826	m81n729-s506	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707827	m81n729-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707828	m81n728-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_027	non_cancer	robotic_case		borderline	1
+SRR24707829	m81n728-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_185	non_cancer	laparoscopy			
+SRR24707830	m81n728-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_185	non_cancer	laparoscopy			
+SRR24707831	m81n728-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_070	cancer	open_case	1	carcinosarcoma	3
+SRR24707832	m69n707-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_106	cancer	open_case	3	serous	3
+SRR24707833	m81n728-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_070	cancer	open_case	1	carcinosarcoma	3
+SRR24707834	m81n727-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_053	cancer	open_case		mucinous 	1
+SRR24707835	m81n727-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_053	cancer	open_case		mucinous 	1
+SRR24707836	m81n727-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_095	non_cancer	open_case			
+SRR24707837	m81n727-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_095	non_cancer	open_case			
+SRR24707838	m81n727-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_126	cancer	open_case	3	serous 	3
+SRR24707839	m81n727-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_126	cancer	open_case	3	serous 	3
+SRR24707840	m81n726-s522	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707841	m81n726-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707842	m81n718-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_166	cancer	open_case	1	clear cell	3
+SRR24707843	m81n716-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_018	non_cancer	open_case			
+SRR24707844	m81n716-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_153	non_cancer	open_case			
+SRR24707845	m81n716-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_051	non_cancer	laparoscopy			
+SRR24707846	m81n716-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_051	non_cancer	laparoscopy			
+SRR24707847	m81n716-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_114	non_cancer	robotic_case			
+SRR24707848	m81n716-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_114	non_cancer	robotic_case			
+SRR24707849	m69n706-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_146	cancer	open_case	4	transitional cell	
+SRR24707850	m81n716-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_171	non_cancer	robotic_case			
+SRR24707851	m81n716-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_171	non_cancer	robotic_case			
+SRR24707852	m81n715-s518	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707853	m81n715-s515	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707854	m81n715-s513	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707855	m81n715-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707856	m81n715-s505	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707857	m81n715-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707858	m81n714-s522	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707859	m81n714-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_038	non_cancer	robotic_case			
+SRR24707860	m69n706-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_146	cancer	open_case	4	transitional cell	
+SRR24707861	m81n714-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_038	non_cancer	robotic_case			
+SRR24707862	m81n714-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_120	non_cancer	robotic_case			
+SRR24707863	m81n714-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_120	non_cancer	robotic_case			
+SRR24707864	m81n714-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_110	cancer	open_case	3	serous	3
+SRR24707865	m81n714-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_110	cancer	open_case	3	serous	3
+SRR24707866	m69n705-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_093	cancer	open_case	3	serous	3
+SRR24707867	m81n705-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_131	non_cancer	robotic_case			
+SRR24707868	m81n705-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_002	non_cancer	laparoscopy			
+SRR24707869	m81n705-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_002	non_cancer	laparoscopy			
+SRR24707870	m81n705-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_178	cancer	open_case	4	serous 	3
+SRR24707871	m81n705-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_178	cancer	open_case	4	serous 	3
+SRR24707872	m81n705-s511	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_061	non_cancer	laparoscopy			
+SRR24707873	m81n705-s510	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_033	cancer	robotic_case	1	serous	3
+SRR24707874	m81n705-s508	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_033	cancer	robotic_case	1	serous	3
+SRR24707875	m81n705-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_122	non_cancer	laparoscopy			
+SRR24707876	m81n705-s506	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_122	non_cancer	laparoscopy			
+SRR24707877	m69n705-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_009	non_cancer	laparoscopy			
+SRR24707878	m81n705-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_179	cancer	open_case	3	serous	3
+SRR24707879	m81n705-s503	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_179	cancer	open_case	3	serous	3
+SRR24707880	m81n705-s502	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_157	non_cancer	open_case		borderline	3
+SRR24707881	m81n704-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_089	non_cancer	laparoscopy			
+SRR24707882	m81n704-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_029	cancer	open_case	3	serous 	3
+SRR24707883	m81n704-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_029	cancer	open_case	3	serous 	3
+SRR24707884	m81n704-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_059	non_cancer	laparoscopy			
+SRR24707885	m81n704-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_063	non_cancer	laparoscopy			
+SRR24707886	m81n704-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_063	non_cancer	laparoscopy			
+SRR24707887	m81n704-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_139	non_cancer	robotic_case			
+SRR24707888	m69n705-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_009	non_cancer	laparoscopy			
+SRR24707889	m81n704-s511	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_157	non_cancer	open_case		borderline	3
+SRR24707890	m80n727-s503	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_161	non_cancer	robotic_case			
+SRR24707891	m80n727-s502	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_013	non_cancer	robotic_case			
+SRR24707892	m80n726-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707893	m80n726-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707894	m69n705-s505	SRP438987	AIR	AIR	Operating Room Air	part_021	non_cancer	open_case		borderline	
+SRR24707895	m80n726-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707896	m80n726-s513	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707897	m80n726-s511	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_013	non_cancer	robotic_case			
+SRR24707898	m80n726-s510	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_098	cancer	robotic_case	3	serous	3
+SRR24707899	m80n726-s508	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_098	cancer	robotic_case	3	serous	3
+SRR24707900	m80n726-s507	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_148	non_cancer	robotic_case			
+SRR24707901	m80n726-s506	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_148	non_cancer	robotic_case			
+SRR24707902	m80n726-s505	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_061	non_cancer	laparoscopy			
+SRR24707903	m80n726-s503	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_061	non_cancer	laparoscopy			
+SRR24707904	m80n726-s502	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_033	cancer	robotic_case	1	serous	3
+SRR24707905	m69n705-s503	SRP438987	AIR	AIR	Operating Room Air	part_101	non_cancer	robotic_case			
+SRR24707906	m80n724-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707907	m80n724-s521	SRP438987	PG	PG	Paracolic Gutter	part_038	non_cancer	robotic_case			
+SRR24707908	m80n724-s520	SRP438987	PG	PG	Paracolic Gutter	part_120	non_cancer	robotic_case			
+SRR24707909	m80n724-s518	SRP438987	PG	PG	Paracolic Gutter	part_096	cancer	open_case	2	serous 	3
+SRR24707910	m80n724-s516	SRP438987	PG	PG	Paracolic Gutter	part_112	cancer	open_case	2	serous 	3
+SRR24707911	m80n724-s515	SRP438987	PG	PG	Paracolic Gutter	part_023	cancer	open_case	1	serous 	3
+SRR24707912	m80n724-s513	SRP438987	PG	PG	Paracolic Gutter	part_001	cancer	open_case	4	serous	3
+SRR24707913	m80n724-s511	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_033	cancer	robotic_case	1	serous	3
+SRR24707914	m80n718-s503	SRP438987	AIR	AIR	Operating Room Air	part_089	non_cancer	laparoscopy			
+SRR24707915	m80n718-s502	SRP438987	AIR	AIR	Operating Room Air	part_059	non_cancer	laparoscopy			
+SRR24707916	m80n716-s522	SRP438987	PG	PG	Paracolic Gutter	part_156	cancer	open_case	1	endometrioid	1
+SRR24707917	m80n716-s520	SRP438987	PG	PG	Paracolic Gutter	part_036	cancer	open_case	3	serous	3
+SRR24707918	m80n716-s518	SRP438987	PG	PG	Paracolic Gutter	part_073	cancer	open_case	3	serous	3
+SRR24707919	m80n716-s517	SRP438987	PG	PG	Paracolic Gutter	part_079	cancer	open_case	1	clear cell 	3
+SRR24707920	m80n716-s516	SRP438987	PG	PG	Paracolic Gutter	part_082	non_cancer	robotic_case			
+SRR24707921	m80n716-s515	SRP438987	PG	PG	Paracolic Gutter	part_141	cancer	open_case	1	endometrioid	3
+SRR24707922	m69n704-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_065	non_cancer	laparoscopy			
+SRR24707923	m80n716-s513	SRP438987	PG	PG	Paracolic Gutter	part_006	non_cancer	robotic_case			
+SRR24707924	m80n716-s511	SRP438987	AIR	AIR	Operating Room Air	part_063	non_cancer	laparoscopy			
+SRR24707925	m80n716-s510	SRP438987	AIR	AIR	Operating Room Air	part_139	non_cancer	robotic_case			
+SRR24707926	m80n716-s508	SRP438987	AIR	AIR	Operating Room Air	part_005	non_cancer	laparoscopy			
+SRR24707927	m80n716-s507	SRP438987	AIR	AIR	Operating Room Air	part_116	non_cancer	laparoscopy			
+SRR24707928	m80n716-s506	SRP438987	AIR	AIR	Operating Room Air	part_109	cancer	open_case	4	serous	3
+SRR24707929	m80n716-s505	SRP438987	AIR	AIR	Operating Room Air	part_042	non_cancer	laparoscopy			
+SRR24707930	m80n716-s503	SRP438987	AIR	AIR	Operating Room Air	part_012	non_cancer	laparoscopy			
+SRR24707931	m80n716-s502	SRP438987	AIR	AIR	Operating Room Air	part_027	non_cancer	robotic_case		borderline	1
+SRR24707932	m80n715-s522	SRP438987	PG	PG	Paracolic Gutter	part_166	cancer	open_case	1	clear cell	3
+SRR24707933	m69n704-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_119	non_cancer	laparoscopy			
+SRR24707934	m80n715-s521	SRP438987	PG	PG	Paracolic Gutter	part_018	non_cancer	open_case			
+SRR24707935	m80n715-s520	SRP438987	PG	PG	Paracolic Gutter	part_153	non_cancer	open_case			
+SRR24707936	m80n715-s517	SRP438987	PG	PG	Paracolic Gutter	part_110	cancer	open_case	3	serous	3
+SRR24707937	m80n715-s516	SRP438987	PG	PG	Paracolic Gutter	part_016	non_cancer	robotic_case			
+SRR24707938	m69n712-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_123	cancer	open_case	4	serous	3
+SRR24707939	m69n712-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_014	cancer	open_case	2	serous	3
+SRR24707940	m69n712-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_064	cancer	open_case	4	serous	3
+SRR24707941	m69n712-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_028	non_cancer	laparoscopy			
+SRR24707942	m69n712-s511	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707943	m69n712-s510	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707944	m69n712-s508	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_101	non_cancer	robotic_case			
+SRR24707945	m69n712-s507	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_187	non_cancer	robotic_case			
+SRR24707946	m69n712-s506	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_187	non_cancer	robotic_case			
+SRR24707947	m69n712-s505	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_035	non_cancer	robotic_case			
+SRR24707948	m69n701-s522	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707949	m69n712-s503	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_035	non_cancer	robotic_case			
+SRR24707950	m69n712-s502	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_163	non_cancer	robotic_case			
+SRR24707951	m69n711-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_128	non_cancer	open_case			
+SRR24707952	m69n711-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_128	non_cancer	open_case			
+SRR24707953	m69n711-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_102	cancer	open_case	3	serous	3
+SRR24707954	m69n711-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_103	cancer	open_case	4	serous	3
+SRR24707955	m69n711-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_103	cancer	open_case	4	serous	3
+SRR24707956	m69n711-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_069	non_cancer	open_case		borderline	
+SRR24707957	m69n711-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_069	non_cancer	open_case		borderline	
+SRR24707958	m69n711-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_065	non_cancer	laparoscopy			
+SRR24707959	m69n701-s521	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24707960	m69n701-s503	SRP438987	AIR	AIR	Operating Room Air	part_173	non_cancer	laparoscopy			
+SRR24707961	m69n701-s502	SRP438987	AIR	AIR	Operating Room Air	part_129	non_cancer	robotic_case			
+SRR24707962	m91n715-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_046	non_cancer	laparoscopy			
+SRR24707963	m91n715-s508	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707964	m91n715-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_096	cancer	open_case	2	serous 	3
+SRR24707965	m91n715-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_174	non_cancer	laparoscopy			
+SRR24707966	m91n715-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_117	non_cancer	robotic_case			
+SRR24707967	m69n711-s507	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_137	non_cancer	robotic_case			
+SRR24707968	m91n715-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_001	cancer	open_case	4	serous	3
+SRR24707969	m91n715-s502	SRP438987	CERVIX	CERVIX	CERVIX	part_058	non_cancer	robotic_case			
+SRR24707970	m91n714-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_112	cancer	open_case	2	serous 	3
+SRR24707971	m91n714-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_023	cancer	open_case	1	serous 	3
+SRR24707972	m91n714-s518	SRP438987	CERVIX	CERVIX	CERVIX	part_135	non_cancer	robotic_case			
+SRR24707973	m91n714-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_025	non_cancer	laparoscopy			
+SRR24707974	m91n714-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_111	cancer	open_case	3	endometrioid	1
+SRR24707975	m91n714-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_094	cancer	open_case	1	endometrioid	1
+SRR24707976	m91n714-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_088	cancer	open_case	1	clear cell	3
+SRR24707977	m91n714-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_186	non_cancer	laparoscopy			
+SRR24707978	m69n711-s506	SRP438987	LP - PORT	LP	Laparoscopic Port	part_076	non_cancer	laparoscopy			
+SRR24707979	m91n714-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_150	non_cancer	laparoscopy			
+SRR24707980	m91n714-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_125	cancer	open_case	3	clear cell	3
+SRR24707981	m91n714-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_015	non_cancer	laparoscopy			
+SRR24707982	m91n714-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_002	non_cancer	laparoscopy			
+SRR24707983	m91n714-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_178	cancer	open_case	4	serous 	3
+SRR24707984	m91n712-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_131	non_cancer	robotic_case			
+SRR24707985	m91n712-s518	SRP438987	CERVIX	CERVIX	CERVIX	part_089	non_cancer	laparoscopy			
+SRR24707986	m91n706-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_033	cancer	robotic_case	1	serous	3
+SRR24707987	m91n706-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_122	non_cancer	laparoscopy			
+SRR24707988	m91n706-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_179	cancer	open_case	3	serous	3
+SRR24707989	m91n706-s502	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24707990	m91n705-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_168	cancer	open_case	3	serous	3
+SRR24707991	m91n705-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_143	cancer	open_case	3	serous	3
+SRR24707992	m91n705-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_157	non_cancer	open_case		borderline	3
+SRR24707993	m91n705-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_084	non_cancer	robotic_case			
+SRR24707994	m91n705-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_099	non_cancer	open_case			
+SRR24707995	m69n710-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_039	non_cancer	laparoscopy			
+SRR24707996	m91n705-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_077	non_cancer	open_case			
+SRR24707997	m91n705-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_147	non_cancer	laparoscopy			
+SRR24707998	m91n705-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_132	cancer	open_case	3	serous	3
+SRR24707999	m91n705-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_048	cancer	open_case	3	undifferentiated 	3
+SRR24708000	m91n705-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_050	non_cancer	open_case		borderline	
+SRR24708001	m91n705-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_162	cancer	laparoscopy	4	breast cancer metastasis	
+SRR24708002	m91n705-s503	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708003	m91n705-s502	SRP438987	CERVIX	CERVIX	CERVIX	part_113	non_cancer	laparoscopy			
+SRR24708004	m91n704-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_021	non_cancer	open_case		borderline	
+SRR24708005	m91n704-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_101	non_cancer	robotic_case			
+SRR24708006	m69n710-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_177	cancer	laparoscopy	3	endometrioid 	2
+SRR24708007	m91n704-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_160	cancer	open_case	3	serous	3
+SRR24708008	m91n704-s518	SRP438987	CERVIX	CERVIX	CERVIX	part_187	non_cancer	robotic_case			
+SRR24708009	m91n704-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_090	non_cancer	open_case			
+SRR24708010	m81n726-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708011	m69n707-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_182	cancer	open_case	3	serous	3
+SRR24708012	m81n726-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708013	m81n726-s513	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708014	m81n726-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_115	non_cancer	open_case			
+SRR24708015	m81n726-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_115	non_cancer	open_case			
+SRR24708016	m81n726-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_154	cancer	open_case	3	serous	3
+SRR24708017	m81n726-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_154	cancer	open_case	3	serous	3
+SRR24708018	m81n726-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_091	non_cancer	open_case			
+SRR24708019	m81n726-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_091	non_cancer	open_case			
+SRR24708020	m81n726-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_054	cancer	open_case	3	serous 	3
+SRR24708021	m81n726-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_054	cancer	open_case	3	serous 	3
+SRR24708022	m69n707-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_182	cancer	open_case	3	serous	3
+SRR24708023	m69n701-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_040	cancer	open_case	3	serous	3
+SRR24708024	m81n724-s522	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708025	m81n724-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708026	m81n724-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708027	m81n724-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_138	cancer	open_case	3	serous 	3
+SRR24708028	m81n724-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_138	cancer	open_case	3	serous 	3
+SRR24708029	m81n724-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_172	non_cancer	open_case			
+SRR24708030	m81n724-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_172	non_cancer	open_case			
+SRR24708031	m81n724-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_100	cancer	open_case	2	serous	3
+SRR24708032	m81n724-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_100	cancer	open_case	2	serous	3
+SRR24708033	m81n724-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_085	non_cancer	open_case			
+SRR24708034	m81n714-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_016	non_cancer	robotic_case			
+SRR24708035	m81n714-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_165	cancer	open_case	4	serous	1
+SRR24708036	m81n714-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_165	cancer	open_case	4	serous	1
+SRR24708037	m81n714-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_020	non_cancer	open_case			
+SRR24708038	m81n714-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_020	non_cancer	open_case			
+SRR24708039	m69n706-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_183	non_cancer	open_case			
+SRR24708040	m81n712-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_096	cancer	open_case	2	serous 	3
+SRR24708041	m81n712-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_096	cancer	open_case	2	serous 	3
+SRR24708042	m81n712-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_117	non_cancer	robotic_case			
+SRR24708043	m81n712-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_046	non_cancer	laparoscopy			
+SRR24708044	m81n712-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_046	non_cancer	laparoscopy			
+SRR24708045	m81n712-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_112	cancer	open_case	2	serous 	3
+SRR24708046	m81n712-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_060	non_cancer	laparoscopy			
+SRR24708047	m81n712-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_060	non_cancer	laparoscopy			
+SRR24708048	m81n712-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_161	non_cancer	robotic_case			
+SRR24708049	m81n712-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_161	non_cancer	robotic_case			
+SRR24708050	m69n706-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_183	non_cancer	open_case			
+SRR24708051	m81n712-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_047	cancer	open_case	3	serous 	3
+SRR24708052	m81n712-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_047	cancer	open_case	3	serous 	3
+SRR24708053	m81n711-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_112	cancer	open_case	2	serous 	3
+SRR24708054	m81n711-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_001	cancer	open_case	4	serous	3
+SRR24708055	m81n711-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_001	cancer	open_case	4	serous	3
+SRR24708056	m81n711-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_135	non_cancer	robotic_case			
+SRR24708057	m81n711-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_135	non_cancer	robotic_case			
+SRR24708058	m81n704-s510	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_045	non_cancer	robotic_case		borderline	
+SRR24708059	m81n704-s508	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_045	non_cancer	robotic_case		borderline	
+SRR24708060	m81n704-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_084	non_cancer	robotic_case			
+SRR24708061	m81n704-s506	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_084	non_cancer	robotic_case			
+SRR24708062	m81n704-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_147	non_cancer	laparoscopy			
+SRR24708063	m81n704-s503	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_147	non_cancer	laparoscopy			
+SRR24708064	m81n703-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708065	m81n703-s517	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708066	m81n703-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708067	m69n705-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_064	cancer	open_case	4	serous	3
+SRR24708068	m81n703-s515	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708069	m81n703-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708070	m81n703-s507	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708071	m81n703-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708072	m81n703-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708073	m81n702-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_139	non_cancer	robotic_case			
+SRR24708074	m81n702-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_005	non_cancer	laparoscopy			
+SRR24708075	m81n702-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_005	non_cancer	laparoscopy			
+SRR24708076	m81n702-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_116	non_cancer	laparoscopy			
+SRR24708077	m81n702-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_116	non_cancer	laparoscopy			
+SRR24708078	m69n705-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_064	cancer	open_case	4	serous	3
+SRR24708079	m81n702-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_180	cancer	open_case	1	serous	3
+SRR24708080	m81n702-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_180	cancer	open_case	1	serous	3
+SRR24708081	m81n702-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_109	cancer	open_case	4	serous	3
+SRR24708082	m80n724-s510	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_122	non_cancer	laparoscopy			
+SRR24708083	m80n724-s508	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_045	non_cancer	robotic_case		borderline	
+SRR24708084	m69n705-s502	SRP438987	AIR	AIR	Operating Room Air	part_160	cancer	open_case	3	serous	3
+SRR24708085	m80n724-s507	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_045	non_cancer	robotic_case		borderline	
+SRR24708086	m80n724-s506	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_084	non_cancer	robotic_case			
+SRR24708087	m80n724-s505	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_084	non_cancer	robotic_case			
+SRR24708088	m80n724-s503	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_162	cancer	laparoscopy	4	breast cancer metastasis	
+SRR24708089	m80n724-s502	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_162	cancer	laparoscopy	4	breast cancer metastasis	
+SRR24708090	m80n723-s522	SRP438987	PG	PG	Paracolic Gutter	part_025	non_cancer	laparoscopy			
+SRR24708091	m80n723-s521	SRP438987	PG	PG	Paracolic Gutter	part_094	cancer	open_case	1	endometrioid	1
+SRR24708092	m80n723-s520	SRP438987	PG	PG	Paracolic Gutter	part_088	cancer	open_case	1	clear cell	3
+SRR24708093	m80n723-s518	SRP438987	PG	PG	Paracolic Gutter	part_055	cancer	open_case	3	serous	3
+SRR24708094	m80n723-s516	SRP438987	PG	PG	Paracolic Gutter	part_015	non_cancer	laparoscopy			
+SRR24708095	m69n704-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_028	non_cancer	laparoscopy			
+SRR24708096	m80n723-s515	SRP438987	PG	PG	Paracolic Gutter	part_131	non_cancer	robotic_case			
+SRR24708097	m80n723-s513	SRP438987	PG	PG	Paracolic Gutter	part_178	cancer	open_case	4	serous 	3
+SRR24708098	m80n723-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708099	m80n722-s522	SRP438987	PG	PG	Paracolic Gutter	part_029	cancer	open_case	3	serous 	3
+SRR24708100	m80n722-s521	SRP438987	PG	PG	Paracolic Gutter	part_059	non_cancer	laparoscopy			
+SRR24708101	m80n722-s520	SRP438987	PG	PG	Paracolic Gutter	part_139	non_cancer	robotic_case			
+SRR24708102	m80n722-s518	SRP438987	PG	PG	Paracolic Gutter	part_180	cancer	open_case	1	serous	3
+SRR24708103	m80n722-s517	SRP438987	PG	PG	Paracolic Gutter	part_109	cancer	open_case	4	serous	3
+SRR24708104	m80n722-s516	SRP438987	PG	PG	Paracolic Gutter	part_003	cancer	open_case	3	serous 	3
+SRR24708105	m80n722-s515	SRP438987	PG	PG	Paracolic Gutter	part_185	non_cancer	laparoscopy			
+SRR24708106	m80n715-s515	SRP438987	PG	PG	Paracolic Gutter	part_165	cancer	open_case	4	serous	1
+SRR24708107	m80n715-s513	SRP438987	PG	PG	Paracolic Gutter	part_020	non_cancer	open_case			
+SRR24708108	m80n715-s511	SRP438987	AIR	AIR	Operating Room Air	part_185	non_cancer	laparoscopy			
+SRR24708109	m80n715-s508	SRP438987	AIR	AIR	Operating Room Air	part_107	non_cancer	open_case			
+SRR24708110	m80n715-s507	SRP438987	AIR	AIR	Operating Room Air	part_070	cancer	open_case	1	carcinosarcoma	3
+SRR24708111	m80n715-s506	SRP438987	AIR	AIR	Operating Room Air	part_053	cancer	open_case		mucinous 	1
+SRR24708112	m69n704-s511	SRP438987	AIR	AIR	Operating Room Air	part_075	cancer	open_case	4	adenocarcinoma	
+SRR24708113	m80n715-s505	SRP438987	AIR	AIR	Operating Room Air	part_095	non_cancer	open_case			
+SRR24708114	m80n715-s503	SRP438987	AIR	AIR	Operating Room Air	part_126	cancer	open_case	3	serous 	3
+SRR24708115	m80n714-s522	SRP438987	PG	PG	Paracolic Gutter	part_161	non_cancer	robotic_case			
+SRR24708116	m80n714-s521	SRP438987	PG	PG	Paracolic Gutter	part_047	cancer	open_case	3	serous 	3
+SRR24708117	m80n714-s520	SRP438987	PG	PG	Paracolic Gutter	part_067	non_cancer	open_case			
+SRR24708118	m80n714-s518	SRP438987	PG	PG	Paracolic Gutter	part_011	non_cancer	open_case			
+SRR24708119	m80n714-s517	SRP438987	PG	PG	Paracolic Gutter	part_140	cancer	open_case	3	serous	3
+SRR24708120	m80n714-s516	SRP438987	PG	PG	Paracolic Gutter	part_013	non_cancer	robotic_case			
+SRR24708121	m80n714-s515	SRP438987	PG	PG	Paracolic Gutter	part_098	cancer	robotic_case	3	serous	3
+SRR24708122	m80n714-s513	SRP438987	PG	PG	Paracolic Gutter	part_124	cancer	open_case	3	serous	3
+SRR24708123	m69n704-s510	SRP438987	AIR	AIR	Operating Room Air	part_187	non_cancer	robotic_case			
+SRR24708124	m80n714-s511	SRP438987	AIR	AIR	Operating Room Air	part_115	non_cancer	open_case			
+SRR24708125	m80n714-s510	SRP438987	AIR	AIR	Operating Room Air	part_154	cancer	open_case	3	serous	3
+SRR24708126	m80n714-s508	SRP438987	AIR	AIR	Operating Room Air	part_091	non_cancer	open_case			
+SRR24708127	m80n714-s507	SRP438987	AIR	AIR	Operating Room Air	part_054	cancer	open_case	3	serous 	3
+SRR24708128	m80n714-s506	SRP438987	AIR	AIR	Operating Room Air	part_138	cancer	open_case	3	serous 	3
+SRR24708129	m80n714-s505	SRP438987	AIR	AIR	Operating Room Air	part_172	non_cancer	open_case			
+SRR24708130	m80n711-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708131	m80n711-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708132	m69n704-s506	SRP438987	AIR	AIR	Operating Room Air	part_034	cancer	open_case	1	clear cell	3
+SRR24708133	m80n710-s522	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708134	m80n710-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708135	m80n710-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708136	m80n710-s511	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708137	m80n710-s510	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708138	m80n710-s507	SRP438987	AIR	AIR	Operating Room Air	part_134	non_cancer	open_case			
+SRR24708139	m80n710-s506	SRP438987	AIR	AIR	Operating Room Air	part_158	non_cancer	open_case			
+SRR24708140	m80n710-s503	SRP438987	AIR	AIR	Operating Room Air	part_104	cancer	open_case	4	serous	3
+SRR24708141	m80n710-s502	SRP438987	AIR	AIR	Operating Room Air	part_152	cancer	open_case	3	serous	3
+SRR24708142	m80n707-s517	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708143	m69n704-s505	SRP438987	AIR	AIR	Operating Room Air	part_159	cancer	open_case	4	serous	3
+SRR24708144	m80n707-s510	SRP438987	AIR	AIR	Operating Room Air	part_181	cancer	open_case	3	serous	3
+SRR24708145	m80n707-s508	SRP438987	AIR	AIR	Operating Room Air	part_156	cancer	open_case	1	endometrioid	1
+SRR24708146	m80n707-s507	SRP438987	AIR	AIR	Operating Room Air	part_022	cancer	open_case	3	serous	3
+SRR24708147	m80n707-s505	SRP438987	AIR	AIR	Operating Room Air	part_036	cancer	open_case	3	serous	3
+SRR24708148	m80n707-s503	SRP438987	AIR	AIR	Operating Room Air	part_073	cancer	open_case	3	serous	3
+SRR24708149	m80n707-s502	SRP438987	AIR	AIR	Operating Room Air	part_079	cancer	open_case	1	clear cell 	3
+SRR24708150	m80n706-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708151	m80n706-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708152	m80n706-s513	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708153	m80n706-s511	SRP438987	AIR	AIR	Operating Room Air	part_082	non_cancer	robotic_case			
+SRR24708154	m69n729-s508	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_136	non_cancer	laparoscopy			
+SRR24708155	m69n729-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_144	non_cancer	laparoscopy			
+SRR24708156	m69n729-s506	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_144	non_cancer	laparoscopy			
+SRR24708157	m69n729-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_031	non_cancer	laparoscopy			
+SRR24708158	m69n703-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_039	non_cancer	laparoscopy			
+SRR24708159	m69n729-s503	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_031	non_cancer	laparoscopy			
+SRR24708160	m69n729-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_106	cancer	open_case	3	serous	3
+SRR24708161	m69n728-s522	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708162	m69n728-s521	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708163	m69n728-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_113	non_cancer	laparoscopy			
+SRR24708164	m69n728-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_113	non_cancer	laparoscopy			
+SRR24708165	m69n728-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_062	non_cancer	robotic_case			
+SRR24708166	m69n728-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_062	non_cancer	robotic_case			
+SRR24708167	m69n728-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_077	non_cancer	open_case			
+SRR24708168	m69n728-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_077	non_cancer	open_case			
+SRR24708169	m69n703-s511	SRP438987	AIR	AIR	Operating Room Air	part_035	non_cancer	robotic_case			
+SRR24708170	m69n701-s506	SRP438987	AIR	AIR	Operating Room Air	part_040	cancer	open_case	3	serous	3
+SRR24708171	m69n728-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_182	cancer	open_case	3	serous	3
+SRR24708172	m69n728-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_182	cancer	open_case	3	serous	3
+SRR24708173	m69n728-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_151	cancer	open_case	3	serous  	3
+SRR24708174	m69n728-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_155	cancer	open_case	1	clear cell	3
+SRR24708175	m69n728-s506	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_155	cancer	open_case	1	clear cell	3
+SRR24708176	m69n728-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_026	cancer	open_case	2	clear cell	3
+SRR24708177	m69n728-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_146	cancer	open_case	4	transitional cell	
+SRR24708178	m69n728-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_146	cancer	open_case	4	transitional cell	
+SRR24708179	m69n727-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_021	non_cancer	open_case		borderline	
+SRR24708180	m69n727-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_021	non_cancer	open_case		borderline	
+SRR24708181	m69n703-s510	SRP438987	AIR	AIR	Operating Room Air	part_056	non_cancer	robotic_case			
+SRR24708182	m69n727-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_101	non_cancer	robotic_case			
+SRR24708183	m69n727-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_101	non_cancer	robotic_case			
+SRR24708184	m69n727-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_160	cancer	open_case	3	serous	3
+SRR24708185	m69n727-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_160	cancer	open_case	3	serous	3
+SRR24708186	m69n727-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_075	cancer	open_case	4	adenocarcinoma	
+SRR24708187	m69n727-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_075	cancer	open_case	4	adenocarcinoma	
+SRR24708188	m69n727-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_183	non_cancer	open_case			
+SRR24708189	m69n727-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_183	non_cancer	open_case			
+SRR24708190	m69n727-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_121	cancer	open_case	1	mucinous 	
+SRR24708191	m69n727-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_121	cancer	open_case	1	mucinous 	
+SRR24708192	m69n703-s508	SRP438987	AIR	AIR	Operating Room Air	part_127	cancer	open_case	2	endometrioid	3
+SRR24708193	m69n727-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_093	cancer	open_case	3	serous	3
+SRR24708194	m69n727-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_093	cancer	open_case	3	serous	3
+SRR24708195	m69n727-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_009	non_cancer	laparoscopy			
+SRR24708196	m69n727-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_009	non_cancer	laparoscopy			
+SRR24708197	m69n726-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_187	non_cancer	robotic_case			
+SRR24708198	m69n726-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_187	non_cancer	robotic_case			
+SRR24708199	m69n726-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_008	non_cancer	open_case			
+SRR24708200	m69n726-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_008	non_cancer	open_case			
+SRR24708201	m69n726-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_090	non_cancer	open_case			
+SRR24708202	m69n720-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_074	cancer	open_case	1	endometrioid	
+SRR24708203	m69n720-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_074	cancer	open_case	1	endometrioid	
+SRR24708204	m69n720-s511	SRP438987	PG	PG	Paracolic Gutter	part_086	cancer	open_case	4	adenocarcinoma	3
+SRR24708205	m69n720-s510	SRP438987	PG - RIGHT	PG	Paracolic Gutter	part_071	non_cancer	robotic_case			
+SRR24708206	m69n720-s508	SRP438987	PG - LEFT	PG	Paracolic Gutter	part_071	non_cancer	robotic_case			
+SRR24708207	m69n720-s507	SRP438987	PG	PG	Paracolic Gutter	part_097	cancer	laparoscopy	3	serous	3
+SRR24708208	m69n702-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708209	m69n701-s505	SRP438987	AIR	AIR	Operating Room Air	part_010	non_cancer	robotic_case			
+SRR24708210	m69n720-s506	SRP438987	PG	PG	Paracolic Gutter	part_176	cancer	open_case	4	serous	4
+SRR24708211	m69n720-s505	SRP438987	PG	PG	Paracolic Gutter	part_184	non_cancer	open_case			
+SRR24708212	m69n720-s503	SRP438987	PG	PG	Paracolic Gutter	part_040	cancer	open_case	3	serous	3
+SRR24708213	m69n720-s502	SRP438987	PG	PG	Paracolic Gutter	part_010	non_cancer	robotic_case			
+SRR24708214	m69n719-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_142	cancer	open_case	4	serous	3
+SRR24708215	m69n719-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_142	cancer	open_case	4	serous	3
+SRR24708216	m69n719-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_017	non_cancer	laparoscopy			
+SRR24708217	m69n719-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_080	non_cancer	open_case		borderline	
+SRR24708218	m69n719-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_080	non_cancer	open_case		borderline	
+SRR24708219	m69n719-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_072	cancer	open_case	1	clear cell	3
+SRR24708220	m69n702-s513	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708221	m69n719-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_118	non_cancer	robotic_case			
+SRR24708222	m69n719-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_118	non_cancer	robotic_case			
+SRR24708223	m69n719-s511	SRP438987	PG	PG	Paracolic Gutter	part_076	non_cancer	laparoscopy			
+SRR24708224	m69n719-s510	SRP438987	PG	PG	Paracolic Gutter	part_123	cancer	open_case	4	serous	3
+SRR24708225	m69n719-s508	SRP438987	PG	PG	Paracolic Gutter	part_175	non_cancer	open_case			
+SRR24708226	m91n712-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_029	cancer	open_case	3	serous 	3
+SRR24708227	m91n712-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_059	non_cancer	laparoscopy			
+SRR24708228	m91n712-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_063	non_cancer	laparoscopy			
+SRR24708229	m69n711-s505	SRP438987	LP - PORT	LP	Laparoscopic Port	part_010	non_cancer	robotic_case			
+SRR24708230	m91n712-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_042	non_cancer	laparoscopy			
+SRR24708231	m91n712-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_139	non_cancer	robotic_case			
+SRR24708232	m91n712-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_005	non_cancer	laparoscopy			
+SRR24708233	m91n712-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_180	cancer	open_case	1	serous	3
+SRR24708234	m91n712-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_109	cancer	open_case	4	serous	3
+SRR24708235	m91n712-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_185	non_cancer	laparoscopy			
+SRR24708236	m91n712-s503	SRP438987	CERVIX	CERVIX	CERVIX	part_107	non_cancer	open_case			
+SRR24708237	m91n712-s502	SRP438987	CERVIX	CERVIX	CERVIX	part_095	non_cancer	open_case			
+SRR24708238	m91n711-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_012	non_cancer	laparoscopy			
+SRR24708239	m91n711-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_027	non_cancer	robotic_case		borderline	1
+SRR24708240	m69n711-s503	SRP438987	LP - PORT	LP	Laparoscopic Port	part_092	non_cancer	robotic_case			
+SRR24708241	m91n711-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_070	cancer	open_case	1	carcinosarcoma	3
+SRR24708242	m91n711-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_115	non_cancer	open_case			
+SRR24708243	m91n711-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_154	cancer	open_case	3	serous	3
+SRR24708244	m91n711-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_054	cancer	open_case	3	serous 	3
+SRR24708245	m91n711-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_091	non_cancer	open_case			
+SRR24708246	m91n711-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_138	cancer	open_case	3	serous 	3
+SRR24708247	m91n711-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_041	cancer	open_case	3	serous	3
+SRR24708248	m91n711-s506	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708249	m91n711-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_104	cancer	open_case	4	serous	3
+SRR24708250	m91n704-s516	SRP438987	CERVIX	CERVIX	CERVIX	part_159	cancer	open_case	4	serous	3
+SRR24708251	m91n704-s515	SRP438987	CERVIX	CERVIX	CERVIX	part_133	cancer	open_case	3	serous	3
+SRR24708252	m91n704-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_066	cancer	open_case	3	serous	3
+SRR24708253	m91n704-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_075	cancer	open_case	4	adenocarcinoma	
+SRR24708254	m91n704-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_008	non_cancer	open_case			
+SRR24708255	m91n704-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_035	non_cancer	robotic_case			
+SRR24708256	m91n704-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_163	non_cancer	robotic_case			
+SRR24708257	m69n710-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_144	non_cancer	laparoscopy			
+SRR24708258	m91n704-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_167	cancer	open_case	4	breast cancer metastasis	
+SRR24708259	m91n704-s502	SRP438987	CERVIX	CERVIX	CERVIX	part_108	non_cancer	laparoscopy			
+SRR24708260	m91n703-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_056	non_cancer	robotic_case			
+SRR24708261	m91n703-s521	SRP438987	CERVIX	CERVIX	CERVIX	part_032	non_cancer	laparoscopy			
+SRR24708262	m91n703-s520	SRP438987	CERVIX	CERVIX	CERVIX	part_105	cancer	open_case	1	endometrioid	3
+SRR24708263	m91n703-s517	SRP438987	CERVIX	CERVIX	CERVIX	part_137	non_cancer	robotic_case			
+SRR24708264	m91n703-s513	SRP438987	CERVIX	CERVIX	CERVIX	part_017	non_cancer	laparoscopy			
+SRR24708265	m91n703-s511	SRP438987	CERVIX	CERVIX	CERVIX	part_087	cancer	open_case	3	serous	3
+SRR24708266	m91n703-s510	SRP438987	CERVIX	CERVIX	CERVIX	part_086	cancer	open_case	4	adenocarcinoma	3
+SRR24708267	m91n703-s508	SRP438987	CERVIX	CERVIX	CERVIX	part_097	cancer	laparoscopy	3	serous	3
+SRR24708268	m69n710-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_144	non_cancer	laparoscopy			
+SRR24708269	m91n703-s507	SRP438987	CERVIX	CERVIX	CERVIX	part_176	cancer	open_case	4	serous	4
+SRR24708270	m91n703-s506	SRP438987	CERVIX	CERVIX	CERVIX	part_184	non_cancer	open_case			
+SRR24708271	m91n703-s505	SRP438987	CERVIX	CERVIX	CERVIX	part_083	cancer	robotic_case	1	endometrioid	2
+SRR24708272	m91n703-s502	SRP438987	CERVIX	CERVIX	CERVIX	part_169	non_cancer	laparoscopy			
+SRR24708273	m91n702-s522	SRP438987	CERVIX	CERVIX	CERVIX	part_080	non_cancer	open_case		borderline	
+SRR24708274	m69n707-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_151	cancer	open_case	3	serous  	3
+SRR24708275	m81n724-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_085	non_cancer	open_case			
+SRR24708276	m81n723-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_023	cancer	open_case	1	serous 	3
+SRR24708277	m81n723-s521	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708278	m81n723-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708279	m81n723-s517	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708280	m81n723-s516	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708281	m81n723-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_168	cancer	open_case	3	serous	3
+SRR24708282	m81n723-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_168	cancer	open_case	3	serous	3
+SRR24708283	m81n723-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708284	m81n723-s508	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708285	m69n707-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_151	cancer	open_case	3	serous  	3
+SRR24708286	m81n723-s505	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708287	m81n722-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708288	m81n722-s510	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708289	m81n722-s508	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708290	m81n722-s507	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708291	m81n722-s506	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708292	m81n722-s505	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708293	m81n722-s503	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708294	m81n722-s502	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708295	m81n721-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_134	non_cancer	open_case			
+SRR24708296	m69n706-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_155	cancer	open_case	1	clear cell	3
+SRR24708297	m81n721-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_158	non_cancer	open_case			
+SRR24708298	m81n711-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_025	non_cancer	laparoscopy			
+SRR24708299	m81n711-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_025	non_cancer	laparoscopy			
+SRR24708300	m81n711-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_067	non_cancer	open_case			
+SRR24708301	m69n706-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_121	cancer	open_case	1	mucinous 	
+SRR24708302	m69n701-s511	SRP438987	AIR	AIR	Operating Room Air	part_080	non_cancer	open_case		borderline	
+SRR24708303	m81n711-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_067	non_cancer	open_case			
+SRR24708304	m81n711-s508	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_011	non_cancer	open_case			
+SRR24708305	m81n711-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_011	non_cancer	open_case			
+SRR24708306	m81n711-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_140	cancer	open_case	3	serous	3
+SRR24708307	m81n711-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_140	cancer	open_case	3	serous	3
+SRR24708308	m81n711-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_013	non_cancer	robotic_case			
+SRR24708309	m81n711-s502	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_013	non_cancer	robotic_case			
+SRR24708310	m81n710-s518	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708311	m81n710-s515	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708312	m81n710-s511	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_019	non_cancer	laparoscopy			
+SRR24708313	m69n706-s510	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708314	m81n710-s510	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_019	non_cancer	laparoscopy			
+SRR24708315	m81n710-s507	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_098	cancer	robotic_case	3	serous	3
+SRR24708316	m81n710-s506	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_044	non_cancer	laparoscopy			
+SRR24708317	m81n710-s505	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_044	non_cancer	laparoscopy			
+SRR24708318	m81n710-s503	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_124	cancer	open_case	3	serous	3
+SRR24708319	m81n710-s502	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_148	non_cancer	robotic_case			
+SRR24708320	m81n707-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_094	cancer	open_case	1	endometrioid	1
+SRR24708321	m81n707-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_094	cancer	open_case	1	endometrioid	1
+SRR24708322	m81n702-s510	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_149	cancer	open_case	1	granulosa cell	
+SRR24708323	m81n702-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_024	non_cancer	robotic_case			
+SRR24708324	m81n702-s506	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_024	non_cancer	robotic_case			
+SRR24708325	m81n702-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_132	cancer	open_case	3	serous	3
+SRR24708326	m81n702-s503	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_132	cancer	open_case	3	serous	3
+SRR24708327	m81n702-s502	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_099	non_cancer	open_case			
+SRR24708328	m81n701-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_109	cancer	open_case	4	serous	3
+SRR24708329	m69n705-s513	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_028	non_cancer	laparoscopy			
+SRR24708330	m81n701-s521	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_078	non_cancer	robotic_case			
+SRR24708331	m81n701-s520	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_078	non_cancer	robotic_case			
+SRR24708332	m81n701-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_003	cancer	open_case	3	serous 	3
+SRR24708333	m81n701-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_003	cancer	open_case	3	serous 	3
+SRR24708334	m81n701-s516	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_042	non_cancer	laparoscopy			
+SRR24708335	m81n701-s515	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_042	non_cancer	laparoscopy			
+SRR24708336	m81n701-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_012	non_cancer	laparoscopy			
+SRR24708337	m81n701-s511	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_099	non_cancer	open_case			
+SRR24708338	m81n701-s510	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_048	cancer	open_case	3	undifferentiated 	3
+SRR24708339	m81n701-s508	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_048	cancer	open_case	3	undifferentiated 	3
+SRR24708340	m69n705-s508	SRP438987	AIR	AIR	Operating Room Air	part_113	non_cancer	laparoscopy			
+SRR24708341	m69n701-s510	SRP438987	AIR	AIR	Operating Room Air	part_086	cancer	open_case	4	adenocarcinoma	3
+SRR24708342	m81n701-s507	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_050	non_cancer	open_case		borderline	
+SRR24708343	m81n701-s506	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_050	non_cancer	open_case		borderline	
+SRR24708344	m81n701-s505	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_162	cancer	laparoscopy	4	breast cancer metastasis	
+SRR24708345	m81n701-s503	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_162	cancer	laparoscopy	4	breast cancer metastasis	
+SRR24708346	m69n704-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_128	non_cancer	open_case			
+SRR24708347	m80n722-s513	SRP438987	PG	PG	Paracolic Gutter	part_070	cancer	open_case	1	carcinosarcoma	3
+SRR24708348	m80n722-s505	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708349	m80n722-s502	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708350	m80n721-s522	SRP438987	PG	PG	Paracolic Gutter	part_053	cancer	open_case		mucinous 	1
+SRR24708351	m80n721-s521	SRP438987	PG	PG	Paracolic Gutter	part_126	cancer	open_case	3	serous 	3
+SRR24708352	m80n721-s518	SRP438987	PG	PG	Paracolic Gutter	part_154	cancer	open_case	3	serous	3
+SRR24708353	m80n721-s517	SRP438987	PG	PG	Paracolic Gutter	part_054	cancer	open_case	3	serous 	3
+SRR24708354	m80n721-s516	SRP438987	PG	PG	Paracolic Gutter	part_138	cancer	open_case	3	serous 	3
+SRR24708355	m80n721-s515	SRP438987	PG	PG	Paracolic Gutter	part_172	non_cancer	open_case			
+SRR24708356	m80n721-s513	SRP438987	PG	PG	Paracolic Gutter	part_100	cancer	open_case	2	serous	3
+SRR24708357	m69n704-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_102	cancer	open_case	3	serous	3
+SRR24708358	m80n721-s503	SRP438987	AIR	AIR	Operating Room Air	part_038	non_cancer	robotic_case			
+SRR24708359	m80n721-s502	SRP438987	AIR	AIR	Operating Room Air	part_120	non_cancer	robotic_case			
+SRR24708360	m80n720-s520	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708361	m80n720-s517	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708362	m80n720-s511	SRP438987	AIR	AIR	Operating Room Air	part_096	cancer	open_case	2	serous 	3
+SRR24708363	m80n720-s508	SRP438987	AIR	AIR	Operating Room Air	part_174	non_cancer	laparoscopy			
+SRR24708364	m80n720-s507	SRP438987	AIR	AIR	Operating Room Air	part_117	non_cancer	robotic_case			
+SRR24708365	m80n720-s505	SRP438987	AIR	AIR	Operating Room Air	part_046	non_cancer	laparoscopy			
+SRR24708366	m80n720-s503	SRP438987	AIR	AIR	Operating Room Air	part_023	cancer	open_case	1	serous 	3
+SRR24708367	m80n720-s502	SRP438987	AIR	AIR	Operating Room Air	part_001	cancer	open_case	4	serous	3
+SRR24708368	m69n704-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_069	non_cancer	open_case		borderline	
+SRR24708369	m80n719-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708370	m80n714-s503	SRP438987	AIR	AIR	Operating Room Air	part_100	cancer	open_case	2	serous	3
+SRR24708371	m80n714-s502	SRP438987	AIR	AIR	Operating Room Air	part_085	non_cancer	open_case			
+SRR24708372	m80n712-s522	SRP438987	PG	PG	Paracolic Gutter	part_148	non_cancer	robotic_case			
+SRR24708373	m80n712-s521	SRP438987	PG	PG	Paracolic Gutter	part_168	cancer	open_case	3	serous	3
+SRR24708374	m69n704-s508	SRP438987	AIR	AIR	Operating Room Air	part_008	non_cancer	open_case			
+SRR24708375	m80n712-s518	SRP438987	PG	PG	Paracolic Gutter	part_143	cancer	open_case	3	serous	3
+SRR24708376	m80n712-s517	SRP438987	PG	PG	Paracolic Gutter	part_061	non_cancer	laparoscopy			
+SRR24708377	m80n712-s516	SRP438987	PG	PG	Paracolic Gutter	part_033	cancer	robotic_case	1	serous	3
+SRR24708378	m80n712-s515	SRP438987	PG	PG	Paracolic Gutter	part_122	non_cancer	laparoscopy			
+SRR24708379	m80n712-s513	SRP438987	PG	PG	Paracolic Gutter	part_179	cancer	open_case	3	serous	3
+SRR24708380	m80n712-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708381	m80n712-s510	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708382	m80n712-s503	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708383	m80n711-s522	SRP438987	PG	PG	Paracolic Gutter	part_157	non_cancer	open_case		borderline	3
+SRR24708384	m80n711-s521	SRP438987	PG	PG	Paracolic Gutter	part_045	non_cancer	robotic_case		borderline	
+SRR24708385	m69n704-s507	SRP438987	AIR	AIR	Operating Room Air	part_090	non_cancer	open_case			
+SRR24708386	m80n711-s520	SRP438987	PG	PG	Paracolic Gutter	part_084	non_cancer	robotic_case			
+SRR24708387	m80n711-s518	SRP438987	PG	PG	Paracolic Gutter	part_149	cancer	open_case	1	granulosa cell	
+SRR24708388	m80n711-s517	SRP438987	PG	PG	Paracolic Gutter	part_132	cancer	open_case	3	serous	3
+SRR24708389	m80n711-s516	SRP438987	PG	PG	Paracolic Gutter	part_099	non_cancer	open_case			
+SRR24708390	m80n711-s515	SRP438987	PG	PG	Paracolic Gutter	part_048	cancer	open_case	3	undifferentiated 	3
+SRR24708391	m80n711-s513	SRP438987	PG	PG	Paracolic Gutter	part_050	non_cancer	open_case		borderline	
+SRR24708392	m80n711-s511	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708393	m80n711-s508	SRP438987	WATER	WATER No Template Control	WATER No Template Control						
+SRR24708394	m69n704-s503	SRP438987	AIR	AIR	Operating Room Air	part_133	cancer	open_case	3	serous	3
+SRR24708395	m69n701-s507	SRP438987	AIR	AIR	Operating Room Air	part_184	non_cancer	open_case			
+SRR24708396	m80n706-s510	SRP438987	AIR	AIR	Operating Room Air	part_141	cancer	open_case	1	endometrioid	3
+SRR24708397	m80n706-s508	SRP438987	AIR	AIR	Operating Room Air	part_170	non_cancer	robotic_case			
+SRR24708398	m80n706-s507	SRP438987	AIR	AIR	Operating Room Air	part_006	non_cancer	robotic_case			
+SRR24708399	m80n706-s505	SRP438987	AIR	AIR	Operating Room Air	part_018	non_cancer	open_case			
+SRR24708400	m80n706-s503	SRP438987	AIR	AIR	Operating Room Air	part_153	non_cancer	open_case			
+SRR24708401	m80n706-s502	SRP438987	AIR	AIR	Operating Room Air	part_051	non_cancer	laparoscopy			
+SRR24708402	m80n705-s522	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708403	m80n705-s521	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_038	non_cancer	robotic_case			
+SRR24708404	m80n705-s520	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_038	non_cancer	robotic_case			
+SRR24708405	m80n705-s518	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_120	non_cancer	robotic_case			
+SRR24708406	m69n704-s502	SRP438987	AIR	AIR	Operating Room Air	part_066	cancer	open_case	3	serous	3
+SRR24708407	m80n705-s517	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_120	non_cancer	robotic_case			
+SRR24708408	m80n705-s516	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_117	non_cancer	robotic_case			
+SRR24708409	m80n705-s515	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_117	non_cancer	robotic_case			
+SRR24708410	m80n705-s511	SRP438987	AIR	AIR	Operating Room Air	part_114	non_cancer	robotic_case			
+SRR24708411	m80n705-s510	SRP438987	AIR	AIR	Operating Room Air	part_171	non_cancer	robotic_case			
+SRR24708412	m80n705-s508	SRP438987	AIR	AIR	Operating Room Air	part_110	cancer	open_case	3	serous	3
+SRR24708413	m80n705-s507	SRP438987	AIR	AIR	Operating Room Air	part_016	non_cancer	robotic_case			
+SRR24708414	m80n705-s506	SRP438987	AIR	AIR	Operating Room Air	part_165	cancer	open_case	4	serous	1
+SRR24708415	m80n705-s505	SRP438987	AIR	AIR	Operating Room Air	part_030	non_cancer	open_case			
+SRR24708416	m80n705-s503	SRP438987	AIR	AIR	Operating Room Air	part_020	non_cancer	open_case			
+SRR24708417	m69n703-s522	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_119	non_cancer	laparoscopy			
+SRR24708418	m80n703-s508	SRP438987	AIR	AIR	Operating Room Air	part_124	cancer	open_case	3	serous	3
+SRR24708419	m80n703-s507	SRP438987	AIR	AIR	Operating Room Air	part_148	non_cancer	robotic_case			
+SRR24708420	m80n703-s506	SRP438987	AIR	AIR	Operating Room Air	part_168	cancer	open_case	3	serous	3
+SRR24708421	m80n703-s505	SRP438987	AIR	AIR	Operating Room Air	part_007	non_cancer	laparoscopy			
+SRR24708422	m80n703-s502	SRP438987	AIR	AIR	Operating Room Air	part_143	cancer	open_case	3	serous	3
+SRR24708423	m80n702-s522	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_116	non_cancer	laparoscopy			
+SRR24708424	m80n702-s521	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_078	non_cancer	robotic_case			
+SRR24708425	m80n702-s520	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_042	non_cancer	laparoscopy			
+SRR24708426	m69n703-s518	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_037	non_cancer	robotic_case			
+SRR24708427	m80n702-s518	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_042	non_cancer	laparoscopy			
+SRR24708428	m80n702-s517	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_012	non_cancer	laparoscopy			
+SRR24708429	m80n702-s516	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_012	non_cancer	laparoscopy			
+SRR24708430	m80n702-s515	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_107	non_cancer	open_case			
+SRR24708431	m80n702-s513	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_107	non_cancer	open_case			
+SRR24708432	m80n702-s511	SRP438987	AIR	AIR	Operating Room Air	part_061	non_cancer	laparoscopy			
+SRR24708433	m80n702-s510	SRP438987	AIR	AIR	Operating Room Air	part_033	cancer	robotic_case	1	serous	3
+SRR24708434	m80n702-s508	SRP438987	AIR	AIR	Operating Room Air	part_122	non_cancer	laparoscopy			
+SRR24708435	m80n702-s507	SRP438987	AIR	AIR	Operating Room Air	part_179	cancer	open_case	3	serous	3
+SRR24708436	m80n702-s506	SRP438987	AIR	AIR	Operating Room Air	part_157	non_cancer	open_case		borderline	3
+SRR24708437	m69n703-s517	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_037	non_cancer	robotic_case			
+SRR24708438	m80n702-s503	SRP438987	AIR	AIR	Operating Room Air	part_084	non_cancer	robotic_case			
+SRR24708439	m80n701-s522	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_095	non_cancer	open_case			
+SRR24708440	m80n701-s521	SRP438987	LP - PORT 1	LP	Laparoscopic Port	part_095	non_cancer	open_case			
+SRR24708441	m80n701-s520	SRP438987	LP - PORT 2	LP	Laparoscopic Port	part_115	non_cancer	open_case			
+SRR24708442	m69n726-s516	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_090	non_cancer	open_case			
+SRR24708443	m69n703-s506	SRP438987	AIR	AIR	Operating Room Air	part_032	non_cancer	laparoscopy			
+SRR24708444	m69n726-s515	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_133	cancer	open_case	3	serous	3
+SRR24708445	m69n726-s513	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_133	cancer	open_case	3	serous	3
+SRR24708446	m69n726-s505	SRP438987	BUFFER	BUFFER EXTRACTION CONTROL	BUFFER EXTRACTION CONTROL						
+SRR24708447	m69n724-s522	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_066	cancer	open_case	3	serous	3
+SRR24708448	m69n724-s521	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_066	cancer	open_case	3	serous	3
+SRR24708449	m69n724-s520	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_035	non_cancer	robotic_case			
+SRR24708450	m69n724-s518	SRP438987	FTO - LEFT	FTO	Fallopian Tube and Ovarian Surface	part_035	non_cancer	robotic_case			
+SRR24708451	m69n724-s517	SRP438987	FTO - RIGHT	FTO	Fallopian Tube and Ovarian Surface	part_056	non_cancer	robotic_case			

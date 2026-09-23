@@ -144,12 +144,16 @@ df = pd.read_csv('SraRunTable.csv')
 
 
 '''analysis'''
+mapping = pd.read_csv('author_mapping.txt',sep='\t',index_col=0)
+mapping = mapping.loc[mapping['participant'].notna(),:]
+srr2cancer = mapping['cancer_noncancer'].to_dict()
+srr2part = mapping['participant'].to_dict()
 data = []
 stream_of_data = []
 conditions = ['FTO','CX','PG','PORT','AIR','NTC','DB']
 ns = [369,152,122,81,130,111,36]
-taxa_level = 'Genus'
-name = 'Clostridium'
+taxa_level = 'Species'
+name = 'ureolyticus'
 for c in conditions:
     taxa = pd.read_csv('{}/df_taxa.txt'.format(c),sep='\t',index_col=0)
     taxa = taxa.loc[taxa[taxa_level]==name,:]
@@ -158,11 +162,14 @@ for c in conditions:
     count = count.loc[:,all_asv]
     s = count.sum(axis=1)
     stream_of_data.append(s.values.tolist())
-    for item in s:
-        data.append((c,item))
-df = pd.DataFrame.from_records(data=data,columns=['condition','count'])
+    for item,srr in zip(s,s.index):
+        data.append((c,item,srr))
+df = pd.DataFrame.from_records(data=data,columns=['condition','count','srr'])
+df['cancer'] = df['srr'].map(srr2cancer)
+df['participant'] = df['srr'].map(srr2part)
+df.to_csv('{}_{}.txt'.format(taxa_level,name),sep='\t')
 fig,ax = plt.subplots()
-sns.stripplot(data=df,x='condition',y='count',ax=ax)
+sns.stripplot(data=df,x='condition',y='count',hue='cancer',ax=ax)
 ax.boxplot(x=stream_of_data,positions=np.arange(len(conditions)),patch_artist=False,showfliers=False)
 l = ['{}\nn={}'.format(i1,i2) for i1,i2 in zip(conditions,ns)]
 ax.set_xticklabels(l)

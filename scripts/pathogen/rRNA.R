@@ -6,8 +6,8 @@ packageVersion('dada2')
 path <- '/mnt'
 setwd('/mnt')
 list.files(path)
-fnFs <- sort(list.files(path, pattern="_1.fastq", full.names = TRUE))
-fnRs <- sort(list.files(path, pattern="_2.fastq", full.names = TRUE))
+fnFs <- sort(list.files(file.path(path, "trimmed"), pattern="_1.fastq", full.names = TRUE))
+fnRs <- sort(list.files(file.path(path, "trimmed"), pattern="_2.fastq", full.names = TRUE))
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 
 pdf("quality_profile_forward.pdf", width = 10, height = 6)
