@@ -7,11 +7,11 @@ function run_riborf_part1 () {
 
     gunzip -c ${FASTQ} > ${OUTDIR}/${SAMPLE}.fastq
 
-    # module load perl/5.38.2
-    # perl ${RIBORF_CODE}/RibORF.2.0/removeAdapter.pl -f ${OUTDIR}/${SAMPLE}.fastq -a ${ADAPTER_SEQ} -o ${OUTDIR}/adapter.${SAMPLE}.fastq
-    # module purge
+    module load perl/5.38.2
+    perl ${RIBORF_CODE}/RibORF.2.0/removeAdapter.pl -f ${OUTDIR}/${SAMPLE}.fastq -a ${ADAPTER_SEQ} -o ${OUTDIR}/adapter.${SAMPLE}.fastq
+    module purge
 
-    ${CUTADAPT} -a ${ADAPTER_SEQ} -u 3 -m 15 -o ${OUTDIR}/adapter.${SAMPLE}.fastq ${OUTDIR}/${SAMPLE}.fastq
+    # ${CUTADAPT} -a ${ADAPTER_SEQ} -u 3 -m 15 -o ${OUTDIR}/adapter.${SAMPLE}.fastq ${OUTDIR}/${SAMPLE}.fastq
     
 
     module load bowtie2/2.3.1
@@ -82,9 +82,9 @@ HG19_GTF=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGe
 HG19_GENEPRED=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGene.genePred.txt  # gtfToGenePred file.gtf file.genePred.txt
 HG19_CANDIDATE_ORF=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/candidateORF.genepred.txt # perl ORFannotate.pl hg19.fa -t file.genePred.txt -o .
 HG19_CANDIDATE_SEQ=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/candidateORF.fa  # same as above
-FASTQ=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/raw/SRR15513149.fastq.gz
+FASTQ=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/raw/SRR1528689.fastq.gz
 ROOT_DIR=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result
-ADAPTER_SEQ=AGATCGGAAG  # using fastqc sample.fastq.gz to infer, first 10nt
+ADAPTER_SEQ=TGGAATTCTC  # AGATCGGAAG for first 47, TGGAATTCTC for the last 4
 CUTADAPT=/gpfs/data/yarmarkovichlab/russell_data/cutadapt_env/bin/cutadapt
 RRNA_FASTA=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/human.ribosomal.rna.fa
 BOWTIE_HG19_INDEX_DIR=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/ribo_real  # bowtie2-build file.fa hg19genome.index
@@ -96,8 +96,8 @@ if [ ! -d ${OUTDIR} ]; then
     mkdir ${OUTDIR}
 fi
 
-# run_riborf_part1
-run_riborf_part2
-./get_riborf_fasta.py --srr ${SAMPLE}
+run_riborf_part1
+# run_riborf_part2
+# ./get_riborf_fasta.py --srr ${SAMPLE}
 
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --partition=cpu_medium
+#SBATCH --partition=gpu4_medium
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
@@ -8,6 +8,7 @@
 #SBATCH --job-name="ribo"
 #SBATCH --output=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.out
 #SBATCH --error=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.err
+#SBATCH --gres=gpu:v100:1
 
 
 # module load sratoolkit/2.10.7

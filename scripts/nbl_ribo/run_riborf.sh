@@ -7,11 +7,11 @@ function run_riborf_part1 () {
 
     gunzip -c ${FASTQ} > ${OUTDIR}/${SAMPLE}.fastq
 
-    # module load perl/5.38.2
-    # perl ${RIBORF_CODE}/RibORF.2.0/removeAdapter.pl -f ${OUTDIR}/${SAMPLE}.fastq -a ${ADAPTER_SEQ} -o ${OUTDIR}/adapter.${SAMPLE}.fastq
-    # module purge
+    module load perl/5.38.2
+    perl ${RIBORF_CODE}/RibORF.2.0/removeAdapter.pl -f ${OUTDIR}/${SAMPLE}.fastq -a ${ADAPTER_SEQ} -o ${OUTDIR}/adapter.${SAMPLE}.fastq
+    module purge
 
-    ${CUTADAPT} -a ${ADAPTER_SEQ} -u 3 -m 15 -o ${OUTDIR}/adapter.${SAMPLE}.fastq ${OUTDIR}/${SAMPLE}.fastq
+    # ${CUTADAPT} -a ${ADAPTER_SEQ} -u 3 -m 15 -o ${OUTDIR}/adapter.${SAMPLE}.fastq ${OUTDIR}/${SAMPLE}.fastq
     
 
     module load bowtie2/2.3.1

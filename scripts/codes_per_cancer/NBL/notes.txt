@@ -1,0 +1,1 @@
+I deleted fff26c2c-cf1d-4adc-a071-083271cce89c from 162 samples because the sorting can not work, which affect the pathogen and TE pipeline
