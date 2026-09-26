@@ -10,100 +10,153 @@ from ast import literal_eval
 
 
 
-# gs and ensg
-# 1. get tmp.txt run https://www.syngoportal.org/convert
-# 2. get mapping.txt
-# 3. manually add to that if needed
-df = pd.read_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/bulk-gex_v8_rna-seq_GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct',sep='\t',index_col=0,skiprows=2)
-df.index = [item.split('.')[0] for item in df.index]
-df.to_csv('tmp.txt',sep='\t')
-df = pd.read_csv('idmap.txt',sep='\t')
-data = []
-for row in tqdm(df.itertuples()):
-    gs = row.symbol
-    ensg = row.query
-    alias = row.alias
-    if isinstance(gs,str):
-        gs = gs.upper()
-        data.append((gs,ensg))
-    if isinstance(alias,str):
-        for item in alias.split(','):
-            item = item.strip(' ')
-            item = item.upper()
-            data.append((item,ensg))
-add = [
-    ('MAGE-A3','ENSG00000221867')
-]
-data.extend(add)
-pd.DataFrame(data=data,columns=['gs','ensg']).to_csv('mapping.txt',sep='\t',index=None)
-sys.exit('stop')
+# # gs and ensg
+# # 1. get tmp.txt run https://www.syngoportal.org/convert
+# # 2. get mapping.txt
+# # 3. manually add to that if needed
+# df = pd.read_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/bulk-gex_v8_rna-seq_GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct',sep='\t',index_col=0,skiprows=2)
+# df.index = [item.split('.')[0] for item in df.index]
+# df.to_csv('tmp.txt',sep='\t')
+# df = pd.read_csv('idmap.txt',sep='\t')
+# data = []
+# for row in tqdm(df.itertuples()):
+#     gs = row.symbol
+#     ensg = row.query
+#     alias = row.alias
+#     if isinstance(gs,str):
+#         gs = gs.upper()
+#         data.append((gs,ensg))
+#     if isinstance(alias,str):
+#         for item in alias.split(','):
+#             item = item.strip(' ')
+#             item = item.upper()
+#             data.append((item,ensg))
+# add = [
+#     ('MAGE-A3','ENSG00000221867')
+# ]
+# data.extend(add)
+# pd.DataFrame(data=data,columns=['gs','ensg']).to_csv('mapping.txt',sep='\t',index=None)
+# sys.exit('stop')
 
 
 
-# deepimmuno
-meta_dic = {}
+# immunogenicity
+# meta_dic = {}
 
-root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
-cancers = [
-    'BRCA',
-    'KIRC',
-    'COAD',
-    'STAD',
-    'MESO',
-    'LIHC',
-    'ESCA',
-    'CESC',
-    'BLCA',
-    'RT',
-    'AML',
-    'DLBC',
-    'GBM',
-    'NBL',
-    'PAAD',
-    'HNSC',
-    'OV',
-    'LUSC',
-    'LUAD',
-    'CHOL',
-    'SKCM'
-]
+# root_atlas_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+# cancers = [
+#     'BRCA',
+#     'KIRC',
+#     'COAD',
+#     'STAD',
+#     'MESO',
+#     'LIHC',
+#     'ESCA',
+#     'CESC',
+#     'BLCA',
+#     'RT',
+#     'AML',
+#     'DLBC',
+#     'GBM',
+#     'NBL',
+#     'PAAD',
+#     'HNSC',
+#     'OV',
+#     'LUSC',
+#     'LUAD',
+#     'CHOL',
+#     'SKCM'
+# ]
 
-for c in cancers:
-    final_path = os.path.join(root_atlas_dir,c,'antigen','fdr','final_enhanced.txt')
-    final = pd.read_csv(final_path,sep='\t')
-    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
-    final = final.loc[cond,:]
-    for row in tqdm(final.itertuples()):
-        pep = row.pep
-        lists = literal_eval(row.additional_query)
-        hlas = literal_eval(row.presented_by_each_sample_hla)
-        # adding hlas to lists
-        for k,vs in hlas.items():
-            if len(vs) == 0:
-                continue
-            else:
-                for v in vs:
-                    if v[0] is not None:
-                        lists.append(v)
-        lists = list(set(lists))
-        df = pd.DataFrame.from_records(lists,columns=['hla','rank_pert','nM','id'])
-        all_hla = [item.replace(':','') for item in df['hla']]
-        if pep in meta_dic.keys():
-            meta_dic[pep] = list(set(meta_dic[pep]).union(set(all_hla)))
-        else:
-            meta_dic[pep] = all_hla
+# for c in cancers:
+#     final_path = os.path.join(root_atlas_dir,c,'antigen','0.05','final_enhanced.txt')
+#     final = pd.read_csv(final_path,sep='\t')
+#     cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final['presented_by_each_sample_hla']]
+#     final = final.loc[cond,:]
+#     for row in tqdm(final.itertuples()):
+#         pep = row.pep
+#         lists = literal_eval(row.additional_query)
+#         hlas = literal_eval(row.presented_by_each_sample_hla)
+#         # adding hlas to lists
+#         for k,vs in hlas.items():
+#             if len(vs) == 0:
+#                 continue
+#             else:
+#                 for v in vs:
+#                     if v[0] is not None:
+#                         lists.append(v)
+#         lists = list(set(lists))
+#         df = pd.DataFrame.from_records(lists,columns=['hla','rank_pert','nM','id'])
+#         all_hla = [item.replace(':','') for item in df['hla']]
+#         if pep in meta_dic.keys():
+#             meta_dic[pep] = list(set(meta_dic[pep]).union(set(all_hla)))
+#         else:
+#             meta_dic[pep] = all_hla
 
-data = []
-for k,vs in meta_dic.items():
-    l = len(k)
-    for v in vs:
-        data.append((k,v,l))
-df = pd.DataFrame.from_records(data,columns=['pep','hla','length'])
-df = df.loc[df['length'].isin([9,10]),:]
+# data = []
+# for k,vs in meta_dic.items():
+#     l = len(k)
+#     for v in vs:
+#         data.append((k,v,l))
+# df = pd.DataFrame.from_records(data,columns=['pep','hla','length'])
+# df.to_csv('total_query.txt',sep='\t',index=None)
 
-df_input = pd.DataFrame(data={0:df['pep'].values.tolist(),1:df['hla'].values.tolist()})
-df_output = run_deepimmuno(df_input)
-df_output.to_csv('all_deepimmuno_immunogenicity.txt',sep='\t',index=None)
+
+# immunogenicity-deepimmuno
+# df = pd.read_csv('total_query.txt',sep='\t')
+# df = df.loc[df['length'].isin([9,10]),:]
+
+# df_input = pd.DataFrame(data={0:df['pep'].values.tolist(),1:df['hla'].values.tolist()})
+# df_output = run_deepimmuno(df_input)
+# df_output.to_csv('all_deepimmuno_immunogenicity.txt',sep='\t',index=None)
+
+# immunogenicity-PRIME
+# df = pd.read_csv('total_query.txt',sep='\t')
+# df = df.loc[df['length'].isin([8,9,10,11,12,13,14]),:]
+# unique_peptides = set(df['pep'])
+# with open('./PRIME/PRIME_input.txt','w') as f:
+#     for item in unique_peptides:
+#         f.write('{}\n'.format(item))
+# unique_hlas = set(df['hla'])
+# lis = []
+# for hla in unique_hlas:
+#     lis.append(hla.split('HLA-')[1].replace('*',''))
+# lis.remove('C0301')
+# s = ','.join(lis)
+# print(s)
+
+# consolidate
+df = pd.read_csv('total_query.txt',sep='\t')
+alg1 = pd.read_csv('all_deepimmuno_immunogenicity.txt',sep='\t')
+alg1_dic = {} 
+for row in alg1.itertuples():
+    uid = row.peptide + ',' + row.HLA
+    alg1_dic[uid] = row.immunogenicity
+alg2 = pd.read_csv('./PRIME/PRIME_output.txt',sep='\t',skiprows=11).set_index(keys=['Peptide']).iloc[:,4:]
+alg2_dic = {}
+for c in alg2.columns:
+    if '%Rank_' in c:
+        s = alg2[c]
+        for idx,value in s.items():
+            tmp = c.split('%Rank_')[1]
+            tmp = tmp[0] + '*' + tmp[1:]
+            HLA = 'HLA-' + tmp
+            uid = idx + ',' + HLA
+            alg2_dic[uid] = value
+col1 = []
+col2 = []
+for row in df.itertuples():
+    uid = row.pep + ',' + row.hla
+    col1.append(alg1_dic.get(uid,None))
+    col2.append(alg2_dic.get(uid,None))
+df['deepimmuno_immunogenicity'] = col1
+df['PRIME_immunogenicity'] = col2
+df.to_csv('final_immunogenicity.txt',sep='\t',index=None)
+
+
+
+
+
 
 
 
