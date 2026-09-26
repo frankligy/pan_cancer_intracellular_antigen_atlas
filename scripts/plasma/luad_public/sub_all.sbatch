@@ -1,0 +1,43 @@
+#!/bin/bash
+#SBATCH --partition=a100_short
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=20
+#SBATCH --time=1-00:00:00
+#SBATCH --mem=150Gb
+#SBATCH --job-name="neoverse"
+#SBATCH --output=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.out
+#SBATCH --error=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.err
+#SBATCH --gres=gpu:a100:1
+
+
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/preprocess.sh template.json
+
+# step 1
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/NeoVerse_single.sh template.json
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/NeoVerse.sh template.json
+
+# step 2
+# module load samtools
+# module load htslib/1.3
+# module load singularity/3.9.8
+# export LD_LIBRARY_PATH=/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/snv_env/lib:$LD_LIBRARY_PATH
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/NeoVerse.py --config template.json --running_mode non_interactive
+
+# # step 3
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/configure_maxquant.py --config template.json 
+
+# step 4
+# module unload dotnet
+# module load dotnet/3.1.425 # /gpfs/share/apps/dotnet/3.1.425/dotnet # MaxQuant_v_2.4.9.0/bin/MaxQuantCmd.exe
+# module load singularity # module pull dotnet8-jammy.sif docker://mcr.microsoft.com/dotnet/sdk:8.0-jammy # singularity exec --cleanenv --bind /gpfs:/gpfs --bind /lib64/libgomp.so.1:/usr/lib/x86_64-linux-gnu/libgomp.so.1 /gpfs/data/yarmarkovichlab/Frank/test_ms/dotnet8-jammy.sif dotnet # MaxQuant_v2.8.1.0/bin/MaxQuantCmd.dll
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/run_maxquant.sh template.json
+
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/rederive.py --config template.json
+
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/post_maxquant.py --config template.json
+
+# module load singularity/3.1
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse/launch_portal.py --config template.json --running_mode generate_figures_rescue
+
+# ./personal_mutation.py

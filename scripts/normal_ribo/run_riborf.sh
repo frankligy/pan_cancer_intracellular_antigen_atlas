@@ -84,7 +84,7 @@ HG19_CANDIDATE_ORF=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/
 HG19_CANDIDATE_SEQ=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/candidateORF.fa  # same as above
 FASTQ=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/raw/SRR1528689.fastq.gz
 ROOT_DIR=/gpfs/data/yarmarkovichlab/Frank/pan_cancer/normal_ribo/result
-ADAPTER_SEQ=TGGAATTCTC  # AGATCGGAAG for first 47, TGGAATTCTC for the last 4
+ADAPTER_SEQ=na  # AGATCGGAAG for first 47, TGGAATTCTC for the last 4
 CUTADAPT=/gpfs/data/yarmarkovichlab/russell_data/cutadapt_env/bin/cutadapt
 RRNA_FASTA=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/human.ribosomal.rna.fa
 BOWTIE_HG19_INDEX_DIR=/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/ribo_real  # bowtie2-build file.fa hg19genome.index
@@ -96,8 +96,8 @@ if [ ! -d ${OUTDIR} ]; then
     mkdir ${OUTDIR}
 fi
 
-run_riborf_part1
-# run_riborf_part2
-# ./get_riborf_fasta.py --srr ${SAMPLE}
+# run_riborf_part1
+run_riborf_part2
+./get_riborf_fasta.py --srr ${SAMPLE}
 
 

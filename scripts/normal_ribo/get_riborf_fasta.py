@@ -141,7 +141,7 @@ if __name__ == '__main__':
     parser.add_argument('--srr',type=str,default='',help='srr')
     args = parser.parse_args()
 
-    srr = arg.srr
+    srr = args.srr
 
     HG19_SEQ = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.fa"
     HG19_GTF = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGene.gtf"

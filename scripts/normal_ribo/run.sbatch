@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --partition=gpu4_medium
+#SBATCH --partition=cpu_medium
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
@@ -8,7 +8,6 @@
 #SBATCH --job-name="ribo"
 #SBATCH --output=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.out
 #SBATCH --error=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.err
-#SBATCH --gres=gpu:v100:1
 
 
 # module load sratoolkit/2.10.7
@@ -18,6 +17,8 @@
 # grep "ribosome-protected mRNA fragments" SraRunTable_GSE182377.csv | cut -d "," -f 1 | xargs -L 1 -P 10 -I {} sh -c "fasterq-dump -e 20 {}"
 # for file in *.fastq; do echo $file; done | xargs -L 1 -P 10 -I {} sh -c "gzip {}"
 
+
+
 # # GSE59820 n=4
 # # https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM1446874 TGGAATTCTC
 # declare -a samples=(
@@ -26,6 +27,11 @@
 # SRR1528688
 # SRR1528689
 # )
+
+# module load fastqc
+# mkdir ./fastqc_result
+# for f in ./raw/*.fastq.gz; do echo $f; done | xargs -n 1 -P 10 -I {} bash -c "fastqc {} -o ./fastqc_result"
+# ./multiqc_env/bin/multiqc ./fastqc_result
 
 # for s in ${samples[@]}; do echo $s; done | xargs -L 1 -P 10 -I {} sh -c "fasterq-dump -e 20 {}"
 # for file in *.fastq; do echo $file; done | xargs -L 1 -P 10 -I {} sh -c "gzip {}"

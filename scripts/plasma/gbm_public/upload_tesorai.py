@@ -19,7 +19,7 @@ SPECTRA PROTEOME
 API_KEY = "d3f8507d15fbd5ec3ceb01291afa430b902cfce0e841228f5eec3e634237f37be86c47bd7ca03b6484dc1bf3b0fcb2d8"
 ORG_ID = "5c881473-026e-4473-9b92-1a3b00842876"
 USER_ID = "3899abde-6661-4bdd-be4d-2c4e3d28e346"
-PROJECT_ID = "3a1306d9-afbb-46cd-8837-289ee58946e5" 
+PROJECT_ID = "3a1306d9-afbb-46cd-8837-289ee58946e5"
 DATA_FORMAT = "RAW"
 DATA_TYPE = "SPECTRA"
 
@@ -109,19 +109,18 @@ def upload_single_file(file_path):
 
 # Example usage
 if __name__ == "__main__":
-    # immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/osteosarcoma/UCSF_in_house'
+    # immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/plasma/lung_cancer_nyu/immuno'
     # all_d = subprocess.run('find {} -type d -name "*.d" -exec echo {{}} \;'.format(immuno_dir),shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
     # for d in all_d:
     #     des_zip = './{}.zip'.format(d.split('/')[-1].split('.')[0])
     #     subprocess.run('zip -r {} {}'.format(des_zip,d),shell=True)
     #     upload_single_file(des_zip)
 
-    immuno_dir = '/gpfs/data/yarmarkovichlab/lung_cancer_plasma_public/immuno'
+    immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/plasma/plasma_gbm_PXD008127/immuno'
     all_raw = subprocess.run('find {} -type f -name "*.raw" -exec echo {{}} \;'.format(immuno_dir),shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
     for raw in all_raw:
         upload_single_file(raw)
     sys.exit('stop')
-
 
     # all_mzml = [
     #     '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/breast_cancer/phase2_PXD025345/PK_MCF7_II_CL_all.wiff',
