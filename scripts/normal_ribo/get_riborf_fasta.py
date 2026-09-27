@@ -161,7 +161,7 @@ if __name__ == '__main__':
     df = pd.read_csv(RIBORF_RESULT,sep='\t',index_col=0)   # from nuORF paper
     df.rename(columns={'pred.pvalue':'pvalue'},inplace=True)
     df['plotType'] = [item.split('|')[-2] for item in df.index]
-    df = df.loc[df['plotType'].isin(['dORF','odORF','ouORF','uORF','iORF','noncoding']),:]
+    df = df.loc[df['plotType'].isin(['dORF','odORF','ouORF','uORF','iORF','noncoding','extension']),:]
     df = df.loc[[item.startswith('ENST') for item in df.index],:]
 
     data = []

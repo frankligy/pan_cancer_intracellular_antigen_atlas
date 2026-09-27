@@ -135,14 +135,21 @@ def row2orf(row):
 
 
         
-        
+# OHMX20210030_001
+# OHMX20210030_002
+# OHMX20210030_003
+# OHMX20210030_004
+# OHMX20210030_005
+# OHMX20210030_006
+# OHMX20210030_007
+# OHMX20210030_008
 
 
 HG19_SEQ = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.fa"
 HG19_GTF = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/riborf_test/hg19.ensGene.gtf"
 HG19_DIC = "/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/gtf_dic.p"
-RIBORF_RESULT = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/ribo_real/OHMX20210030_001/outputDir/pred.pvalue.parameters.txt"
-FASTA_OUTDIR = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/ribo_real/OHMX20210030_001/outputDir/"
+RIBORF_RESULT = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/ribo_real/OHMX20210030_008/outputDir/pred.pvalue.parameters.txt"
+FASTA_OUTDIR = "/gpfs/data/yarmarkovichlab/neuroblastoma/riboseq/ribo_real/OHMX20210030_008/outputDir/"
 
 
 # gtf_dic = process_gtf('hg19.ensGene.gtf')  # download from ucsc
@@ -156,7 +163,7 @@ with open(HG19_DIC,'rb') as f:
 df = pd.read_csv(RIBORF_RESULT,sep='\t',index_col=0)   # from nuORF paper
 df.rename(columns={'pred.pvalue':'pvalue'},inplace=True)
 df['plotType'] = [item.split('|')[-2] for item in df.index]
-df = df.loc[df['plotType'].isin(['dORF','odORF','ouORF','uORF','iORF','noncoding']),:]
+df = df.loc[df['plotType'].isin(['dORF','odORF','ouORF','uORF','iORF','noncoding','extension']),:]
 df = df.loc[[item.startswith('ENST') for item in df.index],:]
 
 data = []
