@@ -395,7 +395,6 @@ with open('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/db_fasta/pe
 # safety_screen_df['not_in_normal_ribo'] = not_in_normal_ribo
 # safety_screen_df.to_csv('post_safety_screen_add_ribo.txt',sep='\t',index=None)
 
-
 safety_screen_df = pd.read_csv('post_safety_screen_add_ribo.txt',sep='\t')
 safety_screen_bl = set(safety_screen_df.loc[(~safety_screen_df['cond_stringent']) | (~safety_screen_df['not_in_normal_ribo']) | (safety_screen_df['is_ambiguous_IL']),:]['pep'].values)
 
@@ -409,7 +408,12 @@ for c in cancers:
 final = pd.concat(data,axis=0,keys=cancers).reset_index(level=-2).rename(columns={'level_0':'cancer'})
 final['is_in_bl'] = final['pep'].isin(safety_screen_bl)
 final.to_csv('final_all_ts_antigens_record_bl.txt',sep='\t',index=None)
+n_filtered = len(set(final.loc[final['is_in_bl'],:]['pep']))
+n_total = len(set(final['pep']))
+p_filtered = n_filtered/n_total
+print(p_filtered,n_filtered)
 final = final.loc[~final['pep'].isin(safety_screen_bl),:]
+sys.exit('stop')
 
 self_df = final.loc[(final['typ']=='self_gene') & (final['unique']!=False),:] 
 self_df = self_df.loc[~self_df['gene_symbol'].isin(manual_bl),:]

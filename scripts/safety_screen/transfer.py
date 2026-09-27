@@ -62,9 +62,8 @@ os.chdir(result_dir)
 all_tissues = subprocess.run("for f in *; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 os.chdir(old_dir)
 
-# # derive maxquant 0.05 
+# rederive maxquant 0.05 
 # fdr = 0.05
-# # rederive
 # for t in all_tissues:
 #     t_dir = os.path.join(result_dir,t)
 #     old_dir = os.getcwd()
@@ -78,7 +77,7 @@ os.chdir(old_dir)
 #         valids = {'vanilla':valid}
 #         rewrite_msmsScans_new(valids,fold,fdr)
 
-# # append tesorai result to each 5% FDR msmsScan
+# append tesorai result to each 5% FDR msmsScan_new
 # fdr = 0.05
 # tesorai = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_normal.tsv',sep='\t')
 # tesorai = tesorai.loc[tesorai['qval']<0.01,:]
@@ -173,8 +172,7 @@ os.chdir(old_dir)
 #         final['Length'] = [len(item) if len(item)>1 else 0 for item in final['Sequence']]
 #         final.to_csv(os.path.join(fold,'combined','txt','{}_new_{}_tesorai.txt'.format(name,fdr)),sep='\t',index=None)
 
-
-# # combining and renaming to resolve small case issue
+# generate hla_ligand_atlas_now_0.05_tesorai.txt
 # fdr = 0.05
 # total_dfs = []
 # for t in all_tissues:
@@ -186,6 +184,7 @@ os.chdir(old_dir)
 #     all_batches = subprocess.run("for f in batch*; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 #     os.chdir(old_dir)
 #     for b in all_batches:
+#         print(fdr,t,b)
 #         msms_path = os.path.join(intdir,b,'combined','txt','msmsScans_new_{}_tesorai.txt'.format(fdr))
 #         msms = pd.read_csv(msms_path,sep='\t')
 #         msms = msms.loc[msms['Identified']=='+',:]
@@ -220,8 +219,7 @@ os.chdir(old_dir)
 # final['tissue'] = col
 # final.to_csv('hla_ligand_atlas_now_{}_tesorai.txt'.format(fdr),sep='\t',index=None)
 
-
-# just use this tesorai combined one and original hla ligand atlas
+# generate post_safety_screen.txt
 df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/for_safety_screen.txt',sep='\t')
 final = df
 
@@ -238,9 +236,11 @@ final['normal_{}'.format(fdr)] = col
 
 all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
                 'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
-                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
+                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus', 'hepatocytes', 'beta_cell', 'iPSC', 'Treg', 'CD14',' ImmDC', 'MatureDC', 'CD4', 'CD8', 'CD19',
+                'CD4_Act', 'CD8_Act','CD19_Act']
 
-non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus']
+non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus','hepatocytes', 'beta_cell', 'iPSC', 'Treg', 'CD14',' ImmDC', 'MatureDC', 'CD4', 'CD8', 'CD19',
+                'CD4_Act', 'CD8_Act','CD19_Act']
 essential = list(set(all_tissues).difference(set(non_essential)))
 
 cond = []
@@ -259,14 +259,8 @@ final.to_csv('post_safety_screen.txt',sep='\t',index=None)
 sys.exit('stop')
 
 
-# making db
-df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/for_safety_screen.txt',sep='\t')
-with open('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/db_fasta/peptides.fasta','w') as f:
-    for cancer,pep,typ in zip(df['cancer'],df['pep'],df['typ']):
-        f.write('>query|{}|{}|{}\n{}\n'.format(pep,typ,cancer,pep))
-sys.exit('stop')
 
-# transfer
+# transfer, that was old code for trasferring Aman's MaxQuant run to here
 # aman_dir = '/gpfs/data/yarmarkovichlab/Aman/hla_ligand_atlas'
 # frank_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen'
 # df = pd.read_csv(os.path.join(aman_dir,'final.txt'),sep='\t')
