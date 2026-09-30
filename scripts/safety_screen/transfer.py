@@ -62,7 +62,7 @@ os.chdir(result_dir)
 all_tissues = subprocess.run("for f in *; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 os.chdir(old_dir)
 
-# rederive maxquant 0.05 
+# # rederive maxquant 0.05 
 # fdr = 0.05
 # for t in all_tissues:
 #     t_dir = os.path.join(result_dir,t)
@@ -77,7 +77,7 @@ os.chdir(old_dir)
 #         valids = {'vanilla':valid}
 #         rewrite_msmsScans_new(valids,fold,fdr)
 
-# append tesorai result to each 5% FDR msmsScan_new
+# # append tesorai result to each 5% FDR msmsScan_new
 # fdr = 0.05
 # tesorai = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_normal.tsv',sep='\t')
 # tesorai = tesorai.loc[tesorai['qval']<0.01,:]
@@ -172,52 +172,53 @@ os.chdir(old_dir)
 #         final['Length'] = [len(item) if len(item)>1 else 0 for item in final['Sequence']]
 #         final.to_csv(os.path.join(fold,'combined','txt','{}_new_{}_tesorai.txt'.format(name,fdr)),sep='\t',index=None)
 
-# generate hla_ligand_atlas_now_0.05_tesorai.txt
-# fdr = 0.05
-# total_dfs = []
-# for t in all_tissues:
-#     each_tissue_dfs = []
-#     each_tissue_raws = []
-#     intdir = os.path.join(result_dir,t)
-#     old_dir = os.getcwd()
-#     os.chdir(intdir)
-#     all_batches = subprocess.run("for f in batch*; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-#     os.chdir(old_dir)
-#     for b in all_batches:
-#         print(fdr,t,b)
-#         msms_path = os.path.join(intdir,b,'combined','txt','msmsScans_new_{}_tesorai.txt'.format(fdr))
-#         msms = pd.read_csv(msms_path,sep='\t')
-#         msms = msms.loc[msms['Identified']=='+',:]
-#         for raw,sub_df in msms.groupby(by='Raw file'):
-#             sub_df['Precursor intensity'] = sub_df['Precursor intensity'].fillna(value=1e-5)
-#             sub_df['percentile'] = rankdata(sub_df['Precursor intensity'].values,method='min') / sub_df.shape[0]
-#             each_raw_data = []
-#             for p,sub_df2 in sub_df.groupby(by='Sequence'):
-#                 # take the highest
-#                 intensity = sub_df2['Precursor intensity'].values.max()
-#                 percentile = sub_df2['percentile'].values.max()
-#                 each_raw_data.append((p,intensity,percentile))
-#             each_raw_df = pd.DataFrame.from_records(data=each_raw_data,columns=['peptide','intensity','percentile'])
-#             try:
-#                 upper = np.quantile(each_raw_df['intensity'].values,0.75)
-#             except:
-#                 continue
-#             else:
-#                 each_raw_df['norm'] = np.log2(each_raw_df['intensity'].values/upper)
-#                 each_tissue_dfs.append(each_raw_df)
-#                 each_tissue_raws.append(raw)
-#     each_tissue_metadf = pd.concat(each_tissue_dfs,axis=0,keys=each_tissue_raws).reset_index(level=-2).rename(columns={'level_0':'raw_file'})
-#     total_dfs.append(each_tissue_metadf)
 
-# final = pd.concat(total_dfs,axis=0,keys=all_tissues).reset_index(level=-2).rename(columns={'level_0':'tissue'})
-# final['log_intensity'] = np.log2(final['intensity'].values)
-# mapping =  {'bladder':'Bladder','brain':'Brain','heart':'Heart','skin':'Skin','smallintestine':'Small intestine','spleen':'Spleen','tongue':'Tongue',
-#             'AdrenalGland':'Adrenal gland','BoneMarrow':'Bone marrow','LymphNode':'Lymph node'}
-# col = []
-# for item in final['tissue']:
-#     col.append(mapping.get(item,item))
-# final['tissue'] = col
-# final.to_csv('hla_ligand_atlas_now_{}_tesorai.txt'.format(fdr),sep='\t',index=None)
+# generate hla_ligand_atlas_now_0.05_tesorai.txt
+fdr = 0.05
+total_dfs = []
+for t in all_tissues:
+    each_tissue_dfs = []
+    each_tissue_raws = []
+    intdir = os.path.join(result_dir,t)
+    old_dir = os.getcwd()
+    os.chdir(intdir)
+    all_batches = subprocess.run("for f in batch*; do echo $f; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+    os.chdir(old_dir)
+    for b in all_batches:
+        print(fdr,t,b)
+        msms_path = os.path.join(intdir,b,'combined','txt','msmsScans_new_{}_tesorai.txt'.format(fdr))
+        msms = pd.read_csv(msms_path,sep='\t')
+        msms = msms.loc[msms['Identified']=='+',:]
+        for raw,sub_df in msms.groupby(by='Raw file'):
+            sub_df['Precursor intensity'] = sub_df['Precursor intensity'].fillna(value=1e-5)
+            sub_df['percentile'] = rankdata(sub_df['Precursor intensity'].values,method='min') / sub_df.shape[0]
+            each_raw_data = []
+            for p,sub_df2 in sub_df.groupby(by='Sequence'):
+                # take the highest
+                intensity = sub_df2['Precursor intensity'].values.max()
+                percentile = sub_df2['percentile'].values.max()
+                each_raw_data.append((p,intensity,percentile))
+            each_raw_df = pd.DataFrame.from_records(data=each_raw_data,columns=['peptide','intensity','percentile'])
+            try:
+                upper = np.quantile(each_raw_df['intensity'].values,0.75)
+            except:
+                continue
+            else:
+                each_raw_df['norm'] = np.log2(each_raw_df['intensity'].values/upper)
+                each_tissue_dfs.append(each_raw_df)
+                each_tissue_raws.append(raw)
+    each_tissue_metadf = pd.concat(each_tissue_dfs,axis=0,keys=each_tissue_raws).reset_index(level=-2).rename(columns={'level_0':'raw_file'})
+    total_dfs.append(each_tissue_metadf)
+
+final = pd.concat(total_dfs,axis=0,keys=all_tissues).reset_index(level=-2).rename(columns={'level_0':'tissue'})
+final['log_intensity'] = np.log2(final['intensity'].values)
+mapping =  {'bladder':'Bladder','brain':'Brain','heart':'Heart','skin':'Skin','smallintestine':'Small intestine','spleen':'Spleen','tongue':'Tongue',
+            'AdrenalGland':'Adrenal gland','BoneMarrow':'Bone marrow','LymphNode':'Lymph node'}
+col = []
+for item in final['tissue']:
+    col.append(mapping.get(item,item))
+final['tissue'] = col
+final.to_csv('hla_ligand_atlas_now_{}_tesorai.txt'.format(fdr),sep='\t',index=None)
 
 # generate post_safety_screen.txt
 df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/for_safety_screen.txt',sep='\t')
@@ -237,10 +238,10 @@ final['normal_{}'.format(fdr)] = col
 all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
                 'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
                 'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus', 'hepatocytes', 'beta_cell', 'iPSC', 'Treg', 'CD14',' ImmDC', 'MatureDC', 'CD4', 'CD8', 'CD19',
-                'CD4_Act', 'CD8_Act','CD19_Act']
+                'CD4_Act', 'CD8_Act','CD19_Act','HSC', 'granulocytes']
 
 non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus','hepatocytes', 'beta_cell', 'iPSC', 'Treg', 'CD14',' ImmDC', 'MatureDC', 'CD4', 'CD8', 'CD19',
-                'CD4_Act', 'CD8_Act','CD19_Act']
+                'CD4_Act', 'CD8_Act','CD19_Act','HSC','granulocytes']
 essential = list(set(all_tissues).difference(set(non_essential)))
 
 cond = []

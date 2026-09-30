@@ -69,6 +69,56 @@ n_samples = [
 ]
 
 
+# first test yield
+gbm = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/plasma/plasma_gbm_PXD008127/antigen/other_alg/all_neoantigen.txt',sep='\t')
+lung_public = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/plasma/lung_cancer_plasma_public/antigen/other_alg/all_neoantigen.txt',sep='\t')
+lung_nyu = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/plasma/lung_cancer_nyu/antigen/other_alg/all_neoantigen.txt',sep='\t')
+
+yields = []
+samples = []
+for s,sub_df in gbm.groupby(by='Raw file'):
+    yields.append(len(set(sub_df['Sequence'])))
+    samples.append(s)
+gbm_yields, gbm_samples = zip(*sorted(zip(yields,samples),reverse=True))
+
+lung_public_yields = [len(set(lung_public['Sequence']))]
+lung_public_samples = ['lung_public']
+
+yields = []
+samples = []
+for s,sub_df in lung_nyu.groupby(by='Raw file'):
+    yields.append(len(set(sub_df['Sequence'])))
+    samples.append(s)
+lung_nyu_yields, lung_nyu_samples = zip(*sorted(zip(yields,samples),reverse=True))
+
+total_yields = list(gbm_yields) + lung_public_yields + list(lung_nyu_yields)
+total_samples = list(gbm_samples) + lung_public_samples + list(lung_nyu_samples)
+
+mean_yields = np.quantile(total_yields,[0.25,0.5,0.75])
+
+fig,ax = plt.subplots(figsize=(15,4.8))
+ax.bar(x=np.arange(len(total_samples)),height=total_yields,color=['#6BAED6']*len(gbm_samples)+['#74A892']*len(lung_public_samples)+['#E38C78']*len(lung_nyu_samples))
+ax.axhline(y=mean_yields[0],linestyle='--',color='#5B6573')
+ax.axhline(y=mean_yields[1],linestyle='--',color='#5B6573')
+ax.axhline(y=mean_yields[2],linestyle='--',color='#5B6573')
+ax.set_ylabel('Number of unique peptides identified per sample')
+ax.set_title(mean_yields)
+ax.set_xticks(np.arange(len(total_samples)))
+ax.set_xticklabels(total_samples,fontsize=2,rotation=90)
+plt.savefig('yield.pdf',bbox_inches='tight')
+plt.close()
+
+# generate reactome
+result = pd.read_csv('Reactome_Pathways_2024_table.txt',sep='\t').iloc[:11,:]
+fig,ax = plt.subplots()
+ax.barh(y=np.arange(result.shape[0]),width=np.flip(np.negative(np.log10(result['Adjusted P-value'].values))))
+ax.set_xlabel('-log10(adjusted p-value)')
+ax.set_yticks(np.arange(result.shape[0]))
+ax.set_yticklabels(np.flip(result['Term'].values),fontsize=4)
+plt.savefig('plasma_enrichr.pdf',bbox_inches='tight')
+plt.close()
+sys.exit('stop')
+
 # use peptide abudance to cluster immunopeptidome samples
 rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
 c_df_list = []

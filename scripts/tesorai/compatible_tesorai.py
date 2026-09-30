@@ -44,11 +44,12 @@ cancers2immuno = {
     'nblneg':'neuroblastoma' # to accomodate nblneg
 }
 
-# process new healthy, first format change, then double check no suffix added, if yes modify that
+# # process new healthy, first format change, then double check no suffix added, if yes modify that
 # ks = ['normal 1-1 r1 frank change 0121_pep_fdr.tsv',
 #       'normal 2-3 r1 frank change 0121_pep_fdr.tsv',
 #       'normal 3-3 r1 frank change 0121_pep_fdr.tsv',
-#       'cell_type_resolved_normal_pep_fdr.tsv']
+#       'cell_type_resolved_normal_pep_fdr.tsv',
+#       'cell_type_resolved_hsc_pep_fdr.tsv']
 
 # dfs = []
 # for k in ks:
@@ -115,7 +116,7 @@ os.chdir(ori_dir)
 common = set(all_have).intersection(set(all_raw))
 diff = set(all_have).difference(set(all_raw))
 print(len(common))
-print(diff)
+print(diff) # 752 + 146 + 77 = 975, but one CD8 is not run on tesorai, so 974
 sys.exit('stop')
 
 

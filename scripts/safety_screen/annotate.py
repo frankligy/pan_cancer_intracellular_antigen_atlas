@@ -526,6 +526,109 @@ immune_cell_df = pd.DataFrame({
 })
 actual_final.append(immune_cell_df)
 
+'''granulocytes and HSC'''
+raw_file_table = pd.read_csv(
+    "raw_filelist_Axel_Walter.tsv",
+    sep="\t",
+    dtype=str,
+)
+
+hla1_files = raw_file_table[
+    raw_file_table["HLA_class"].str.strip().eq("I")
+].copy()
+
+hla_by_uid = {
+    "Granulocytes 01":
+        "A*01:01; A*02:01; B*18:01; B*57:01; C*07:02",
+
+    "Granulocytes 02":
+        "A*02:01; A*24:02; B*35:01; B*55:01; C*03:04; C*04:01",
+
+    "Granulocytes 03":
+        "A*01:01; A*02:01; B*07:02; C*07:02",
+
+    "Granulocytes 04":
+        "A*11:01; A*32:01; B*18:01; B*44:02; C*05:01; C*07:02",
+
+    "Granulocytes 05":
+        "A*01:01; A*23:01; B*44:02; C*04:01",
+
+    "Granulocytes 06":
+        "A*02:01; B*07:02; B*51:01; C*07:02",
+
+    "Granulocytes 07":
+        "A*03:01; B*07:02; B*35:01; C*04:01; C*07:02",
+
+    "Granulocytes 08":
+        "A*01:01; A*03:01; B*08:01; B*44:02; C*07:02; C*16:01",
+
+    "Granulocytes 09":
+        "A*02:01; A*31:01; B*18:01; B*40:01; C*03:04; C*07:02",
+
+    "Granulocytes 10":
+        "A*11:01; B*44:02; B*55:01; C*03:04; C*05:01",
+
+    "Granulocytes 11":
+        "A*24:02; A*32:01; B*07:02; B*14:02; C*07:02",
+
+    "Granulocytes 12":
+        "A*02:01; A*11:01; B*35:01; B*44:02; C*04:01; C*05:01",
+
+    "Granulocytes 13":
+        "A*01:01; A*02:01; B*44:02; B*57:01; C*05:01; C*06:02",
+
+    "Granulocytes 14":
+        "A*02:01; B*15:01; B*40:01; C*03:04",
+
+    "HPC 01":
+        "A*03:01; B*07:02; C*07:02",
+
+    "HPC 02":
+        "A*02:01; A*24:02; B*27:05; B*44:02; C*02:02; C*04:01",
+
+    "HPC 03":
+        "A*02:01; B*35:01; B*39:01; C*04:01",
+
+    "HPC 04":
+        "A*02:01; A*26:01; B*41:02; B*44:02; C*05:01",
+
+    "HPC 05":
+        "A*01:01; A*32:01; B*08:01; B*57:01; C*06:02; C*07:02",
+
+    "HPC 06":
+        "A*24:02; A*31:01; B*07:02; B*44:02; C*04:01; C*07:02",
+
+    "HPC 07":
+        "A*01:01; A*32:01; B*37:01; B*40:01; C*02:02; C*06:02",
+
+    "HPC 08":
+        "A*02:01; A*03:01; B*07:02; B*57:01; C*06:02; C*07:02",
+}
+
+cell_types = [
+    "granulocytes" if uid.startswith("Granulocytes") else "HSC"
+    for uid in hla1_files["unique_ID"]
+]
+
+raw_files = hla1_files["file"].tolist()
+raw_files = [item.split('.RAW')[0] + '.raw' if item.endswith('RAW') else item for item in raw_files]
+
+sample_ids = hla1_files["unique_ID"].tolist()
+
+hla_types = [
+    hla_by_uid[uid]
+    for uid in sample_ids
+]
+
+granulocyte_hsc_df = pd.DataFrame({
+    "tissue": cell_types,
+    "file": raw_files,
+    "uid": sample_ids,
+    "hla": hla_types,
+})
+actual_final.append(granulocyte_hsc_df)
+
+
 actual_final = pd.concat(actual_final,axis=0)
 actual_final.to_csv('final.txt',sep='\t',index=None)
 actual_final.to_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/final.txt',sep='\t',index=None)
