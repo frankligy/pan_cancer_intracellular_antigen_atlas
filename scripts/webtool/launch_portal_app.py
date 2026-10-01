@@ -132,7 +132,7 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
             if ensg is not None:
                 query_source = ensg
             
-        final = final.loc[final['Source'].str.upper().str.contains(query_source),:]
+        final = final.loc[final['Source'].str.upper().str.contains(query_source,regex=False),:]
 
     if isinstance(query_peptide,str):
         query_peptide = query_peptide.upper()
@@ -140,7 +140,7 @@ def filter_table(cancer,query_type,query_peptide,query_source,query_hla,sort_by_
 
     if isinstance(query_hla,str):
         query_hla = query_hla.upper()
-        final = final.loc[(final['presented_by_each_sample_hla'].str.contains(query_hla)) | (final['additional_query'].str.contains(query_hla)),:]
+        final = final.loc[(final['presented_by_each_sample_hla'].str.contains(query_hla,regex=False)) | (final['additional_query'].str.contains(query_hla,regex=False)),:]
 
 
     # sort
@@ -200,7 +200,7 @@ def get_hla_info(meta,lists,hlas):
         hla = k.split('HLA-')[1]
         sub_meta = meta.loc[meta['HLA'].notna(),:]
         try:
-            samples = sub_meta.loc[sub_meta['HLA'].str.contains(hla),:]['biology'].unique().tolist() # for RT
+            samples = sub_meta.loc[sub_meta['HLA'].str.contains(hla,regex=False),:]['biology'].unique().tolist() # for RT
         except:
             samples = []
         try:
