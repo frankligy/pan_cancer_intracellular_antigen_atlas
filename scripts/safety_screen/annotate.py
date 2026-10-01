@@ -82,12 +82,20 @@ anno = {
 
 pat = re.compile(r'-(DN\d+)_')
 
+tissue_mapping = {
+    'AdrenalGland':'Adrenal gland',
+    'BoneMarrow':'Bone marrow',
+    'LymphNode':'Lymph node',
+    'SmallIntestine':'Small intestine'
+}
+
 data = []
 for t in tissues:
     sub = df.loc[df['file'].str.contains(t),:]
     for f in sub['file']:
         uid = re.search(pat,f).group(1)
         hla = anno[uid]
+        t = tissue_mapping.get(t,t)
         data.append((t,f,uid,hla))
 final = pd.DataFrame.from_records(data,columns=['tissue','file','uid','hla'])
 actual_final.append(final)
