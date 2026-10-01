@@ -155,7 +155,7 @@
             "sc_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_single_cell_data_ensg.txt",
             "hla_ligand_atlas_path":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/hla_2020.12/HLA_aggregated.tsv",
             "bayests_xy_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt",
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt",
             "tesorai_folder":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches"
 
@@ -183,7 +183,7 @@
         },
 
         "fixed_parameters":{
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "SANDBOX_PATH":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/pwiz",
             "tmp_dir":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/scratch",
             "bruker_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/process_bruker.py",

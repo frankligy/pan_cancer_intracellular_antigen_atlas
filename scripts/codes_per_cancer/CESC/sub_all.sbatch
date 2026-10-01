@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=20
 #SBATCH --time=1-00:00:00
 #SBATCH --mem=300Gb
-#SBATCH --job-name="neoverse-pan"
+#SBATCH --job-name="CESC"
 #SBATCH --output=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.out
 #SBATCH --error=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.err
 #SBATCH --gres=gpu:a100:1
@@ -17,7 +17,7 @@
 
 # /gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/run_maxquant.sh template.json
 
-/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/post_maxquant.py --config template.json
+# /gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/post_maxquant.py --config template.json
 
 # /gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/rederive.py --config template.json
 

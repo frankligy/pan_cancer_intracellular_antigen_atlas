@@ -7,15 +7,15 @@
             "manifest_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/RT/manifest_rt_69.tsv",
             "variant_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/variants/placeholder.txt",
             "variant_convert_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/variants/placeholder.txt",
-            "gene_count_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/placeholder.txt",
+            "gene_count_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/TARGET-RT.star_counts.tsv",
             "splicing_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/splicing/RT",
             "intron_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/intron_retention/RT",
             "pathogen_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/pathogen/RT",
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/RT",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "mode":"TARGET",
             "min_pep_len":8,
-            "max_pep_len":11
+            "max_pep_len":15
         },
 
         "fixed_parameters":{
@@ -37,9 +37,9 @@
 
         "tunable_parameters":{
             "min_pep_len":8,
-            "max_pep_len":11,
+            "max_pep_len":15,
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/RT",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "total":63,
             "te_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/TE/RT",
             "manifest_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/RT/manifest_rt_69.tsv",
@@ -113,12 +113,12 @@
             "rederive_samples_no":[],
 
 
-            "mode":0.05,
+            "mode":0.01,
             "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/rhabdoid_tumor/metadata.txt",
             "cores":20,
             "inquiry_mode":"i",
-            "is_full":false,
-            "is_tuple":false
+            "is_full":true,
+            "is_tuple":true
 
         },
 
@@ -158,8 +158,9 @@
             "sc_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_single_cell_data_ensg.txt",
             "hla_ligand_atlas_path":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/hla_2020.12/HLA_aggregated.tsv",
             "bayests_xy_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt",
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
-            "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt"
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
+            "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt",
+            "tesorai_folder":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches"
 
         }
         
@@ -184,7 +185,7 @@
         },
 
         "fixed_parameters":{
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "SANDBOX_PATH":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/pwiz",
             "tmp_dir":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/scratch",
             "bruker_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/process_bruker.py",

@@ -12,10 +12,10 @@
             "intron_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/intron_retention/COAD",
             "pathogen_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/pathogen/COAD",
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/COAD",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "mode":"TCGA",
             "min_pep_len":8,
-            "max_pep_len":11
+            "max_pep_len":15
         },
 
         "fixed_parameters":{
@@ -37,9 +37,9 @@
 
         "tunable_parameters":{
             "min_pep_len":8,
-            "max_pep_len":11,
+            "max_pep_len":15,
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/COAD",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "total":483,
             "te_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/TE/COAD",
             "manifest_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/COAD/manifest_coad_524.tsv",
@@ -123,8 +123,8 @@
             "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/colon_cancer/metadata.txt",
             "cores":20,
             "inquiry_mode":"i",
-            "is_full":false,
-            "is_tuple":false
+            "is_full":true,
+            "is_tuple":true
         },
 
         "fixed_parameters":{
@@ -163,7 +163,7 @@
             "sc_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_single_cell_data_ensg.txt",
             "hla_ligand_atlas_path":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/hla_2020.12/HLA_aggregated.tsv",
             "bayests_xy_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt",
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt",
             "tesorai_folder":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches"
 
@@ -190,7 +190,7 @@
         },
 
         "fixed_parameters":{
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "SANDBOX_PATH":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/pwiz",
             "tmp_dir":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/scratch",
             "bruker_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/process_bruker.py",
@@ -260,14 +260,14 @@
 
         "nuorf":{
 
-            "obj":"SAYLGRTL",
+            "obj":"EAGSPYRVQ",
 
             "immuno_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/colon_cancer",
             "technology":"orbitrap",
             "col":"percentile",
 
             "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/colon_cancer/metadata.txt",
-            "final_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/COAD/antigen/fdr/final_enhanced.txt",
+            "final_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/COAD/antigen/0.05/final_enhanced.txt",
 
             "normal_hla_type":"/gpfs/data/yarmarkovichlab/Aman/hla_ligand_atlas/final.txt"
         }

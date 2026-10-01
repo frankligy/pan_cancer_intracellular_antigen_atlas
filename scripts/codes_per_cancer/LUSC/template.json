@@ -12,10 +12,10 @@
             "intron_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/intron_retention/LUSC",
             "pathogen_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/pathogen/LUSC",
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/LUSC",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "mode":"TCGA",
             "min_pep_len":8,
-            "max_pep_len":11
+            "max_pep_len":15
         },
 
         "fixed_parameters":{
@@ -26,7 +26,8 @@
             "human_non_canonical_proteome":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/uniprot_reviewed_curated_addition.fasta",
             "canonical_enhanced":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/canonical_enhanced.txt",
             "driver":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/variants/driver_genes.txt",
-            "hg38_fa":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/circRNA/hg38.fa"
+            "hg38_fa":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/circRNA/hg38.fa",
+            "hg38_cds_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/hg38_cds_final.txt"
         }
     },
 
@@ -36,11 +37,10 @@
 
         "tunable_parameters":{
             "min_pep_len":8,
-            "max_pep_len":11,
+            "max_pep_len":15,
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/LUSC",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "total":502,
-            "class2":false,
             "te_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/TE/LUSC",
             "manifest_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/LUSC/manifest_lusc_553.tsv",
             "image_format":"pdf"
@@ -53,53 +53,28 @@
             "gtex_all_h5ad":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/gtex_gene_all.h5ad",
             "hg38_gtf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/gencode.v36.annotation.gtf",
             "membrane_gene":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/human_membrane_proteins_acc2ens.txt",
-            "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt",
             "protein":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/Homo_sapiens.GRCh38.pep.all.fa",
-            "variant_raw_dbsnp":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/chm13v2.0_dbSNPv155.vcf.gz",
-            "variant_raw_redit":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/REDIportal/TABLE1_hg38.txt",
-            "variant_raw_cosmic":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/variant_annotations/Cosmic_MutantCensus_v99_GRCh38.tsv",
-            "variant_dbsnp":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/variant_annotations/annot.txt.gz",
-            "variant_redit":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/variant_annotations/redit_postlift.bed.gz",
-            "variant_cosmic":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/variant_annotations/cosmic_postlift.bed.gz",
-            "liftover_program":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/dbSNP/liftOver",
-            "liftover_chains":{
-                "hs1_hg38":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/dbSNP/hs1ToHg38.over.chain.gz",
-                "hg38_hs1":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/dbSNP/hg38ToHs1.over.chain.gz"
-            },
-            "vep_image":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/engine/SNV/vep.sif",
             "variant_ensembl_gtf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/Homo_sapiens.GRCh38.110.gtf",
             "splicing_snaf":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/blacklist_splicing.txt",
-            "splicing_blacklist":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/snaf_prelift.bed", 
-            "splicing_unmapped":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/snaf_unmapped.txt",
+            "splicing_blacklist":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/snaf_prelift.bed",
             "splicing_gtex_hg38":"/gpfs/data/yarmarkovichlab/Frank/SNAF_ecosystem/data/controls/GTEx_junction_counts.h5ad",
             "splicing_tcga_hg38":"/gpfs/data/yarmarkovichlab/Frank/SNAF_ecosystem/data/controls/tcga_matched_control_junction_count.h5ad",
-            "splicing_gtex_mapping":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/gtex_hg38_t2t/gtex_t2t_coord_to_uid.txt",
-            "splicing_tcga_mapping":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/tcga_hg38_t2t/tcga_t2t_coord_to_uid.txt",
             "splicing_gtex_mapping_hg38":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/gtex_hg38_t2t/tmp_prelift.bed",
             "splicing_tcga_mapping_hg38":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/splicing_annotations/tcga_hg38_t2t/tmp_prelift.bed",
-            "t2t_gtf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/catLiftOffGenesV1.gtf",
-            "t2t_unique_regions":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/hgUnique.hg38.bed",
-            "t2t_fa":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/hs1.fa",
             "ref_proteome":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/proteomes_AND_proteome_type_1_2023_10_16.tsv",
             "other_proteome":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/proteomes_AND_proteome_type_2_2023_10_16.tsv",
-            "te_gtf_t2t":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/T2T_CHM13_v2_rmsk_TE.gtf",
             "te_gtf_hg38":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/splicing/GRCh38_Ensembl_rmsk_TE.gtf",
             "te_anno_hg38":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/TE_ERV/hg38_rmsk_TE.gtf.locInd.locations",
             "normal_hg38_meta":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/hg38_normal_meta.txt",
             "normal_hg38_dir":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/hg38_telocal_intron",
-            "geve_hg38_anno":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/gEVE_Hsap38_annotation.txt",
-            "geve_hg38_seq":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/gEVE_Hsap38.geve.aa_v1_all.fa",
-            "geve_hg38_bed":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/gEVE_Hsap38.bed",
             "normal_t2t_meta":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/t2t_normal_meta.txt",
             "normal_t2t_dir":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/t2t_pathogen_intron",
             "combined_normal_pathogen_t2t":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/t2t_pathogen_intron/normal_pathogen.txt",
-            "combined_normal_intron_t2t":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/t2t_pathogen_intron/normal_intron.txt",
             "combined_normal_intron_hg38":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/selected/hg38_telocal_intron/normal_intron.txt",
-            "gene_model":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/gene_model.txt",
-            "ncbi_orffinder":"/gpfs/data/yarmarkovichlab/chordoma/NeoVerse_analysis/ORFfinder",
-            "circ_rna_normal":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/circRNA/human_hg38_All_circRNA.csv",
             "hg38_fa":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/GTEx/circRNA/hg38.fa",
-            "nuorf_fa":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/nuORF_seq.fasta",
+            "hg19_fa":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/hg19.fa",
+            "nuorf_gtf_dict":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/gtf_dic.p",
+            "nuorf_txt":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/nuORF.txt",
             "ieatlas_cancer":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/Epitopes_In_Cancer_Tissues.txt",
             "ieatlas_normal":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/Epitopes_In_Normal_Tissues.txt",
             "hla_ligand_atlas_intensity":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.05_tesorai.txt",
@@ -107,9 +82,6 @@
             "junction2isoformDB_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/splicing/junction2isoformDB.txt",
             "HERV_splice_db_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/TE/splice_erv_db.txt",
             "hg38_cds_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/hg38_cds_final.txt"
-
-
-
         }
 
     },
@@ -122,45 +94,34 @@
             "immunopeptidome_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/lung_LUSC",
             "technology":{
                 "PXD009935_Yifet_tnf_ifn":"orbitrap",
-                "sternberg_2020_nc":"orbitrap",
                 "PXD009752_54_55_stm_Perreault":"orbitrap",
                 "PXD016060":"orbitrap",
+                "sternberg_2020_nc":"orbitrap",
                 "sternberg_2023_lung_nc_batch1":"orbitrap",
                 "sternberg_2023_lung_nc_batch2":"orbitrap",
                 "sternberg_2023_lung_nc_batch3":"orbitrap",
-                "sternberg_2023_lung_nc_batch4":"orbitrap"
+                "sternberg_2023_lung_nc_batch4":"orbitrap",
+                "PXD022949":"orbitrap"
             },
-            "remove_list":["sternberg_2023_lung_nc","mzml_dir"],
             "hla_class":1,
             "peptide_fdr":1,
-            "current_maxquant_run_mqpar":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/lung_LUSC/sternberg_2023_lung_nc_batch4/mqpar.xml",
+            "current_maxquant_run_mqpar":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/lung_LUSC/PXD022949/mqpar.xml",
 
 
             "rederive_mzml_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/lung_LUSC/mzml_dir",
             "rederive_vanilla_fdr":0.05,
             "rederive_mode":"rewrite_vanilla",
             "rederive_rescore_fdr":0.05,
-            "rederive_samples":["PXD009935_Yifet_tnf_ifn","PXD009752_54_55_stm_Perreault"],
-            "rederive_samples_yes":["PXD009935_Yifet_tnf_ifn","PXD009752_54_55_stm_Perreault"],
+            "rederive_samples":["PXD016060","sternberg_2020_nc","sternberg_2023_lung_nc_batch1","sternberg_2023_lung_nc_batch2","sternberg_2023_lung_nc_batch3","sternberg_2023_lung_nc_batch4"],
+            "rederive_samples_yes":["PXD009935_Yifet_tnf_ifn","PXD009752_54_55_stm_Perreault","PXD022949"],
             "rederive_samples_no":["PXD016060","sternberg_2020_nc","sternberg_2023_lung_nc_batch1","sternberg_2023_lung_nc_batch2","sternberg_2023_lung_nc_batch3","sternberg_2023_lung_nc_batch4"],
 
-
-            "mode":"fdr",
+            "mode":0.01,
             "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/lung_LUSC/metadata.txt",
             "cores":20,
             "inquiry_mode":"i",
-
-
-            "result_dict":{
-                "PXD009935_Yifet_tnf_ifn":"PXD009935_Yifet_tnf_ifn",
-                "sternberg_2020_nc":"sternberg_2020_nc",
-                "PXD009752_54_55_stm_Perreault":"PXD009752_54_55_stm_Perreault",
-                "PXD016060":"PXD016060",
-                "sternberg_2023_lung_nc_batch1":"sternberg_2023_lung_nc_batch1",
-                "sternberg_2023_lung_nc_batch2":"sternberg_2023_lung_nc_batch2",
-                "sternberg_2023_lung_nc_batch3":"sternberg_2023_lung_nc_batch3",
-                "sternberg_2023_lung_nc_batch4":"sternberg_2023_lung_nc_batch4"
-            }
+            "is_full":true,
+            "is_tuple":true
 
         },
 
@@ -190,7 +151,7 @@
                 "nuORF"
                 ],
     
-            "added_genes":["ENSG00000221867","ENSG00000147381","ENSG00000184033","ENSG00000185686","ENSG00000046774","ENSG00000139352","ENSG00000137142","ENSG00000164458","ENSG00000147689","ENSG00000204019"],
+            "added_genes":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/added_genes.txt",
             "ieatlas_cancer":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/Epitopes_In_Cancer_Tissues.txt",
             "ieatlas_normal":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/nuORF/Epitopes_In_Normal_Tissues.txt",
             "netMHCpan_path":"/gpfs/data/yarmarkovichlab/Frank/SNAF_ecosystem/netMHCpan-4.1/netMHCpan",
@@ -200,8 +161,9 @@
             "sc_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_single_cell_data_ensg.txt",
             "hla_ligand_atlas_path":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/hla_2020.12/HLA_aggregated.tsv",
             "bayests_xy_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt",
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
-            "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt"
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
+            "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt",
+            "tesorai_folder":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches"
 
         }
         
@@ -215,7 +177,7 @@
             "cores":20,
 
             "cancer":"LUSC",
-            "antigen_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/LUSC/antigen/fdr",
+            "antigen_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/LUSC/antigen/0.05",
             "assets_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/LUSC/assets",
             "technology":"orbitrap",
             "bruker_format":"na",
@@ -226,7 +188,7 @@
         },
 
         "fixed_parameters":{
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "SANDBOX_PATH":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/pwiz",
             "tmp_dir":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/scratch",
             "bruker_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/process_bruker.py",

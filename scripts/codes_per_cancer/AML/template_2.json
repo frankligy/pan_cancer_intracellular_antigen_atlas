@@ -101,7 +101,7 @@
             "remove_list":["PXD012083_plos_one_npm1_neoantigen_HLA-II"],
             "hla_class":2,
             "peptide_fdr":1,
-            "current_maxquant_run_mqpar":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML_HLA-II/PXD012083_plos_one_npm1_neoantigen_HLA-II_batch3/mqpar.xml",
+            "current_maxquant_run_mqpar":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML_HLA-II/PXD012083_plos_one_npm1_neoantigen_HLA-II_batch2/mqpar.xml",
 
 
             "rederive_mzml_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML_HLA-II/mzml_dir",

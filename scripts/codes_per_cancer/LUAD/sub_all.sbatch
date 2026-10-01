@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=20
 #SBATCH --time=1-00:00:00
 #SBATCH --mem=300Gb
-#SBATCH --job-name="neoverse-pan"
+#SBATCH --job-name="LUAD"
 #SBATCH --output=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.out
 #SBATCH --error=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.err
 #SBATCH --gres=gpu:a100:1

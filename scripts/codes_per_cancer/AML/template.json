@@ -12,10 +12,10 @@
             "intron_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/intron_retention/AML",
             "pathogen_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/pathogen/AML",
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/AML",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "mode":"TCGA",
             "min_pep_len":8,
-            "max_pep_len":11
+            "max_pep_len":15
         },
 
         "fixed_parameters":{
@@ -37,9 +37,9 @@
 
         "tunable_parameters":{
             "min_pep_len":8,
-            "max_pep_len":11,
+            "max_pep_len":15,
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/AML",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "total":151,
             "te_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/TE/AML",
             "manifest_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/AML/manifest_AML_151.tsv",
@@ -121,12 +121,9 @@
 
             "rederive_mzml_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML/mzml_dir",
             "rederive_vanilla_fdr":0.05,
-            "rederive_mode":"rewrite",
+            "rederive_mode":"rewrite_vanilla",
             "rederive_rescore_fdr":0.05,
-            "rederive_samples":["PXD018542_perreault_atypical_batch1","PXD018542_perreault_atypical_batch2","PXD012083_plos_one_npm1_neoantigen_batch1","PXD012083_plos_one_npm1_neoantigen_batch2",
-                                "PXD012083_plos_one_npm1_neoantigen_batch3","PXD038691_batch1","PXD038691_batch2","PXD038691_batch3",
-                                "PXD038691_batch4","PXD038691_batch5","PXD038691_batch6","PXD038691_batch7","PXD038691_batch8","PXD038691_batch9",
-                                "PXD038691_batch10","PXD038691_batch11"],
+            "rederive_samples":["PXD015039_THP1_protocol_optimization_batch1","PXD015039_THP1_protocol_optimization_batch2","PXD015039_THP1_protocol_optimization_batch3","PXD015039_THP1_protocol_optimization_batch4"],
             "rederive_samples_yes":["PXD018542_perreault_atypical_batch1","PXD018542_perreault_atypical_batch2","PXD012083_plos_one_npm1_neoantigen_batch1","PXD012083_plos_one_npm1_neoantigen_batch2",
                                     "PXD012083_plos_one_npm1_neoantigen_batch3","PXD038691_batch1","PXD038691_batch2","PXD038691_batch3",
                                     "PXD038691_batch4","PXD038691_batch5","PXD038691_batch6","PXD038691_batch7","PXD038691_batch8","PXD038691_batch9",
@@ -134,12 +131,12 @@
             "rederive_samples_no":["PXD015039_THP1_protocol_optimization_batch1","PXD015039_THP1_protocol_optimization_batch2","PXD015039_THP1_protocol_optimization_batch3","PXD015039_THP1_protocol_optimization_batch4"],
 
 
-            "mode":0.05,
+            "mode":0.01,
             "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML/metadata.txt",
             "cores":20,
             "inquiry_mode":"i",
-            "is_full":false,
-            "is_tuple":false
+            "is_full":true,
+            "is_tuple":true
 
         },
 
@@ -179,7 +176,7 @@
             "sc_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_single_cell_data_ensg.txt",
             "hla_ligand_atlas_path":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/hla_2020.12/HLA_aggregated.tsv",
             "bayests_xy_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt",
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt",
             "tesorai_folder":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches"
 
@@ -192,7 +189,7 @@
         "tunable_parameters":{
             "raw_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML",
             "mzml_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML/mzml_dir",
-            "cores":20,
+            "cores":10,
 
             "cancer":"AML",
             "antigen_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/AML/antigen/0.05",
@@ -206,7 +203,7 @@
         },
 
         "fixed_parameters":{
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "SANDBOX_PATH":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/pwiz",
             "tmp_dir":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/scratch",
             "bruker_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/process_bruker.py",
@@ -219,7 +216,7 @@
 
     "python_interact":{
 
-        "image_format":"png",
+        "image_format":"pdf",
 
         "gene":{
             "markers":{
@@ -325,14 +322,14 @@
 
         "nuorf":{
 
-            "obj":"TLFDYEVRL",
+            "obj":"SLFEGIYTI",
 
-            "immuno_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/GBM",
+            "immuno_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML",
             "technology":"orbitrap",
-            "col":"norm",
+            "col":"percentile",
 
-            "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/GBM/metadata.txt",
-            "final_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/GBM/antigen/fdr/final_enhanced.txt",
+            "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/AML/metadata.txt",
+            "final_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/AML/antigen/0.05/final_enhanced.txt",
 
             "normal_hla_type":"/gpfs/data/yarmarkovichlab/Aman/hla_ligand_atlas/final.txt"
     

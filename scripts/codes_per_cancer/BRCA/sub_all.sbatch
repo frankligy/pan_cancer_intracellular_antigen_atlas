@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH --partition=gpu4_medium
+#SBATCH --partition=a100_short
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=20
 #SBATCH --time=1-00:00:00
-#SBATCH --mem=150Gb
-#SBATCH --job-name="neoverse-pan"
+#SBATCH --mem=300Gb
+#SBATCH --job-name="BRCA"
 #SBATCH --output=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.out
 #SBATCH --error=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.err
-#SBATCH --gres=gpu:v100:1
+#SBATCH --gres=gpu:a100:1
 
 
 # /gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/integrate_tcga.py --config template.json

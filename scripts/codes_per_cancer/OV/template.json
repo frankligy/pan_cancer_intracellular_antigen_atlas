@@ -12,10 +12,10 @@
             "intron_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/intron_retention/OV",
             "pathogen_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/pathogen/OV",
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/OV",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "mode":"TCGA",
             "min_pep_len":8,
-            "max_pep_len":11
+            "max_pep_len":15
         },
 
         "fixed_parameters":{
@@ -37,9 +37,9 @@
 
         "tunable_parameters":{
             "min_pep_len":8,
-            "max_pep_len":11,
+            "max_pep_len":15,
             "atlas_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas/OV",
-            "db_fasta_dir":"db_fasta",
+            "db_fasta_dir":"db_fasta_tesorai",
             "total":429,
             "class2":false,
             "te_dir_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/TE/OV",
@@ -116,19 +116,19 @@
 
             "rederive_mzml_dir":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/ovarian_cancer/mzml_dir",
             "rederive_vanilla_fdr":0.05,
-            "rederive_mode":"rewrite_vanilla",
+            "rederive_mode":"rewrite",
             "rederive_rescore_fdr":0.05,
-            "rederive_samples":["MSV000084442_HLAthena_OV","PXD006939_sternberg_cl","PXD007635_schuster_batch9"],
+            "rederive_samples":["PXD014062_HGSC","PXD007635_schuster_batch1","PXD007635_schuster_batch2","PXD007635_schuster_batch3","PXD007635_schuster_batch4","PXD007635_schuster_batch5","PXD007635_schuster_batch6","PXD007635_schuster_batch7","PXD007635_schuster_batch8","PXD007635_schuster_batch10"],
             "rederive_samples_no":["MSV000084442_HLAthena_OV","PXD006939_sternberg_cl","PXD007635_schuster_batch9"],
             "rederive_samples_yes":["PXD014062_HGSC","PXD007635_schuster_batch1","PXD007635_schuster_batch2","PXD007635_schuster_batch3","PXD007635_schuster_batch4","PXD007635_schuster_batch5","PXD007635_schuster_batch6","PXD007635_schuster_batch7","PXD007635_schuster_batch8","PXD007635_schuster_batch10"],
 
 
-            "mode":0.05,
+            "mode":0.01,
             "metadata_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome/ovarian_cancer/metadata.txt",
             "cores":20,
             "inquiry_mode":"i",
-            "is_full":false,
-            "is_tuple":false
+            "is_full":true,
+            "is_tuple":true
 
         },
 
@@ -168,7 +168,7 @@
             "sc_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/summary/zach_single_cell_data_ensg.txt",
             "hla_ligand_atlas_path":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/hla_2020.12/HLA_aggregated.tsv",
             "bayests_xy_path":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/gene/full_results_XY_essential_tissues.txt",
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "nuorf":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/NeoVerse/data/nuORF.txt",
             "tesorai_folder":"/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches"
 
@@ -194,7 +194,7 @@
         },
 
         "fixed_parameters":{
-            "us_hla_path":"/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv",
+            "us_hla_path":"/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv",
             "SANDBOX_PATH":"/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/fasta/pwiz",
             "tmp_dir":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/scratch",
             "bruker_script":"/gpfs/data/yarmarkovichlab/softwares/NeoVerse_pan/process_bruker.py",
