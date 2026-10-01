@@ -113,7 +113,18 @@ def compare_result(tesorai,df):
     df = df.loc[:,selected_columns]
     return df
 
+# # some to exclude in the benchmark
+# to_excluded = {
+#     'KIRC':['PXD038782'],
+#     'HNSC':['PXD038782']
+# }
 
+# # include all tesorai result
+# all_tesorai = subprocess.run("for file in tesorai_peptide_fdr_*.tsv; do echo $file; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# path_dic = {}
+# for tesorai in all_tesorai:
+#     c = '_'.join(tesorai.split('.tsv')[0].split('_')[3:]).split('_rescue')[0]
+#     path_dic.setdefault(c,[]).append(tesorai)
 
 # data_all = []
 # data_hq = []
@@ -129,6 +140,17 @@ def compare_result(tesorai,df):
 #         all_txt = subprocess.run(cmd1,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 #     else:
 #         all_txt = subprocess.run(cmd2,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+#     # exclude two that are .d, d is tricy because scan does not match so the comparison is not most stringent, we only did that for MESO as an exception
+#     cleaned_all_txt = []
+#     for item in all_txt:
+#         if c in to_excluded.keys():
+#             to_excluded_study = to_excluded[c]
+#             for study in to_excluded_study:
+#                 if study not in item:
+#                     cleaned_all_txt.append(item)
+#         else:
+#             cleaned_all_txt.append(item)
+#     all_txt = cleaned_all_txt
 #     all_study = [item.split('/')[1] for item in all_txt]
 #     all_txt = [os.path.join(immuno_dir,item[2:]) for item in all_txt]
 #     os.chdir(old_dir)
@@ -139,7 +161,7 @@ def compare_result(tesorai,df):
 #         msms = pd.read_csv(txt,sep='\t')
 #         df_list.append(msms)
 #     df = pd.concat(df_list,axis=0,keys=all_study).reset_index(level=-2)
-#     # assert df.shape[0] == len(set(df['uid']))
+#     assert df.shape[0] == len(set(df['uid']))
 
 #     # remove rev, some are maxquant-labelled rev, some has REV in proteins
 #     col1 = []
@@ -158,12 +180,16 @@ def compare_result(tesorai,df):
 #     df['Identified_vanilla'] = col2
 #     df['Identified_rescore'] = col3
 
-#     # compare
-#     tesorai = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/tesorai_peptide_fdr_{}.tsv'.format(c),sep='\t')
+#     # compare, only use peter's old result
+#     tesorai_list = []
+#     for tesorai_file in path_dic[c]:
+#         tmp_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches/{}'.format(tesorai_file),sep='\t')
+#         tesorai_list.append(tmp_df)
+#     tesorai = pd.concat(tesorai_list,axis=0)
+
 #     if c != 'MESO':
 #         now_df = compare_result(tesorai,df)
 
-    
 #     # plot peptide 8-11 and additional 12-15 and ambiguity
 #     fig = plt.figure(figsize=(15,6))
 #     gs = mpl.gridspec.GridSpec(nrows=1,ncols=2,width_ratios=(0.5,0.5),wspace=0.2)
@@ -225,6 +251,7 @@ def compare_result(tesorai,df):
 # final_data_all.to_csv('final_data_all.txt',sep='\t',index=None)
 # final_data_hq = pd.DataFrame.from_records(data_hq,columns=['cancer','unique_to_maxquant','unique_to_rescore','m_r_not_t','unique_to_tesorai','t_m_not_r','t_r_not_m','all'])
 # final_data_hq.to_csv('final_data_hq.txt',sep='\t',index=None)
+
 
 
 # plot all

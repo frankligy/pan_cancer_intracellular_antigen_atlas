@@ -100,29 +100,23 @@ cancers2immuno = {
 # df['filename'] = col
 # df.to_csv('tesorai_peptide_fdr_normal.tsv',sep='\t',index=None)
 
-# to double check
-ori_dir = os.getcwd()
-os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/immuno')
-cmd = 'find . -type f -name "*.raw" -exec echo {} \; | xargs -n1 basename'
-all_raw = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-os.chdir(ori_dir)
+# # to double check
+# ori_dir = os.getcwd()
+# os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/immuno')
+# cmd = 'find . -type f -name "*.raw" -exec echo {} \; | xargs -n1 basename'
+# all_raw = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# os.chdir(ori_dir)
 
-ori_dir = os.getcwd()
-os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches')
-cmd = 'cut -f1 tesorai_peptide_fdr_normal.tsv | sort | uniq'
-all_have = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-os.chdir(ori_dir)
+# ori_dir = os.getcwd()
+# os.chdir('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/NYU_Tesorai_all_searches')
+# cmd = 'cut -f1 tesorai_peptide_fdr_normal.tsv | sort | uniq'
+# all_have = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# os.chdir(ori_dir)
 
-common = set(all_have).intersection(set(all_raw))
-diff = set(all_have).difference(set(all_raw))
-print(len(common))
-print(diff) # 752 + 146 + 77 = 975, but one CD8 is not run on tesorai, so 974
-sys.exit('stop')
-
-
-
-
-
+# common = set(all_have).intersection(set(all_raw))
+# diff = set(all_have).difference(set(all_raw))
+# print(len(common))
+# print(diff) # 752 + 146 + 77 = 975, but one CD8 is not run on tesorai, so 974
 
 
 
@@ -144,34 +138,34 @@ mapping = {
     # 'frank_LUSC_rescue_1_pep_fdr.tsv':'tesorai_peptide_fdr_LUSC_rescue_1.tsv',
     # 'frank_ov_rerun_microbe_pep_fdr.tsv':'tesorai_peptide_fdr_OV.tsv',
     # 'frank_cesc_rerun_microbe2_pep_fdr.tsv':'tesorai_peptide_fdr_CESC.tsv',
-    'nbl_neg_0122_pep_fdr.tsv':'tesorai_peptide_fdr_nblneg.tsv'
+    # 'nbl_neg_0122_pep_fdr.tsv':'tesorai_peptide_fdr_nblneg.tsv'
 }
 
-for k,v in mapping.items():
-    df = pd.read_csv('./rescue_raw/{}'.format(k),sep='\t',index_col=0)
-    df = df.loc[~df['is_decoy'],:]
-    df = df.loc[df['possible_protein_ids'].notna(),:]
-    df['filename'] = [item.split('.zip')[0] + '.d' if item.endswith('.zip') else item for item in df['filename']]
-    df['filename'] = [item.split('.RAW')[0] + '.raw' if item.endswith('.RAW') else item for item in df['filename']]
-    df.drop(columns=['job_id','is_decoy','retention_time_normalized','precursor_charge'],inplace=True)
-    df['possible_protein_ids'] = [';;'.join(item.split(';')) for item in df['possible_protein_ids']]
-    df.rename(columns={'precursor_intensity':'intensity'},inplace=True)
-    df.to_csv('./{}'.format(v),sep='\t',index=None)
+# for k,v in mapping.items():
+#     df = pd.read_csv('./rescue_raw/{}'.format(k),sep='\t',index_col=0)
+#     df = df.loc[~df['is_decoy'],:]
+#     df = df.loc[df['possible_protein_ids'].notna(),:]
+#     df['filename'] = [item.split('.zip')[0] + '.d' if item.endswith('.zip') else item for item in df['filename']]
+#     df['filename'] = [item.split('.RAW')[0] + '.raw' if item.endswith('.RAW') else item for item in df['filename']]
+#     df.drop(columns=['job_id','is_decoy','retention_time_normalized','precursor_charge'],inplace=True)
+#     df['possible_protein_ids'] = [';;'.join(item.split(';')) for item in df['possible_protein_ids']]
+#     df.rename(columns={'precursor_intensity':'intensity'},inplace=True)
+#     df.to_csv('./{}'.format(v),sep='\t',index=None)
 
 # make sure no RAW no zip
-all_tesorai = subprocess.run("for file in tesorai_peptide_fdr_*.tsv; do echo $file; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
-for tesorai in all_tesorai:
-    df = pd.read_csv(tesorai,sep='\t')
-    cond = np.any(df['filename'].str.endswith('RAW').values)
-    if cond:
-        print(tesorai,cond)
+# all_tesorai = subprocess.run("for file in tesorai_peptide_fdr_*.tsv; do echo $file; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
+# for tesorai in all_tesorai:
+#     df = pd.read_csv(tesorai,sep='\t')
+#     cond = np.any(df['filename'].str.endswith('RAW').values)
+#     if cond:
+#         print(tesorai,cond)
 
 # make sure no suffix added
 all_tesorai = subprocess.run("for file in tesorai_peptide_fdr_*.tsv; do echo $file; done",shell=True,stdout=subprocess.PIPE,universal_newlines=True).stdout.split('\n')[:-1]
 for tesorai in all_tesorai:
     df = pd.read_csv(tesorai,sep='\t')
     all_file = set([item.split('.')[0] for item in df['filename']])
-    c = tesorai.split('_')[3]
+    c = '_'.join(tesorai.split('.tsv')[0].split('_')[3:]).split('_rescue')[0]
     if c in cancers2immuno.keys():
         meta = pd.read_csv(os.path.join('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome',cancers2immuno[c],'metadata.txt'),sep='\t')
         doced_file = set([item.split('.')[0] for item in meta['sample']])
@@ -179,8 +173,7 @@ for tesorai in all_tesorai:
             assert len(all_file.difference(doced_file)) == 0
         except AssertionError:
             print(tesorai,print(all_file.difference(doced_file)))
-
-
+sys.exit('stop')
 
 
 # # fix suffix
