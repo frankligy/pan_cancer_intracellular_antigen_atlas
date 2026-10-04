@@ -4,11 +4,13 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --time=1-00:00:00
-#SBATCH --mem=50Gb
-#SBATCH --job-name="neoverse-pan"
+#SBATCH --mem=100Gb
+#SBATCH --job-name="public"
 #SBATCH --output=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.out
 #SBATCH --error=/gpfs/data/yarmarkovichlab/Frank/job_dump/%j_%x.err
 #SBATCH --gres=gpu:a100:1
 
 
+# ./catalogue.py
 ./moving.py
+# ./hub.py

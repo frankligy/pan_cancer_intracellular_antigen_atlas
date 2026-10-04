@@ -87,7 +87,6 @@ for c in cancers:
     final.to_csv(after,sep='\t',index=None)
 
 
-
 # move meta, for both web and hub
 des_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/app/static'
 if not os.path.exists(des_dir):
@@ -198,7 +197,6 @@ subprocess.run('cp {} {}'.format(deepimmuno_result,des_dir),shell=True)
 mapping_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/mapping.txt'
 subprocess.run('cp {} {}'.format(mapping_result,des_dir),shell=True)
 
-sys.exit('stop')
 
 # move figures
 des_dir = '/gpfs/data/yarmarkovichlab/public/ImmunoVerse/assets'

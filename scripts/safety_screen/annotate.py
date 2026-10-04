@@ -640,5 +640,6 @@ actual_final.append(granulocyte_hsc_df)
 actual_final = pd.concat(actual_final,axis=0)
 actual_final.to_csv('final.txt',sep='\t',index=None)
 actual_final.to_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/final.txt',sep='\t',index=None)
+actual_final.to_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/normal/final.txt',sep='\t',index=None)
 
 
