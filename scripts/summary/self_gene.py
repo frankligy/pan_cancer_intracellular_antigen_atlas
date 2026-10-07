@@ -177,7 +177,7 @@ data = []
 for c in cancers:
     # now consider hla
     if c in ['RT','NBL']:
-        dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
+        dic = pd.read_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
         dic = {k.replace('HLA-',''):v for k,v in dic.items()}
     else:
         dic = {}

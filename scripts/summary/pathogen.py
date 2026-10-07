@@ -261,8 +261,29 @@ tmp.to_csv('annotated_cmv_table.txt',sep='\t',index=None)
 
 
 # select representative
-candidates = []
+all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
+                'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
+                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus', 'hepatocytes', 'beta_cell', 'iPSC', 'HSC', 'granulocytes', 'CD14', 'ImmDC', 'MatureDC', 
+                'CD4', 'CD8','CD4_Act','CD8_Act','Treg','CD19','CD19_Act']
 
+non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus', 'iPSC', 'CD19','CD19_Act','HSC']
+essential = list(set(all_tissues).difference(set(non_essential)))
+
+original = pd.read_csv('post_safety_screen_add_ribo.txt',sep='\t')
+original = original.loc[original['typ']=='pathogen',:]
+original = original.loc[(original['not_in_normal_ribo']) & (~original['is_ambiguous_IL'])]
+cond = []
+for item in original['normal_0.05']:
+    item = str(item)
+    a = set(item.split(',')).intersection(set(essential))
+    if len(a) > 0:
+        cond.append(False)
+    else:
+        cond.append(True)
+original = original.loc[cond,:]
+wl = set(original['pep'])
+
+candidates = []
 final_sub = final.loc[final['strain']=='HBV',:]
 for c_,final_sub2 in final_sub.groupby(by='cancer'):
     tmp = final_sub2.sort_values(by='n_psm')['pep'].iloc[-2:]
@@ -309,13 +330,9 @@ for c_,final_sub2 in final_sub.groupby(by='cancer'):
     candidates.extend(list(tmp))
 
 # start to draw
-candidates = list(set(candidates))
+candidates = list(set(candidates).intersection(wl))
 pep2patho = {p:sub_df['strain'].iloc[0] for p,sub_df in final.groupby(by='pep')}
 safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.05_tesorai.txt',sep='\t')
-
-all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
-                'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
-                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
 
 store_data = []
 store_type = []
@@ -347,7 +364,7 @@ for pep in candidates:
 
 df = pd.DataFrame(data=store_data,index=candidates,columns=cancers+list(all_tissues))
 
-ori_array = [tuple(['cancer']*21+['normal']*30),tuple(df.columns.tolist())]
+ori_array = [tuple(['cancer']*21+['normal']*45),tuple(df.columns.tolist())]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.columns = mi
 

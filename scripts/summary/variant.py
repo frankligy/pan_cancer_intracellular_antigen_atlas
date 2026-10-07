@@ -139,13 +139,10 @@ final['is_driver'] = final['gene'].isin(driver).values
 final['mutation'] = ['|'.join([item.split('|')[0],item.split('|')[1]]) for item in final['real_source']]
 final['mutation_type'] = [item.split('|')[-1] for item in final['real_source']]
 final['recurrency'] = [item.split('|')[2] for item in final['real_source']]
-final.to_csv('all_variants.txt',sep='\t',index=None)
 
 final['recurrency'] = final['recurrency'].astype('int')
 tmp = final.loc[final['recurrency']>1,:]
-print(len(tmp['pep'].unique()))
 tmp = final.loc[final['recurrency']==1,:]
-print(len(tmp['pep'].unique()))
 
 # plot cancer
 col1 = []
@@ -249,10 +246,7 @@ for c,p in zip(final['cancer'],final['pep']):
         cond.append(False)
 final['in_tesorai'] = cond
 final.to_csv('annotated_variant_antigen.txt',sep='\t',index=None)
-print(len(final['pep'].unique()))
 
-tmp = final.loc[final['in_iedb'],:]
-print(len(tmp['pep'].unique()))
 
 
 # need to make sure pep_tsnadb are in the search space

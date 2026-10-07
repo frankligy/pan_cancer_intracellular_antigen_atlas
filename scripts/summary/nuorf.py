@@ -73,7 +73,11 @@ VARIANT_ENSEMBL_GTF = '/gpfs/data/yarmarkovichlab/Frank/immunopeptidome_project/
 
 all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
                 'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
-                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
+                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus', 'hepatocytes', 'beta_cell', 'iPSC', 'HSC', 'granulocytes', 'CD14', 'ImmDC', 'MatureDC', 
+                'CD4', 'CD8','CD4_Act','CD8_Act','Treg','CD19','CD19_Act']
+
+non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus', 'iPSC', 'CD19','CD19_Act','HSC']
+essential = list(set(all_tissues).difference(set(non_essential)))
 
 def get_enst2gs():
     gtf = pd.read_csv(VARIANT_ENSEMBL_GTF,sep='\t',skiprows=5,header=None)
@@ -180,8 +184,21 @@ final = df.loc[df['typ']=='nuORF',:]
 final.to_csv('all_nuorf_final.txt',sep='\t',index=None)
 
 ts = ['5\' uORF','5\' Overlap uORF','Out-of-Frame','3\' Overlap dORF','3\' dORF','lncRNA','Pseudogene']
+original = pd.read_csv('post_safety_screen_add_ribo.txt',sep='\t')
+original = original.loc[original['typ']=='nuORF',:]
+original = original.loc[(original['not_in_normal_ribo']) & (~original['is_ambiguous_IL'])]
+cond = []
+for item in original['normal_0.05']:
+    item = str(item)
+    a = set(item.split(',')).intersection(set(essential))
+    if len(a) > 0:
+        cond.append(False)
+    else:
+        cond.append(True)
+original = original.loc[cond,:]
+
 dic = {t:[] for t in ts}
-for pep,sub_df in final.groupby(by='pep'):
+for pep,sub_df in original.groupby(by='pep'):
     nc = sub_df.shape[0]
     nt = sub_df['nuorf_type'].iloc[0]
     if nt in ts:
@@ -197,7 +214,7 @@ for k,v in new_dic.items():
     candidates.extend(v)
 
 enst2gs = get_enst2gs()
-dic = {i1:i2 for i1,i2 in zip(final['pep'],final['source'])}
+dic = {i1:i2 for i1,i2 in zip(original['pep'],original['source'])}
 with open('freq_nuorf_pep2anno.txt','w') as f:
     f.write('peptide\tsource\tannotation\n')
     for k,v in dic.items():
@@ -207,7 +224,7 @@ with open('freq_nuorf_pep2anno.txt','w') as f:
 freq_nuorf_pep2anno = pd.read_csv('freq_nuorf_pep2anno.txt',sep='\t',index_col=0)['annotation'].to_dict()
 candidates = list(freq_nuorf_pep2anno.keys())
 
-pep2type = {p:sub_df['nuorf_type'].iloc[0] for p,sub_df in final.groupby(by='pep')}
+pep2type = {p:sub_df['nuorf_type'].iloc[0] for p,sub_df in original.groupby(by='pep')}
 safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.05_tesorai.txt',sep='\t')
 
 store_data = []
@@ -241,7 +258,7 @@ for pep in candidates:
 all_ribo_tissues = ['Brain','fat','Fibroblast','HAEC','HCAEC','Hepatocytes','VSMC','Kidney']
 df = pd.DataFrame(data=store_data,index=candidates,columns=cancers+all_ribo_tissues+list(all_tissues))
 
-ori_array = [tuple(['cancer']*21+['ribo']*8+['normal']*30),tuple(df.columns.tolist())]
+ori_array = [tuple(['cancer']*21+['ribo']*8+['normal']*45),tuple(df.columns.tolist())]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.columns = mi
 

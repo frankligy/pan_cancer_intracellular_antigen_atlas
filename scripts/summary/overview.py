@@ -413,7 +413,6 @@ n_total = len(set(final['pep']))
 p_filtered = n_filtered/n_total
 print(p_filtered,n_filtered)
 final = final.loc[~final['pep'].isin(safety_screen_bl),:]
-sys.exit('stop')
 
 self_df = final.loc[(final['typ']=='self_gene') & (final['unique']!=False),:] 
 self_df = self_df.loc[~self_df['gene_symbol'].isin(manual_bl),:]
@@ -460,6 +459,7 @@ iedb_pep = set(iedb_df['Epitope - Name'].values)
 immunoverse_pep = set(patent_df['pep'].values)
 novel = immunoverse_pep.difference(iedb_pep)
 novel_rate = len(novel)/len(immunoverse_pep)
+print(len(novel))
 print(novel_rate)
 
 patent_df['overview_in_iedb'] = patent_df['pep'].isin(iedb_pep)
@@ -658,6 +658,7 @@ print(total_immuno - lung.shape[0])
 print(total_immuno_bio - len(lung['biology'].unique()))
 
 
+
 hla_data = []
 all_hla = []
 for k,v in hla_dic.items():
@@ -673,7 +674,7 @@ for c in cancers:
 hla_df = pd.DataFrame(index=cancers,columns=all_hla,data=hla_data)
 reformatted_hla = ['HLA-' + item.replace(':','').replace('*','') for item in hla_df.columns]
 hla_df.columns = reformatted_hla
-freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)
+freq_df = pd.read_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv',sep=',',index_col=0)
 freq_dic = freq_df['Percent US population'].to_dict()
 ori_array = [tuple([item[4:] for item in hla_df.columns.tolist()]),
              tuple([freq_dic.get(item,0) for item in hla_df.columns]),
@@ -691,6 +692,8 @@ for c in cancers:
         neg *= (1-f)
     coverage = 1-neg
     cancer2coverage[c] = coverage
+print(len([k for k,v in cancer2coverage.items() if v>=0.9 ]))
+print(len([k for k,v in cancer2coverage.items() if v>=0.7]))
 ori_array = [tuple(hla_df.index.tolist()),
              tuple([cancer2coverage[item] for item in hla_df.index])]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
@@ -886,7 +889,7 @@ data = []
 for c in cancers:
     # now consider hla
     if c in ['RT','NBL']:
-        dic = pd.read_csv('/gpfs/data/yarmarkovichlab/medulloblastoma/neoverse_folder/NeoVerse_final_output_new/antigens/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
+        dic = pd.read_csv('/gpfs/data/yarmarkovichlab/public/ImmunoVerse/database/US_HLA_frequency.csv',sep=',',index_col=0)['Percent US population'].to_dict()
         dic = {k.replace('HLA-',''):v for k,v in dic.items()}
     else:
         dic = {}

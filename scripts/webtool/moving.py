@@ -194,8 +194,12 @@ subprocess.run('cp {} {}'.format(freq,des_dir),shell=True)
 deepimmuno_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/all_deepimmuno_immunogenicity.txt'
 subprocess.run('cp {} {}'.format(deepimmuno_result,des_dir),shell=True)
 
+immunogenicity_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/final_immunogenicity.txt'
+subprocess.run('cp {} {}'.format(immunogenicity_result,des_dir),shell=True)
+
 mapping_result = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/codes/webtool/mapping.txt'
 subprocess.run('cp {} {}'.format(mapping_result,des_dir),shell=True)
+sys.exit('stop')
 
 
 # move figures

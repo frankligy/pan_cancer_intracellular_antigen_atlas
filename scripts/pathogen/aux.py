@@ -169,7 +169,7 @@ df['cancer'] = df['srr'].map(srr2cancer)
 df['participant'] = df['srr'].map(srr2part)
 df.to_csv('{}_{}.txt'.format(taxa_level,name),sep='\t')
 fig,ax = plt.subplots()
-sns.stripplot(data=df,x='condition',y='count',hue='cancer',ax=ax)
+sns.stripplot(data=df,x='condition',y='count',ax=ax)
 ax.boxplot(x=stream_of_data,positions=np.arange(len(conditions)),patch_artist=False,showfliers=False)
 l = ['{}\nn={}'.format(i1,i2) for i1,i2 in zip(conditions,ns)]
 ax.set_xticklabels(l)

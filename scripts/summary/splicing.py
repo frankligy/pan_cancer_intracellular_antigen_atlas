@@ -172,7 +172,11 @@ pep2anno = {i1:i2 for i1,i2 in zip(final['pep'],final['anno'])}
 safety_screen_df = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/safety_screen/code/hla_ligand_atlas_now_0.05_tesorai.txt',sep='\t')
 all_tissues = ['Adrenal gland', 'Aorta', 'Bladder', 'Bone marrow', 'Brain', 'Cerebellum', 'Colon', 'Esophagus', 'Gallbladder', 'Heart', 'Kidney', 'Liver', 
                 'Lung', 'Lymph node', 'Mamma', 'Muscle', 'Myelon', 'Ovary', 'Pancreas', 'Prostate', 'Skin', 'Small intestine', 'Spleen', 'Stomach', 'Testis', 
-                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus']
+                'Thymus', 'Thyroid', 'Tongue', 'Trachea', 'Uterus', 'hepatocytes', 'beta_cell', 'iPSC', 'HSC', 'granulocytes', 'CD14', 'ImmDC', 'MatureDC', 
+                'CD4', 'CD8','CD4_Act','CD8_Act','Treg','CD19','CD19_Act']
+
+non_essential = ['Adrenal gland','Ovary','Prostate','Testis','Thymus', 'iPSC', 'CD19','CD19_Act','HSC']
+essential = list(set(all_tissues).difference(set(non_essential)))
 
 store_data = []
 store_coord = []
@@ -208,7 +212,7 @@ for k in prioritized_peps:
     store_t.append(pep2t[k])
     
 df = pd.DataFrame(data=store_data,index=prioritized_peps,columns=cancers+list(all_tissues))
-ori_array = [tuple(['cancer']*21+['normal']*30),tuple(df.columns.tolist())]
+ori_array = [tuple(['cancer']*21+['normal']*45),tuple(df.columns.tolist())]
 mi = pd.MultiIndex.from_arrays(arrays=ori_array,sortorder=0)
 df.columns = mi
 ori_array = [tuple(df.index.tolist()),
