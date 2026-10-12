@@ -125,56 +125,58 @@ immuno_dir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/immunopeptidome'
 iedb = pd.read_csv('all_epitope_no_b_human_linear_mhc_i.tsv',sep='\t')
 iedb_peptides = set(iedb['Epitope - Name'].unique())
 
-# # search_space
-# cats = ['contaminant','variant','pathogen','fusion','intron_retention','nuORF','TE_chimeric_transcript','splicing','ERV','unknown','nc_isoform','self_gene']
-# data = np.empty((len(cancers),len(cats)),dtype=np.float64)
-# for i,c in enumerate(cancers):
-#     space_dict = {}
-#     combined_fasta = os.path.join(immuno_dir,cancers2immuno[c],'combined_{}_pan_cancer.fasta'.format(c))
-#     with open(combined_fasta,'r') as in_handle:
-#         for title,seq in SimpleFastaParser(in_handle):
-#             identity = classify_source(title)
-#             if identity in space_dict.keys():
-#                 space_dict[identity] += len(seq)
-#             else:
-#                 space_dict[identity] = 0
-#                 space_dict[identity] += len(seq)
+# search_space
+cats = ['contaminant','variant','pathogen','fusion','intron_retention','nuORF','TE_chimeric_transcript','splicing','ERV','unknown','nc_isoform','self_gene']
+data = np.empty((len(cancers),len(cats)),dtype=np.float64)
+for i,c in enumerate(cancers):
+    space_dict = {}
+    combined_fasta = os.path.join(immuno_dir,cancers2immuno[c],'combined_{}_pan_cancer.fasta'.format(c))
+    with open(combined_fasta,'r') as in_handle:
+        for title,seq in SimpleFastaParser(in_handle):
+            identity = classify_source(title)
+            if identity in space_dict.keys():
+                space_dict[identity] += len(seq)
+            else:
+                space_dict[identity] = 0
+                space_dict[identity] += len(seq)
 
-#     for cat in cats:
-#         if cat not in space_dict.keys():
-#             space_dict[cat] = 0
-#     data[i,:] = pd.Series(space_dict).loc[cats].values
+    for cat in cats:
+        if cat not in space_dict.keys():
+            space_dict[cat] = 0
+    data[i,:] = pd.Series(space_dict).loc[cats].values
 
-# df = pd.DataFrame(data=data,index=cancers,columns=cats)
-# df['tmp'] = df['nc_isoform'] + df['self_gene']
-# df['self_gene'] = df['tmp']
-# df.drop(columns=['unknown','nc_isoform','tmp'],inplace=True)
-# increase_by = df.iloc[:,:9].sum(axis=1) / df.iloc[:,9]
-# print(np.median(increase_by.values))
-# print(np.mean(increase_by.values))
-# print(np.min(increase_by.values))
-# print(np.max(increase_by.values))
+df = pd.DataFrame(data=data,index=cancers,columns=cats)
+df['tmp'] = df['nc_isoform'] + df['self_gene']
+df['self_gene'] = df['tmp']
+df.drop(columns=['unknown','nc_isoform','tmp'],inplace=True)
+increase_by = df.iloc[:,:9].sum(axis=1) / df.iloc[:,9]
+print(np.median(increase_by.values))
+print(np.mean(increase_by.values))
+print(np.min(increase_by.values))
+print(np.max(increase_by.values))
 
-# data = df.values
-# fig,ax = plt.subplots()
-# ax.bar(cancers,data[:,0],label='contaminant')
-# ax.bar(cancers,data[:,1],bottom=data[:,0],label='variant')
-# ax.bar(cancers,data[:,2],bottom=data[:,:2].sum(axis=1),label='pathogen')
-# ax.bar(cancers,data[:,3],bottom=data[:,:3].sum(axis=1),label='fusion')
-# ax.bar(cancers,data[:,4],bottom=data[:,:4].sum(axis=1),label='intron_retention')
-# ax.bar(cancers,data[:,5],bottom=data[:,:5].sum(axis=1),label='nuORF')
-# ax.bar(cancers,data[:,6],bottom=data[:,:6].sum(axis=1),label='TE_chimeric_transcript')
-# ax.bar(cancers,data[:,7],bottom=data[:,:7].sum(axis=1),label='splicing')
-# ax.bar(cancers,data[:,8],bottom=data[:,:8].sum(axis=1),label='self_translating_TE')
-# ax.bar(cancers,data[:,9],bottom=data[:,:9].sum(axis=1),label='self_gene')
-# for i,c in enumerate(cancers):
-#     ax.text(x=i,y=data[:,:10].sum(axis=1)[i],s=round(increase_by.iloc[i],2))
-# ax.set_ylabel('value')
-# # ax.set_ylim([0,1.05])
-# ax.set_xticklabels(cancers,rotation=60)
-# ax.legend()
-# plt.savefig('search_space_total.pdf',bbox_inches='tight')
-# plt.close()
+df.to_csv('search_space_total.txt',sep='\t')
+data = df.values
+fig,ax = plt.subplots()
+ax.bar(cancers,data[:,0],label='contaminant')
+ax.bar(cancers,data[:,1],bottom=data[:,0],label='variant')
+ax.bar(cancers,data[:,2],bottom=data[:,:2].sum(axis=1),label='pathogen')
+ax.bar(cancers,data[:,3],bottom=data[:,:3].sum(axis=1),label='fusion')
+ax.bar(cancers,data[:,4],bottom=data[:,:4].sum(axis=1),label='intron_retention')
+ax.bar(cancers,data[:,5],bottom=data[:,:5].sum(axis=1),label='nuORF')
+ax.bar(cancers,data[:,6],bottom=data[:,:6].sum(axis=1),label='TE_chimeric_transcript')
+ax.bar(cancers,data[:,7],bottom=data[:,:7].sum(axis=1),label='splicing')
+ax.bar(cancers,data[:,8],bottom=data[:,:8].sum(axis=1),label='self_translating_TE')
+ax.bar(cancers,data[:,9],bottom=data[:,:9].sum(axis=1),label='self_gene')
+for i,c in enumerate(cancers):
+    ax.text(x=i,y=data[:,:10].sum(axis=1)[i],s=round(increase_by.iloc[i],2))
+ax.set_ylabel('value')
+# ax.set_ylim([0,1.05])
+ax.set_xticklabels(cancers,rotation=60)
+ax.legend()
+plt.savefig('search_space_total.pdf',bbox_inches='tight')
+plt.close()
+
 
 # 70 and iedb
 # data_list = []

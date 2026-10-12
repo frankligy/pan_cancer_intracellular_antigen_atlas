@@ -48,6 +48,7 @@ for k,v in dic.items():
     fc_dict1[k] = fc2
 print(fc_dict1)
 final = pd.DataFrame.from_records(data,columns=['junction','region','value'])
+final.to_csv('pmel_log_skcm.txt',sep='\t')
 fig,ax = plt.subplots()
 sns.boxplot(final,x='junction',y='value',hue='region',ax=ax)
 ax.set_yscale('log')
@@ -74,6 +75,7 @@ for k,v in dic.items():
     fc_dict2[k] = fc2
 print(fc_dict2)
 final = pd.DataFrame.from_records(data,columns=['junction','region','value'])
+final.to_csv('pmel_log_uvm.txt',sep='\t')
 fig,ax = plt.subplots()
 sns.boxplot(final,x='junction',y='value',hue='region',ax=ax)
 ax.set_yscale('log')
@@ -87,6 +89,7 @@ for k,v in fc_dict1.items():
 for k,v in fc_dict2.items():
     df_data.append((k,v,'UVM'))
 df = pd.DataFrame.from_records(data=df_data,columns=['junction','value','cancer'])
+df.to_csv('pmel_compare.txt',sep='\t')
 fig,ax = plt.subplots()
 sns.pointplot(df,x='cancer',y='value',hue='junction',ax=ax)
 plt.savefig('pmel_compare.pdf',bbox_inches='tight')

@@ -112,7 +112,13 @@ ax.set_ylabel(col)
 # ax.set_ylim((-2.5,4))
 plt.savefig('abundance_{}_4_full.pdf'.format(col),bbox_inches='tight')
 plt.close()
-sys.exit('stop')
+
+with open('abundance_{}_4_full.txt'.format(col),'w') as f:
+    for k,vs in compare_data.items():
+        for v in vs:
+            f.write('{}\t{}\n'.format(k,v))
+
+
 
 # plot by rank
 highest_list = []
@@ -128,5 +134,5 @@ dic = dict(sorted(dic.items(), key=lambda x: x[1],reverse=True))
 fig,ax = plt.subplots()
 ax.bar(x=np.arange(len(dic)),height=dic.values())
 ax.set_ylim([0,30])
-plt.savefig('abudance_champion.pdf',bbox_inches='tight')
+plt.savefig('abundance_champion.pdf',bbox_inches='tight')
 plt.close()

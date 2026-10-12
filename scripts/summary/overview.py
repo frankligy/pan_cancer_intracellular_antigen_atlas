@@ -620,7 +620,7 @@ data.append(tmp_data)
 
 plot_df = pd.DataFrame(index=['gene','splicing','self_translate_TE','chimera_TE','intron_retention','pathogen','fusion','variant','lncRNA','pseudogene','cryptic ORF'],
                        columns=cancers,data=np.array(data))
-
+plot_df.to_csv('ts_antigen_overview.txt',sep='\t')
 fig,ax = plt.subplots(figsize=(15,15))
 sns.heatmap(plot_df,annot=True,linewidth=0.5,fmt='g',annot_kws={"fontsize": 8},cmap='Blues',square=True)
 plt.savefig('ts_antigen_overview.pdf',bbox_inches='tight')
@@ -810,6 +810,7 @@ for c,s in zip(cancers,n_samples):
 
 
 plot_df = pd.DataFrame(index=['gene','splicing','intron','TE','variant','pathogen','fusion'],columns=cancers,data=np.transpose(np.array(data)))
+plot_df.to_csv('ts_event_overview.txt',sep='\t')
 
 fig,ax = plt.subplots(figsize=(15,10))
 sns.heatmap(plot_df,annot=True,linewidth=0.5,fmt='g',vmax=15000,annot_kws={"fontsize": 5},cmap='Blues',square=True)
