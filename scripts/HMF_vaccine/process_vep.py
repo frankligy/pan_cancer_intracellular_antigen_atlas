@@ -59,6 +59,10 @@ mpl.rcParams['font.family'] = 'Arial'
 dna = pd.read_csv('dna.txt',sep='\t')['uid'].unique()
 rna = pd.read_csv('rna.txt',sep='\t')['uid'].unique()
 common = set(dna).intersection(set(rna))
+tmp = pd.read_csv('dna.txt',sep='\t')
+dna_expressed = tmp.loc[tmp['uid'].isin(common),:]
+dna_expressed.to_csv('expressed_somatic_mutations.txt',sep='\t',index=None)
+sys.exit('stop')
 somatic = pd.read_csv('/gpfs/data/yarmarkovichlab/HMF_vaccine/immunoverse_result/variants_possible_somatic.txt',sep='\t')
 col = []
 for info,gs in zip(somatic['INFO'],somatic['symbol']):
