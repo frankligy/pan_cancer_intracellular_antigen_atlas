@@ -294,7 +294,7 @@ And your json shall look like as below for generating mzml:
 To optionally run rescore:
 
 ```bash
-/gpfs/data/yarmarkovichlab/softwares/NeoVerse/run_maxquant.sh template.json
+/gpfs/data/yarmarkovichlab/softwares/NeoVerse/rederive.py --config template.json
 ```
 
 With json as:
