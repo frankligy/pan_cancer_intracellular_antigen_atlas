@@ -161,8 +161,9 @@ mapping = {
     'MM':'multiple_myeloma',
     'PRAD':'prostate_cancer',
     'OS':'osteosarcoma',
-    'UCS':'uterine_serous_carcinoma',
-    'schwannoma':'schwannoma'
+    'uterine_serous_carcinoma':'uterine_serous_carcinoma',
+    'schwannoma':'schwannoma',
+    'DIPG':'DIPG'
 }
 for c in mapping.keys():
     final_path = os.path.join(root_dir,mapping[c],'metadata.txt')

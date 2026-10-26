@@ -66,8 +66,9 @@ mapping = {
     'MM':'multiple_myeloma',
     'PRAD':'prostate_cancer',
     'OS':'osteosarcoma',
-    'UCS':'uterine_serous_carcinoma',
-    'schwannoma':'schwannoma'
+    'uterine_serous_carcinoma':'uterine_serous_carcinoma',
+    'schwannoma':'schwannoma',
+    'DIPG':'DIPG'
 }
 
 root_dir = '/gpfs/data/yarmarkovichlab/Frank/ImmunoVerse_Hub'
