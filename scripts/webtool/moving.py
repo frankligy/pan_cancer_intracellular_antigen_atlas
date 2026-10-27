@@ -163,7 +163,8 @@ mapping = {
     'OS':'osteosarcoma',
     'uterine_serous_carcinoma':'uterine_serous_carcinoma',
     'schwannoma':'schwannoma',
-    'DIPG':'DIPG'
+    'DIPG':'DIPG',
+    'MB':'MB'
 }
 for c in mapping.keys():
     final_path = os.path.join(root_dir,mapping[c],'metadata.txt')

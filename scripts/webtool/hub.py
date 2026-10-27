@@ -68,7 +68,8 @@ mapping = {
     'OS':'osteosarcoma',
     'uterine_serous_carcinoma':'uterine_serous_carcinoma',
     'schwannoma':'schwannoma',
-    'DIPG':'DIPG'
+    'DIPG':'DIPG',
+    'MB':'MB'
 }
 
 root_dir = '/gpfs/data/yarmarkovichlab/Frank/ImmunoVerse_Hub'
