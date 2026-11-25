@@ -68,6 +68,90 @@ n_samples = [
     472
 ]
 
+# use transcriptome to cluster TCGA
+rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+genes = set()
+for c in cancers:
+    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','0.01','final_enhanced_all.txt'),sep='\t')
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_all['presented_by_each_sample_hla']]
+    final_all = final_all.loc[cond,:]
+    final_all = final_all.loc[final_all['typ']=='self_gene',:]
+    final_all = final_all.loc[final_all['unique'],:]
+    genes = genes.union(set(final_all['ensgs'].values))
+
+gene_df_list = []
+for c in cancers:
+    gene_tpm = pd.read_csv(os.path.join(rootdir,c,'gene_tpm.txt'),sep='\t',index_col=0)
+    common = list(genes.intersection(set(gene_tpm.index)))
+    gene_tpm = gene_tpm.loc[common,:]
+    gene_tpm = gene_tpm.loc[np.logical_not(gene_tpm.index.duplicated()),:]
+    gene_df_list.append(gene_tpm)
+df = pd.concat(gene_df_list,axis=1,keys=cancers)
+df = df.dropna(axis=0,how='any')
+
+mi = df.columns
+mi_df = mi.to_frame(index=False)
+df.columns = mi_df[1].values
+
+df = df.T
+adata = ad.AnnData(X=df.values,obs=pd.DataFrame(index=df.index,data={'cancer':mi_df[0].values}),var=pd.DataFrame(index=df.columns))  # 7058 × 13033
+sc.pp.log1p(adata)
+sc.pp.highly_variable_genes(adata,flavor='seurat',n_top_genes=5000)
+adata.raw = adata
+adata = adata[:,adata.var['highly_variable']]
+sc.pp.scale(adata,max_value=10)
+sc.tl.pca(adata,n_comps=50)
+sc.pp.neighbors(adata)
+sc.tl.umap(adata)
+umap_dual_view_save(adata,cols=['cancer'])
+sd = adata.obs
+sd['umap_x'] = adata.obsm['X_umap'][:,0]
+sd['umap_y'] = adata.obsm['X_umap'][:,1]
+sd.to_csv('rna_umap_coord.txt',sep='\t')
+
+# use peptide to cluster, no serum sample added
+rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
+c_df_list = []
+for c in cancers:
+    print(c)
+    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','0.01','final_enhanced_all.txt'),sep='\t')
+    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_all['presented_by_each_sample_hla']]
+    final_all = final_all.loc[cond,:]
+    final_all = final_all.loc[final_all['typ']=='self_gene',:]
+    final_all = final_all.loc[final_all['unique'],:]
+    gene2data = {}
+    for ensg,sub_df in tqdm(final_all.groupby(by='ensgs')):
+        sample2data = {}
+        for item in sub_df['detailed_intensity']:
+            item = literal_eval(item)
+            for tup in item:
+                sample2data.setdefault(tup[0],[]).append(tup[1])
+        sample2value = {k:np.median(v) for k,v in sample2data.items()}   # sample1:0.56
+        gene2data[ensg] = sample2value
+    c_df = pd.DataFrame.from_dict(gene2data,orient='columns')
+    c_df_list.append(c_df)
+
+df = pd.concat(c_df_list,axis=0,join='outer',keys=cancers).fillna(value=0).T # gene * sample
+
+mi = df.columns
+mi_df = mi.to_frame(index=False)
+df.columns = mi_df[1].values
+
+df = df.T # sample * gene
+adata = ad.AnnData(X=df.values,obs=pd.DataFrame(index=df.index,data={'cancer':mi_df[0].values}),var=pd.DataFrame(index=df.columns))  
+sc.pp.highly_variable_genes(adata,flavor='seurat',n_top_genes=5000)
+adata.raw = adata
+adata = adata[:,adata.var['highly_variable']]
+sc.pp.scale(adata,max_value=10)
+sc.tl.pca(adata,n_comps=50)
+sc.pp.neighbors(adata)
+sc.tl.umap(adata)
+umap_dual_view_save(adata,cols=['cancer'])
+sd = adata.obs
+sd['umap_x'] = adata.obsm['X_umap'][:,0]
+sd['umap_y'] = adata.obsm['X_umap'][:,1]
+sd.to_csv('immuno_umap_coord.txt',sep='\t')
+
 
 # first test yield
 gbm = pd.read_csv('/gpfs/data/yarmarkovichlab/Frank/pan_cancer/plasma/plasma_gbm_PXD008127/antigen/other_alg/all_neoantigen.txt',sep='\t')
@@ -94,6 +178,9 @@ lung_nyu_yields, lung_nyu_samples = zip(*sorted(zip(yields,samples),reverse=True
 total_yields = list(gbm_yields) + lung_public_yields + list(lung_nyu_yields)
 total_samples = list(gbm_samples) + lung_public_samples + list(lung_nyu_samples)
 
+tmp_df = pd.DataFrame(data={'sample':total_samples,'yield':total_yields})
+tmp_df.to_csv('plasma_yield.txt',sep='\t',index=None)
+
 mean_yields = np.quantile(total_yields,[0.25,0.5,0.75])
 
 fig,ax = plt.subplots(figsize=(15,4.8))
@@ -117,7 +204,6 @@ ax.set_yticks(np.arange(result.shape[0]))
 ax.set_yticklabels(np.flip(result['Term'].values),fontsize=4)
 plt.savefig('plasma_enrichr.pdf',bbox_inches='tight')
 plt.close()
-sys.exit('stop')
 
 # use peptide abudance to cluster immunopeptidome samples
 rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
@@ -218,6 +304,10 @@ sc.tl.pca(adata,n_comps=50)
 sc.pp.neighbors(adata)
 sc.tl.umap(adata)
 umap_dual_view_save(adata,cols=['cancer'])
+sd = adata.obs
+sd['umap_x'] = adata.obsm['X_umap'][:,0]
+sd['umap_y'] = adata.obsm['X_umap'][:,1]
+sd.to_csv('immuno_umap_add_serum_coord.txt',sep='\t')
 adata = adata.raw.to_adata()
 adata_ori = adata.copy()
 adata = adata_ori[adata_ori.obs['cancer'].isin(['GBM','LUAD','gbm_public','luad_nyu','luad_public'])]
@@ -249,6 +339,10 @@ sc.pl.violin(adata,keys=ensgs,groupby='cancer')
 plt.savefig('umap_violin_taa.pdf',bbox_inches='tight')
 plt.close()
 
+tmp_df = sc.get.obs_df(adata,keys=list(gene_to_ensg.values()) + ['cancer'])
+tmp_df.to_csv('violin_data.txt',sep='\t')
+
+
 gene_to_ensg = {
     # GBM-enriched
     "OLIG2":  "ENSG00000205927",
@@ -274,46 +368,12 @@ adata = adata_ori[adata_ori.obs['cancer']!='luad_public',:]
 sc.tl.rank_genes_groups(adata,'cancer')
 sc.pl.rank_genes_groups(adata, n_genes=25, sharey=False)
 plt.savefig('umap_genes.pdf',bbox_inches='tight')
-sys.exit('stop')
+
+de_gene = pd.DataFrame.from_records(adata.uns['rank_genes_groups']['names'])
+de_gene.to_csv('de_gene.txt',sep='\t')
 
 
 
-# use transcriptome to cluster TCGA
-rootdir = '/gpfs/data/yarmarkovichlab/Frank/pan_cancer/atlas'
-genes = set()
-for c in cancers:
-    final_all = pd.read_csv(os.path.join(rootdir,c,'antigen','0.01','final_enhanced_all.txt'),sep='\t')
-    cond = [False if ('[]' in item) and ('(\'HLA-' not in item) else True for item in final_all['presented_by_each_sample_hla']]
-    final_all = final_all.loc[cond,:]
-    final_all = final_all.loc[final_all['typ']=='self_gene',:]
-    final_all = final_all.loc[final_all['unique'],:]
-    genes = genes.union(set(final_all['ensgs'].values))
-
-gene_df_list = []
-for c in cancers:
-    gene_tpm = pd.read_csv(os.path.join(rootdir,c,'gene_tpm.txt'),sep='\t',index_col=0)
-    common = list(genes.intersection(set(gene_tpm.index)))
-    gene_tpm = gene_tpm.loc[common,:]
-    gene_tpm = gene_tpm.loc[np.logical_not(gene_tpm.index.duplicated()),:]
-    gene_df_list.append(gene_tpm)
-df = pd.concat(gene_df_list,axis=1,keys=cancers)
-df = df.dropna(axis=0,how='any')
-
-mi = df.columns
-mi_df = mi.to_frame(index=False)
-df.columns = mi_df[1].values
-
-df = df.T
-adata = ad.AnnData(X=df.values,obs=pd.DataFrame(index=df.index,data={'cancer':mi_df[0].values}),var=pd.DataFrame(index=df.columns))  # 7058 × 13033
-sc.pp.log1p(adata)
-sc.pp.highly_variable_genes(adata,flavor='seurat',n_top_genes=5000)
-adata.raw = adata
-adata = adata[:,adata.var['highly_variable']]
-sc.pp.scale(adata,max_value=10)
-sc.tl.pca(adata,n_comps=50)
-sc.pp.neighbors(adata)
-sc.tl.umap(adata)
-umap_dual_view_save(adata,cols=['cancer'])
 
 
 
